@@ -1,2 +1,7 @@
-C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\util\DBConnection.java
-C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\entity\User.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\controllers\MainController.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\service\UserDAOImpl.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\utils\DBConnection.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\controllers\NewServlet.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\dto\User.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\controllers\HomeController.java
+C:\Users\MinhQuang\Desktop\Semester5\SWP391\SE1610_Group_Stress\src\main\java\com\stress\dao\UserDAO.java

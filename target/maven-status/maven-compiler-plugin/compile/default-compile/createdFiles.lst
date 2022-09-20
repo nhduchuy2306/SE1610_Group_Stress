@@ -1,2 +1,7 @@
+com\stress\controllers\HomeController.class
+com\stress\controllers\NewServlet.class
+com\stress\dao\UserDAO.class
 com\stress\entity\User.class
-com\stress\util\DBConnection.class
+com\stress\utils\DBConnection.class
+com\stress\service\UserDAOImpl.class
+com\stress\controllers\MainController.class
