@@ -23,5 +23,13 @@ public class DBConnection {
         return conn;
     }
     
-    
+    public static void main(String[] args) {
+        try {
+            System.out.println(DBConnection.getConnection());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

@@ -4,10 +4,18 @@
  */
 package com.stress.service;
 
+import com.stress.dao.UserDAO;
+import com.stress.dto.User;
+
 /**
  *
  * @author Huy
  */
-public class UserDAOImpl {
+public class UserDAOImpl implements UserDAO{
+
+    @Override
+    public User getAll() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

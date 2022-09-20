@@ -4,10 +4,12 @@
  */
 package com.stress.dao;
 
+import com.stress.dto.User;
+
 /**
  *
  * @author Huy
  */
 public interface UserDAO {
-    
+    User getAll();
 }

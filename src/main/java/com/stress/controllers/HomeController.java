@@ -4,6 +4,8 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
+import com.stress.service.UserDAOImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +32,7 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        UserDAO dao = new UserDAOImpl();
         
         request.getRequestDispatcher("index.html").forward(request, response);
     }
