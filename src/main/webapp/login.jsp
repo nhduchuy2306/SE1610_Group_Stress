@@ -58,6 +58,7 @@
                                                         Me</label>
                                                 </div>
                                             </div>
+                                            <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
                                             <a href="index.html" class="btn btn-primary btn-user btn-block">
                                                 Login
                                             </a>
@@ -87,6 +88,7 @@
             </div>
 
         </div>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <!-- Bootstrap core JavaScript-->
         <script src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

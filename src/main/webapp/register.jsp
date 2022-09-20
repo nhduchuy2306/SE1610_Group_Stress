@@ -32,7 +32,7 @@
                 <!-- Nested Row within Card Body -->
                 <div class="row">
                     <!--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>-->
-                    <img class="col-lg-6 d-none d-lg-block" 
+                    <img class="col-lg-5 d-none d-lg-block" 
                                      src="https://cdn.dribbble.com/users/5980575/screenshots/17141125/car-rental-instagram-social-media-post-banner-template-free-415705_4x.png?compress=1&resize=1000x750&vertical=top" alt="alt"/>
                     <div class="col-lg-7">
                         <div class="p-5">
