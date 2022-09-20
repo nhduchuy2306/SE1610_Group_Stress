@@ -1,7 +1,11 @@
-com\stress\controllers\HomeController.class
-com\stress\controllers\NewServlet.class
-com\stress\dao\UserDAO.class
-com\stress\entity\User.class
+com\stress\dto\Order.class
 com\stress\utils\DBConnection.class
 com\stress\service\UserDAOImpl.class
+com\stress\dto\User.class
+com\stress\dto\Role.class
 com\stress\controllers\MainController.class
+com\stress\dto\Location.class
+com\stress\dao\UserDAO.class
+com\stress\dto\Route.class
+com\stress\controllers\HomeController.class
+com\stress\controllers\NewServlet.class

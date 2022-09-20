@@ -1,13 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.stress.dto;
 
-/**
- *
- * @author Huy
- */
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Route {
-    
+    private String routeID;
+    private String routeName;
+    private Location startLocation;
+    private Location endLocation;
+    private String description;
+    private boolean status;
 }

@@ -15,10 +15,9 @@
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title>Travel</title>
+        <title>Car Booking</title>
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-        <!--CSS============================================= -->
         <link rel="stylesheet" href="css/linearicons.css">
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.css">
@@ -32,60 +31,7 @@
 
     <body>
         <header id="header">
-            <div class="header-top">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 col-sm-6 col-6 header-top-left">
-                            <ul>
-                                <li><a href="#">Visit Us</a></li>
-                                <li><a href="#">Buy Tickets</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6 col-sm-6 col-6 header-top-right">
-                            <div class="header-social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-dribbble"></i></a>
-                                <a href="#"><i class="fa fa-behance"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container main-menu">
-                <div class="row align-items-center justify-content-between d-flex">
-                    <div id="logo">
-                        <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
-                    </div>
-                    <nav id="nav-menu-container">
-                        <ul class="nav-menu">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="packages.html">Packages</a></li>
-                            <li><a href="hotels.html">Hotels</a></li>
-                            <li><a href="insurance.html">Insurence</a></li>
-                            <li class="menu-has-children"><a href="">Blog</a>
-                                <ul>
-                                    <li><a href="blog-home.html">Blog Home</a></li>
-                                    <li><a href="blog-single.html">Blog Single</a></li>
-                                </ul>
-                            </li>
-                            <li class="menu-has-children"><a href="">Pages</a>
-                                <ul>
-                                    <li><a href="elements.html">Elements</a></li>
-                                    <li class="menu-has-children"><a href="">Level 2 </a>
-                                        <ul>
-                                            <li><a href="#">Item One</a></li>
-                                            <li><a href="#">Item Two</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </nav><!-- #nav-menu-container -->
-                </div>
-            </div>
+            <jsp:include page="menu.jsp"></jsp:include>
         </header><!-- #header -->
 
         <!-- start banner Area -->
@@ -111,7 +57,7 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="flight" role="tabpanel" aria-labelledby="flight-tab">
+                            <div class="tab-pane fade show active" id="flight" role="tabpanel">
                                 <form class="form-wrap">
                                     <fieldset name="from">
                                         <select class="form-control" required name='from' onchange=''>
@@ -147,7 +93,7 @@
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
                                     <input type="text" class="form-control date-picker" name="return" placeholder="Return "
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return'">
-                                    <a href="route.html" class="primary-btn text-uppercase">Search tickets</a>
+                                    <a href="route.jsp" class="primary-btn text-uppercase">Search tickets</a>
                                 </form>
                             </div>
                         </div>
