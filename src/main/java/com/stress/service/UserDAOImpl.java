@@ -7,6 +7,7 @@ import com.stress.dto.User;
 
 public class UserDAOImpl implements UserDAO{
     private static final String LOGINBYEMAIL = "SELECT [userID], ";
+    
     @Override
     public User getAllUser() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
