@@ -12,7 +12,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="CarBooking" options="-endorseddirs &quot;D:\FALL 2022\swp\SE1610_Group_Stress\target/endorsed&quot;" />
+      <module name="CarBooking" options="-endorseddirs &quot;D:\FALL 2022\swp\SE1610_Group_Stress\SE1610_Group_Stress\target/endorsed&quot;" />
     </option>
   </component>
 </project>
