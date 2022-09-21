@@ -9,6 +9,7 @@ com\stress\utils\DBConnection.class
 com\stress\dao\VehicleDAO.class
 com\stress\service\UserDAOImpl.class
 com\stress\dto\Trip.class
+com\stress\service\TripDAOImpl.class
 com\stress\dao\DriverLicenseDAO.class
 com\stress\dao\LocationDAO.class
 com\stress\dto\User.class
@@ -22,6 +23,7 @@ com\stress\dao\SeatDAO.class
 com\stress\dto\GooglePojo.class
 com\stress\dto\Location.class
 com\stress\utils\Status.class
+com\stress\service\RouteDAOImpl.class
 com\stress\dao\UserDAO.class
 com\stress\utils\GoogleUtils.class
 com\stress\dao\RouteDAO.class
