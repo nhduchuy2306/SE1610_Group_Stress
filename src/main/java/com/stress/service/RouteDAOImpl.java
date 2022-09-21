@@ -26,8 +26,8 @@ public class RouteDAOImpl implements RouteDAO{
             ptm = conn.prepareStatement(ADD_ROUTE);
             ptm.setString(1, route.getRouteID());
             ptm.setString(2, route.getRouteName());
-            ptm.setString(3, route.getStartLocation().getLocationName());
-            ptm.setString(4, route.getEndLocation().getLocationName());
+            ptm.setString(3, route.getStartLocation());
+            ptm.setString(4, route.getEndLocation());
             ptm.setString(5, route.getDescription());
             ptm.setBoolean(6, route.isStatus());
             check = ptm.executeUpdate() > 0;
@@ -48,8 +48,8 @@ public class RouteDAOImpl implements RouteDAO{
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(UPDATE_ROUTE);
             ptm.setString(1, route.getRouteName());
-            ptm.setString(2, route.getStartLocation().getLocationName());
-            ptm.setString(3, route.getEndLocation().getLocationName());
+            ptm.setString(2, route.getStartLocation());
+            ptm.setString(3, route.getEndLocation());
             ptm.setString(4, route.getDescription());
             ptm.setBoolean(5, route.isStatus());
             ptm.setString(6, route.getRouteID());
