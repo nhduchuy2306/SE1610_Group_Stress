@@ -12,5 +12,5 @@ public class Seat {
     private String seatID; 
     private int	price;
     private int	status;
-    private Trip trip;
+    private String tripID;
 }

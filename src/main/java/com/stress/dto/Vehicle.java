@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.stress.dto;
 
-/**
- *
- * @author Huy
- */
+
 class Vehicle {
-    
+    private String vehicleID;
+    private String vehicleName;
+    private String licensePlate;
 }
