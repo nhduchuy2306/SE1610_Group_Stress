@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 public class Route {
     private String routeID;
     private String routeName;
-    private Location startLocation;
-    private Location endLocation;
+    private String startLocation;
+    private String endLocation;
     private String description;
     private boolean status;
 }

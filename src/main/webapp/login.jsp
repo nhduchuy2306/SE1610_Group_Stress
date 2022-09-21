@@ -58,12 +58,15 @@
                                                         Me</label>
                                                 </div>
                                             </div>
+                                            <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
                                             <a href="index.html" class="btn btn-primary btn-user btn-block">
                                                 Login
                                             </a>
                                             <hr>
-                                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/CarBooking/login&response_type=code
+                                   &client_id=275645487476-tl7da6qfftelhssckl825fv51ahida12.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
                                                 <i class="fab fa-google fa-fw"></i> Login with Google
+                                                
                                             </a>
                                             <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                                 <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
@@ -87,6 +90,7 @@
             </div>
 
         </div>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <!-- Bootstrap core JavaScript-->
         <script src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
