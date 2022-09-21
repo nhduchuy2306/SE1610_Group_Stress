@@ -4,7 +4,9 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
+import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
 import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.stress.dto.User;
 
 /**
  *
@@ -22,8 +25,14 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
 
-    private static final String SUCCESS = "index.jsp";
+    
     private static final String ERROR = "login.jsp";
+    private static final String REGISTER = "register.jsp";
+    private static final String USER_ROLE = "1";
+    private static final String ADMIN_ROLE = "2"; 
+    private static final String ADMIN = "admin/index.jsp";
+    private static final String USER = "index.jsp";
+    
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -35,14 +44,25 @@ public class LoginController extends HttpServlet {
             if (code != null && !code.isEmpty()) {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-                System.out.println(googlePojo.getEmail());
+
                 // This is a reCaptcha check box using when check login
                 // Login With Google, not using Recaptcha
                 //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
                 //boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-                if(googlePojo != null) {
-                    session.setAttribute("LOGIN_USER", googlePojo);
-                    url = SUCCESS;
+                if (googlePojo != null) {
+                    UserDAO userDao = new UserDAOImpl();
+                    User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
+                    if (loginUser != null) {
+                        session.setAttribute("LOGIN_USER", loginUser);
+                        if(loginUser.getRoleID().equals(ADMIN_ROLE)) url = ADMIN;
+                        if(loginUser.getRoleID().equals(USER_ROLE)) url = USER;
+                        
+                       
+                    } else {
+                        session.setAttribute("LOGIN_USER", loginUser);
+                        url = REGISTER;
+                    }
+
                 }
             }
         } catch (Exception e) {
