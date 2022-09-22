@@ -2,6 +2,7 @@
 package com.stress.dao;
 
 import com.stress.dto.User;
+import java.sql.SQLException;
 
 
 public interface UserDAO {
@@ -9,5 +10,6 @@ public interface UserDAO {
     User getUserByIDAndPassword();
     User getUserByEmail();
     User getUserByID();
-    User getUserByUserName(); 
+    User getUserByUserName();
+    boolean registerNewUSer(String userID,String name,String password,String email,String roleID,boolean status)throws SQLException;
 }
