@@ -6,7 +6,6 @@ import com.stress.dto.User;
 
 
 public class UserDAOImpl implements UserDAO{
-    private static final String LOGINBYEMAIL = "SELECT [userID], ";
     
     @Override
     public User getAllUser() {
