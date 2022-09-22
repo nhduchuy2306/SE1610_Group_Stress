@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public interface UserDAO {
     User getAllUser();
-    User getUserIDAndPassword();
+    User getUserByIDAndPassword();
     User getUserByEmail();
     User getUserByID();
     User getUserByUserName();

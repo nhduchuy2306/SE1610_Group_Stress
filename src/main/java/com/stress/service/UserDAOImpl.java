@@ -21,11 +21,6 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public User getUserIDAndPassword() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
     public User getUserByID() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -39,9 +34,14 @@ public class UserDAOImpl implements UserDAO{
     public User getUserByEmail() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
+
     @Override
-    public User checkLogin(String userID, String password) throws SQLException{
+    public User getUserByIDAndPassword() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public User checkLogin(String email, String password) throws SQLException{
         User user=null;
         Connection conn=null;
         PreparedStatement ptm =null;
