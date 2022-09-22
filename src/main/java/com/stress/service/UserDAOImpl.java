@@ -5,6 +5,7 @@ import com.stress.dto.User;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
@@ -14,6 +15,8 @@ public class UserDAOImpl implements UserDAO {
     private static final String LOGINBYEMAIL = "SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
     private static final String LOGGIN_BY_EMAIL = "SELECT [UserID], [UserName],[Password], [DOB], [Address], [PhoneNumber], [Sex],[RoleID],[AccountBalance] FROM tblUsers WHERE "
             + "[Email] = ? AND [Status] = 1";
+
+
 
     @Override
     public User getAllUser() {
@@ -68,10 +71,13 @@ public class UserDAOImpl implements UserDAO {
 
     }
 
+
+
     @Override
-    public User getUserByIDAndPassword() {
+    public User getUserIDAndPassword() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 
     public User checkLogin(String email, String password) throws SQLException {
         User user = null;
@@ -112,5 +118,15 @@ public class UserDAOImpl implements UserDAO {
             }
         }
         return user;
+    }
+
+    @Override
+    public User getUserByIDAndPassword() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public User getUserByEmail() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -6,10 +6,10 @@ package com.stress.controllers;
 
 import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
-import com.stress.dto.User;
+
+
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
-import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.stress.dto.User;
 
 /**
  *
@@ -25,12 +26,17 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginGoogleController extends HttpServlet {
 
-    private static final String USER_PAGE = "index.jsp";
+
+
+    
     private static final String ERROR = "login.jsp";
-    private static final String ADMIN_PAGE = "admin/index.jsp";
-    private static final String ADMIN = "2";
-    private static final String USER = "1";
     private static final String REGISTER = "register.jsp";
+    private static final String USER_ROLE = "1";
+    private static final String ADMIN_ROLE = "2"; 
+    private static final String ADMIN = "admin/index.jsp";
+    private static final String USER = "index.jsp";
+    
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -42,23 +48,32 @@ public class LoginGoogleController extends HttpServlet {
             if (code != null && !code.isEmpty()) {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-                System.out.println(googlePojo.getEmail());
+
                 // This is a reCaptcha check box using when check login
                 // Login With Google, not using Recaptcha
                 //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
                 //boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-                if(googlePojo != null) {
-                    UserDAO uDao = new UserDAOImpl();
-                    User loginUser = uDao.getUserByEmail(googlePojo.getEmail());
-                    if(loginUser != null) {
+
+               
+
+                if (googlePojo != null) {
+                    UserDAO userDao = new UserDAOImpl();
+                    User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
+                    if (loginUser != null) {
                         session.setAttribute("LOGIN_USER", loginUser);
-                        if(loginUser.getRoleID().trim().equals(ADMIN))  url = ADMIN_PAGE;
-                         else if(loginUser.getRoleID().trim().equals(USER)) url = USER_PAGE;
+                        if(loginUser.getRoleID().trim().equals(ADMIN_ROLE)) {
+                            System.out.println("Welcome Admin");
+                            url = ADMIN;
+                        }
+                        if(loginUser.getRoleID().trim().equals(USER_ROLE)) url = USER;
                         
-                    }else {
-                        session.setAttribute("LOGIN_USER", googlePojo);
+                       
+                    } else {
+                        session.setAttribute("LOGIN_USER", loginUser);
                         url = REGISTER;
                     }
+
+
                 }
             }
         } catch (Exception e) {

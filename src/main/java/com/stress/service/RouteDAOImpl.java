@@ -9,8 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RouteDAOImpl implements RouteDAO {
 
@@ -18,6 +16,34 @@ public class RouteDAOImpl implements RouteDAO {
             + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?,?)";
     private static final String UPDATE_ROUTE = "UPDATE tblRoutes SET RouteName = ?, StartLocation = ?, "
             + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";
+
+    
+    private static final String DELETE_ROUTE = "UPDATE tblroutes SET [Status] = 0 WHERE [RouteID] = ?";
+    
+    @Override
+    public boolean deleteRoute(String routeID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(DELETE_ROUTE);
+                ptm.setString(1, routeID);
+                check = ptm.executeUpdate() > 0;
+                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
+    
+
     private static final String SERVICE_BY_START_LOCATION = "select * \n"
                                 + "from tblRoutes\n"
                                 + "where StartLocation = (\n"
@@ -33,7 +59,8 @@ public class RouteDAOImpl implements RouteDAO {
                                 + "	where LocationName like ?\n"
                                 + ")";
     
-    private static final String DELETE_ROUTE = "UPDATE tblRoutes SET [Status] = 0 WHERE [RouteID] = ?";
+  
+
 
     @Override
     public boolean addRoute(Route route) throws SQLException {
@@ -145,24 +172,5 @@ public class RouteDAOImpl implements RouteDAO {
         return list;
     }
 
-    @Override
-    public boolean deleteRoute(String routeID) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        try {
-            conn = DBConnection.getConnection();
-            if(conn != null) {
-                ptm = conn.prepareStatement(DELETE_ROUTE);
-                ptm.setString(1, routeID);
-                check = ptm.executeUpdate() > 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally { 
-            if(ptm != null) ptm.close();
-            if(conn != null) conn.close();
-        }
-        return check;
-    }
+   
 }
