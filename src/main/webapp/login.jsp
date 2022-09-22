@@ -64,7 +64,7 @@
                                             </a>
                                             <hr>
                                             <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
-                                   &client_id=275645487476-tl7da6qfftelhssckl825fv51ahida12.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
+                                   &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
                                                 <i class="fab fa-google fa-fw"></i> Login with Google
                                                 
                                             </a>

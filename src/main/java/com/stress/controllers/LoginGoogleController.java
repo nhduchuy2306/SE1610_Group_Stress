@@ -4,7 +4,10 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
+import com.stress.dto.User;
+import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
 import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
@@ -22,8 +25,12 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginGoogleController extends HttpServlet {
 
-    private static final String SUCCESS = "index.jsp";
+    private static final String USER_PAGE = "index.jsp";
     private static final String ERROR = "login.jsp";
+    private static final String ADMIN_PAGE = "admin/index.jsp";
+    private static final String ADMIN = "2";
+    private static final String USER = "1";
+    private static final String REGISTER = "register.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -41,8 +48,17 @@ public class LoginGoogleController extends HttpServlet {
                 //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
                 //boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
                 if(googlePojo != null) {
-                    session.setAttribute("LOGIN_USER", googlePojo);
-                    url = SUCCESS;
+                    UserDAO uDao = new UserDAOImpl();
+                    User loginUser = uDao.getUserByEmail(googlePojo.getEmail());
+                    if(loginUser != null) {
+                        session.setAttribute("LOGIN_USER", loginUser);
+                        if(loginUser.getRoleID().trim().equals(ADMIN))  url = ADMIN_PAGE;
+                         else if(loginUser.getRoleID().trim().equals(USER)) url = USER_PAGE;
+                        
+                    }else {
+                        session.setAttribute("LOGIN_USER", googlePojo);
+                        url = REGISTER;
+                    }
                 }
             }
         } catch (Exception e) {

@@ -1,4 +1,3 @@
-
 package com.stress.service;
 
 import com.stress.dao.UserDAO;
@@ -8,11 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Date;
 
+public class UserDAOImpl implements UserDAO {
 
-public class UserDAOImpl implements UserDAO{
-    private static final String LOGINBYEMAIL="SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
-    
+    private static final String LOGINBYEMAIL = "SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
+    private static final String LOGGIN_BY_EMAIL = "SELECT [UserID], [UserName],[Password], [DOB], [Address], [PhoneNumber], [Sex],[RoleID],[AccountBalance] FROM tblUsers WHERE "
+            + "[Email] = ? AND [Status] = 1";
+
     @Override
     public User getAllUser() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -29,8 +31,41 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public User getUserByEmail() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public User getUserByEmail(String email) throws SQLException {
+        User user = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(LOGGIN_BY_EMAIL);
+                ptm.setString(1, email);
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    String userID = rs.getString("userID");
+                    String username = rs.getString("username");
+                    String password = rs.getString("password");
+                    Date dob = rs.getDate("DOB");
+                    String address = rs.getString("Address");
+                    String phoneNumber = rs.getString("PhoneNumber");
+                    boolean sex = rs.getBoolean("Sex");
+                    String roleID = rs.getString("RoleID");
+                    String AccountBalance = rs.getString("AccountBalance");
+                    
+                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, AccountBalance, true);
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null ) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return user;
+
     }
 
     @Override
@@ -38,37 +73,43 @@ public class UserDAOImpl implements UserDAO{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public User checkLogin(String email, String password) throws SQLException{
-        User user=null;
-        Connection conn=null;
-        PreparedStatement ptm =null;
-        ResultSet rs= null;
-        try{
-            conn=DBConnection.getConnection();
-            if(conn!=null){
-                ptm=conn.prepareStatement(LOGINBYEMAIL);
+    public User checkLogin(String email, String password) throws SQLException {
+        User user = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(LOGINBYEMAIL);
                 ptm.setString(1, email);
                 ptm.setString(2, password);
-                rs= ptm.executeQuery();
-                if(rs.next()){
-                    String userID=rs.getString("userID");
-                    String username=rs.getString("username");
-                    java.sql.Date dob =rs.getDate("dob");
-                    String address=rs.getString("address");
-                    String phoneNumber=rs.getString("phoneNumber");
-                    boolean sex=rs.getBoolean("sex"); 
-                    String roleID=rs.getString("roleID");
-                    String AccountBalance=rs.getString("AccountBalance");
-                    boolean status=rs.getBoolean("status");
-                    user=new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, AccountBalance, status);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    String userID = rs.getString("userID");
+                    String username = rs.getString("username");
+                    java.sql.Date dob = rs.getDate("dob");
+                    String address = rs.getString("address");
+                    String phoneNumber = rs.getString("phoneNumber");
+                    boolean sex = rs.getBoolean("sex");
+                    String roleID = rs.getString("roleID");
+                    String AccountBalance = rs.getString("AccountBalance");
+                    boolean status = rs.getBoolean("status");
+                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, AccountBalance, status);
                 }
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally{
-            if(rs!=null) rs.close();
-            if(ptm!=null) ptm.close();
-            if(conn!=null) conn.close();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return user;
     }
