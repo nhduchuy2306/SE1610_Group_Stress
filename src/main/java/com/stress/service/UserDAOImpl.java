@@ -12,7 +12,8 @@ import java.sql.SQLException;
 
 public class UserDAOImpl implements UserDAO{
     private static final String LOGINBYEMAIL = "SELECT [userID], ";
-    private static final String LOGIN="SELECT username, email,dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=? AND password=?";
+    private static final String LOGIN="SELECT Username, Email,DOB, Address, PhoneNumber, Sex, RoleID, AccountBalance, Status FROM tblUsers WHERE UserID=? AND Password=?";
+    private static final String DELETE="DELETE tblUsers WHERE UserID=?";
     
     @Override
     public User getAllUser() {
@@ -73,5 +74,25 @@ public class UserDAOImpl implements UserDAO{
             if(conn!=null) conn.close();
         }
         return user;
+    }
+    @Override
+    public boolean deleteUser(String userID) throws SQLException{
+        boolean result=false;
+        Connection conn=null;
+        PreparedStatement ptm=null;
+        try{
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(DELETE);
+                ptm.setString(1, userID);
+                result=ptm.executeUpdate()>0? true:false;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return result;
     }
 }
