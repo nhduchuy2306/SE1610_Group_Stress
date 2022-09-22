@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Route {
-    private String routeID;
+    private int routeID;
     private String routeName;
-    private String startLocation;
-    private String endLocation;
+    private int startLocation;
+    private int endLocation;
     private String description;
     private boolean status;
 }

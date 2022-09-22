@@ -5,6 +5,7 @@ import com.stress.dao.DriverDAO;
 import com.stress.dto.Driver;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,8 @@ import java.util.List;
 public class DriverDAOImpl implements DriverDAO{
     
     private final String GET_ALL_DRIVER = "SELECT * FROM tblDriver";
-    private final String ADD_NEW_DRIVER = "INSERT INTO tblDrivers(TripID,TripName,StartDateTime,"
-            + "[Policy],RouteID,VehicleID,DriverID,SeatRemain,[Status] VALUES(?,?,?,?,?,?,?,?,?)";
+    private final String ADD_NEW_DRIVER = "INSERT INTO tblDrivers(DriverID,DriverName,DOB,"
+            + "Sex,DriverPic,PhoneNumber,[Status] VALUES(?,?,?,?,?,?,?)";
 
     @Override
     public List<Driver> getAllDriver() throws SQLException{
@@ -34,9 +35,10 @@ public class DriverDAOImpl implements DriverDAO{
                         rs.getString(1), 
                         rs.getString(2), 
                         rs.getDate(3), 
-                        rs.getString(4), 
+                        rs.getBoolean(4), 
                         rs.getString(5), 
-                        rs.getInt(6)
+                        rs.getString(6), 
+                        rs.getInt(7)
                     ));
             }
         } catch (Exception e) {
@@ -49,8 +51,26 @@ public class DriverDAOImpl implements DriverDAO{
     }
 
     @Override
-    public boolean addNewDriver(Driver driver) {
+    public boolean addNewDriver(Driver driver) throws SQLException{
         boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(ADD_NEW_DRIVER);
+            ptm.setString(1,driver.getDriverID());
+            ptm.setString(2, driver.getDriverName());
+            ptm.setDate(3, driver.getDOB());
+            ptm.setBoolean(4, driver.isSex());
+            ptm.setString(5, driver.getDriverPicture());
+            ptm.setString(6, driver.getPhoneNumber());
+            ptm.setInt(7, driver.getStatus());
+            check = ptm.executeUpdate() > 0;
+        } catch (Exception e) {
+        } finally {
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
         return check;
     }
 }

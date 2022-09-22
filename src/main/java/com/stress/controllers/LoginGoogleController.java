@@ -8,7 +8,6 @@ import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
-import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +22,7 @@ import com.stress.dto.User;
  * @author Huy, Quangtm
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
+public class LoginGoogleController extends HttpServlet {
 
     
     private static final String ERROR = "login.jsp";
