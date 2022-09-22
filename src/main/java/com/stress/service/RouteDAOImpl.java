@@ -15,7 +15,32 @@ public class RouteDAOImpl implements RouteDAO{
             + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?,?)";
     private static final String UPDATE_ROUTE = "UPDATE tblRoutes SET RouteName = ?, StartLocation = ?, "
             + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";
-
+    
+    private static final String DELETE_ROUTE = "UPDATE tblroutes SET [Status] = 0 WHERE [RouteID] = ?";
+    
+    @Override
+    public boolean deleteRoute(String routeID) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(DELETE_ROUTE);
+                ptm.setString(1, routeID);
+                check = ptm.executeUpdate() > 0;
+                
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
+    
     @Override
     public boolean addRoute(Route route) throws SQLException {
         boolean check = false;
