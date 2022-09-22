@@ -11,10 +11,7 @@ import java.sql.SQLException;
 
 
 public class UserDAOImpl implements UserDAO{
-<<<<<<< HEAD
     private static final String LOGINBYEMAIL="SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
-=======
->>>>>>> huy
     
     @Override
     public User getAllUser() {
@@ -40,8 +37,7 @@ public class UserDAOImpl implements UserDAO{
     public User getUserByIDAndPassword() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-<<<<<<< HEAD
-    
+
     public User checkLogin(String email, String password) throws SQLException{
         User user=null;
         Connection conn=null;
@@ -76,6 +72,4 @@ public class UserDAOImpl implements UserDAO{
         }
         return user;
     }
-=======
->>>>>>> huy
 }
