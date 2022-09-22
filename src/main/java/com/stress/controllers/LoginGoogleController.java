@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  * @author Huy, Quangtm
  */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
+public class LoginGoogleController extends HttpServlet {
 
     private static final String SUCCESS = "index.jsp";
     private static final String ERROR = "login.jsp";
