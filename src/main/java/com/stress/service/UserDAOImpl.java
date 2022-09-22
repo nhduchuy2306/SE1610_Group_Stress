@@ -11,7 +11,8 @@ import java.sql.SQLException;
 
 
 public class UserDAOImpl implements UserDAO{
-    private static final String LOGINBYEMAIL="SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
+    private static final String LOGINBYEMAIL = "SELECT [userID], ";
+    private static final String LOGIN="SELECT username, email,dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=? AND password=?";
     
     @Override
     public User getAllUser() {
@@ -38,7 +39,8 @@ public class UserDAOImpl implements UserDAO{
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public User checkLogin(String email, String password) throws SQLException{
+    @Override
+    public User checkLogin(String userID, String password) throws SQLException{
         User user=null;
         Connection conn=null;
         PreparedStatement ptm =null;
@@ -46,13 +48,13 @@ public class UserDAOImpl implements UserDAO{
         try{
             conn=DBConnection.getConnection();
             if(conn!=null){
-                ptm=conn.prepareStatement(LOGINBYEMAIL);
-                ptm.setString(1, email);
+                ptm=conn.prepareStatement(LOGIN);
+                ptm.setString(1, userID);
                 ptm.setString(2, password);
                 rs= ptm.executeQuery();
                 if(rs.next()){
-                    String userID=rs.getString("userID");
                     String username=rs.getString("username");
+                    String email=rs.getString("email");
                     java.sql.Date dob =rs.getDate("dob");
                     String address=rs.getString("address");
                     String phoneNumber=rs.getString("phoneNumber");
