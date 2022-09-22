@@ -16,6 +16,6 @@ public interface RouteDAO {
     List<Route> searchServiceByEndLocation(String endLocation) throws SQLException;
 
     
-    boolean deleteRoute(String routeID) throws SQLException;
+
 
 }

@@ -63,13 +63,10 @@
                                                 Login
                                             </a>
                                             <hr>
-<<<<<<< HEAD
+
                                             <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
                                    &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
-=======
-                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/login&response_type=code
-                                   &client_id=275645487476-tl7da6qfftelhssckl825fv51ahida12.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
->>>>>>> 56b46bbfd43a8eea4515d025c18345f493c84ff5
+
                                                 <i class="fab fa-google fa-fw"></i> Login with Google
                                                 
                                             </a>
