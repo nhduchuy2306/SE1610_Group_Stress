@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class Ticket {
     private int ticketID;
     private String seatID;
-    private Trip trip; 
-    private Order order;
+    private String tripID; 
+    private String orderID;
 }

@@ -14,6 +14,6 @@ public class Order {
     private String orderID;
     private Date createDate;
     private String paymentMode;
-    private User user;
+    private String userID;
     private boolean status;
 }

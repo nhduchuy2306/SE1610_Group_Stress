@@ -14,9 +14,9 @@ public class Trip {
     private String tripName;
     private Date startDateTime;
     private String policy;
-    private Route route;
-    private Vehicle vehicle;
-    private Driver driver;
+    private int routeID;
+    private String vehicleID;
+    private String driverID;
     private int seatRemain;
     private int status;	
 }
