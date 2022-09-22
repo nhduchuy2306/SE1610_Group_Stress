@@ -11,4 +11,6 @@ public interface RouteDAO {
     boolean updateRoute(Route route) throws SQLException;
     List<Route> searchServiceByStartLocation(String startLocation) throws SQLException;
     List<Route> searchServiceByEndLocation(String endLocation) throws SQLException;
+    
+    boolean deleteRoute(String routeID) throws SQLException;
 }
