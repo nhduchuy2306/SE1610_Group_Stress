@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 
 public class UserDAOImpl implements UserDAO{
-    private static final String LOGIN_BY_EMAIL = "SELECT [userID], [Username], [Password], [Address],[DOB], [PhoneNumber], [Sex], [RoleID], [AccountBalance]"
+    private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [Password], [Address],[DOB], [PhoneNumber], [Sex], [RoleID], [AccountBalance]"
             + "  FROM tblUsers WHERE [Email] = ? AND [Status] = 1";
     
     @Override
@@ -48,10 +48,10 @@ public class UserDAOImpl implements UserDAO{
                 ptm = conn.prepareStatement(LOGIN_BY_EMAIL);
                 ptm.setString(1, email);
                 rs = ptm.executeQuery();
-                if(rs != null) {
+                if(rs.next()) {
                     String userID = rs.getString("UserID");
                     String username = rs.getString("Username");
-                    String password = rs.getString("password");
+                    String password = rs.getString("Password");
                     Date DOB = rs.getDate("DOB");
                     String address = rs.getString("Address");
                     String phoneNumber = rs.getString("PhoneNumber");

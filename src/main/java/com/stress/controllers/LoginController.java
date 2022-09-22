@@ -54,8 +54,11 @@ public class LoginController extends HttpServlet {
                     User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
                     if (loginUser != null) {
                         session.setAttribute("LOGIN_USER", loginUser);
-                        if(loginUser.getRoleID().equals(ADMIN_ROLE)) url = ADMIN;
-                        if(loginUser.getRoleID().equals(USER_ROLE)) url = USER;
+                        if(loginUser.getRoleID().trim().equals(ADMIN_ROLE)) {
+                            System.out.println("Welcome Admin");
+                            url = ADMIN;
+                        }
+                        if(loginUser.getRoleID().trim().equals(USER_ROLE)) url = USER;
                         
                        
                     } else {

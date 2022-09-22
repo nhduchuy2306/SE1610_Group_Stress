@@ -63,7 +63,7 @@
                                                 Login
                                             </a>
                                             <hr>
-                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/CarBooking/login&response_type=code
+                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/login&response_type=code
                                    &client_id=275645487476-tl7da6qfftelhssckl825fv51ahida12.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
                                                 <i class="fab fa-google fa-fw"></i> Login with Google
                                                 
