@@ -9,5 +9,5 @@ public interface UserDAO {
     User getUserByIDAndPassword();
     User getUserByEmail();
     User getUserByID();
-    User getUserByUserName();
+    User getUserByUserName(); 
 }

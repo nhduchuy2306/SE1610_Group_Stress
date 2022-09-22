@@ -31,5 +31,4 @@ public class UserDAOImpl implements UserDAO{
     public User getUserByIDAndPassword() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }
