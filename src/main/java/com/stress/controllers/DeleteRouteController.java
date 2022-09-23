@@ -20,25 +20,35 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "DeleteRouteController", urlPatterns = {"/DeleteRouteController"})
 public class DeleteRouteController extends HttpServlet {
     private static final String SUCCESS = "";
+
+   
     private static final String ERROR = "error.jsp";
+
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
+
+        String routeID = request.getParameter("routeID");
+       
         try {
-            String routeID = request.getParameter("routeID");
+       
             RouteDAO routeDAO = new RouteDAOImpl();
             if(routeDAO.deleteRoute(routeID)) {
                 url = SUCCESS;
                 // View Again 
             }
             
+
         } catch (Exception e) {
             System.out.println("Error at DeleteRouteController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+
+        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

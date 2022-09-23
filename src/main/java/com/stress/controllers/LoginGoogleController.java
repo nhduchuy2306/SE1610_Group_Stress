@@ -6,6 +6,8 @@ package com.stress.controllers;
 
 import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
+
+
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
 import java.io.IOException;
@@ -24,6 +26,8 @@ import com.stress.dto.User;
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginGoogleController extends HttpServlet {
 
+
+
     
     private static final String ERROR = "login.jsp";
     private static final String REGISTER = "register.jsp";
@@ -32,6 +36,7 @@ public class LoginGoogleController extends HttpServlet {
     private static final String ADMIN = "admin/index.jsp";
     private static final String USER = "index.jsp";
     
+
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -48,6 +53,9 @@ public class LoginGoogleController extends HttpServlet {
                 // Login With Google, not using Recaptcha
                 //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
                 //boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+
+               
+
                 if (googlePojo != null) {
                     UserDAO userDao = new UserDAOImpl();
                     User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
@@ -64,6 +72,7 @@ public class LoginGoogleController extends HttpServlet {
                         session.setAttribute("LOGIN_USER", loginUser);
                         url = REGISTER;
                     }
+
 
                 }
             }
