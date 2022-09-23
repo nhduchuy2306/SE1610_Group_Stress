@@ -8,11 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+
 
     private static final String LOGINBYEMAIL = "SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
     private static final String LOGGIN_BY_EMAIL = "SELECT [UserID], [UserName],[Password], [DOB], [Address], [PhoneNumber], [Sex],[RoleID],[AccountBalance] FROM tblUsers WHERE "
@@ -20,6 +20,12 @@ public class UserDAOImpl implements UserDAO {
 
     private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
             + " [Sex],[RoleID], [AccountBalance] FROM tblUsers WHERE [status] = 1";
+
+
+
+    
+    private static final String REGITER="INSERT INTO tblUsers(UserID,Username,[Password],Email,RoleID,[Status]) VALUES (?,?,?,?,?,?)";
+    private static final String CHECK_DUPLICATE="SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
 
 
     @Override
@@ -123,7 +129,9 @@ public class UserDAOImpl implements UserDAO {
                 conn.close();
             }
         }
+
         return user;
+
 
     }
 
@@ -179,7 +187,56 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByEmail() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+    public boolean registerNewUSer(String userID,String name,String password,String email,String roleID,boolean status) throws SQLException  {
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
+        try {
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(REGITER);
+                ptm.setString(1, userID);
+                ptm.setString(2, name);
+                ptm.setString(3, password);
+                ptm.setString(4, email);
+                ptm.setString(5, roleID);
+                ptm.setBoolean(6, status);
+                check=ptm.executeUpdate()>0? true:false;
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
+        }
+        return check;
+    }
+
+    @Override
+    public boolean checkDuplicateByID(String userID) throws SQLException {
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
+        ResultSet rs= null;
+        try{
+            conn=conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(CHECK_DUPLICATE);
+                ptm.setString(1, userID);
+                rs=ptm.executeQuery();
+                if(rs!=null){
+                    check=true;
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
+        }
+        return check;
+
     }
 }

@@ -4,7 +4,7 @@
 
     <head>
 
-<<<<<<< HEAD
+
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +25,7 @@
     </head>
 
     <body class="bg-gradient-primary">
-=======
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -41,7 +41,8 @@
     <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-primary">
->>>>>>> 56b46bbfd43a8eea4515d025c18345f493c84ff5
+
+
 
         <div class="container">
 
@@ -111,6 +112,56 @@
                                         <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
                                     </a>
                                 </form>
+=======
+    <div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <!--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>-->
+                    <img class="col-lg-5 d-none d-lg-block" 
+                                     src="https://cdn.dribbble.com/users/5980575/screenshots/17141125/car-rental-instagram-social-media-post-banner-template-free-415705_4x.png?compress=1&resize=1000x750&vertical=top" alt="alt"/>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                            </div>
+                            <form class="user" action="http://localhost:8080/CarBooking/MainController" method="post">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                               placeholder="First Name" name="firstName" value="">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" id="exampleLastName"
+                                               placeholder="Last Name" name="lastName" value="">
+                                    </div>
+                                </div>                   
+                                <div class="form-group">
+                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                           placeholder="Email Address" name="email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" id="exampleInputEmail"
+                                           placeholder="Account" value="" name="account">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user"
+                                               id="exampleInputPassword" placeholder="Password" name="password">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user"
+                                               id="exampleRepeatPassword" placeholder="Repeat Password" name="repeatPassword">
+                                    </div> 
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="form-control form-control-user" id=""
+                                           name="action" value="RegisterAccount" style="background-color: #4e73df; color: white;
+                                           padding:0;height: 6vh">
+                                </div>
+
                                 <hr>
                                 <div class="text-center">
                                     <a class="small" href="forgot-password.jsp">Forgot Password?</a>
