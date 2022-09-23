@@ -12,4 +12,5 @@ public interface UserDAO {
     User getUserByID();
     User getUserByUserName();
     boolean registerNewUSer(String userID,String name,String password,String email,String roleID,boolean status)throws SQLException;
+    boolean checkDuplicateByID(String userID) throws SQLException;
 }

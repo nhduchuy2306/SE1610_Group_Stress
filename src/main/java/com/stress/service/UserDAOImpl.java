@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class UserDAOImpl implements UserDAO{
     private static final String LOGINBYEMAIL="SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
     private static final String REGITER="INSERT INTO tblUsers(UserID,Username,[Password],Email,RoleID,[Status]) VALUES (?,?,?,?,?,?)";
+    private static final String CHECK_DUPLICATE="SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
     
     @Override
     public User getAllUser() {
@@ -95,6 +96,31 @@ public class UserDAOImpl implements UserDAO{
                 
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
+        }
+        return check;
+    }
+
+    @Override
+    public boolean checkDuplicateByID(String userID) throws SQLException {
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
+        ResultSet rs= null;
+        try{
+            conn=conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(CHECK_DUPLICATE);
+                ptm.setString(1, userID);
+                rs=ptm.executeQuery();
+                if(rs!=null){
+                    check=true;
+                }
+            }
+        }catch(Exception e){
             e.printStackTrace();
         }finally{
             if(ptm!=null)ptm.close();

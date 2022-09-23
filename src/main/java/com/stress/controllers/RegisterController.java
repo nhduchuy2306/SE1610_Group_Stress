@@ -35,11 +35,15 @@ public class RegisterController extends HttpServlet {
             String password=request.getParameter("password");
             UserDAOImpl dao=new UserDAOImpl();
             boolean check=dao.registerNewUSer(account, name, password, email, "1", true);
-            if(check==true){
-                request.setAttribute("ACCOUNT", account);
-                request.setAttribute("PASSWORD", password);
-                url=SUCCESS;
+            boolean checkDuplicate=dao.checkDuplicateByID(account);
+            if (checkDuplicate == true) {
+                if (check == true) {
+                    request.setAttribute("ACCOUNT", account);
+                    request.setAttribute("PASSWORD", password);
+                    url = SUCCESS;
+                }
             }
+            
         } catch (Exception e) {
             log("Error at Register Controller:"+ e.toString());
         }finally{
