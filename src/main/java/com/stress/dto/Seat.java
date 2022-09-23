@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Seat {
+    public static final int UNAVAILABLE = 0;
+    public static final int AVAILABLE = 1;
+    
     private String seatID; 
     private int	price;
     private int	status;
-    private String tripID;
+    private Trip tripID;
 }

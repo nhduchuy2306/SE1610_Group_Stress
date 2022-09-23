@@ -11,9 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
+    public static final boolean PENDING  = false;
+    public static final boolean COMPLETE  = true;
+    
     private String orderID;
     private Date createDate;
     private String paymentMode;
-    private String userID;
+    private User user;
     private boolean status;
 }
