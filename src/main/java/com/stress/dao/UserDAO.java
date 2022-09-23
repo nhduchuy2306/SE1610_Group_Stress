@@ -3,10 +3,11 @@ package com.stress.dao;
 
 import com.stress.dto.User;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public interface UserDAO {
-    User getAllUser();
+    List<User> getAllUser() throws SQLException;
 
     User getUserByIDAndPassword();
 
