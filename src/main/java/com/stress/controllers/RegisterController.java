@@ -4,9 +4,10 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
+import com.stress.dto.User;
 import com.stress.service.UserDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,19 +28,20 @@ public class RegisterController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url=ERROR;
         try {
-            String firstName=request.getParameter("firstName");
-            String lastName=request.getParameter("lastName");
-            String name=firstName + " " + lastName;
+            String userName=request.getParameter("userName");
+            String birthday=request.getParameter("birthday");
+            String gender=request.getParameter("gender");
             String email=request.getParameter("email");
-            String account=request.getParameter("account");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String userID=request.getParameter("account");
             String password=request.getParameter("password");
-            UserDAOImpl dao=new UserDAOImpl();
-            boolean check=dao.registerNewUSer(account, name, password, email, "1", true);
-            boolean checkDuplicate=dao.checkDuplicateByID(account);
+            
+            UserDAO dao=new UserDAOImpl();
+            boolean checkDuplicate=dao.checkDuplicateByID(userID);
+            boolean check=dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender);
             if (checkDuplicate == true) {
                 if (check == true) {
-                    request.setAttribute("ACCOUNT", account);
-                    request.setAttribute("PASSWORD", password);
                     url = SUCCESS;
                 }
             }

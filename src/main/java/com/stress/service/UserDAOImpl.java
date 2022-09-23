@@ -5,6 +5,7 @@ import com.stress.dao.UserDAO;
 import com.stress.dto.User;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,8 +15,8 @@ import java.util.logging.Logger;
 
 public class UserDAOImpl implements UserDAO{
     private static final String LOGINBYEMAIL="SELECT userID,username, dob, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE email=? AND password=?";
-    private static final String REGITER="INSERT INTO tblUsers(UserID,Username,[Password],Email,RoleID,[Status]) VALUES (?,?,?,?,?,?)";
-    private static final String CHECK_DUPLICATE="SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
+    private static final String REGITER="INSERT INTO tblUsers(UserID,Username,[Password],Email,DOB,[Address],PhoneNumber,Sex,RoleID,AccountBalance,[Status]) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CHECK_DUPLICATE="SELECT userID,username, DOB, [Address], phoneNumber, sex, roleID, AccountBalance,[Status] FROM tblUsers WHERE userID=?";
     
     @Override
     public User getAllUser() {
@@ -78,7 +79,8 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public boolean registerNewUSer(String userID,String name,String password,String email,String roleID,boolean status) throws SQLException  {
+    public boolean registerNewUSer(String userID,String userName,String password,String email,String DOB,String address,
+        String phoneNumber,String sex) throws SQLException  {
         boolean check=false;
         Connection conn=null;
         PreparedStatement ptm =null;
@@ -87,13 +89,18 @@ public class UserDAOImpl implements UserDAO{
             if(conn!=null){
                 ptm=conn.prepareStatement(REGITER);
                 ptm.setString(1, userID);
-                ptm.setString(2, name);
+                ptm.setString(2, userName);
                 ptm.setString(3, password);
                 ptm.setString(4, email);
-                ptm.setString(5, roleID);
-                ptm.setBoolean(6, status);
+                ptm.setString(5, DOB);
+                ptm.setString(6, address);
+                ptm.setString(7, phoneNumber);
+                ptm.setString(8, sex);
+                ptm.setString(9, "1");
+                ptm.setDouble(10, 0);
+                ptm.setBoolean(11, true);
                 check=ptm.executeUpdate()>0? true:false;
-                
+           //     UserID,Username,[Password],Email,DOB,[Address],PhoneNumber,Sex,RoleID,AccountBalance,[Status]
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,9 +130,20 @@ public class UserDAOImpl implements UserDAO{
         }catch(Exception e){
             e.printStackTrace();
         }finally{
+            if(rs!=null)rs.close();
             if(ptm!=null)ptm.close();
             if(conn!=null)conn.close();
         }
         return check;
+    }
+    public static void main(String[] args) {
+        try {
+            UserDAOImpl dao=new UserDAOImpl();
+            Date date=new Date(12,2,3);
+          
+            boolean check=dao.checkDuplicateByID("nangchoichang");
+            System.out.println("check:"+check);
+        } catch (Exception e) {
+        }
     }
 }
