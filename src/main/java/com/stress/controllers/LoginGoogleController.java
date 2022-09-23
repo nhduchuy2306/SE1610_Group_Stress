@@ -61,11 +61,11 @@ public class LoginGoogleController extends HttpServlet {
                     User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
                     if (loginUser != null) {
                         session.setAttribute("LOGIN_USER", loginUser);
-                        if(loginUser.getRoleID().trim().equals(ADMIN_ROLE)) {
+                        if(loginUser.getRole().getRoleID().trim().equals(ADMIN_ROLE)) {
                             System.out.println("Welcome Admin");
                             url = ADMIN;
                         }
-                        if(loginUser.getRoleID().trim().equals(USER_ROLE)) url = USER;
+                        if(loginUser.getRole().getRoleID().trim().equals(USER_ROLE)) url = USER;
                         
                        
                     } else {
