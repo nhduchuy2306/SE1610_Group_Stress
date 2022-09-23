@@ -4,49 +4,38 @@
  */
 package com.stress.controllers;
 
-import com.stress.dto.GooglePojo;
-import com.stress.utils.GoogleUtils;
-import com.stress.utils.VerifyRecaptcha;
+import com.stress.dao.RouteDAO;
+import com.stress.service.RouteDAOImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Huy, Quangtm
+ * @author MinhQuang
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
-public class LoginController extends HttpServlet {
-
-    private static final String SUCCESS = "index.jsp";
-    private static final String ERROR = "login.jsp";
-
+@WebServlet(name = "DeleteRouteController", urlPatterns = {"/DeleteRouteController"})
+public class DeleteRouteController extends HttpServlet {
+    private static final String SUCCESS = "";
+    private static final String ERROR = "error.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         String url = ERROR;
         try {
-            String code = request.getParameter("code");
-            if (code != null && !code.isEmpty()) {
-                String accessToken = GoogleUtils.getToken(code);
-                GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-                System.out.println(googlePojo.getEmail());
-                // This is a reCaptcha check box using when check login
-                // Login With Google, not using Recaptcha
-                //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-                //boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-                if(googlePojo != null) {
-                    session.setAttribute("LOGIN_USER", googlePojo);
-                    url = SUCCESS;
-                }
+            String routeID = request.getParameter("routeID");
+            RouteDAO routeDAO = new RouteDAOImpl();
+            if(routeDAO.deleteRoute(routeID)) {
+                url = SUCCESS;
+                // View Again 
             }
+            
         } catch (Exception e) {
-            System.out.println("Error at Login Google Controller " + e.toString());
+            System.out.println("Error at DeleteRouteController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
