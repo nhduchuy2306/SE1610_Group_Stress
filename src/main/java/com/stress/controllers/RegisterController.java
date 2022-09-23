@@ -4,6 +4,7 @@
  */
 package com.stress.controllers;
 
+import com.stress.service.UserDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,28 +15,38 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author MinhQuang
+ * @author KieuMinhHieu
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "RegisterController", urlPatterns = {"/RegisterController"})
+public class RegisterController extends HttpServlet {
 
-    public static final String ERROR="error.jsp";
-    public static final String REGISTER="RegisterAccount";
-    public static final String REGISTER_CONTROLLER="RegisterController";
+    private static final String ERROR="register.jsp";
+    private static final String SUCCESS="login.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         String url=ERROR;
-        
         try {
-           String action = request.getParameter("action");
-           if(action.equals(REGISTER)){
-               url=REGISTER_CONTROLLER;
-           }
-            System.out.println("action"+ action);
+            String firstName=request.getParameter("firstName");
+            String lastName=request.getParameter("lastName");
+            String name=firstName + " " + lastName;
+            String email=request.getParameter("email");
+            String account=request.getParameter("account");
+            String password=request.getParameter("password");
+            UserDAOImpl dao=new UserDAOImpl();
+            boolean check=dao.registerNewUSer(account, name, password, email, "1", true);
+            boolean checkDuplicate=dao.checkDuplicateByID(account);
+            if (checkDuplicate == true) {
+                if (check == true) {
+                    request.setAttribute("ACCOUNT", account);
+                    request.setAttribute("PASSWORD", password);
+                    url = SUCCESS;
+                }
+            }
+            
         } catch (Exception e) {
-        } finally {
+            log("Error at Register Controller:"+ e.toString());
+        }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
