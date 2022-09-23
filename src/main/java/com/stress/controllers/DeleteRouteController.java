@@ -4,8 +4,9 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.RouteDAO;
+import com.stress.service.RouteDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,25 +17,25 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MinhQuang
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
-
-    public static final String ERROR="error.jsp";
-    public static final String REGISTER="RegisterAccount";
-    public static final String REGISTER_CONTROLLER="RegisterController";
+@WebServlet(name = "DeleteRouteController", urlPatterns = {"/DeleteRouteController"})
+public class DeleteRouteController extends HttpServlet {
+    private static final String SUCCESS = "";
+    private static final String ERROR = "error.jsp";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url=ERROR;
-        
+        String url = ERROR;
         try {
-           String action = request.getParameter("action");
-           if(action.equals(REGISTER)){
-               url=REGISTER_CONTROLLER;
-           }
-            System.out.println("action"+ action);
+            String routeID = request.getParameter("routeID");
+            RouteDAO routeDAO = new RouteDAOImpl();
+            if(routeDAO.deleteRoute(routeID)) {
+                url = SUCCESS;
+                // View Again 
+            }
+            
         } catch (Exception e) {
+            System.out.println("Error at DeleteRouteController " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
