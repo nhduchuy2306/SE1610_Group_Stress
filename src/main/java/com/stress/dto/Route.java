@@ -3,16 +3,23 @@ package com.stress.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Route {
+    public static final boolean INACTIVE = false;
+    public static final boolean ACTIVE = true;
+    
     private int routeID;
     private String routeName;
-    private int startLocation;
-    private int endLocation;
+    private Location startLocation;
+    private Location endLocation;
     private String description;
     private boolean status;
 }

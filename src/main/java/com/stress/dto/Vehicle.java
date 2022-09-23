@@ -9,9 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 class Vehicle {
+    public static final int ACTIVE = 1;
+    public static final int ONGOING = 2;
+    public static final int INACTIVE = 0;
+    
     private String vehicleID;
     private String vehicleName;
     private String licensePlate;
-    private int vehicleTypeID;
+    private VehicleType vehicleType;
     private int status;
+    
+  
 }

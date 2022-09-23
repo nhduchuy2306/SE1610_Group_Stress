@@ -4,6 +4,8 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.VehicleDAO;
+import com.stress.service.VehicleDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,27 +16,34 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author MinhQuang
+ * @author Viktor-Nitro5
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "DeleteVehicleController", urlPatterns = {"/DeleteVehicleController"})
+public class DeleteVehicleController extends HttpServlet {
 
-    public static final String ERROR="error.jsp";
-    public static final String REGISTER="RegisterAccount";
-    public static final String REGISTER_CONTROLLER="RegisterController";
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    private static final String ERROR = "MainController";
+    private static final String SUCCESS = "MainController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url=ERROR;
-        
+        String url = ERROR;
         try {
-           String action = request.getParameter("action");
-           if(action.equals(REGISTER)){
-               url=REGISTER_CONTROLLER;
-           }
-            System.out.println("action"+ action);
+            String VehicleID = request.getParameter("VehicleID");
+            VehicleDAO dao = new VehicleDAOImpl();
+            boolean check = dao.deleteVehicle("VehicleID");
+            if (check) {
+                url = SUCCESS;
+            } 
         } catch (Exception e) {
+            log("Error at DeleteController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

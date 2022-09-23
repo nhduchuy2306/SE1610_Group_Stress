@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
+    public static final int INACTIVE = 0;
+    public static final int ACTIVE_NORMAL = 1;
+    public static final int ACTIVE_GOOGLE = 2;
+    
     private String userID;
     private String username;
     private String password;
@@ -18,7 +22,7 @@ public class User {
     private String address;
     private String phoneNumber;
     private boolean sex;
-    private String roleID;
+    private Role role;
     private String AccountBalance;
-    private boolean status;
+    private int status;
 }

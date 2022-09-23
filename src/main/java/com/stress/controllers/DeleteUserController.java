@@ -4,37 +4,54 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
+import com.stress.dto.User;
+import com.stress.service.UserDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author MinhQuang
+ * @author Viktor-Nitro5
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "DeleteUserController", urlPatterns = {"/DeleteUserController"})
+public class DeleteUserController extends HttpServlet {
 
-    public static final String ERROR="error.jsp";
-    public static final String REGISTER="RegisterAccount";
-    public static final String REGISTER_CONTROLLER="RegisterController";
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    private static final String ERROR = "MainController";
+    private static final String SUCCESS = "MainController";
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url=ERROR;
-        
+        String url = ERROR;
         try {
-           String action = request.getParameter("action");
-           if(action.equals(REGISTER)){
-               url=REGISTER_CONTROLLER;
-           }
-            System.out.println("action"+ action);
+            String userID = request.getParameter("userID");
+            UserDAO dao = new UserDAOImpl();
+            HttpSession session = request.getSession();
+            User loginUser = (User) session.getAttribute("LOGIN_USER");
+            if (userID.equals(loginUser.getUserID())) {
+                request.setAttribute("ERROR", "Current user is still active, unable to delete!");
+            } else {
+                boolean check = dao.deleteUser(userID);
+                if (check) {
+                    url = SUCCESS;
+                }
+            }
         } catch (Exception e) {
+            log("Error at DeleteController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
