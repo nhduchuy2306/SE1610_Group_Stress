@@ -14,5 +14,5 @@ public class DriverLicense {
     private String nationality;
     private String classes;
     private Date DateExpired;
-    private String DriverID;
+    private Driver driver;
 }

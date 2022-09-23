@@ -10,13 +10,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Trip {
+    public static final int INACTIVE = 0;
+    public static final int ACTIVE = 1;
+    public static final int ONGOING = 2;
+    public static final int COMPLETE = 3;
+    
     private String tripID;
     private String tripName;
     private Date startDateTime;
     private String policy;
-    private int routeID;
-    private String vehicleID;
-    private String driverID;
+    private Route route;
+    private Vehicle vehicle;
+    private Driver driver;
     private int seatRemain;
     private int status;	
 }

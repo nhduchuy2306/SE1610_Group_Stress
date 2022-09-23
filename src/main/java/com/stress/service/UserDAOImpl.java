@@ -1,6 +1,7 @@
 package com.stress.service;
 
 import com.stress.dao.UserDAO;
+import com.stress.dto.Role;
 import com.stress.dto.User;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-            + " [Sex],[RoleID], [AccountBalance] FROM tblUsers WHERE [status] = 1";
+            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
     private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
             + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
     private static final String DELETE = "DELETE tblUsers WHERE UserID=?";
@@ -29,6 +30,7 @@ public class UserDAOImpl implements UserDAO {
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
+        ResultSet rs1 = null;
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
@@ -45,13 +47,25 @@ public class UserDAOImpl implements UserDAO {
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
-                    userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, AccountBalance, true));
+                    int status = rs.getInt("Status");
+                    
+                    ptm = conn.prepareStatement("SELECT RoleName FROM tblRoles WHERE RoleID = ?");
+                    ptm.setString(1, roleID);
+                    rs1 = ptm.executeQuery();
+                    Role role = null;
+                    if(rs1.next()) {
+                        String roleName = rs.getString("roleName");
+                        role = new Role(roleID, roleName);
+                    }
+                    
+                    userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            if (rs1 != null) rs.close();
             if (rs != null) {
                 rs.close();
             }

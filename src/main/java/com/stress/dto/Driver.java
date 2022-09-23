@@ -10,6 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Driver {
+    public static final int INACTIVE = 0;
+    public static final int ACTIVE = 1;
+    public static final int ONGOING = 2;
+    
     private String driverID;
     private String driverName;	
     private Date DOB; 
