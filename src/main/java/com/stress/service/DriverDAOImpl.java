@@ -19,6 +19,7 @@ public class DriverDAOImpl implements DriverDAO{
     private final String GET_ALL_DRIVER = "SELECT * FROM tblDriver";
     private final String ADD_NEW_DRIVER = "INSERT INTO tblDrivers(DriverID,DriverName,DOB,"
             + "Sex,DriverPic,PhoneNumber,[Status] VALUES(?,?,?,?,?,?,?)";
+    private static final String DELETE="DELETE tblDrivers WHERE DriverID=?";
 
     @Override
     public List<Driver> getAllDriver() throws SQLException{
@@ -72,5 +73,25 @@ public class DriverDAOImpl implements DriverDAO{
             if(conn!=null) conn.close();
         }
         return check;
+    }
+    @Override
+    public boolean deleteDriver(String DriverID) throws SQLException{
+        boolean result=false;
+        Connection conn=null;
+        PreparedStatement ptm=null;
+        try{
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(DELETE);
+                ptm.setString(1, DriverID);
+                result=ptm.executeUpdate()>0? true:false;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return result;
     }
 }

@@ -4,23 +4,22 @@
  */
 package com.stress.controllers;
 
-import com.stress.dao.UserDAO;
-import com.stress.dto.User;
-import com.stress.service.UserDAOImpl;
+import com.stress.dao.VehicleDAO;
+import com.stress.service.VehicleDAOImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Viktor-Nitro5
  */
-@WebServlet(name = "LoginControllerV2", urlPatterns = {"/LoginControllerV2"})
-public class LoginControllerV2 extends HttpServlet {
+@WebServlet(name = "DeleteVehicleController", urlPatterns = {"/DeleteVehicleController"})
+public class DeleteVehicleController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,46 +29,26 @@ public class LoginControllerV2 extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private static final String ERROR = "login.jsp";
-    private static final String SUCCESS = "index.jsp";
-//    private static final String USER_PAGE = "userPage.jsp";
-//    private static final String ADMIN_PAGE = "adminPage.jsp";
-//    private static final String STAFF_PAGE = "staffPage.jsp";
+    private static final String ERROR = "MainController";
+    private static final String SUCCESS = "MainController";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String userID = request.getParameter("userID");
-            String password = request.getParameter("password");
-            UserDAO dao = new UserDAOImpl();
-            User loginUser = dao.getUserByIDAndPassword(userID, password);
-            if (loginUser != null) {
-                HttpSession session = request.getSession();
-                session.setAttribute("LOGIN_USER", loginUser);
-                /*
-                Not yet implement user/admin/staff page
-                String roleID = loginUser.getRoleID();
-                if (US.equals(roleID)) {
-                    url = USER_PAGE;
-                } else if (AD.equals(roleID)) {
-                    url = ADMIN_PAGE;
-                } else if (ST.equals(roleID)) {
-                    url = STAFF_PAGE;
-                } else {
-                    request.setAttribute("ERROR", "Your role is not supported!");
-                }
-                */
-                url=SUCCESS;
-            } else {
-                request.setAttribute("ERROR", "Incorrect UserID or Password.");
-            }
+            String VehicleID = request.getParameter("VehicleID");
+            VehicleDAO dao = new VehicleDAOImpl();
+            boolean check = dao.deleteVehicle("VehicleID");
+            if (check) {
+                url = SUCCESS;
+            } 
         } catch (Exception e) {
-            log("Error at LoginController " + e.toString());
+            log("Error at DeleteController" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
