@@ -6,10 +6,6 @@ package com.stress.utils;
 
 import java.util.UUID;
 
-/**
- *
- * @author Huy
- */
 public class Constants {
     // Captcha
     public static String CAPTCHA_SITE_KEY = "6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17";
