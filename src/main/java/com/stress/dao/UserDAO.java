@@ -7,16 +7,18 @@ import java.util.List;
 
 
 public interface UserDAO {
+
     List<User> getAllUser() throws SQLException;
+
 
     User getUserByIDAndPassword();
 
     User getUserByEmail(String email) throws SQLException;
 
-    User getUserByEmail();
+
 
     User getUserIDAndPassword();
-    
+    User getUserByEmail(String email) throws SQLException;
 
     User getUserByID();
     User getUserByUserName(); 

@@ -21,6 +21,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
             + " [Sex],[RoleID], [AccountBalance] FROM tblUsers WHERE [status] = 1";
 
+
     @Override
     public List<User> getAllUser() throws SQLException {
         List<User> userList = new ArrayList();
@@ -74,7 +75,15 @@ public class UserDAOImpl implements UserDAO {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+  
+
+
+
     @Override
+    public User getUserByIDAndPassword() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
+
     public User getUserByEmail(String email) throws SQLException {
         User user = null;
         Connection conn = null;
