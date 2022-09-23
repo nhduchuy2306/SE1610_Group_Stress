@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+public class UserDAOImpl implements UserDAO {
     private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
             + " [Sex],[RoleID], [AccountBalance] FROM tblUsers WHERE [status] = 1";
     private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
@@ -20,8 +22,6 @@ import java.util.List;
             + "  FROM tblUsers WHERE [Email] = ? AND [Status] = 1";
     private static final String REGITER = "INSERT INTO tblUsers(UserID,Username,[Password],Email,RoleID,[Status]) VALUES (?,?,?,?,?,?)";
     private static final String CHECK_DUPLICATE = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
-
-public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAllUser() throws SQLException {
@@ -87,7 +87,7 @@ public class UserDAOImpl implements UserDAO {
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
-                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, AccountBalance, true);
+                    user = new User(userID, username, password, email, DOB, address, phoneNumber, sex, roleID, AccountBalance, true);
                 }
             }
         } catch (Exception e) {
@@ -128,15 +128,25 @@ public class UserDAOImpl implements UserDAO {
                     boolean sex = rs.getBoolean("sex");
                     String roleID = rs.getString("roleID");
                     Float AccountBalance = rs.getFloat("AccountBalance");
+                    String tmpAccountBalance = Float.toString(AccountBalance);
                     boolean status = rs.getBoolean("status");
-                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, AccountBalance, status);
-                    if (conn != null) {
-                        conn.close();
-                    }
+                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, tmpAccountBalance, status);
                 }
-                return user;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
             }
         }
+        return user;
     }
 
     @Override
@@ -166,7 +176,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
 
-    public boolean registerNewUser(String userID, String name, String password, String email, String roleID, boolean status) throws SQLException {
+    public boolean registerNewUSer(String userID, String name, String password, String email, String roleID, boolean status) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -181,7 +191,6 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setString(5, roleID);
                 ptm.setBoolean(6, status);
                 check = ptm.executeUpdate() > 0 ? true : false;
-
             }
         } catch (Exception e) {
             e.printStackTrace();
