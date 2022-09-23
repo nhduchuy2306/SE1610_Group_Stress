@@ -7,15 +7,10 @@ import java.sql.SQLException;
 
 public interface UserDAO {
     User getAllUser();
-<<<<<<< HEAD
-    User getUserByIDAndPassword();
     User getUserByEmail();
-=======
-    User getUserIDAndPassword();
+    User getUserByIDAndPassword(String userID, String password) throws SQLException;
     User getUserByEmail(String email) throws SQLException;
->>>>>>> origin/quangtm
     User getUserByID();
     User getUserByUserName();
-    User checkLogin(String email, String password) throws SQLException;
     boolean deleteUser(String userID) throws SQLException;
 }

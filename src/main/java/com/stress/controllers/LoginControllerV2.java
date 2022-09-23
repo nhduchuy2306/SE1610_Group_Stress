@@ -40,10 +40,10 @@ public class LoginControllerV2 extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = ERROR;
         try {
-            String email = request.getParameter("email");
+            String userID = request.getParameter("userID");
             String password = request.getParameter("password");
             UserDAO dao = new UserDAOImpl();
-            User loginUser = dao.checkLogin(email, password);
+            User loginUser = dao.getUserByIDAndPassword(userID, password);
             if (loginUser != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN_USER", loginUser);
