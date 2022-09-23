@@ -1,13 +1,2 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<Context path="/CarBooking"/>
-=======
-<<<<<<< HEAD
 <Context path="/ETrans"/>
-=======
-<Context path="" antiResourceLocking="true" />
-
-
-
->>>>>>> origin/quangtm
->>>>>>> 56b46bbfd43a8eea4515d025c18345f493c84ff5

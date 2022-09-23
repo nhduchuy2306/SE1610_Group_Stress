@@ -14,29 +14,33 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author MinhQuang
+ * @author Huy
  */
-@WebServlet(name = "MainController", urlPatterns = {"/MainController"})
-public class MainController extends HttpServlet {
+@WebServlet(name = "MoMoResponse", urlPatterns = {"/MoMoResponse"})
+public class MoMoResponse extends HttpServlet {
 
-    public static final String ERROR="error.jsp";
-    public static final String REGISTER="RegisterAccount";
-    public static final String REGISTER_CONTROLLER="RegisterController";
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String url=ERROR;
-        
-        try {
-           String action = request.getParameter("action");
-           if(action.equals(REGISTER)){
-               url=REGISTER_CONTROLLER;
-           }
-            System.out.println("action"+ action);
-        } catch (Exception e) {
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet MoMoResponse</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet MoMoResponse at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

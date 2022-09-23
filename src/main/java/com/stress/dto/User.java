@@ -19,6 +19,6 @@ public class User {
     private String phoneNumber;
     private boolean sex;
     private String roleID;
-    private float AccountBalance;
+    private String AccountBalance;
     private boolean status;
 }
