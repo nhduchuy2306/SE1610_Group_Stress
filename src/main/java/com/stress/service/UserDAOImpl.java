@@ -114,7 +114,7 @@ public class UserDAOImpl implements UserDAO {
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
-                    user = new User(userID, username, password, email, DOB, address, phoneNumber, sex, roleID, AccountBalance, true);
+//                    user = new User(userID, username, password, email, DOB, address, phoneNumber, sex, roleID, AccountBalance, true);
                 }
             }
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class UserDAOImpl implements UserDAO {
                     Float AccountBalance = rs.getFloat("AccountBalance");
                     String tmpAccountBalance = Float.toString(AccountBalance);
                     boolean status = rs.getBoolean("status");
-                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, tmpAccountBalance, status);
+//                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, tmpAccountBalance, status);
                 }
             }
         } catch (Exception e) {

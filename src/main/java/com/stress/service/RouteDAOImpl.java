@@ -72,8 +72,8 @@ public class RouteDAOImpl implements RouteDAO {
             ptm = conn.prepareStatement(ADD_ROUTE);
             ptm.setInt(1, route.getRouteID());
             ptm.setString(2, route.getRouteName());
-            ptm.setInt(3, route.getStartLocation());
-            ptm.setInt(4, route.getEndLocation());
+//            ptm.setInt(3, route.getStartLocation().get);
+//            ptm.setInt(4, route.getEndLocation());
             ptm.setString(5, route.getDescription());
             ptm.setBoolean(6, route.isStatus());
             check = ptm.executeUpdate() > 0;
@@ -98,8 +98,8 @@ public class RouteDAOImpl implements RouteDAO {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(UPDATE_ROUTE);
             ptm.setString(1, route.getRouteName());
-            ptm.setInt(2, route.getStartLocation());
-            ptm.setInt(3, route.getEndLocation());
+//            ptm.setInt(2, route.getStartLocation());
+//            ptm.setInt(3, route.getEndLocation());
             ptm.setString(4, route.getDescription());
             ptm.setBoolean(5, route.isStatus());
             ptm.setInt(6, route.getRouteID());
@@ -128,12 +128,12 @@ public class RouteDAOImpl implements RouteDAO {
             ptm.setString(1, "%"+startLocation+"%");
             rs = ptm.executeQuery();
             while(rs.next()){
-                list.add(new Route(rs.getInt(1), 
-                        rs.getString(2), 
-                        rs.getInt(3), 
-                        rs.getInt(4), 
-                        rs.getString(5), 
-                        rs.getBoolean(6)));
+//                list.add(new Route(rs.getInt(1), 
+//                        rs.getString(2), 
+////                        rs.getInt(3), 
+//                        rs.getInt(4), 
+//                        rs.getString(5), 
+//                        rs.getBoolean(6)));
             }
         } catch (Exception e) {
         } finally {
@@ -156,12 +156,12 @@ public class RouteDAOImpl implements RouteDAO {
             ptm.setString(1, "%"+endLocation+"%");
             rs = ptm.executeQuery();
             while(rs.next()){
-                list.add(new Route(rs.getInt(1), 
-                        rs.getString(2), 
-                        rs.getInt(3), 
-                        rs.getInt(4), 
-                        rs.getString(5), 
-                        rs.getBoolean(6)));
+//                list.add(new Route(rs.getInt(1), 
+//                        rs.getString(2), 
+//                        rs.getInt(3), 
+//                        rs.getInt(4), 
+//                        rs.getString(5), 
+//                        rs.getBoolean(6)));
             }
         } catch (Exception e) {
         } finally {
