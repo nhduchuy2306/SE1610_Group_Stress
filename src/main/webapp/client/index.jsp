@@ -17,16 +17,38 @@
         <meta charset="UTF-8">
         <!-- Site Title -->
         <title>Car Booking</title>
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
         <link rel="stylesheet" href="css/linearicons.css">
         <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/jquery-ui.css">
-        <link rel="stylesheet" href="css/nice-select.css">
+        <link rel="stylesheet" href="css/jquery-ui.css">				
+        <link rel="stylesheet" href="css/nice-select.css">							
         <link rel="stylesheet" href="css/animate.min.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">
+        <link rel="stylesheet" href="css/owl.carousel.css">				
         <link rel="stylesheet" href="css/main.css">
+        <style>
+            datalist {
+                position: absolute;
+                background-color: white;
+                border: 1px solid blue;
+                border-radius: 0 0 5px 5px;
+                border-top: none;
+                font-family: sans-serif;
+                width: 350px;
+                padding: 5px;
+                max-height: 10rem;
+                overflow-y: auto
+            }
+            option {
+                background-color: white;
+                padding: 4px;
+                color: blue;
+                margin-bottom: 1px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+        </style>
     </head>
 
     <body>
@@ -56,39 +78,35 @@
                                         aria-controls="flight" aria-selected="true">Book A Car</a> -->
                             </li>
                         </ul>
-                        <div class="tab-content" id="myTabContent">
+                        <div class="tab-content" id="myTabContent"> 
                             <div class="tab-pane fade show active" id="flight" role="tabpanel">
                                 <form class="form-wrap">
-                                    <fieldset name="from">
-                                        <select class="form-control" required name='from' onchange=''>
-                                            <option value="">From</option>
-                                            <option value="Cambodia">Cambodia</option>
-                                            <option value="Hong Kong">Hong Kong</option>
-                                            <option value="India">India</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="Korea">Korea</option>
-                                            <option value="Laos">Laos</option>
-                                            <option value="Myanmar">Myanmar</option>
-                                            <option value="Singapore">Singapore</option>
-                                            <option value="Thailand">Thailand</option>
-                                            <option value="Vietnam">Vietnam</option>
-                                        </select>
-                                    </fieldset>
-                                    <fieldset name="to">
-                                        <select class="form-control" required name='to' onchange=''>
-                                            <option value="">To</option>
-                                            <option value="Cambodia">Cambodia</option>
-                                            <option value="Hong Kong">Hong Kong</option>
-                                            <option value="India">India</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="Korea">Korea</option>
-                                            <option value="Laos">Laos</option>
-                                            <option value="Myanmar">Myanmar</option>
-                                            <option value="Singapore">Singapore</option>
-                                            <option value="Thailand">Thailand</option>
-                                            <option value="Vietnam">Vietnam</option>
-                                        </select>
-                                    </fieldset>
+                                    <input list="froms" class="form-control" placeholder="From" name="from" id="browser">
+                                    <datalist id="froms">
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Hong Kong">Hong Kong</option>
+                                        <option value="India">India</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Korea">Korea</option>
+                                        <option value="Laos">Laos</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Vietnam">Vietnam</option>
+                                    </datalist>
+                                    <input list="tos" class="form-control" placeholder="To" name="to" id="browser">
+                                    <datalist id="tos">
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Hong Kong">Hong Kong</option>
+                                        <option value="India">India</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Korea">Korea</option>
+                                        <option value="Laos">Laos</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Vietnam">Vietnam</option>
+                                    </datalist>
                                     <input type="text" class="form-control date-picker" name="start" placeholder="Start "
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
                                     <input type="text" class="form-control date-picker" name="return" placeholder="Return "
@@ -468,7 +486,6 @@
             </div>
         </footer>
         <!-- End footer Area -->
-
         <script src="js/vendor/jquery-2.2.4.min.js"></script>
         <script src="js/popper.min.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
