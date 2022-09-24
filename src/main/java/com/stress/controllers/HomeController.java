@@ -34,7 +34,7 @@ public class HomeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
        
         
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("./WEB-INF/client/index.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
