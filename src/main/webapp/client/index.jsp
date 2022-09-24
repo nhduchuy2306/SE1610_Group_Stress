@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,7 +17,6 @@
         <meta charset="UTF-8">
         <!-- Site Title -->
         <title>Car Booking</title>
-
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
         <link rel="stylesheet" href="css/linearicons.css">
         <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -484,6 +484,4 @@
         <script src="js/mail-script.js"></script>
         <script src="js/main.js"></script>
     </body>
-
->>>>>>> 871b8c37a3d162d74af9e9fdb0d2435d71e7a9dd
 </html>
