@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<c:url value="${pageContext.request.contextPath}/client" var="url"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,7 +18,7 @@
         <!-- Site Title -->
         <title>Car Booking</title>
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
-        <link rel="stylesheet" href="${url}/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/linearicons.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">

@@ -1,5 +1,6 @@
 package com.stress.service;
 
+import com.stress.dao.RoleDAO;
 import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
 import com.stress.dto.Role;
@@ -13,8 +14,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class UserDAOImpl implements UserDAO {
+    private RoleDAO roleDAO = new RoleDAOImpl(); // DONT REMOVE this is use for get User by ID 
+    
     private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
             + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
     private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
@@ -243,7 +245,40 @@ public class UserDAOImpl implements UserDAO {
         }
         return check;
     }
-    
+    @Override
+    public User getUserByID(String userID) throws SQLException {
+        String sql = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
+            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [UserID] = ?";
+        Connection conn =null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            ptm.setString(1, userID);
+            rs = ptm.executeQuery();
+            while(rs.next()){
+                return new User(rs.getString("UserID"),
+                                rs.getString("Username"),
+                                rs.getString("Password"),
+                                rs.getString("Email"),
+                                rs.getDate("DOB"),
+                                rs.getString("DOB"),
+                                rs.getString("PhoneNumber"),
+                                rs.getBoolean("Sex"),
+                                roleDAO.getRoleById(userID),
+                                rs.getString("AccountBalance"),
+                                rs.getInt("Status")
+                            );
+            }
+        } catch (Exception e) {
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+            if(rs!=null) rs.close();
+        }
+        return null;
+    }   
     @Override
     public boolean registerByEmail(GooglePojo googleUser) throws SQLException {
         boolean check = false;
@@ -270,6 +305,4 @@ public class UserDAOImpl implements UserDAO {
         }
         return check;
     }
-    
-   
 }

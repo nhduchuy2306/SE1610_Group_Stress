@@ -11,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>User Tables</title>
+        <title>Driver Tables</title>
 
         <!-- Custom fonts for this template -->
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -46,60 +46,89 @@
 
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
-
-                            <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                                For more information about DataTables, please visit the 
-                                <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
-                            <!-- DataTales Example -->
-                            
-                            <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" name="action" value="update" class="btn btn-primary">Save changes</button>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h2 class="m-0 font-weight-bold text-primary">DRIVERS</h2>
+                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                        Add Driver 
+                                    </button>
+                                    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Add new Driver</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form action="driver">
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Driver ID</label>
+                                                            <input type="text" name="driverID" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver ID">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Driver Name</label>
+                                                            <input type="text" name="driverName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Name">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">DOB</label>
+                                                            <input type="date" name="DOB" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Gender</label>
+                                                            <select name="sex" class="form-control">
+                                                                <option value="true" selected>MALE</option>
+                                                                <option value="false">FEMALE</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Driver Picture</label>
+                                                            <input type="text" name="driverPic" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Picture">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Phone Number</label>
+                                                            <input type="text" name="phoneNumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone Number">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Status</label>
+                                                            <select name="status" class="form-control">
+                                                                <option value="0">INACTIVE</option>
+                                                                <option value="1" selected>ACTIVE</option>
+                                                                <option value="2">ONGOING</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <button type="submit" name="action" value="add" class="btn btn-primary">Save</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3 d-flex justify-content-center align-items-center">
-                                <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
-                                <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                    Add Driver 
-                                </button>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Driver ID</th>
-                                                <th>Driver Name</th>
-                                                <th>DOB</th>
-                                                <th>Gender</th>
-                                                <th>Driver Picture</th>
-                                                <th>Phone Number</th>
-                                                <th>Status</th>
-                                                <th>Modify</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>Driver ID</th>
+                                                    <th>Driver Name</th>
+                                                    <th>DOB</th>
+                                                    <th>Gender</th>
+                                                    <th>Driver Picture</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Status</th>
+                                                    <th>Modify</th>
+                                                    <th>Delete</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                             <c:forEach items="${requestScope.LIST_ALL_DRIVER}" var="d" varStatus="counter">
                                                 <tr>
-                                            <form action="driver">
+                                            <!--<form action="driver">-->
                                                 <td>${counter.count}</td>
                                                 <td>${d.driverID}</td>
                                                 <td>${d.driverName}</td>
@@ -107,7 +136,19 @@
                                                 <td>${d.sex}</td>
                                                 <td>${d.driverPicture}</td>
                                                 <td>${d.phoneNumber}</td>
-                                                <td>${d.status}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${d.status eq 0}">
+                                                            INACTIVE
+                                                        </c:when>
+                                                        <c:when test="${d.status eq 1}">
+                                                            ACTIVE
+                                                        </c:when>
+                                                        <c:when test="${d.status eq 2}">
+                                                            ONGOING
+                                                        </c:when>
+                                                    </c:choose>
+                                                </td>
                                                 <td>
                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${d.driverID.trim()}">
                                                         <i class="fa fa-pen"></i>
@@ -116,26 +157,69 @@
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${d.driverName}</h5>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
                                                                 </div>
-                                                                <div class="modal-body">
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                    <button type="submit" name="action" value="update" class="btn btn-primary">Save changes</button>
-                                                                </div>
+                                                                <form action="driver">
+                                                                    <div class="modal-body">
+                                                                        <div class="modal-body">
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Driver ID</label>
+                                                                                <input type="text" name="driverID" class="form-control" value="${d.driverID.trim()}" id="exampleInputEmail1" readonly placeholder="Enter Driver ID">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Driver Name</label>
+                                                                                <input type="text" name="driverName" class="form-control" value="${d.driverName.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Name">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">DOB</label>
+                                                                                <input type="date" name="DOB" class="form-control" value="${d.DOB}" id="exampleInputEmail1" placeholder="Enter DOB">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Gender</label>
+                                                                                <select name="sex" class="form-control">
+                                                                                    <option value="true" ${d.sex eq true?"selected":""} >MALE</option>
+                                                                                    <option value="false" ${d.sex eq false?"selected":""}>FEMALE</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Driver Picture</label>
+                                                                                <input type="text" name="driverPic" class="form-control" value="${d.driverPicture.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Picture">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Phone Number</label>
+                                                                                <input type="text" name="phoneNumber" class="form-control" value="${d.phoneNumber.trim()}" id="exampleInputEmail1" placeholder="Enter Phone Number">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Status</label>
+                                                                                <select name="status" class="form-control">
+                                                                                    <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
+                                                                                    <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
+                                                                                    <option value="2" ${d.status eq 2?"selected":""}>ONGOING</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" name="action" value="update" class="btn btn-primary">Save</button>
+                                                                    </div>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <input type="hidden" name="driverId" value="${d.driverID}">
-                                                    <input type="submit" name="action" value="delete">
+                                                    <form action="driver">
+                                                        <input type="hidden" name="driverID" value="${d.driverID.trim()}">
+                                                        <button type="submit" name="action" value="delete" class="btn btn-primary">
+                                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
-                                            </form>
+                                            <!--</form>-->
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -152,7 +236,7 @@
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
+                            <span>E-Transportation Website</span>
                         </div>
                     </div>
                 </footer>
@@ -188,24 +272,63 @@
                 </div>
             </div>
         </div>
+        <!--Modal show success and fail-->
+        <!-- Button trigger modal -->
+        <!--<button type="button" class="btn btn-primary show-success-modal" style="" data-toggle="modal" data-target="#showsuccess">click</button>-->
 
+        <!-- Modal visibility: hidden; opacity: 0;-->
+        <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.SUCCESS}</h4>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-ban" style="font-size:70px; color: red" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.ERROR}</h4>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Modal show success and fail-->
         <!-- Bootstrap core JavaScript-->
         <script src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
         <!-- Core plugin JavaScript-->
         <script src="${pageContext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
-
         <!-- Custom scripts for all pages-->
         <script src="${pageContext.request.contextPath}/admin/js/sb-admin-2.min.js"></script>
-
         <!-- Page level plugins -->
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
-
+        <script type="text/javascript">
+            <c:if test="${requestScope.SUCCESS!=null}">
+                $(document).ready(function () {
+                    $("#showsuccess").modal('show');
+//                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
+                });
+            </c:if>
+            <c:if test="${requestScope.ERROR!=null}">
+                $(document).ready(function () {
+                    $("#showerror").modal('show');
+//                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
+                });
+            </c:if>
+        </script>
     </body>
-
 </html>

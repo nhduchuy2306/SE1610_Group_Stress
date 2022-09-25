@@ -25,4 +25,6 @@ public class User {
     private Role role;
     private String AccountBalance;
     private int status;
+    
+   
 }

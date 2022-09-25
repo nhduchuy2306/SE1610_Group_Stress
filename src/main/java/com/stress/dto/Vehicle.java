@@ -15,8 +15,6 @@ import lombok.Setter;
  * @author MinhQuang
  */
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Vehicle {

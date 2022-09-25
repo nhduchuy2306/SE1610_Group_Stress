@@ -1,10 +1,10 @@
 
 package com.stress.dao;
 
-import java.sql.SQLException;
 import com.stress.dto.Role;
+import java.sql.SQLException;
 
 
 public interface RoleDAO {
-    public Role getRoleByID(String roleID) throws SQLException;
+    Role getRoleById(String roleID) throws SQLException;
 }
