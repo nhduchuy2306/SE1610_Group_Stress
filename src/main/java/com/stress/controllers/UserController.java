@@ -26,8 +26,8 @@ public class UserController extends HttpServlet {
             throws ServletException, IOException {
         String action=request.getParameter("action");
         switch (action) {
-            case "update":
-                updateUser(request,response);
+            case "viewUser":
+                viewUser(request,response);
                 break;
             case "RegisterAccount":
                 registerUser(request,response);
@@ -78,6 +78,10 @@ public class UserController extends HttpServlet {
         }finally{
             request.getRequestDispatcher(url).forward(request, response);
         }
+    }
+
+    private void viewUser(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 
