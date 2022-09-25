@@ -218,7 +218,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement ptm = null;
         ResultSet rs = null;
         try {
-            conn = conn = DBConnection.getConnection();
+            conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(CHECK_DUPLICATE);
                 ptm.setString(1, userID);
@@ -271,12 +271,5 @@ public class UserDAOImpl implements UserDAO {
         return check;
     }
     
-    public static void main(String[] args) throws SQLException {
-        UserDAO uDao = new UserDAOImpl();
-        List<User> uList = uDao.getAllUser();
-        for (User user : uList) {
-            System.out.println(user);
-        }
-        System.out.println(uDao.getUserByEmail("zuesnanii@gmail.com").toString());
-    }
+   
 }
