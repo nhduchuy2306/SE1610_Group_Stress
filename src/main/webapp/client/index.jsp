@@ -17,29 +17,17 @@
         <meta charset="UTF-8">
         <!-- Site Title -->
         <title>Car Booking</title>
-<<<<<<< HEAD:src/main/webapp/WEB-INF/client/index.jsp
 
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-        <link rel="stylesheet" href="<s:url value='/css/linearicons.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/font-awesome.min.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/bootstrap.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/magnific-popup.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/jquery-ui.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/nice-select.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/animate.min.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/owl.carousel.css'/>">
-        <link rel="stylesheet" href="<s:url value='/css/main.css'/>">
-=======
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
-        <link rel="stylesheet" href="css/linearicons.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/jquery-ui.css">				
-        <link rel="stylesheet" href="css/nice-select.css">							
-        <link rel="stylesheet" href="css/animate.min.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">				
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/jquery-ui.css">				
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/nice-select.css">							
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/animate.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">				
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
         <style>
             datalist {
                 position: absolute;
@@ -62,14 +50,12 @@
                 cursor: pointer;
             }
         </style>
->>>>>>> 05c6aad6e012fac7cdfe5d665f073b36a90b9000:src/main/webapp/client/index.jsp
     </head>
 
     <body>
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
         </header><!-- #header -->
-            <c:out value="${pageContext.request.contextPath}"></c:out>
         <!-- start banner Area -->
         <section class="banner-area relative">
             <div class="overlay overlay-bg"></div>
@@ -500,30 +486,21 @@
             </div>
         </footer>
         <!-- End footer Area -->
-<<<<<<< HEAD:src/main/webapp/WEB-INF/client/index.jsp
 
-        <script src="./src/main/webapp/WEB-INF/client/js/vendor/jquery-2.2.4.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/popper.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/vendor/bootstrap.min.js"></script>
-=======
-        <script src="js/vendor/jquery-2.2.4.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
->>>>>>> 05c6aad6e012fac7cdfe5d665f073b36a90b9000:src/main/webapp/client/index.jsp
+        <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/jquery-ui.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/easing.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/hoverIntent.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/superfish.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/jquery.ajaxchimp.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/jquery.magnific-popup.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/jquery.nice-select.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/owl.carousel.min.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/mail-script.js"></script>
-        <script src="./src/main/webapp/WEB-INF/client/js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
     </body>
-<<<<<<< HEAD:src/main/webapp/WEB-INF/client/index.jsp
-    
-=======
->>>>>>> 05c6aad6e012fac7cdfe5d665f073b36a90b9000:src/main/webapp/client/index.jsp
+
 </html>

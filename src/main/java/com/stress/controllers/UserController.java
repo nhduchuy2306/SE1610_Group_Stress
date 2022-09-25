@@ -4,6 +4,8 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.IUser;
+import com.stress.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,8 +29,9 @@ public class UserController extends HttpServlet {
             case "update":
                 updateUser(request,response);
                 break;
-            default:
-                throw new AssertionError();
+            case "RegisterAccount":
+                registerUser(request,response);
+                break;
         }
     }
 
@@ -36,12 +39,47 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        this.doGet(request, response);
+        doGet(request, response);
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String name=request.getParameter("");
+        String name=request.getParameter("action");
     }
+
+    private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url="./client/register.jsp";
+        try {
+            String userName=request.getParameter("userName");
+            String birthday=request.getParameter("birthday");
+            String gender=request.getParameter("gender");
+            String email=request.getParameter("email");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String userID=request.getParameter("userID");
+            String password=request.getParameter("password");
+            String repeatPassword=request.getParameter("repeatPassword");
+            boolean checkValidation=true;
+            if(!password.equals(repeatPassword)){
+                request.setAttribute("ERROR", "Password is not match!");
+                checkValidation=false;
+            }
+            IUser dao=new UserService();
+            boolean checkDuplicate=dao.checkDuplicateByID(userID);
+            boolean check=dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender);
+            if(checkValidation==true){
+               if (checkDuplicate == true) {
+                    if (check == true) {
+                    url = "./client/login.jsp";
+                    }
+                }
+           }
+        } catch (Exception e) {
+            log("Error at UserController - Register:"+e.toString());
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+    
 
     
 }
