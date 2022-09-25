@@ -17,8 +17,10 @@
         <meta charset="UTF-8">
         <!-- Site Title -->
         <title>Car Booking</title>
+
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">
@@ -55,7 +57,6 @@
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
         </header><!-- #header -->
-
         <!-- start banner Area -->
         <section class="banner-area relative">
             <div class="overlay overlay-bg"></div>
@@ -501,4 +502,6 @@
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
     </body>
+
+</html>
 </html>

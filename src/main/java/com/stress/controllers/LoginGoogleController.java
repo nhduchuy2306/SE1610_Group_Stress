@@ -8,7 +8,6 @@ import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
 
 
-import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -18,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.stress.dto.User;
+import com.stress.service.UserDAOImpl;
 
 /**
  *
