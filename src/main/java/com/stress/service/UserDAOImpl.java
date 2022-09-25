@@ -21,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
             + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
     private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
             + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
-    private static final String DELETE = "DELETE tblUsers WHERE UserID=?";
+    
     private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
             + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
     private static final String CHECK_DUPLICATE = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
                     String password = rs.getString("Password");
                     Date dob = rs.getDate("DOB");
                     String address = rs.getString("Address");
-                    String phoneNumber = rs.getString("PhoneNumber");
+                    String phoneNumber =rs.getString("PhoneNumber");
                     String email = rs.getString("Email");
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
@@ -58,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error at getAllUser:" +e.toString());
         } finally {
             if (rs1 != null) rs.close();
             if (rs != null) {
@@ -161,12 +161,13 @@ public class UserDAOImpl implements UserDAO {
         boolean result = false;
         Connection conn = null;
         PreparedStatement ptm = null;
+        String delete = "UPDATE tblUsers SET [status]=0  WHERE UserID=?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(DELETE);
+                ptm = conn.prepareStatement(delete);
                 ptm.setString(1, userID);
-                result = ptm.executeUpdate() > 0 ? true : false;
+                result = ptm.executeUpdate()> 0 ? true : false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,5 +302,14 @@ public class UserDAOImpl implements UserDAO {
             if(conn != null) conn.close();
         }
         return check;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            UserDAOImpl dao=new UserDAOImpl();
+            boolean check=dao.deleteUser("chu be dan 9");
+            System.out.println("check:" +check);
+        } catch (Exception e) {
+        }
     }
 }

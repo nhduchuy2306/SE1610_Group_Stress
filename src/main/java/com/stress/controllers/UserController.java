@@ -5,8 +5,10 @@
 package com.stress.controllers;
 
 import com.stress.dao.UserDAO;
+import com.stress.dto.User;
 import com.stress.service.UserDAOImpl;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +33,12 @@ public class UserController extends HttpServlet {
                 break;
             case "RegisterAccount":
                 registerUser(request,response);
+                break;
+            case "update":
+                updateUser(request,response);
+                break;
+            case "delete":
+                deleteUser(request,response);
                 break;
         }
     }
@@ -76,8 +84,49 @@ public class UserController extends HttpServlet {
         }
     }
 
-    private void viewUser(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private void viewUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String url="./admin/404.jsp";
+        try {
+            UserDAO dao=new UserDAOImpl();
+            List <User> list=dao.getAllUser();
+            System.out.println(list);
+            if(!list.isEmpty()){
+                request.setAttribute("LIST_USER", list);
+                url="./admin/userTable.jsp";
+            }
+        } catch (Exception e) {
+            log("Error at UserController - ViewUser: "+ e.toString());
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String url="./admin/404.jsp";
+        try {
+            
+        } catch (Exception e) {
+            log("Error at UserController - updateUser: "+ e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String url="./admin/404.jsp";
+        try {
+            String userID=request.getParameter("userID");
+            UserDAO dao=new UserDAOImpl();
+            boolean check=dao.deleteUser(userID);
+            if(check){
+                viewUser(request, response);
+            }
+        } catch (Exception e) {
+            log("Error at UserController - deleteUser: "+ e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
     }
     
 
