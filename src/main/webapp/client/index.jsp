@@ -20,6 +20,7 @@
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">
@@ -220,7 +221,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="single-other-issue">
                             <div class="thumb">
-                                <img class="img-fluid" src="img/o1.jpg" alt="">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o1.jpg" alt="">
                             </div>
                             <a href="#">
                                 <h4>Rent a Car</h4>
@@ -486,7 +487,6 @@
             </div>
         </footer>
         <!-- End footer Area -->
-
         <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -503,4 +503,5 @@
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
     </body>
 
+</html>
 </html>

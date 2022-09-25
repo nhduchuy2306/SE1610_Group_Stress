@@ -4,8 +4,9 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
 import com.stress.dto.User;
-import com.stress.service.UserService;
+import com.stress.service.UserDAOImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.stress.dao.IUser;
 
 /**
  *
@@ -42,7 +42,7 @@ public class LoginControllerV2 extends HttpServlet {
         try {
             String userID = request.getParameter("userID");
             String password = request.getParameter("password");
-            IUser dao = new UserService();
+            UserDAO dao = new UserDAOImpl();
             User loginUser = dao.getUserByIDAndPassword(userID, password);
             if (loginUser != null) {
                 HttpSession session = request.getSession();

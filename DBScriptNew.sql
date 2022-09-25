@@ -19,7 +19,7 @@ CREATE TABLE tblUsers (
     Sex bit,
     RoleID char(5) FOREIGN KEY REFERENCES tblRoles(RoleID) ON UPDATE CASCADE ON DELETE SET NULL,
     AccountBalance decimal DEFAULT 0,
-    [Status] BIT DEFAULT 1
+    [Status] int DEFAULT 1
 ) 
 
 CREATE TABLE tblOrders(
@@ -63,11 +63,10 @@ CREATE TABLE tblDriverLicenses(
     Nationality nvarchar(100),
     Class char(2) NOT NULL,
     DateExpired DATE,
-    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID )
+    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL
 )
----x---
 CREATE TABLE tblDrivers(
-    DriverID char(5) PRIMARY KEY,
+    DriverID char(12) PRIMARY KEY,
     DriverName nvarchar(150) NOT NULL,
     DOB DATE, 
     Sex BIT,
@@ -166,24 +165,24 @@ VAlUES('VE011','Hyundai Space','51U-13436',4,1)
 INSERT INTO tblVehicles(VehicleID,VehicleName,LicensePlate,VehicleTypeID,[Status])
 VAlUES('VE012','Huyndai Aero Town','51C-13560',4,1)
 
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D001',N'Kiều Minh Hiếu','2002-08-23','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D002',N'Nguyễn Hiển Vinh','2002-06-24','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D003',N'Lê Tuấn Tài','1993-07-29','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D004',N'Trần Nhật Tuân','1995-07-26','','0912345678',2)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D005',N'Nguyễn Vinh Hoa','1992-07-29','','0912345678',0)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D006',N'Đặng Tuấn Tài','1994-07-23','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D007',N'Tô Mỹ Lệ','2000-01-27','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D008',N'Ngô Ngọc Vân Trang','2002-02-24','','0912345678',2)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D009',N'Đăng Thị Hương','1997-03-12','','0912345678',0)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D001',N'Kiều Minh Hiếu','2002-08-23',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D002',N'Nguyễn Hiển Vinh','2002-06-24',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D003',N'Lê Tuấn Tài','1993-07-29',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D004',N'Trần Nhật Tuân','1995-07-26',1,'','0912345678',2)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D005',N'Nguyễn Vinh Hoa','1992-07-29',1,'','0912345678',0)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D006',N'Đặng Tuấn Tài','1994-07-23',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D007',N'Tô Mỹ Lệ','2000-01-27',0,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D008',N'Ngô Ngọc Vân Trang','2002-02-24',0,'','0912345678',2)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D009',N'Đăng Thị Hương','1997-03-12',0,'','0912345678',0)
 
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
 VALUES('VT001',N'Việt Nam','B1','1997-03-12' ,'D001')

@@ -5,6 +5,8 @@
 package com.stress.controllers;
 
 import com.stress.dao.IUser;
+import com.stress.dao.UserDAO;
+import com.stress.service.UserDAOImpl;
 import com.stress.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -42,10 +44,6 @@ public class UserController extends HttpServlet {
         doGet(request, response);
     }
 
-    private void updateUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String name=request.getParameter("action");
-    }
-
     private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url="./client/register.jsp";
         try {
@@ -63,7 +61,7 @@ public class UserController extends HttpServlet {
                 request.setAttribute("ERROR", "Password is not match!");
                 checkValidation=false;
             }
-            IUser dao=new UserService();
+            UserDAO dao=new UserDAOImpl();
             boolean checkDuplicate=dao.checkDuplicateByID(userID);
             boolean check=dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender);
             if(checkValidation==true){
