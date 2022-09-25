@@ -4,10 +4,8 @@
  */
 package com.stress.controllers;
 
-import com.stress.dao.IUser;
 import com.stress.dao.UserDAO;
 import com.stress.service.UserDAOImpl;
-import com.stress.service.UserService;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
