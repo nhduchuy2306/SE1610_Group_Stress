@@ -6,5 +6,5 @@ import java.sql.SQLException;
 
 
 public interface RoleDAO {
-    Role getRoleById(String roleID) throws SQLException;
+    Role getRoleByID(String roleID) throws SQLException;
 }
