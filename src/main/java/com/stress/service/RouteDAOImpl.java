@@ -172,5 +172,10 @@ public class RouteDAOImpl implements RouteDAO {
         return list;
     }
 
+    @Override
+    public Route getRouteByID(String routeID) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
    
 }

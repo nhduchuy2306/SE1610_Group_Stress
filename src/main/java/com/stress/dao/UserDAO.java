@@ -13,4 +13,5 @@ public interface UserDAO {
     boolean deleteUser(String userID) throws SQLException;
     boolean registerNewUSer(String userID,String name,String password,String email,String roleID,boolean status)throws SQLException;
     boolean checkDuplicateByID(String userID) throws SQLException;
+    User getUserByID(String userID) throws SQLException;
 }

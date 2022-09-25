@@ -127,7 +127,7 @@ public class DriverDAOImpl implements DriverDAO{
     }
 
     @Override
-    public Driver getDriverById(String driverID) throws SQLException {
+    public Driver getDriverByID(String driverID) throws SQLException {
         String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] "
                     + "FROM tblDrivers "
                     + "WHERE [DriverID] = ?";
