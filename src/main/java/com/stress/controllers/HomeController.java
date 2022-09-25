@@ -20,14 +20,13 @@ public class HomeController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./client/index.jsp");
     }
     
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./client/index.jsp");
+        request.getRequestDispatcher("./client/index.jsp").forward(request, response);
     }
 
 
