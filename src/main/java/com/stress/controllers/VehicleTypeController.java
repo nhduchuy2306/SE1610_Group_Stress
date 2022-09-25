@@ -65,6 +65,7 @@ public class VehicleTypeController extends HttpServlet {
          request.setCharacterEncoding("utf-8");
          VehicleTypeDAO vDao = new VehicleTypeDAOImpl();
          String action = request.getParameter("action");
+         if(action != null) {
          switch (action) {
             case "show":
                 showAllVehicleType(request, response, vDao);
@@ -77,6 +78,7 @@ public class VehicleTypeController extends HttpServlet {
                 break;
             default:
                 throw new AssertionError();
+        }
         }
     }
     private void showAllVehicleType(HttpServletRequest request, HttpServletResponse response, VehicleTypeDAO vDAO) 
