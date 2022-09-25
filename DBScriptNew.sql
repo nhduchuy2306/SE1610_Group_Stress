@@ -63,9 +63,8 @@ CREATE TABLE tblDriverLicenses(
     Nationality nvarchar(100),
     Class char(2) NOT NULL,
     DateExpired DATE,
-    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID )
+    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL
 )
----x---
 CREATE TABLE tblDrivers(
     DriverID char(5) PRIMARY KEY,
     DriverName nvarchar(150) NOT NULL,
