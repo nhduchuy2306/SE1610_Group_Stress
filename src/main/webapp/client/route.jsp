@@ -230,7 +230,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-6 col-sm-12 pb-1">
+                                <div class="col-lg-12 col-md-6 col-sm-12">
                                     <div class="card product-item border-0 mb-4">
                                         <div
                                             class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -243,15 +243,17 @@
                                                 <h6 class="text-muted ml-2"><del>$123.00</del></h6>
                                             </div>
                                         </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                        <div class="card-footer bg-light border">
+                                            <p>
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                                    Button with data-target
+                                                </button>
+                                            </p>
+
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#exampleModal" onclick="AlwaysFlightClick()">
                                                 Launch demo modal
                                             </button>
-                                            <!-- <a href="" class="btn btn-sm text-dark p-0"><i
-                                                            class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a> -->
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
@@ -338,6 +340,11 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="collapse container mb-10" id="collapseExample">
+                                    <div class="card card-body">
+                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
@@ -655,21 +662,21 @@
         <script src="js/jquery.seat-charts.js"></script>
         <script src="js/chosing-seat.js"></script>
         <script>
-            var flight_tab = document.querySelector("#flight-tab");
-            var hotel_tab = document.querySelector("#hotel-tab");
-            var holiday_tab = document.querySelector("#holiday-tab");
+                            var flight_tab = document.querySelector("#flight-tab");
+                            var hotel_tab = document.querySelector("#hotel-tab");
+                            var holiday_tab = document.querySelector("#holiday-tab");
 
-            function AlwaysFlightClick() {
-                flight_tab.click();
-            }
+                            function AlwaysFlightClick() {
+                                flight_tab.click();
+                            }
 
-            function nextInFlights() {
-                hotel_tab.click();
-            }
+                            function nextInFlights() {
+                                hotel_tab.click();
+                            }
 
-            function nextInHotels() {
-                holiday_tab.click();
-            }
+                            function nextInHotels() {
+                                holiday_tab.click();
+                            }
         </script>
     </body>
 

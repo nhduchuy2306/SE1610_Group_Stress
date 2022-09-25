@@ -4,103 +4,103 @@ use ETransportationManagement
 
 ---x---
 CREATE TABLE tblRoles(
-	RoleID char(5) PRIMARY KEY,
-	RoleName nvarchar(100)
+    RoleID char(5) PRIMARY KEY,
+    RoleName nvarchar(100)
 )
 ---x---
 CREATE TABLE tblUsers (
-	UserID nvarchar(100) PRIMARY KEY,
-	Username nvarchar(200) NOT NULL UNIQUE,
-	[Password] nvarchar(200) NOT NULL,
-	Email nvarchar(100) NOT NULL,
-	DOB date, 
-	[Address] nvarchar(300),
-	PhoneNumber char(11), 
-	Sex bit,
-	RoleID char(5) FOREIGN KEY REFERENCES tblRoles(RoleID) ON UPDATE CASCADE ON DELETE SET NULL,
-	AccountBalance decimal DEFAULT 0,
-	[Status] BIT DEFAULT 1
+    UserID nvarchar(100) PRIMARY KEY,
+    Username nvarchar(200) NOT NULL UNIQUE,
+    [Password] nvarchar(200) NOT NULL,
+    Email nvarchar(100) NOT NULL,
+    DOB date, 
+    [Address] nvarchar(300),
+    PhoneNumber char(11), 
+    Sex bit,
+    RoleID char(5) FOREIGN KEY REFERENCES tblRoles(RoleID) ON UPDATE CASCADE ON DELETE SET NULL,
+    AccountBalance decimal DEFAULT 0,
+    [Status] BIT DEFAULT 1
 ) 
 
 CREATE TABLE tblOrders(
-	OrderID char(5) PRIMARY KEY,
-	CreateDate DATETIME DEFAULT GETDATE(),
-	PaymentMode nvarchar(100),
-	UserID nvarchar(100) FOREIGN KEY REFERENCES tblUsers(UserID) ON UPDATE CASCADE ON DELETE SET NULL,
-	[Status] BIT DEFAULT 0
+    OrderID char(5) PRIMARY KEY,
+    CreateDate DATETIME DEFAULT GETDATE(),
+    PaymentMode nvarchar(100),
+    UserID nvarchar(100) FOREIGN KEY REFERENCES tblUsers(UserID) ON UPDATE CASCADE ON DELETE SET NULL,
+    [Status] BIT DEFAULT 0
 )
 ---x---
 CREATE TABLE tblLocations(
-	LocationID INT IDENTITY PRIMARY KEY,
-	LocationName nvarchar(100)
+    LocationID INT IDENTITY PRIMARY KEY,
+    LocationName nvarchar(100)
 )
 ---x---
 CREATE TABLE tblRoutes(
-	RouteID INT IDENTITY PRIMARY KEY,
-	RouteName nvarchar(100),
-	StartLocation INT FOREIGN KEY REFERENCES tblLocations(LocationID),
-	EndLocation INT FOREIGN KEY REFERENCES tblLocations(LocationID),
-	[Description] nvarchar(1000),
-	[Status] BIT DEFAULT 1
+    RouteID INT IDENTITY PRIMARY KEY,
+    RouteName nvarchar(100),
+    StartLocation INT FOREIGN KEY REFERENCES tblLocations(LocationID),
+    EndLocation INT FOREIGN KEY REFERENCES tblLocations(LocationID),
+    [Description] nvarchar(1000),
+    [Status] BIT DEFAULT 1
 )
 ---x---
 CREATE TABLE tblVehicleTypes(
-	VehicleTypeID INT IDENTITY PRIMARY KEY,
-	VehicleTypeName nvarchar(100),
-	TotalSeat INT NOT NULL
+    VehicleTypeID INT IDENTITY PRIMARY KEY,
+    VehicleTypeName nvarchar(100),
+    TotalSeat INT NOT NULL
 )
 ---x---
 CREATE TABLE tblVehicles(
-	VehicleID char(5) PRIMARY KEY,
-	VehicleName nvarchar(100),
-	LicensePlate nvarchar(20),
-	VehicleTypeID INT FOREIGN KEY REFERENCES tblVehicleTypes(VehicleTypeID) ON UPDATE CASCADE ON DELETE SET NULL,
-	[Status] INT DEFAULT 1,
+    VehicleID char(5) PRIMARY KEY,
+    VehicleName nvarchar(100),
+    LicensePlate nvarchar(20),
+    VehicleTypeID INT FOREIGN KEY REFERENCES tblVehicleTypes(VehicleTypeID) ON UPDATE CASCADE ON DELETE SET NULL,
+    [Status] INT DEFAULT 1,
 )
 ---x---
 CREATE TABLE tblDriverLicenses(
-	DriverLicenseID char(12) PRIMARY KEY,
-	Nationality nvarchar(100),
-	Class char(2) NOT NULL,
-	DateExpired DATE,
-	DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID )
+    DriverLicenseID char(12) PRIMARY KEY,
+    Nationality nvarchar(100),
+    Class char(2) NOT NULL,
+    DateExpired DATE,
+    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID )
 )
 ---x---
 CREATE TABLE tblDrivers(
-	DriverID char(5) PRIMARY KEY,
-	DriverName nvarchar(150) NOT NULL,
-	DOB DATE, 
-	Sex BIT,
-	DriverPic nvarchar(300) NOT NULL,
-	PhoneNumber char(11),
-	[Status] INT DEFAULT 1
+    DriverID char(5) PRIMARY KEY,
+    DriverName nvarchar(150) NOT NULL,
+    DOB DATE, 
+    Sex BIT,
+    DriverPic nvarchar(300) NOT NULL,
+    PhoneNumber char(11),
+    [Status] INT DEFAULT 1
 )
 
 CREATE TABLE tblTrips(
-	TripID char(5) NOT NULL PRIMARY KEY,
-	TripName nvarchar(100),
-	StartDateTime DATETIME NOT NULL,
-	[Policy] nvarchar(2000),
-	RouteID INT FOREIGN KEY REFERENCES tblRoutes(RouteID) ON UPDATE CASCADE ON DELETE SET NULL,
-	VehicleID char(5) FOREIGN KEY REFERENCES tblVehicles(VehicleID) ON UPDATE CASCADE ON DELETE SET NULL,
-	DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL,
-	SeatRemain INT,
-	[Status] INT NOT NULL DEFAULT 1	
+    TripID char(5) NOT NULL PRIMARY KEY,
+    TripName nvarchar(100),
+    StartDateTime DATETIME NOT NULL,
+    [Policy] nvarchar(2000),
+    RouteID INT FOREIGN KEY REFERENCES tblRoutes(RouteID) ON UPDATE CASCADE ON DELETE SET NULL,
+    VehicleID char(5) FOREIGN KEY REFERENCES tblVehicles(VehicleID) ON UPDATE CASCADE ON DELETE SET NULL,
+    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL,
+    SeatRemain INT,
+    [Status] INT NOT NULL DEFAULT 1	
 )
 
 CREATE TABLE tblSeats(
-	SeatID Char(5) NOT NULL, 
-	Price Decimal,
-	[Status] BIT DEFAULT 1,
-	TripID char(5) FOREIGN KEY REFERENCES tblTrips(TripID),
-	PRIMARY KEY (SeatID,TripID) 
+    SeatID Char(5) NOT NULL, 
+    Price Decimal,
+    [Status] BIT DEFAULT 1,
+    TripID char(5) FOREIGN KEY REFERENCES tblTrips(TripID),
+    PRIMARY KEY (SeatID,TripID) 
 )
 
 CREATE TABLE tblTickets(
- 	TicketID INT IDENTITY PRIMARY KEY,
- 	SeatID char(5) NOT NULL,
- 	TripID char(5) NOT NULL, 
- 	OrderID char(5) FOREIGN KEY REFERENCES tblOrders(OrderID) ON UPDATE CASCADE ON DELETE SET NULL
+    TicketID INT IDENTITY PRIMARY KEY,
+    SeatID char(5) NOT NULL,
+    TripID char(5) NOT NULL, 
+    OrderID char(5) FOREIGN KEY REFERENCES tblOrders(OrderID) ON UPDATE CASCADE ON DELETE SET NULL
 )
 ALTER TABLE tblTickets
 ADD CONSTRAINT FK_TblTickets_TblSeat FOREIGN KEY (SeatID, TripID) REFERENCES tblSeats(SeatID, TripID)
@@ -166,24 +166,24 @@ VAlUES('VE011','Hyundai Space','51U-13436',4,1)
 INSERT INTO tblVehicles(VehicleID,VehicleName,LicensePlate,VehicleTypeID,[Status])
 VAlUES('VE012','Huyndai Aero Town','51C-13560',4,1)
 
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D001',N'Kiều Minh Hiếu','2002-08-23','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D002',N'Nguyễn Hiển Vinh','2002-06-24','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D003',N'Lê Tuấn Tài','1993-07-29','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D004',N'Trần Nhật Tuân','1995-07-26','','0912345678',2)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D005',N'Nguyễn Vinh Hoa','1992-07-29','','0912345678',0)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D006',N'Đặng Tuấn Tài','1994-07-23','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D007',N'Tô Mỹ Lệ','2000-01-27','','0912345678',1)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D008',N'Ngô Ngọc Vân Trang','2002-02-24','','0912345678',2)
-INSERT INTO tblDrivers(DriverID,DriverName,DOB,DriverPic,PhoneNumber,[Status])
-VALUES('D009',N'Đăng Thị Hương','1997-03-12','','0912345678',0)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D001',N'Kiều Minh Hiếu','2002-08-23',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D002',N'Nguyễn Hiển Vinh','2002-06-24',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D003',N'Lê Tuấn Tài','1993-07-29',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D004',N'Trần Nhật Tuân','1995-07-26',1,'','0912345678',2)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D005',N'Nguyễn Vinh Hoa','1992-07-29',1,'','0912345678',0)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D006',N'Đặng Tuấn Tài','1994-07-23',1,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D007',N'Tô Mỹ Lệ','2000-01-27',0,'','0912345678',1)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D008',N'Ngô Ngọc Vân Trang','2002-02-24',0,'','0912345678',2)
+INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
+VALUES('D009',N'Đăng Thị Hương','1997-03-12',0,'','0912345678',0)
 
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
 VALUES('VT001',N'Việt Nam','B1','1997-03-12' ,'D001')

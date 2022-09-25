@@ -63,7 +63,7 @@
             <span>Driver License</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="driverTable.jsp">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/driver?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Driver</span></a>
     </li>

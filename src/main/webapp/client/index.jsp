@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<c:url value="${pageContext.request.contextPath}/client" var="url">
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,17 +18,38 @@
         <meta charset="UTF-8">
         <!-- Site Title -->
         <title>Car Booking</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-        <link rel="stylesheet" href="css/linearicons.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/jquery-ui.css">
-        <link rel="stylesheet" href="css/nice-select.css">
-        <link rel="stylesheet" href="css/animate.min.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
+        <link rel="stylesheet" href="${url}/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/jquery-ui.css">				
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/nice-select.css">							
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/animate.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">				
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
+        <style>
+            datalist {
+                position: absolute;
+                background-color: white;
+                border: 1px solid blue;
+                border-radius: 0 0 5px 5px;
+                border-top: none;
+                font-family: sans-serif;
+                width: 350px;
+                padding: 5px;
+                max-height: 10rem;
+                overflow-y: auto
+            }
+            option {
+                background-color: white;
+                padding: 4px;
+                color: blue;
+                margin-bottom: 1px;
+                font-size: 18px;
+                cursor: pointer;
+            }
+        </style>
     </head>
 
     <body>
@@ -56,39 +79,35 @@
                                         aria-controls="flight" aria-selected="true">Book A Car</a> -->
                             </li>
                         </ul>
-                        <div class="tab-content" id="myTabContent">
+                        <div class="tab-content" id="myTabContent"> 
                             <div class="tab-pane fade show active" id="flight" role="tabpanel">
                                 <form class="form-wrap">
-                                    <fieldset name="from">
-                                        <select class="form-control" required name='from' onchange=''>
-                                            <option value="">From</option>
-                                            <option value="Cambodia">Cambodia</option>
-                                            <option value="Hong Kong">Hong Kong</option>
-                                            <option value="India">India</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="Korea">Korea</option>
-                                            <option value="Laos">Laos</option>
-                                            <option value="Myanmar">Myanmar</option>
-                                            <option value="Singapore">Singapore</option>
-                                            <option value="Thailand">Thailand</option>
-                                            <option value="Vietnam">Vietnam</option>
-                                        </select>
-                                    </fieldset>
-                                    <fieldset name="to">
-                                        <select class="form-control" required name='to' onchange=''>
-                                            <option value="">To</option>
-                                            <option value="Cambodia">Cambodia</option>
-                                            <option value="Hong Kong">Hong Kong</option>
-                                            <option value="India">India</option>
-                                            <option value="Japan">Japan</option>
-                                            <option value="Korea">Korea</option>
-                                            <option value="Laos">Laos</option>
-                                            <option value="Myanmar">Myanmar</option>
-                                            <option value="Singapore">Singapore</option>
-                                            <option value="Thailand">Thailand</option>
-                                            <option value="Vietnam">Vietnam</option>
-                                        </select>
-                                    </fieldset>
+                                    <input list="froms" class="form-control" placeholder="From" name="from" id="browser">
+                                    <datalist id="froms">
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Hong Kong">Hong Kong</option>
+                                        <option value="India">India</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Korea">Korea</option>
+                                        <option value="Laos">Laos</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Vietnam">Vietnam</option>
+                                    </datalist>
+                                    <input list="tos" class="form-control" placeholder="To" name="to" id="browser">
+                                    <datalist id="tos">
+                                        <option value="Cambodia">Cambodia</option>
+                                        <option value="Hong Kong">Hong Kong</option>
+                                        <option value="India">India</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="Korea">Korea</option>
+                                        <option value="Laos">Laos</option>
+                                        <option value="Myanmar">Myanmar</option>
+                                        <option value="Singapore">Singapore</option>
+                                        <option value="Thailand">Thailand</option>
+                                        <option value="Vietnam">Vietnam</option>
+                                    </datalist>
                                     <input type="text" class="form-control date-picker" name="start" placeholder="Start "
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
                                     <input type="text" class="form-control date-picker" name="return" placeholder="Return "
@@ -202,7 +221,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="single-other-issue">
                             <div class="thumb">
-                                <img class="img-fluid" src="img/o1.jpg" alt="">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o1.jpg" alt="">
                             </div>
                             <a href="#">
                                 <h4>Rent a Car</h4>
@@ -468,22 +487,19 @@
             </div>
         </footer>
         <!-- End footer Area -->
-
-        <script src="js/vendor/jquery-2.2.4.min.js"></script>
-        <script src="js/popper.min.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-        <script src="js/jquery-ui.js"></script>
-        <script src="js/easing.min.js"></script>
-        <script src="js/hoverIntent.js"></script>
-        <script src="js/superfish.min.js"></script>
-        <script src="js/jquery.ajaxchimp.min.js"></script>
-        <script src="js/jquery.magnific-popup.min.js"></script>
-        <script src="js/jquery.nice-select.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/mail-script.js"></script>
-        <script src="js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
     </body>
-
->>>>>>> 871b8c37a3d162d74af9e9fdb0d2435d71e7a9dd
 </html>
