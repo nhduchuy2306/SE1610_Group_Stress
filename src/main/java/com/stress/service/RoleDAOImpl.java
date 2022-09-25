@@ -14,9 +14,10 @@ import java.sql.SQLException;
  * @author MinhQuang
  */
 public class RoleDAOImpl implements RoleDAO {
+    
     @Override 
     public Role getRoleByID(String roleID) throws SQLException {
-        Role role = null;
+        String sql = "SELECT [RoleID], [RoleName] FROM tblRoles WHERE [RoleID] = ?";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;

@@ -71,7 +71,7 @@ public class DriverController extends HttpServlet {
             String status = request.getParameter("status").trim();
 
             DriverDAO dao = new DriverDAOImpl();
-            Driver driverTmp = dao.getDriverById(driverID);
+            Driver driverTmp = dao.getDriverByID(driverID);
 
             if (driverTmp != null) {
                 request.setAttribute("ERROR", "DUPLICATE DRIVER ID");
