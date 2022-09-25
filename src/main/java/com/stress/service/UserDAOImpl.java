@@ -24,7 +24,6 @@ public class UserDAOImpl implements UserDAO {
     private static final String DELETE = "DELETE tblUsers WHERE UserID=?";
     private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
             + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
-    private static final String REGITER = "INSERT INTO tblUsers(UserID,Username,[Password],Email,RoleID,[Status]) VALUES (?,?,?,?,?,?)";
     private static final String CHECK_DUPLICATE = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
 
     @Override
@@ -183,67 +182,64 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public boolean registerNewUSer(String userID,String userName,String password,String email,String DOB,String address,
+        String phoneNumber,String sex) throws SQLException {
+            String register="INSERT INTO tblUsers(UserID,Username,[Password]"
+                     + ",Email,DOB,[Address],PhoneNumber,Sex,RoleID,AccountBalance,[Status]) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-    public boolean registerNewUSer(String userID, String name, String password, String email, String roleID, boolean status) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement ptm = null;
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
         try {
-            conn = DBConnection.getConnection();
-            if (conn != null) {
-                ptm = conn.prepareStatement(REGITER);
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(register);
                 ptm.setString(1, userID);
-                ptm.setString(2, name);
+                ptm.setString(2, userName);
                 ptm.setString(3, password);
                 ptm.setString(4, email);
-                ptm.setString(5, roleID);
-                ptm.setBoolean(6, status);
-                check = ptm.executeUpdate() > 0 ? true : false;
+                ptm.setString(5, DOB);
+                ptm.setString(6, address);
+                ptm.setString(7, phoneNumber);
+                ptm.setString(8, sex);
+                ptm.setString(9, "1");
+                ptm.setDouble(10, 0);
+                ptm.setBoolean(11, true);
+                check=ptm.executeUpdate()>0? true:false;         
             }
         } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (ptm != null) {
-                ptm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+            System.out.println("Error at registerNewUSer:"+ e.toString());
+        }finally{
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
         }
         return check;
     }
 
     @Override
     public boolean checkDuplicateByID(String userID) throws SQLException {
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.getConnection();
-            if (conn != null) {
-                ptm = conn.prepareStatement(CHECK_DUPLICATE);
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
+        ResultSet rs= null;
+        try{
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(CHECK_DUPLICATE);
                 ptm.setString(1, userID);
-                rs = ptm.executeQuery();
-                if (rs != null) {
-                    check = true;
+                rs=ptm.executeQuery();
+                if(rs!=null){
+                    check=true;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ptm != null) {
-                ptm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
+        }catch(Exception e){
+            System.out.println("Error at checkDuplicateByID:"+ e.toString());
+        }finally{
+            if(rs!=null)rs.close();
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
         }
-        return check;
+        return check; 
     }
     @Override
     public User getUserByID(String userID) throws SQLException {
@@ -252,6 +248,7 @@ public class UserDAOImpl implements UserDAO {
         Connection conn =null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
+        RoleDAO roleDAO=new RoleDAOImpl();
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
