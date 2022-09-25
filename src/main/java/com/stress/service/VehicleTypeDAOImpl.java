@@ -95,7 +95,7 @@ public class VehicleTypeDAOImpl implements VehicleTypeDAO {
     }
 
     @Override
-    public boolean deleteVehicleType(VehicleType deleteVehicleType) throws SQLException {
+    public boolean deleteVehicleType(String deleteVehicleType) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -103,7 +103,7 @@ public class VehicleTypeDAOImpl implements VehicleTypeDAO {
             conn = DBConnection.getConnection();
             if(conn != null) {
                 ptm = conn.prepareStatement("DELETE FROM tblVehicleTypes WHERE [VehicleTypeID] = ?");
-                ptm.setInt(1, deleteVehicleType.getVehicleTypeID());
+                ptm.setString(1, deleteVehicleType);
                 check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {

@@ -29,7 +29,7 @@ public class LoginGoogleController extends HttpServlet {
 
 
     
-    private static final String ERROR = "login.jsp";
+    private static final String ERROR = "client/login.jsp";
     private static final String USER_ROLE = "1";
     private static final String ADMIN_ROLE = "2"; 
     private static final String ADMIN = "admin/index.jsp";
