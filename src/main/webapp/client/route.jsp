@@ -237,22 +237,51 @@
                                             <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
                                         </div>
                                         <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                            <div class="row">
+                                                <div class="ticket-car-name col-md-4">
+                                                    <div class="bus-icon">
+                                                        <i class="fa fa-bus" style="font-size: 40px; color: #007bff;" aria-hidden="true"></i>
+                                                        <h4 class="mt-10">An Anh Limousine</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-row-name col-md-4 ">
+                                                    <div class="ticket-from-to text-center">
+                                                        <div class="ticket-from d-flex justify-content-center align-items-center">
+                                                            <div class="mr-15">
+                                                                <i class="fa fa-circle" style="font-size: 25px; color:greenyellow;" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="text-center">23:15</h6>
+                                                                <span class="text-center">HCM's Gas Station</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ticket-from mt-10 d-flex justify-content-center align-items-center">
+                                                            <div class="mr-15">
+                                                                <i class="fa fa-map-marker" style="font-size: 25px; color: red;" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6>5:45</h6>
+                                                                <span>DaLat's Gas Station</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-car-description col-md-4">
+                                                    <p class="font-weight-bold" style="color:black;">Limousine with 20 rooms</p>
+                                                    <p class="seat-remain font-weight-bold" style="color:black;">20 seat remain</p>
+                                                </div>
+                                            </div>
+                                            <div class="price float-sm-right">
+                                                <h3 class="mr-30" style="color: #007bff;">350.000đ</h3>
                                             </div>
                                         </div>
-                                        <div class="card-footer bg-light border">
-                                            <p>
-                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                                    Button with data-target
-                                                </button>
-                                            </p>
-
+                                        <div class="card-footer bg-light border d-flex justify-content-between align-items-center">
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                                                View more detail
+                                            </button>
                                             <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#exampleModal" onclick="AlwaysFlightClick()">
-                                                Launch demo modal
+                                                Choose ticket
                                             </button>
                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
                                                  aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -340,13 +369,48 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="collapse" id="collapse">
+                                            <div class="card card-body">
+                                                <ul class="modal-title nav nav-tabs" id="myTab"
+                                                    role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="picture"
+                                                           data-toggle="tab" href="#picture" role="tab"
+                                                           aria-controls="picture"
+                                                           aria-selected="true">Picture</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="utilies"
+                                                           data-toggle="tab" href="#utilies" role="tab"
+                                                           aria-controls="utilies"
+                                                           aria-selected="true">Utilities</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="policy"
+                                                           data-toggle="tab" href="#policy" role="tab"
+                                                           aria-controls="policy"
+                                                           aria-selected="true">Policy</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="picture"
+                                                         role="tabpanel" aria-labelledby="picture">
+                                                        Picture
+                                                    </div>
+                                                    <div class="tab-pane fade" id="utilities" role="tabpanel"
+                                                         aria-labelledby="utilities">
+                                                        Utility
+                                                    </div>
+                                                    <div class="tab-pane fade" id="policy" role="tabpanel"
+                                                         aria-labelledby="policy">
+                                                        Policy
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="collapse container mb-10" id="collapseExample">
-                                    <div class="card card-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
-                                    </div>
-                                </div>
+
                                 <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
                                     <div class="card product-item border-0 mb-4">
                                         <div
