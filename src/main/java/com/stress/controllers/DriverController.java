@@ -128,7 +128,7 @@ public class DriverController extends HttpServlet {
             boolean check = dao.updateDriver(driver);
             
             if (check) {
-                    request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
+                request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
                 request.getRequestDispatcher("/driver?action=show").forward(request, response);
             } else {
                 request.setAttribute("ERROR", "CAN NOT UPDATE DRIVER");
