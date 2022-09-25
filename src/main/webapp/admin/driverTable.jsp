@@ -78,7 +78,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1">Gender</label>
                                                             <select name="sex" class="form-control">
-                                                                <option value="true" selected>MALE</option>
+                                                                <option value="true">MALE</option>
                                                                 <option value="false">FEMALE</option>
                                                             </select>
                                                         </div>
@@ -128,100 +128,116 @@
                                             <tbody>
                                             <c:forEach items="${requestScope.LIST_ALL_DRIVER}" var="d" varStatus="counter">
                                                 <tr>
-                                            <!--<form action="driver">-->
-                                                <td>${counter.count}</td>
-                                                <td>${d.driverID}</td>
-                                                <td>${d.driverName}</td>
-                                                <td>${d.DOB}</td>
-                                                <td>${d.sex}</td>
-                                                <td>${d.driverPicture}</td>
-                                                <td>${d.phoneNumber}</td>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${d.status eq 0}">
-                                                            INACTIVE
-                                                        </c:when>
-                                                        <c:when test="${d.status eq 1}">
-                                                            ACTIVE
-                                                        </c:when>
-                                                        <c:when test="${d.status eq 2}">
-                                                            ONGOING
-                                                        </c:when>
-                                                    </c:choose>
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${d.driverID.trim()}">
-                                                        <i class="fa fa-pen"></i>
-                                                    </button>
-                                                    <div class="modal fade" id="modify-${d.driverID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                        <div class="modal-dialog" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${d.driverName}</h5>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <form action="driver">
-                                                                    <div class="modal-body">
+                                                    <td>${counter.count}</td>
+                                                    <td>${d.driverID}</td>
+                                                    <td>${d.driverName}</td>
+                                                    <td>${d.DOB}</td>
+                                                    <td>${d.sex eq "true"? "MALE":"FEMALE"}</td>
+                                                    <td><<img src="${d.driverPicture}" alt="alt"/></td>
+                                                    <td>${d.phoneNumber}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${d.status eq 0}">
+                                                                INACTIVE
+                                                            </c:when>
+                                                            <c:when test="${d.status eq 1}">
+                                                                ACTIVE
+                                                            </c:when>
+                                                            <c:when test="${d.status eq 2}">
+                                                                ONGOING
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${d.driverID.trim()}">
+                                                            <i class="fa fa-pen"></i>
+                                                        </button>
+                                                        <div class="modal fade" id="modify-${d.driverID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${d.driverName}</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <form action="driver">
                                                                         <div class="modal-body">
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Driver ID</label>
-                                                                                <input type="text" name="driverID" class="form-control" value="${d.driverID.trim()}" id="exampleInputEmail1" readonly placeholder="Enter Driver ID">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Driver Name</label>
-                                                                                <input type="text" name="driverName" class="form-control" value="${d.driverName.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Name">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">DOB</label>
-                                                                                <input type="date" name="DOB" class="form-control" value="${d.DOB}" id="exampleInputEmail1" placeholder="Enter DOB">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Gender</label>
-                                                                                <select name="sex" class="form-control">
-                                                                                    <option value="true" ${d.sex eq true?"selected":""} >MALE</option>
-                                                                                    <option value="false" ${d.sex eq false?"selected":""}>FEMALE</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Driver Picture</label>
-                                                                                <input type="text" name="driverPic" class="form-control" value="${d.driverPicture.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Picture">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Phone Number</label>
-                                                                                <input type="text" name="phoneNumber" class="form-control" value="${d.phoneNumber.trim()}" id="exampleInputEmail1" placeholder="Enter Phone Number">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Status</label>
-                                                                                <select name="status" class="form-control">
-                                                                                    <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
-                                                                                    <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
-                                                                                    <option value="2" ${d.status eq 2?"selected":""}>ONGOING</option>
-                                                                                </select>
+                                                                            <div class="modal-body">
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Driver ID</label>
+                                                                                    <input type="text" name="driverID" class="form-control" value="${d.driverID.trim()}" id="exampleInputEmail1" readonly placeholder="Enter Driver ID">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Driver Name</label>
+                                                                                    <input type="text" name="driverName" class="form-control" value="${d.driverName.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Name">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">DOB</label>
+                                                                                    <input type="date" name="DOB" class="form-control" value="${d.DOB}" id="exampleInputEmail1" placeholder="Enter DOB">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Gender</label>
+                                                                                    <select name="sex" class="form-control">
+                                                                                        <option value="true" ${d.sex eq "1"?"selected":""}>MALE</option>
+                                                                                        <option value="false" ${d.sex eq "0"?"selected":""}>FEMALE</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Driver Picture</label>
+                                                                                    <input type="text" name="driverPic" class="form-control" value="${d.driverPicture.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Picture">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Phone Number</label>
+                                                                                    <input type="text" name="phoneNumber" class="form-control" value="${d.phoneNumber.trim()}" id="exampleInputEmail1" placeholder="Enter Phone Number">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Status</label>
+                                                                                    <select name="status" class="form-control">
+                                                                                        <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
+                                                                                        <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
+                                                                                        <option value="2" ${d.status eq 2?"selected":""}>ONGOING</option>
+                                                                                    </select>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                        <button type="submit" name="action" value="update" class="btn btn-primary">Save</button>
-                                                                    </div>
-                                                                </form>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            <button type="submit" name="action" value="update" class="btn btn-primary">Save</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <form action="driver">
-                                                        <input type="hidden" name="driverID" value="${d.driverID.trim()}">
-                                                        <button type="submit" name="action" value="delete" class="btn btn-primary">
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${d.driverID.trim()}">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </button>
-                                                    </form>
-                                                </td>
-                                            <!--</form>-->
-                                            </tr>
-                                        </c:forEach>
+                                                        <div class="modal fade" id="delete-${d.driverID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Driver ${d.driverName}</h5>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <form action="driver">
+                                                                        <div class="modal-footer">
+                                                                            <input type="hidden" name="driverID" value="${d.driverID.trim()}">
+                                                                            <button type="submit" name="action" value="delete" class="btn btn-primary">
+                                                                                Delete
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -318,16 +334,16 @@
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS!=null}">
-                $(document).ready(function () {
-                    $("#showsuccess").modal('show');
+            $(document).ready(function () {
+                $("#showsuccess").modal('show');
 //                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
-                });
+            });
             </c:if>
             <c:if test="${requestScope.ERROR!=null}">
-                $(document).ready(function () {
-                    $("#showerror").modal('show');
+            $(document).ready(function () {
+                $("#showerror").modal('show');
 //                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
-                });
+            });
             </c:if>
         </script>
     </body>

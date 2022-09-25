@@ -122,12 +122,12 @@
         <!-- End banner Area -->
 
         <!-- Start popular-destination Area -->
-        <section class="recent-blog-area section-gap">
+        <section class="recent-blog-area">
             <div class="container">
-                <div class="row d-flex justify-content-center">
+                <div class="row d-flex justify-content-center align-items-center">
                     <div class="menu-content pb-60 col-lg-9">
                         <div class="title text-center">
-                            <h1 class="mb-10">Popular Route</h1>
+                            <h1 class="mb-10 mt-30">Popular Route</h1>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,9 @@
                         <div class="single-recent-blog-post item">
                             <div class="">
                                 <div class="overlay overlay-bg"></div>
-                                <img class="img-fluid" src="https://storage.googleapis.com/vex-config/cms-tool/destination/images/3/img_hero.png" alt="">
+                                <img class="img-fluid" 
+                                     src="https://storage.googleapis.com/vex-config/cms-tool/destination/images/3/img_hero.png" 
+                                     alt="">
                             </div>
                             <div class="desc text-center mt-10">
                                 <h4>Sài Gòn - Đà Lạt</h4>
@@ -147,7 +149,9 @@
                         <div class="single-recent-blog-post item">
                             <div class="thumb">
                                 <div class="overlay overlay-bg"></div>
-                                <img class="img-fluid" src="https://storage.googleapis.com/vex-config/cms-tool/destination/images/5/img_hero.png?v1" alt="">
+                                <img class="img-fluid" 
+                                     src="https://storage.googleapis.com/vex-config/cms-tool/destination/images/5/img_hero.png?v1" 
+                                     alt="">
                             </div>
                             <div class="desc text-center mt-10">
                                 <h4>Sài Gòn - Nha Trang</h4>
@@ -206,7 +210,7 @@
         <!-- End popular-destination Area -->
 
         <!-- Start other-issue Area -->
-        <section class="other-issue-area section-gap">
+        <section class="other-issue-area">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="menu-content pb-70 col-lg-9">
@@ -276,7 +280,7 @@
         <!-- End other-issue Area -->
 
         <!-- Start Platform and connect -->
-        <section class="other-issue-area section-gap">
+        <section class="other-issue-area">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="menu-content pb-70 col-lg-9">
@@ -336,7 +340,7 @@
         <!-- End Platform and connect -->
 
         <!-- Start Gas station -->
-        <section class="other-issue-area section-gap">
+        <section class="other-issue-area">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="menu-content pb-70 col-lg-9">
@@ -392,7 +396,7 @@
         <!-- End Gas station -->
 
         <!-- start footer Area -->
-        <footer class="footer-area section-gap">
+        <footer class="footer-area">
             <div class="container">
 
                 <div class="row">

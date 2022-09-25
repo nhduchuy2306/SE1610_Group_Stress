@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MinhQuang
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/HomeController"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
 
     @Override
@@ -30,6 +30,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        doGet(request, response);
     }
 
 

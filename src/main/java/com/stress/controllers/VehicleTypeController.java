@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MinhQuang
  */
-@WebServlet(name = "VehicleTypeController", urlPatterns = {"admin/VehicleTypeController"})
+@WebServlet(name = "VehicleTypeController", urlPatterns = {"/VehicleTypeController"})
 public class VehicleTypeController extends HttpServlet {
 
     /**
