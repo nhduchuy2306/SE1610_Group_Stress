@@ -48,7 +48,7 @@
             <span>Route</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="vehicleTypeTable.jsp">
+        <a class="nav-link" href="admin/VehicleTypeController?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Vehicle Type</span></a>
     </li>

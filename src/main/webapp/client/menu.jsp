@@ -30,7 +30,7 @@
                 <li><a href="packages.html">Packages</a></li>
                 <li><a href="hotels.html">Hotels</a></li>
                 <li><a href="contact.html">Contact</a></li>
-                <li><a href="login.jsp">Login</a></li>
+                <li><a href="client/login.jsp">Login</a></li>
                 <li><a href="register.jsp">Register</a></li>
                 <li><a href="">Logout</a></li>
             </ul>
