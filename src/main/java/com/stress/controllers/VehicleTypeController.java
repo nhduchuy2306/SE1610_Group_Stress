@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MinhQuang
  */
-@WebServlet(name = "VehicleTypeController", urlPatterns = {"admin/VehicleTypeController"})
+@WebServlet(name = "VehicleTypeController", urlPatterns = {"/admin/VehicleTypeController"})
 public class VehicleTypeController extends HttpServlet {
 
     /**
@@ -62,17 +62,18 @@ public class VehicleTypeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          response.setContentType("text/html;charset=UTF-8");
+         request.setCharacterEncoding("utf-8");
          VehicleTypeDAO vDao = new VehicleTypeDAOImpl();
          String action = request.getParameter("action");
          switch (action) {
             case "show":
-                
-                break;
-            case "create":
+                showAllVehicleType(request, response, vDao);
                 break;
             case "update":
+                updateVehicleType(request, response, vDao);
                 break;
             case "delete":
+                deleteVehicleType(request, response, vDao);
                 break;
             default:
                 throw new AssertionError();
@@ -90,18 +91,51 @@ public class VehicleTypeController extends HttpServlet {
         }
         request.getRequestDispatcher("/admin/vehicleTypeTable.jsp").forward(request, response);
     }
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private void deleteVehicleType(HttpServletRequest request, HttpServletResponse response, VehicleTypeDAO vDAO) 
+             throws ServletException, IOException {
+        String vehicleTypeID = request.getParameter("vehicleTypeID");
+        try {
+            if(vDAO.deleteVehicleType(vehicleTypeID)) 
+                showAllVehicleType(request, response, vDAO);
+        } catch (Exception e) {
+            System.out.println("Error at Delete VehicleType " + e.toString());
+        }
+    }
+     private void updateVehicleType(HttpServletRequest request, HttpServletResponse response, VehicleTypeDAO vDAO) 
+             throws ServletException, IOException {
+         request.setCharacterEncoding("UTF-8");
+         int vehicleTypeID = Integer.parseInt(request.getParameter("vehicleTypeID"));
+         String vehicleTypeName = request.getParameter("vehicleTypeName");
+         int totalSeat = Integer.parseInt(request.getParameter("totalSeat"));
+         VehicleType updateVehicleTypeItem = new VehicleType(vehicleTypeID, vehicleTypeName, totalSeat);
+         try {
+             if(vDAO.updateVehicleType(updateVehicleTypeItem)) 
+                 showAllVehicleType(request, response, vDAO);
+         } catch (Exception e) {
+             System.out.println("Error at Update Vehicle Type " + e.toString());
+         } 
+         
+     }
+     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        String vehicleName = request.getParameter("vehicleTypeName");
+        int totalSeat = Integer.parseInt(request.getParameter("totalSeat"));
+        VehicleType newVehicleType = new VehicleType(0, vehicleName, totalSeat);
+        VehicleTypeDAO vtDao = new VehicleTypeDAOImpl();
+        try {
+            if(vtDao.createVehicleType(newVehicleType)) 
+            showAllVehicleType(request, response, vtDao);
+                 
+        } catch (Exception e) {
+            System.out.println("Error at Create Vehicle Type " + e.toString());
+        }
+        
+            
+        
     }
 
     /**
