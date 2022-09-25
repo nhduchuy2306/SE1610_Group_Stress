@@ -1,7 +1,9 @@
 
 package com.stress.service;
-
 import com.stress.dao.RoleDAO;
+package com.stress.service;
+import com.stress.dao.RoleDAO;
+import java.sql.SQLException;
 import com.stress.dto.Role;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
@@ -11,13 +13,12 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Huy
+ * @author MinhQuang
  */
-public class RoleDAOImpl implements RoleDAO{
-
-    @Override
-    public Role getRoleById(String roleID) throws SQLException {
-        String sql = "SELECT [RoleID],[RoleName] FROM tblRoles WHERE [RoleID] = ?";
+public class RoleDAOImpl implements RoleDAO {
+    @Override 
+    public Role getRoleByID(String roleID) throws SQLException {
+        Role role = null;
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -37,5 +38,4 @@ public class RoleDAOImpl implements RoleDAO{
         }
         return null;
     }
-    
 }

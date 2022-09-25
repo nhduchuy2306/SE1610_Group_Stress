@@ -30,11 +30,10 @@ public class LoginGoogleController extends HttpServlet {
 
     
     private static final String ERROR = "login.jsp";
-    private static final String REGISTER = "register.jsp";
     private static final String USER_ROLE = "1";
     private static final String ADMIN_ROLE = "2"; 
     private static final String ADMIN = "admin/index.jsp";
-    private static final String USER = "index.jsp";
+    private static final String USER = "client/index.jsp";
     
 
 
@@ -62,15 +61,14 @@ public class LoginGoogleController extends HttpServlet {
                     if (loginUser != null) {
                         session.setAttribute("LOGIN_USER", loginUser);
                         if(loginUser.getRole().getRoleID().trim().equals(ADMIN_ROLE)) {
-                            System.out.println("Welcome Admin");
                             url = ADMIN;
                         }
                         if(loginUser.getRole().getRoleID().trim().equals(USER_ROLE)) url = USER;
                         
                        
                     } else {
-                        session.setAttribute("LOGIN_USER", loginUser);
-                        url = REGISTER;
+                        if(userDao.registerByEmail(googlePojo))
+                        url = USER;
                     }
 
 

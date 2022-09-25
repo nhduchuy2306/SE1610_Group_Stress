@@ -2,6 +2,7 @@ package com.stress.service;
 
 import com.stress.dao.RoleDAO;
 import com.stress.dao.UserDAO;
+import com.stress.dto.GooglePojo;
 import com.stress.dto.Role;
 import com.stress.dto.User;
 import com.stress.utils.DBConnection;
@@ -21,8 +22,8 @@ public class UserDAOImpl implements UserDAO {
     private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
             + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
     private static final String DELETE = "DELETE tblUsers WHERE UserID=?";
-    private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [Password], [Address],[DOB], [PhoneNumber], [Sex], [RoleID], [AccountBalance]"
-            + "  FROM tblUsers WHERE [Email] = ? AND [Status] = 1";
+    private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
+            + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
     private static final String REGITER = "INSERT INTO tblUsers(UserID,Username,[Password],Email,RoleID,[Status]) VALUES (?,?,?,?,?,?)";
     private static final String CHECK_DUPLICATE = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
 
@@ -50,16 +51,9 @@ public class UserDAOImpl implements UserDAO {
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
                     int status = rs.getInt("Status");
-                    
-                    ptm = conn.prepareStatement("SELECT RoleName FROM tblRoles WHERE RoleID = ?");
-                    ptm.setString(1, roleID);
-                    rs1 = ptm.executeQuery();
-                    Role role = null;
-                    if(rs1.next()) {
-                        String roleName = rs.getString("roleName");
-                        role = new Role(roleID, roleName);
-                    }
-                    
+                                        
+                    Role role = new RoleDAOImpl().getRoleByID(roleID);
+                    if(role != null)
                     userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
                 }
             }
@@ -92,18 +86,16 @@ public class UserDAOImpl implements UserDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(LOGIN_BY_EMAIL);
                 ptm.setString(1, email);
+                ptm.setInt(2, User.ACTIVE_GOOGLE);
                 rs = ptm.executeQuery();
                 if (rs.next()) {
                     String userID = rs.getString("UserID");
                     String username = rs.getString("Username");
-                    String password = rs.getString("Password");
-                    Date DOB = rs.getDate("DOB");
-                    String address = rs.getString("Address");
-                    String phoneNumber = rs.getString("PhoneNumber");
-                    boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
-                    String AccountBalance = rs.getString("AccountBalance");
-//                    user = new User(userID, username, password, email, DOB, address, phoneNumber, sex, roleID, AccountBalance, true);
+                    
+                    Role role = new RoleDAOImpl().getRoleByID(roleID);
+                    if(role != null)
+                    user = new User(userID, username, null, email, null, null, null, true, role, null, User.ACTIVE_GOOGLE);
                 }
             }
         } catch (Exception e) {
@@ -228,7 +220,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement ptm = null;
         ResultSet rs = null;
         try {
-            conn = conn = DBConnection.getConnection();
+            conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(CHECK_DUPLICATE);
                 ptm.setString(1, userID);
@@ -253,7 +245,6 @@ public class UserDAOImpl implements UserDAO {
         }
         return check;
     }
-
     @Override
     public User getUserByID(String userID) throws SQLException {
         String sql = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
@@ -287,6 +278,31 @@ public class UserDAOImpl implements UserDAO {
             if(rs!=null) rs.close();
         }
         return null;
+    }   
+    @Override
+    public boolean registerByEmail(GooglePojo googleUser) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("INSERT INTO tblUsers([UserID], [Username], [Email], [Status],[RoleID], [Password]) VALUES (?,?,?,?,?,?)");
+                ptm.setString(1, googleUser.getId());
+                ptm.setString(2, googleUser.getName());
+                ptm.setString(3, googleUser.getEmail());
+                ptm.setInt(4, User.ACTIVE_GOOGLE);
+                ptm.setInt(5, 1);
+                ptm.setString(6, "123");
+                check = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
     }
-
 }
