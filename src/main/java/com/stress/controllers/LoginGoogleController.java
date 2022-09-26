@@ -51,12 +51,13 @@ public class LoginGoogleController extends HttpServlet {
                         if(loginUser.getRole().getRoleID().trim().equals(ADMIN_ROLE)) {
                             url = ADMIN;
                         }
-                        if(loginUser.getRole().getRoleID().trim().equals(USER_ROLE)) url = USER;
-                        
-                       
+                        if (loginUser.getRole().getRoleID().trim().equals(USER_ROLE)){
+                            url = USER;
+                        }
                     } else {
-                        if(userDao.registerByEmail(googlePojo))
-                        url = USER;
+                        if(userDao.registerByEmail(googlePojo)){
+                            url = USER;
+                        }
                     }
 
 

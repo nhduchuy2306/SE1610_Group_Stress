@@ -16,14 +16,6 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private RoleDAO roleDAO = new RoleDAOImpl(); // DONT REMOVE this is use for get User by ID 
-    
-//    private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-//            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
-    private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
-            + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
-    
-    private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
-            + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
 
     @Override
     public List<User> getAllUser() throws SQLException {
@@ -81,10 +73,12 @@ public class UserDAOImpl implements UserDAO {
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
+        String getUserByEmail = "SELECT [UserID], [Username], [RoleID] "
+            + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(LOGIN_BY_EMAIL);
+                ptm = conn.prepareStatement(getUserByEmail);
                 ptm.setString(1, email);
                 ptm.setInt(2, User.ACTIVE_GOOGLE);
                 rs = ptm.executeQuery();
@@ -120,10 +114,12 @@ public class UserDAOImpl implements UserDAO {
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
+        String login = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
+            + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(LOGIN);
+                ptm = conn.prepareStatement(login);
                 ptm.setString(1, userID);
                 ptm.setString(2, password);
                 rs = ptm.executeQuery();
@@ -134,15 +130,15 @@ public class UserDAOImpl implements UserDAO {
                     String address = rs.getString("address");
                     String phoneNumber = rs.getString("phoneNumber");
                     boolean sex = rs.getBoolean("sex");
-                    String roleID = rs.getString("roleID");
+                    Role role=roleDAO.getRoleByID(rs.getString("roleID"));
                     Float AccountBalance = rs.getFloat("AccountBalance");
                     String tmpAccountBalance = Float.toString(AccountBalance);
-                    boolean status = rs.getBoolean("status");
-//                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, tmpAccountBalance, status);
+                    int status = rs.getInt("status");
+                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, role, tmpAccountBalance, status);
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error at UserDAOImpl - getUserByIDAndPassword"+ e.toString());
         } finally {
             if (rs != null) {
                 rs.close();
@@ -219,7 +215,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean checkDuplicateByID(String userID,String email) throws SQLException {
+    public boolean checkDuplicateByIDAndEmail(String userID,String email) throws SQLException {
         boolean check=false;
         Connection conn=null;
         PreparedStatement ptm =null;
@@ -312,8 +308,8 @@ public class UserDAOImpl implements UserDAO {
     public static void main(String[] args) {
         try {
             UserDAOImpl dao=new UserDAOImpl();
-            boolean check=dao.deleteUser("chu be dan 9");
-            System.out.println("check:" +check);
+            User user=dao.getUserByIDAndPassword("buoncuatoi", "123");
+            System.out.println(user);
         } catch (Exception e) {
         }
     }
@@ -348,4 +344,5 @@ public class UserDAOImpl implements UserDAO {
         }
         
     }
+   
 }

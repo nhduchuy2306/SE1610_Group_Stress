@@ -18,7 +18,7 @@ public interface UserDAO {
     boolean deleteUser(String userID) throws SQLException;
     boolean registerNewUSer(String userID,String userName,String password,String email,String DOB,String address,
         String phoneNumber,String sex) throws SQLException;
-    boolean checkDuplicateByID(String userID,String email) throws SQLException;
+    boolean checkDuplicateByIDAndEmail(String userID,String email) throws SQLException;
     User getUserByID(String userID) throws SQLException;
     boolean registerByEmail(GooglePojo googleUser) throws SQLException;
     boolean updateUser(String userID,String userName,String email,String DOB,String address,
