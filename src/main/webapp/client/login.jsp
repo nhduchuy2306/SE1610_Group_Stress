@@ -42,7 +42,7 @@
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                         </div>
-                                        <form class="user" action="http://localhost:8080/CarBooking/user" method="POST">
+                                        <form class="user" action="http://localhost:8080/CarBooking/user" method="post">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user"
                                                        id="exampleInputEmail" aria-describedby="emailHelp"
@@ -59,9 +59,10 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
+<!--                                            <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>-->
       
-                                            <input style="margin-top: 10px" type="submit" class="btn btn-primary btn-user btn-block" name=action" value="Login"/>
+<!--                                            <input style="margin-top: 10px" type="submit" class="btn btn-primary btn-user btn-block" name=action" value="Login"/>-->
+                                            <input type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
                                             <hr>
 
                                             <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code

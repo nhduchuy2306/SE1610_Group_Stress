@@ -35,14 +35,6 @@ public class LoginGoogleController extends HttpServlet {
             if (code != null && !code.isEmpty()) {
                 String accessToken = GoogleUtils.getToken(code);
                 GooglePojo googlePojo = GoogleUtils.getUserInfo(accessToken);
-
-                // This is a reCaptcha check box using when check login
-                // Login With Google, not using Recaptcha
-                //String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-                //boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-
-               
-
                 if (googlePojo != null) {
                     UserDAO userDao = new UserDAOImpl();
                     User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
