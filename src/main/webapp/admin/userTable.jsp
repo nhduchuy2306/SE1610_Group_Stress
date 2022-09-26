@@ -90,7 +90,7 @@
                                                             
                                                         </c:choose>
                                                         </td>
-                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${user.userID.trim()}">
+                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit-${user.userID.trim()}">
                                                                 EDIT
                                                             </button>
                                                         </td> 
@@ -98,7 +98,7 @@
 <!--                                                </form>-->
                                             <!--Start-Modal-->
 
-                                                        <div class="modal fade" id="${user.userID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="edit-${user.userID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -178,9 +178,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                             <!-- End- Modal-->
-                                                        
                                             </c:forEach>
                                             </tbody>
                                         </table>
