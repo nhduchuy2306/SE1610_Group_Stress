@@ -43,7 +43,7 @@ public class DriverController extends HttpServlet {
                 showDriverTable(request, response);
                 break;
             default:
-                showErrorPage(request,response);
+                showErrorPage(request, response);
                 break;
         }
     }
@@ -56,6 +56,8 @@ public class DriverController extends HttpServlet {
             if (list != null) {
                 request.setAttribute("LIST_ALL_DRIVER", list);
                 request.getRequestDispatcher("/admin/driverTable.jsp").forward(request, response);
+            } else {
+                showErrorPage(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,13 +125,13 @@ public class DriverController extends HttpServlet {
             String driverPic = request.getParameter("driverPic").trim();
             String phoneNumber = request.getParameter("phoneNumber").trim();
             String status = request.getParameter("status").trim();
-            
-            Driver driver = new Driver(driverID, driverName, Date.valueOf(dob), Boolean.parseBoolean(sex), 
+
+            Driver driver = new Driver(driverID, driverName, Date.valueOf(dob), Boolean.parseBoolean(sex),
                     driverPic, phoneNumber, Integer.parseInt(status));
-            
+
             DriverDAO dao = new DriverDAOImpl();
             boolean check = dao.updateDriver(driver);
-            
+
             if (check) {
                 request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
                 request.getRequestDispatcher("/driver?action=show").forward(request, response);

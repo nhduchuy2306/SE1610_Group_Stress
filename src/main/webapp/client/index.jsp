@@ -56,7 +56,8 @@
     <body>
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
-        </header><!-- #header -->
+        </header>
+        <!-- #header -->
         <!-- start banner Area -->
         <section class="banner-area relative">
             <div class="overlay overlay-bg"></div>
