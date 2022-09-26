@@ -42,6 +42,9 @@ public class DriverController extends HttpServlet {
             case "show":
                 showDriverTable(request, response);
                 break;
+            default:
+                showErrorPage(request,response);
+                break;
         }
     }
 
@@ -137,5 +140,9 @@ public class DriverController extends HttpServlet {
             e.printStackTrace();
         }
     }
-    
+
+    private void showErrorPage(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.getRequestDispatcher("/client/error.jsp").forward(request, response);
+    }
 }
