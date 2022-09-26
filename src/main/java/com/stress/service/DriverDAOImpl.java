@@ -76,7 +76,9 @@ public class DriverDAOImpl implements DriverDAO{
     
     @Override
     public boolean deleteDriver(String DriverID) throws SQLException{
-        String sql = "DELETE tblDrivers WHERE [DriverID]=?";
+        String sql = "UPDATE tblDrivers "
+                    + "SET [Status] = 0 "
+                    + "WHERE DriverID=?";
         boolean result=false;
         Connection conn=null;
         PreparedStatement ptm=null;
