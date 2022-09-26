@@ -27,9 +27,10 @@ public class RoleDAOImpl implements RoleDAO {
             ptm.setString(1, roleID);
             rs = ptm.executeQuery();
             while(rs.next()){
-                return new Role(rs.getString("RoleID"), rs.getString("RoleName"));
+                return new Role(rs.getString("RoleID").trim(), rs.getString("RoleName"));
             }
         } catch (Exception e) {
+            System.out.println("Error at RoleDAOImpl - getRoleByID"+ e.toString());
         } finally {
             if(conn!=null) conn.close();
             if(ptm!=null) ptm.close();
@@ -37,5 +38,11 @@ public class RoleDAOImpl implements RoleDAO {
         }
         return null;
     }
-
+    public static void main(String[] args) {
+        try {
+            RoleDAOImpl dao = new RoleDAOImpl();
+            System.out.println(dao.getRoleByID("1"));
+        } catch (Exception e) {
+        }
+    }
 }

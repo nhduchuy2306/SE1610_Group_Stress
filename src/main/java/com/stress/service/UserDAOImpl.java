@@ -17,17 +17,18 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private RoleDAO roleDAO = new RoleDAOImpl(); // DONT REMOVE this is use for get User by ID 
     
-    private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
+//    private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
+//            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
     private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
             + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
     
     private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
             + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
-    private static final String CHECK_DUPLICATE = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=?";
 
     @Override
     public List<User> getAllUser() throws SQLException {
+        String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
+            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
         List<User> userList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -36,7 +37,7 @@ public class UserDAOImpl implements UserDAO {
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(GET_ALL_USER);
+                ptm = conn.prepareStatement(getAllUser);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String userID = rs.getString("UserID");
@@ -205,7 +206,7 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setString(8, sex);
                 ptm.setString(9, "1");
                 ptm.setDouble(10, 0);
-                ptm.setBoolean(11, true);
+                ptm.setInt(11, User.ACTIVE_NORMAL);
                 check=ptm.executeUpdate()>0? true:false;         
             }
         } catch (Exception e) {
@@ -218,15 +219,17 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean checkDuplicateByID(String userID) throws SQLException {
+    public boolean checkDuplicateByID(String userID,String email) throws SQLException {
         boolean check=false;
         Connection conn=null;
         PreparedStatement ptm =null;
         ResultSet rs= null;
+        String checkDuplicate = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=? AND Email=?";
+
         try{
             conn=DBConnection.getConnection();
             if(conn!=null){
-                ptm=conn.prepareStatement(CHECK_DUPLICATE);
+                ptm=conn.prepareStatement(checkDuplicate);
                 ptm.setString(1, userID);
                 rs=ptm.executeQuery();
                 if(rs!=null){
@@ -313,5 +316,36 @@ public class UserDAOImpl implements UserDAO {
             System.out.println("check:" +check);
         } catch (Exception e) {
         }
+    }
+
+    @Override
+    public boolean updateUser(String userID,String userName,String email,String DOB,String address,
+        String phoneNumber,String sex,String roleID,String status) throws SQLException {
+        boolean checkUpdate=false;
+        Connection conn =null;
+        PreparedStatement ptm = null;
+        String updateUser="UPDATE tblUsers SET UserName=?,Email=?,DOB=?,Address=?,"
+                + "PhoneNumber=?,Sex=?,[RoleID]=?,[status]=?  WHERE UserID=?";
+        try {
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(updateUser);
+                ptm.setString(1, userName);
+                ptm.setString(2, email);
+                ptm.setString(3, DOB);
+                ptm.setString(4, address);
+                ptm.setString(5, phoneNumber);
+                ptm.setString(6, sex);
+                ptm.setString(7, roleID);
+                ptm.setString(8, status);
+                ptm.setString(9, userID);
+                checkUpdate=ptm.executeUpdate()>0?true:false;
+            }
+        } catch (Exception e) {
+            System.out.println("Eror at UserDAOImpl - updateUser: "+ e.toString());
+        } finally {
+            return checkUpdate;
+        }
+        
     }
 }

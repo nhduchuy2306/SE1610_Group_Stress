@@ -56,12 +56,14 @@
                                                     <th>Phone Number</th>
                                                     <th>Address</th>
                                                     <th>Password</th>
+                                                    <th>Role</th>
+                                                    <th>Status</th>
                                                     <th>EDIT</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <c:forEach var="user" varStatus="counter" items="${requestScope.LIST_USER}">
-                                                <form action="MainController">
+<!--                                                <form action="MainController">-->
                                                     <tr>
                                                         <td>${counter.count}</td>
                                                         <td>${user.userID}</td>
@@ -77,29 +79,43 @@
                                                         <td>${user.phoneNumber}</td>
                                                         <td>${user.address}</td>
                                                         <td>${user.password}</td>
-                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${user.userID}" data-whatever="@mdo">EDIT</button></td> 
+                                                        <td>${user.role.roleName}</td>
+                                                        <td><c:choose>
+                                                            <c:when test="${user.status eq 0}">
+                                                                INACTIVE
+                                                            </c:when>
+                                                            <c:when test="${user.status eq 1}">
+                                                                ACTIVE NORMAL
+                                                            </c:when>
+                                                            
+                                                        </c:choose>
+                                                        </td>
+                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${user.userID.trim()}">
+                                                                EDIT
+                                                            </button>
+                                                        </td> 
                                                     </tr>
-                                                </form>
-                                                        <!--Start Modal-->
+<!--                                                </form>-->
+                                            <!--Start-Modal-->
 
-                                                        <div class="modal fade" id="${user.userID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="${user.userID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">User</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">USER</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <form>
+                                                                       <form action="http://localhost:8080/CarBooking/user" method="POST">
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">UserID</label>
-                                                                                <input type="text" class="form-control" id="userID" readonly="" value="${user.userID}">
+                                                                                <input type="text" class="form-control" name="userID" readonly=""  value="${user.userID}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Name</label>
-                                                                                <input type="text" class="form-control" id="userName"  value="${user.username}">
+                                                                                <input type="text" class="form-control" name="userName"  value="${user.username}">
                                                                             </div>
                                                                             
                                                                             <div class="row" style="display: inline-flex">
@@ -107,64 +123,63 @@
                                                                                     <label for="recipient-name" class="col-form-label">Gender</label>
                                                                                     <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
                                                                                             name="gender" aria-label="Default select example">
-                                                                                        <option value="1">Male</option>
-                                                                                        <option value="0">Female</option>
+                                                                                        <option value="1"${user.sex eq true?"selected":""}>Male</option>
+                                                                                        <option value="0"${user.sex eq false?"selected":""}>Female</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="form-group col-sm-6 mb-3 mb-sm-0">
                                                                                     <label for="recipient-name" class="col-form-label">Birthday</label>
-                                                                                    <input type="date" class="form-control" id="birthday"  value="${user.dob}">
+                                                                                    <input type="date" class="form-control" name="birthday"  value="${user.dob}">
                                                                                 </div>
                                                                             </div>
                                                                             
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Email</label>
-                                                                                <input type="email" class="form-control" id="email"  value="${user.userID}">
+                                                                                <input type="email" class="form-control" name="email"  value="${user.userID}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Phone Number</label> <br/>
-                                                                                <input type="text" class="form-control" id="phoneNum"  value="${user.phoneNumber}">
+                                                                                <input type="text" class="form-control" name="phoneNum"  value="${user.phoneNumber}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Address</label>
-                                                                                <input type="text" class="form-control" id="address"  value="${user.address}">
+                                                                                <input type="text" class="form-control" name="address"  value="${user.address}">
                                                                             </div>
                                                                             <div class="form-group row" style="display: inline-flex">
                                                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                                                     <label for="recipient-name" class="col-form-label">Role</label><br/> 
                                                                                    
                                                                                     <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                            name="roleID" id="role">
-                                                                                        <option id="1" value="1" selected="${selected1}" >USER</option>
-                                                                                        <option id="2" value="2" selected="${selected2}">STAFF</option>
-                                                                                        <option id="3" value="3" selected="${selected3}" >ADMIN</option>
+                                                                                            name="roleID">
+                                                                                        <option  value="1" ${user.role.roleID eq "1"?"selected":""}>USER</option>
+                                                                                        <option  value="2" ${user.role.roleID eq "2"?"selected":""}>STAFF</option>
+                                                                                        <option  value="3" ${user.role.roleID eq "3"?"selected":""} >ADMIN</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                
+                                                                                    
                                                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                                                     <label for="recipient-name" class="col-form-label">Status</label>      
                                                                                     <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
                                                                                             name="status" aria-label="Default select example">
-                                                                                        <option value="1">ACTIVE</option>
-                                                                                        <option value="0">INACTIVE</option>
+                                                                                        <option value="1" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
+                                                                                        <option value="1" ${user.status eq 1?"selected":""}>ACTIVE NORMAL</option>
+                                                                                        <option value="0" ${user.status eq 0?"selected":""}>INACTIVE</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                
                                                                             </div>
-                                         
+                                                                            <div class="modal-footer">
+                                                                                <input style="background-color: #28fe09; padding: 5px 10px; border-color: grey" type="submit" name="action" value="update" >
+                                                                                <a style="text-decoration: none;border: 2px solid #fa0927; padding: 5px 12px; background-color: red; color: black"
+                                                                                   href="http://localhost:8080/CarBooking/user?action=delete&userID=${user.userID}">Delete</a>
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            </div>
                                                                         </form>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <input style="background-color: #28fe09; padding: 5px 10px; border-color: grey" type="submit" name="action" value="update" >
-                                                                        <a style="text-decoration: none;border: 2px solid #fa0927; padding: 5px 12px; background-color: red; color: black"
-                                                                           href="http://localhost:8080/CarBooking/user?action=delete&userID=${user.userID}">Delete</a>
-                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <!--End Modal-->
+                                            <!-- End- Modal-->
                                                         
                                             </c:forEach>
                                             </tbody>
