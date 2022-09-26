@@ -9,6 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Login</title>
+        <link rel="shortcut icon" href="img/fav.png">
         <!-- Custom fonts for this template-->
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
@@ -41,15 +42,15 @@
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                         </div>
-                                        <form class="user">
+                                        <form class="user" action="http://localhost:8080/CarBooking/user" method="post">
                                             <div class="form-group">
-                                                <input type="email" class="form-control form-control-user"
+                                                <input type="text" class="form-control form-control-user"
                                                        id="exampleInputEmail" aria-describedby="emailHelp"
-                                                       placeholder="Enter Email Address...">
+                                                       placeholder="Enter Account..." name="userID">
                                             </div>
                                             <div class="form-group">
                                                 <input type="password" class="form-control form-control-user"
-                                                       id="exampleInputPassword" placeholder="Password">
+                                                       id="exampleInputPassword" placeholder="Password" name="password">
                                             </div>
                                             <div class="form-group">
                                                 <div class="custom-control custom-checkbox small">
@@ -58,10 +59,10 @@
                                                         Me</label>
                                                 </div>
                                             </div>
-                                            <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
-                                            <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                                Login
-                                            </a>
+<!--                                            <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>-->
+      
+<!--                                            <input style="margin-top: 10px" type="submit" class="btn btn-primary btn-user btn-block" name=action" value="Login"/>-->
+                                            <input type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
                                             <hr>
 
                                             <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
