@@ -68,7 +68,7 @@ public class UserController extends HttpServlet {
                 checkValidation=false;
             }
             UserDAO dao=new UserDAOImpl();
-            boolean checkDuplicate=dao.checkDuplicateByID(userID);
+            boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
             boolean check=dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender);
             if(checkValidation==true){
                if (checkDuplicate == true) {
@@ -104,7 +104,20 @@ public class UserController extends HttpServlet {
     private void updateUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         String url="./admin/404.jsp";
         try {
-            
+            String userID=request.getParameter("userID");
+            String userName=request.getParameter("userName");
+            String birthday=request.getParameter("birthday");
+            String gender=request.getParameter("gender");
+            String email=request.getParameter("email");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String roleID=request.getParameter("roleID");
+            String status=request.getParameter("status");
+            UserDAO dao=new UserDAOImpl();
+            boolean checkUpdate=dao.updateUser(userID, userName,email, birthday, address, phoneNum, gender, roleID, status);
+            if(checkUpdate){
+                viewUser(request, response);
+            }
         } catch (Exception e) {
             log("Error at UserController - updateUser: "+ e.toString());
         } finally {
