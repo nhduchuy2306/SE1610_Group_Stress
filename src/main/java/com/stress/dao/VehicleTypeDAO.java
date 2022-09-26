@@ -10,5 +10,6 @@ public interface VehicleTypeDAO {
     public boolean createVehicleType(VehicleType newVehicleType) throws SQLException;
     public boolean updateVehicleType(VehicleType updateVehicleType) throws SQLException;
     public boolean deleteVehicleType(String vehicleTypeID) throws  SQLException;
+    public VehicleType getVehicleTypeByID(int vehicleTypeID) throws SQLException;
     
 }

@@ -264,7 +264,9 @@ public class UserDAOImpl implements UserDAO {
                                 rs.getString("DOB"),
                                 rs.getString("PhoneNumber"),
                                 rs.getBoolean("Sex"),
+
                                 roleDAO.getRoleByID(userID),
+
                                 rs.getString("AccountBalance"),
                                 rs.getInt("Status")
                             );
