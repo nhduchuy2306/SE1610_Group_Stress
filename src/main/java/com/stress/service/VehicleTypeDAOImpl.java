@@ -114,4 +114,31 @@ public class VehicleTypeDAOImpl implements VehicleTypeDAO {
         return check;
     }
     
+    @Override
+    public VehicleType getVehicleTypeByID(int vehicleTypeID) throws SQLException {
+        VehicleType vType = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [VehicleTypeName],[TotalSeat] FROM tblVehicleTypes WHERE [VehicleTypeID] = ?");
+                ptm.setInt(1, vehicleTypeID);
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    String vehicleTypeName = rs.getString("vehicleTypeName");
+                    int totalSeat = rs.getInt("totalSeat");
+                    vType = new VehicleType(vehicleTypeID, vehicleTypeName, totalSeat);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return vType;
+    }
 }

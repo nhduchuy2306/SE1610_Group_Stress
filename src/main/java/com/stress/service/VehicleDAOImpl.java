@@ -6,12 +6,15 @@ import com.stress.dto.Vehicle;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import com.stress.dto.VehicleType;
 
 
 public class VehicleDAOImpl implements VehicleDAO {
-    private static final String DELETE="DELETE tblVehicles WHERE VehicleID=?";
+    private static final String DELETE="UPDATE tblVehicles SET [Status] = ? WHERE VehicleID=?";
     @Override
     public boolean deleteVehicle(String VehicleID) throws SQLException{
         boolean result=false;
@@ -21,7 +24,9 @@ public class VehicleDAOImpl implements VehicleDAO {
             conn=DBConnection.getConnection();
             if(conn!=null){
                 ptm=conn.prepareStatement(DELETE);
-                ptm.setString(1, VehicleID);
+                ptm.setInt(1, Vehicle.INACTIVE);
+                ptm.setString(2, VehicleID);
+                
                 result=ptm.executeUpdate()>0? true:false;
             }
         }catch(Exception e){
@@ -35,24 +40,129 @@ public class VehicleDAOImpl implements VehicleDAO {
 
     @Override
     public Vehicle getVehicleByID(String vehicleID) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Vehicle vehicle = null;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [VehicleName],[LicensePlate],[VehicleTypeID],[Status] FROM tblVehicles WHERE [vehicleID] = ?");
+                ptm.setString(1, vehicleID);
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    String vehicleName = rs.getString("vehicleName");
+                    String licensePlate = rs.getString("licensePlate");
+                    int vehicleTypeID = rs.getInt("vehicleTypeID");
+                    int status = rs.getInt("status");
+                    VehicleType vType = new VehicleTypeDAOImpl().getVehicleTypeByID(vehicleTypeID);
+                    if(vType != null) {
+                        vehicle = new Vehicle(vehicleID, vehicleName, licensePlate, vType, status);
+                    }else 
+                        throw  new Exception();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return vehicle;
     }
-    public boolean createVehicle(Vehicle vhcl) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    @Override
+    public boolean createVehicle(Vehicle vehicle) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("INSERT INTO tblVehicles([VehicleID],[VehicleName],[LicensePlate],[VehicleTypeID],[Status]) VALUES (?,?,?,?,?)");
+                ptm.setString(1, vehicle.getVehicleID());
+                ptm.setString(2, vehicle.getVehicleName());
+                ptm.setString(3, vehicle.getLicensePlate());
+                ptm.setInt(4, vehicle.getVehicleType().getVehicleTypeID());
+                ptm.setInt(5, vehicle.getStatus());
+                
+                check = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
     }
 
     @Override
-    public boolean updateVehicle(Vehicle vhcl) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean updateVehicle(Vehicle vehicle) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("UPDATE tblVehicles SET [VehicleName] = ?, [LicensePlate] = ?, [VehicleTypeID] = ?, [Status] = ? WHERE [VehicleID] = ?");
+                ptm.setString(1, vehicle.getVehicleName());
+                ptm.setString(2, vehicle.getLicensePlate());
+                ptm.setInt(3, vehicle.getVehicleType().getVehicleTypeID());
+                ptm.setInt(4, vehicle.getStatus());
+                ptm.setString(5, vehicle.getVehicleID());
+                check = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
     }
 
-    @Override
-    public List<Vehicle> getVehicleByName(String search) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public List<Vehicle> getAllVehicle() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        List<Vehicle> vList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [VehicleID], [VehicleName],[LicensePlate],[VehicleTypeID],[Status] FROM tblVehicles");
+                rs = ptm.executeQuery();
+                while(rs.next()) {
+                    String vehicleID = rs.getString("VehicleID");
+                    String vehicleName = rs.getString("VehicleName");
+                    String licensePlate = rs.getString("LicensePlate");
+                    int VehicleTypeID = rs.getInt("VehicleTypeID");
+                    int status = rs.getInt("status");
+                    VehicleType vType = new VehicleTypeDAOImpl().getVehicleTypeByID(VehicleTypeID);
+                    if(vType != null) {
+                        vList.add(new Vehicle(vehicleID, vehicleName, licensePlate, vType, status));
+                    }else {
+                        throw new Exception();
+                    }
+                    
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return vList;
+    }
+    
+    public static void main(String[] args) throws SQLException {
+        VehicleDAO vDao = new VehicleDAOImpl();
+        List<Vehicle> vList = vDao.getAllVehicle();
+        for (Vehicle vehicle : vList) {
+            System.out.println(vehicle);
+        }
     }
 }
