@@ -1,14 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package com.stress.controllers;
 
 import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
 
 
-import com.stress.service.UserDAOImpl;
 import com.stress.utils.GoogleUtils;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -18,25 +14,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.stress.dto.User;
+import com.stress.service.UserDAOImpl;
 
-/**
- *
- * @author Huy, Quangtm
- */
 @WebServlet(name = "LoginController", urlPatterns = {"/login"})
 public class LoginGoogleController extends HttpServlet {
 
-
-
-    
     private static final String ERROR = "client/login.jsp";
     private static final String USER_ROLE = "1";
     private static final String ADMIN_ROLE = "2"; 
     private static final String ADMIN = "admin/index.jsp";
     private static final String USER = "client/index.jsp";
     
-
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");

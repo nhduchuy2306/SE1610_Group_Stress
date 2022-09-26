@@ -23,7 +23,7 @@
     </div>
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link" href="userTable.jsp">
+        <a class="nav-link" href="http://localhost:8080/CarBooking/user?action=viewUser">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>User</span></a>
     </li>

@@ -70,16 +70,16 @@
                                                 <i class="fab fa-google fa-fw"></i> Login with Google
                                                 
                                             </a>
-                                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <a href="${pageContext.request.contextPath}/client/index.jsp" class="btn btn-facebook btn-user btn-block">
                                                 <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                                             </a>
                                         </form>
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small" href="forgot-password.jsp">Forgot Password?</a>
+                                            <a class="small" href="${pageContext.request.contextPath}/client/forgot-password.jsp">Forgot Password?</a>
                                         </div>
                                         <div class="text-center">
-                                            <a class="small" href="register.jsp">Create an Account!</a>
+                                            <a class="small" href="${pageContext.request.contextPath}/client/register.jsp">Create an Account!</a>
                                         </div>
                                     </div>
                                 </div>

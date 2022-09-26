@@ -4,8 +4,6 @@
  */
 package com.stress.controllers;
 
-import com.stress.dao.UserDAO;
-import com.stress.service.UserDAOImpl;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,20 +15,24 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MinhQuang
  */
-@WebServlet(name = "HomeController", urlPatterns = {"/HomeController"})
+@WebServlet(name = "HomeController", urlPatterns = {"/home"})
 public class HomeController extends HttpServlet {
 
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    }
+    
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("client/index.jsp").forward(request, response);
+        request.getRequestDispatcher("./client/index.jsp").forward(request, response);
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        doGet(request, response);
     }
-
-
 }
