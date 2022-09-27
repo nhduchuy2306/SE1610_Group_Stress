@@ -53,7 +53,7 @@
             <span>Vehicle Type</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="vehicleTable.jsp">
+        <a class="nav-link" href="VehicleController?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Vehicle</span></a>
     </li>

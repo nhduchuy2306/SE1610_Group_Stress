@@ -32,7 +32,14 @@ CREATE TABLE tblOrders(
 ---x---
 CREATE TABLE tblLocations(
     LocationID INT IDENTITY PRIMARY KEY,
-    LocationName nvarchar(100)
+    LocationName nvarchar(100),
+    CityID INT FOREIGN KEY REFERENCES tblCities()
+    
+)
+CREATE TABLE tblCities(
+    CityID INT IDENTITY PRIMARY KEY,
+    CityName nvarchar(100) UNIQUE
+
 )
 ---x---
 CREATE TABLE tblRoutes(
