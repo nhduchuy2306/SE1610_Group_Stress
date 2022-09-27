@@ -33,7 +33,7 @@ CREATE TABLE tblOrders(
 CREATE TABLE tblLocations(
     LocationID INT IDENTITY PRIMARY KEY,
     LocationName nvarchar(100),
-    CityID INT FOREIGN KEY REFERENCES tblCities()
+    CityID INT FOREIGN KEY REFERENCES tblCities(CityID)
     
 )
 CREATE TABLE tblCities(
@@ -70,7 +70,7 @@ CREATE TABLE tblDriverLicenses(
     Nationality nvarchar(100),
     Class char(2) NOT NULL,
     DateExpired DATE,
-    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL
+    DriverID char(12) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL
 )
 CREATE TABLE tblDrivers(
     DriverID char(12) PRIMARY KEY,
@@ -89,7 +89,7 @@ CREATE TABLE tblTrips(
     [Policy] nvarchar(2000),
     RouteID INT FOREIGN KEY REFERENCES tblRoutes(RouteID) ON UPDATE CASCADE ON DELETE SET NULL,
     VehicleID char(5) FOREIGN KEY REFERENCES tblVehicles(VehicleID) ON UPDATE CASCADE ON DELETE SET NULL,
-    DriverID char(5) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL,
+    DriverID char(12) FOREIGN KEY REFERENCES tblDrivers(DriverID) ON UPDATE CASCADE ON DELETE SET NULL,
     SeatRemain INT,
     [Status] INT NOT NULL DEFAULT 1	
 )
