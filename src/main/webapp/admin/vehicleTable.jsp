@@ -48,7 +48,7 @@
                         <div class="container-fluid">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                    <h2 class="m-0 font-weight-bold text-primary">DRIVERS</h2>
+                                    <h2 class="m-0 font-weight-bold text-primary">VEHICLES</h2>
                                     <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
                                         Add Vehicle
                                     </button>
