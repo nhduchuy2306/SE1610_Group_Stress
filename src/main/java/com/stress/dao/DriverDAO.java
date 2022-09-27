@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 
-public interface DriverDAO {
+public interface DriverDAO{
     List<Driver> getAllDriver() throws SQLException;
     boolean addNewDriver(Driver driver) throws SQLException;
     boolean deleteDriver(String DriverID) throws SQLException;

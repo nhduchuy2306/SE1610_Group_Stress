@@ -134,11 +134,11 @@ public class UserDAOImpl implements UserDAO {
                     String address = rs.getString("address");
                     String phoneNumber = rs.getString("phoneNumber");
                     boolean sex = rs.getBoolean("sex");
-                    String roleID = rs.getString("roleID");
+                    Role role = roleDAO.getRoleByID(rs.getString("roleID").trim());
                     Float AccountBalance = rs.getFloat("AccountBalance");
                     String tmpAccountBalance = Float.toString(AccountBalance);
-                    boolean status = rs.getBoolean("status");
-//                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, roleID, tmpAccountBalance, status);
+                    int status = rs.getInt("status");
+                    user = new User(userID, username, password, email, dob, address, phoneNumber, sex, role, tmpAccountBalance, status);
                 }
             }
         } catch (Exception e) {
@@ -231,6 +231,7 @@ public class UserDAOImpl implements UserDAO {
             if(conn!=null){
                 ptm=conn.prepareStatement(checkDuplicate);
                 ptm.setString(1, userID);
+                ptm.setString(2, email);
                 rs=ptm.executeQuery();
                 if(rs!=null){
                     check=true;

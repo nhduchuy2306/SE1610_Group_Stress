@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -26,28 +27,47 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action=request.getParameter("action");
-        switch (action) {
-            case "viewUser":
-                viewUser(request,response);
-                break;
-            case "RegisterAccount":
-                registerUser(request,response);
-                break;
-            case "update":
-                updateUser(request,response);
-                break;
-            case "delete":
-                deleteUser(request,response);
-                break;
+        try {
+            String action = request.getParameter("action");
+            System.out.println("action:" + action);
+            switch (action) {
+                case "viewUser":
+                    viewUser(request, response);
+                    break;
+                case "update":
+                    updateUser(request, response);
+                    break;
+                case "delete":
+                    deleteUser(request, response);
+                    break;
+            }
+        } catch (Exception e) {
+            log("Error at UserController-doGet: "+e.toString());
         }
+        
     }
 
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        try {
+            String action = request.getParameter("action");
+            System.out.println("action:" + action);
+            switch (action) {
+                case "RegisterAccount":
+                    registerUser(request, response);
+                    break;
+                case "update":
+                    updateUser(request, response);
+                    break;
+                case "Login":
+                    loginUser(request, response);
+                    break;
+            }
+        } catch (Exception e) {
+
+        }    
     }
 
     private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -89,7 +109,6 @@ public class UserController extends HttpServlet {
         try {
             UserDAO dao=new UserDAOImpl();
             List <User> list=dao.getAllUser();
-            System.out.println(list);
             if(!list.isEmpty()){
                 request.setAttribute("LIST_USER", list);
                 url="./admin/userTable.jsp";
@@ -102,7 +121,8 @@ public class UserController extends HttpServlet {
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String url="./admin/404.jsp";
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
             String userID=request.getParameter("userID");
             String userName=request.getParameter("userName");
@@ -120,14 +140,11 @@ public class UserController extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at UserController - updateUser: "+ e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
         }
         
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        String url="./admin/404.jsp";
         try {
             String userID=request.getParameter("userID");
             UserDAO dao=new UserDAOImpl();
@@ -137,9 +154,34 @@ public class UserController extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at UserController - deleteUser: "+ e.toString());
+        } 
+    }
+
+    private void loginUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String url="./client/login.jsp";
+        try {
+            String userID=request.getParameter("userID");
+            String password=request.getParameter("password");
+            UserDAO dao=new UserDAOImpl();
+            User loginUser=dao.getUserByIDAndPassword(userID, password);
+            if(loginUser!=null){
+                HttpSession session =request.getSession();
+                session.setAttribute("LOGIN_USER", loginUser);
+                if(loginUser.getRole().getRoleID().equals("1")){
+                    url="./client/index.jsp";
+                }else if(loginUser.getRole().getRoleID().equals("2")){
+                    url="./admin/index.jsp";
+                }else{
+                    url="./admin/index.jsp";
+                }
+            }
+        } catch (Exception e) {
+            log("Error at UserController - Login: "+e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+        
+        
     }
     
 

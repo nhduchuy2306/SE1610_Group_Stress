@@ -12,23 +12,20 @@ import java.util.List;
 
 public class RouteDAOImpl implements RouteDAO {
 
-    private static final String ADD_ROUTE = "INSERT INTO tblRoutes(RouteID,RouteName,"
-            + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?,?)";
     private static final String UPDATE_ROUTE = "UPDATE tblRoutes SET RouteName = ?, StartLocation = ?, "
             + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";
 
     
-    private static final String DELETE_ROUTE = "UPDATE tblroutes SET [Status] = 0 WHERE [RouteID] = ?";
-    
     @Override
     public boolean deleteRoute(String routeID) throws SQLException {
+        String sql = "UPDATE tblroutes SET [Status] = 0 WHERE [RouteID] = ?";
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
             if(conn != null) {
-                ptm = conn.prepareStatement(DELETE_ROUTE);
+                ptm = conn.prepareStatement(sql);
                 ptm.setString(1, routeID);
                 check = ptm.executeUpdate() > 0;
                 
@@ -59,17 +56,16 @@ public class RouteDAOImpl implements RouteDAO {
                                 + "	where LocationName like ?\n"
                                 + ")";
     
-  
-
-
     @Override
     public boolean addRoute(Route route) throws SQLException {
+        String sql = "INSERT INTO tblRoutes(RouteID,RouteName,"
+            + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?,?)";
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(ADD_ROUTE);
+            ptm = conn.prepareStatement(sql);
             ptm.setInt(1, route.getRouteID());
             ptm.setString(2, route.getRouteName());
 //            ptm.setInt(3, route.getStartLocation().get);

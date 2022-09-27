@@ -160,6 +160,7 @@ public class VehicleDAOImpl implements VehicleDAO {
     
     public static void main(String[] args) throws SQLException {
         VehicleDAO vDao = new VehicleDAOImpl();
+        vDao.createVehicle(new Vehicle("VE015", "ABCD", "59S2_6513", new VehicleType(1, "", 0), 1));
         List<Vehicle> vList = vDao.getAllVehicle();
         for (Vehicle vehicle : vList) {
             System.out.println(vehicle);
