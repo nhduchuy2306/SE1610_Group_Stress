@@ -7,6 +7,7 @@ package com.stress.controllers;
 import com.stress.dao.UserDAO;
 import com.stress.dto.User;
 import com.stress.service.UserDAOImpl;
+import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -162,10 +163,14 @@ public class UserController extends HttpServlet {
         try {
             String userID=request.getParameter("userID");
             String password=request.getParameter("password");
+            String captcha = request.getParameter("g-recaptcha-response");
             UserDAO dao=new UserDAOImpl();
             User loginUser=dao.getUserByIDAndPassword(userID, password);
-            if(loginUser!=null){
+            boolean verify = VerifyRecaptcha.verify(captcha);
+            System.out.println(verify);
+            if(loginUser!=null && verify){
                 HttpSession session =request.getSession();
+                
                 session.setAttribute("LOGIN_USER", loginUser);
                 if(loginUser.getRole().getRoleID().equals("1")){
                     url="./client/index.jsp";

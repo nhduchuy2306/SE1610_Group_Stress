@@ -1,7 +1,6 @@
 
 package com.stress.utils;
 
-import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -11,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import javax.json.Json;
 import javax.json.JsonReader;
+import javax.json.JsonValue;
 
 public class VerifyRecaptcha {
 
