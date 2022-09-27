@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet(name = "VehicleTypeController", urlPatterns = {"/VehicleTypeController"})
+@WebServlet(name = "VehicleTypeController", urlPatterns = {"/admin/VehicleTypeController"})
 public class VehicleTypeController extends HttpServlet {
 
     @Override
@@ -84,6 +84,7 @@ public class VehicleTypeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
+        
         String vehicleName = request.getParameter("vehicleTypeName");
         int totalSeat = Integer.parseInt(request.getParameter("totalSeat"));
         VehicleType newVehicleType = new VehicleType(0, vehicleName, totalSeat);
@@ -99,5 +100,5 @@ public class VehicleTypeController extends HttpServlet {
             
         
     }
-
+   
 }
