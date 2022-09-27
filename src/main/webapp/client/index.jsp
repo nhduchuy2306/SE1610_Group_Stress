@@ -29,6 +29,13 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/animate.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">				
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
+        
+        
+        <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
         <style>
             datalist {
                 position: absolute;
@@ -50,6 +57,22 @@
                 font-size: 18px;
                 cursor: pointer;
             }
+            .modal-button{
+                color: #007bff;
+                background: none;
+                border: none;
+            }
+            .modal-button:hover{
+                color: #007bff;
+                background: none;
+                border: none;
+            }
+            .modal-button:focus{
+                color: #007bff;
+                background: none;
+                border: none;
+                box-shadow: none;
+            } 
         </style>
     </head>
 
@@ -57,6 +80,154 @@
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
         </header>
+<!--        Login Form-->
+        <div class="modal fade bd-example-modal-lg" id="Login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="row">
+                        <!--<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
+                        <img class="col-lg-6 d-none d-lg-block" 
+                             src="https://cdn.dribbble.com/users/5980575/screenshots/17141125/car-rental-instagram-social-media-post-banner-template-free-415705_4x.png?compress=1&resize=1000x750&vertical=top" alt="alt"/>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                </div>
+                                <form class="user" action="http://localhost:8080/CarBooking/user" method="post">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                               id="exampleInputEmail" aria-describedby="emailHelp"
+                                               placeholder="Enter Account..." name="userID">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user"
+                                               id="exampleInputPassword" placeholder="Password" name="password">
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-checkbox small">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <label class="custom-control-label" for="customCheck">Remember
+                                                Me</label>
+                                        </div>
+                                    </div>
+                                    <div class="g-recaptcha" data-sitekey="6LfPMjQiAAAAAALfARSLcVMoKa8KB8kiQM1TLFYI"></div>
+
+                                    <input style="margin-top: 10px" type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
+                                    <hr>
+
+                                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
+                                       &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
+
+                                        <i class="fab fa-google fa-fw"></i> Login with Google
+
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/client/index.jsp" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="${pageContext.request.contextPath}/client/forgot-password.jsp">Forgot Password?</a>
+                            </div>
+                            <div class="text-center">
+                                <button type="button" class="modal-button btn btn-primary" data-toggle="modal" data-target="#Register">Create an Account!</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+<!--        End Login Form-->
+
+
+        <!--Register Form-->
+        
+        <div class="modal fade bd-example-modal-lg" id="Register" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="row">
+                        <img class="col-lg-5 d-none d-lg-block" 
+                             src="https://cdn.dribbble.com/users/5980575/screenshots/17141125/car-rental-instagram-social-media-post-banner-template-free-415705_4x.png?compress=1&resize=1000x750&vertical=top" alt="alt"/>
+                        <div class="col-lg-7">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                                </div>
+                                <form class="user" action="http://localhost:8080/CarBooking/user" method="post">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail"
+                                               placeholder="User Name" name="userName">
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="date" class="form-control form-control-user" id="exampleFirstName"
+                                                   placeholder="Birthday" name="birthday" value="">
+                                        </div>
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <select class="form-select" style="width: 100%; height:
+                                                    100%;border-radius: 40px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
+                                                    name="gender" aria-label="Default select example">
+                                                <option selected>Gender</option>
+                                                <option value="1">Male</option>
+                                                <option value="0">Female</option>
+                                            </select>
+
+                                        </div>
+                                    </div>                   
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="InputEmail"
+                                               placeholder="Email Address" name="email">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="InputAddress"
+                                               placeholder="Address" name="address">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control form-control-user" id="InputPhoneNum"
+                                               placeholder="Phone Number" name="phoneNum">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail"
+                                               placeholder="Account" value="" name="userID">
+                                    </div>
+                                    <p style="color: red; font-size: 20px;"><c:out value="${ERROR}"></c:out></p>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="password" class="form-control form-control-user"
+                                                       id="InputPassword" placeholder="Password" name="password">
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <input type="password" class="form-control form-control-user"
+                                                       id="RepeatPassword" placeholder="Repeat Password" name="repeatPassword">
+                                            </div> 
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" class="form-control form-control-user" id=""
+                                                   name="action" value="RegisterAccount" style="background-color: #4e73df; color: white;
+                                                   padding:0;height: 6vh">
+                                        </div>
+                                        <hr>
+                                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                                            <i class="fab fa-google fa-fw"></i> Login with Google
+                                        </a>
+                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                                        </a>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="${pageContext.request.contextPath}/client/login.jsp">Already have an account? Login!</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!--End Register Form-->
         <!-- #header -->
         <!-- start banner Area -->
         <section class="banner-area relative">
