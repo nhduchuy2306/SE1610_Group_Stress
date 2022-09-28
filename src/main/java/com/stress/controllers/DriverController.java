@@ -182,9 +182,6 @@ public class DriverController extends HttpServlet {
             driver = dao.getDriverByID(driver.getDriverID());
             System.out.println(driver);
             String Driverstatus = "";
-            if (driver == null) {
-                driver = new Driver("D001", "Nguyễn Hoàng Đức Huy", Date.valueOf("2002-06-23"), true, "", "09712345678", 1);
-            }
             if (driver.getStatus() == 0) {
                 Driverstatus = "INACTIVE";
             }
@@ -312,9 +309,6 @@ public class DriverController extends HttpServlet {
             for (int i = 1; i <= list.size();i++) {
                 Driver d = list.get(i);
                 String Driverstatus = "";
-                if (d == null) {
-                    d = new Driver("D001", "Nguyễn Hoàng Đức Huy", Date.valueOf("2002-06-23"), true, "", "09712345678", 1);
-                }
                 if (d.getStatus() == 0) {
                     Driverstatus = "INACTIVE";
                 }

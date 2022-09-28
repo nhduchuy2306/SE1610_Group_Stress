@@ -341,7 +341,7 @@
                 $(document).ready(function (e) {
                     $("#showsuccess").modal('show');
                 });
-                <c:if test="${requestScope.SUCCESS!=null}">
+                <c:if test="${requestScope.ACTION!=null}">
                     $.ajax({
                         url:"/ETrans/driver?action=userUpdate",
                         type:"get",
@@ -354,7 +354,7 @@
                         }
                     });
                 </c:if>
-                <c:if test="${requestScope.SUCCESS!=null}">
+                <c:if test="${requestScope.ACTION!=null}">
                     const inputField = document.querySelectorAll("input[type=search]");
                     inputField.addEventListener('input',function(e){
                         $.ajax({
@@ -375,9 +375,9 @@
                 </c:if>
             </c:if>
             <c:if test="${requestScope.ERROR!=null}">
-            $(document).ready(function () {
-                $("#showerror").modal('show');
-            });
+                $(document).ready(function () {
+                    $("#showerror").modal('show');
+                });
             </c:if>
         </script>
     </body>
