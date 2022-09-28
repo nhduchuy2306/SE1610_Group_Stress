@@ -308,6 +308,121 @@ public class DriverController extends HttpServlet {
             String txt = request.getParameter("txt");
             DriverDAO dao = new DriverDAOImpl();
             List<Driver> list = dao.getDriverByName(txt);
+            PrintWriter out = response.getWriter();
+            for (int i = 1; i <= list.size();i++) {
+                Driver d = list.get(i);
+                String Driverstatus = "";
+                if (d == null) {
+                    d = new Driver("D001", "Nguyễn Hoàng Đức Huy", Date.valueOf("2002-06-23"), true, "", "09712345678", 1);
+                }
+                if (d.getStatus() == 0) {
+                    Driverstatus = "INACTIVE";
+                }
+                if (d.getStatus() == 1) {
+                    Driverstatus = "ACTIVE";
+                }
+                if (d.getStatus() == 2) {
+                    Driverstatus = "ONGOING";
+                }
+                out.println("<tr>\n"
+                    + "                                                    <td>"+i+"</td>\n"
+                    + "                                                    <td>" + d.getDriverID() + "</td>\n"
+                    + "                                                    <td>" + d.getDriverName() + "</td>\n"
+                    + "                                                    <td>" + d.getDOB() + "</td>\n"
+                    + "                                                    <td>" + (d.isSex() == true ? "MALE" : "FEMALE") + "</td>\n"
+                    + "                                                    <td><<img src=\"" + d.getDriverPicture() + "\" alt=\"alt\"/></td>\n"
+                    + "                                                    <td>" + d.getPhoneNumber() + "</td>\n"
+                    + "                                                    <td>" + Driverstatus + "</td>\n"
+                    + "                                                    <td>\n"
+                    + "                                                        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#modify-" + d.getDriverID().trim() + "\">\n"
+                    + "                                                            <i class=\"fa fa-pen\"></i>\n"
+                    + "                                                        </button>\n"
+                    + "                                                        <div class=\"modal fade\" id=\"modify-" + d.getDriverID().trim() + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                    + "                                                            <div class=\"modal-dialog\" role=\"document\">\n"
+                    + "                                                                <div class=\"modal-content\">\n"
+                    + "                                                                    <div class=\"modal-header\">\n"
+                    + "                                                                        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modify Driver " + driver.getDriverName().trim() + "</h5>\n"
+                    + "                                                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n"
+                    + "                                                                            <span aria-hidden=\"true\">&times;</span>\n"
+                    + "                                                                        </button>\n"
+                    + "                                                                    </div>\n"
+                    + "                                                                    <form action=\"driver\">\n"
+                    + "                                                                        <div class=\"modal-body\">\n"
+                    + "                                                                            <div class=\"modal-body\">\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">Driver ID</label>\n"
+                    + "                                                                                    <input type=\"text\" name=\"driverID\" class=\"form-control\" value=\"" + d.getDriverID().trim() + "\" id=\"exampleInputEmail1\" readonly placeholder=\"Enter Driver ID\">\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">Driver Name</label>\n"
+                    + "                                                                                    <input type=\"text\" name=\"driverName\" class=\"form-control\" value=\"" + d.getDriverName().trim() + "\" id=\"exampleInputEmail1\" placeholder=\"Enter Driver Name\">\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">DOB</label>\n"
+                    + "                                                                                    <input type=\"date\" name=\"DOB\" class=\"form-control\" value=\"" + d.getDOB() + "\" id=\"exampleInputEmail1\" placeholder=\"Enter DOB\">\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">Gender</label>\n"
+                    + "                                                                                    <select name=\"sex\" class=\"form-control\">\n"
+                    + "                                                                                        <option value=\"true\"" + (d.isSex() == true ? "selected" : "") + ">MALE</option>\n"
+                    + "                                                                                        <option value=\"false\" " + (d.isSex() == false ? "selected" : "") + ">FEMALE</option>\n"
+                    + "                                                                                    </select>\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">Driver Picture</label>\n"
+                    + "                                                                                    <input type=\"text\" name=\"driverPic\" class=\"form-control\" value=\"" + d.getDriverPicture() + "\" id=\"exampleInputEmail1\" placeholder=\"Enter Driver Picture\">\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">Phone Number</label>\n"
+                    + "                                                                                    <input type=\"text\" name=\"phoneNumber\" class=\"form-control\" value=\"" + d.getPhoneNumber() + "\" id=\"exampleInputEmail1\" placeholder=\"Enter Phone Number\">\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                                <div class=\"form-group\">\n"
+                    + "                                                                                    <label for=\"exampleInputEmail1\">Status</label>\n"
+                    + "                                                                                    <select name=\"status\" class=\"form-control\">\n"
+                    + "                                                                                        <option value=\"0\"" + (d.getStatus() == 0 ? "selected" : "") + ">INACTIVE</option>\n"
+                    + "                                                                                        <option value=\"1\" " + (d.getStatus() == 1 ? "selected" : "") + ">ACTIVE</option>\n"
+                    + "                                                                                        <option value=\"2\" " + (d.getStatus() == 2 ? "selected" : "") + ">ONGOING</option>\n"
+                    + "                                                                                    </select>\n"
+                    + "                                                                                </div>\n"
+                    + "                                                                            </div>\n"
+                    + "                                                                        </div>\n"
+                    + "                                                                        <div class=\"modal-footer\">\n"
+                    + "                                                                            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n"
+                    + "                                                                            <button type=\"submit\" name=\"action\" value=\"update\" class=\"update-button btn btn-primary\">Save</button>\n"
+                    + "                                                                        </div>\n"
+                    + "                                                                    </form>\n"
+                    + "                                                                </div>\n"
+                    + "                                                            </div>\n"
+                    + "                                                        </div>\n"
+                    + "                                                    </td>\n"
+                    + "                                                    <td>\n"
+                    + "                                                        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#delete-" + d.getDriverID() + "\">\n"
+                    + "                                                            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>\n"
+                    + "                                                        </button>\n"
+                    + "                                                        <div class=\"modal fade\" id=\"delete-" + d.getDriverID().trim() + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                    + "                                                            <div class=\"modal-dialog\" role=\"document\">\n"
+                    + "                                                                <div class=\"modal-content\">\n"
+                    + "                                                                    <div class=\"modal-header\">\n"
+                    + "                                                                        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Delete Driver " + d.getDriverName() + "</h5>\n"
+                    + "                                                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n"
+                    + "                                                                            <span aria-hidden=\"true\">&times;</span>\n"
+                    + "                                                                        </button>\n"
+                    + "                                                                    </div>\n"
+                    + "                                                                    <form action=\"driver\">\n"
+                    + "                                                                        <div class=\"modal-footer\">\n"
+                    + "                                                                            <input type=\"hidden\" name=\"driverID\" value=\"" + d.getDriverID() + "\">\n"
+                    + "                                                                            <button type=\"submit\" name=\"action\" value=\"delete\" class=\"btn btn-primary\">\n"
+                    + "                                                                                Delete\n"
+                    + "                                                                            </button>\n"
+                    + "                                                                            <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n"
+                    + "                                                                        </div>\n"
+                    + "                                                                    </form>\n"
+                    + "                                                                </div>\n"
+                    + "                                                            </div>\n"
+                    + "                                                        </div>\n"
+                    + "                                                    </td>\n"
+                    + "                                                </tr>");
+            }
         } catch (Exception e) {
         }
     }

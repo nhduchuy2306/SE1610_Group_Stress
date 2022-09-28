@@ -342,6 +342,19 @@
                     $("#showsuccess").modal('show');
                 });
                 <c:if test="${requestScope.SUCCESS!=null}">
+                    $.ajax({
+                        url:"/ETrans/driver?action=userUpdate",
+                        type:"get",
+                        success: function (data) {
+                            var row = document.getElementById("content-data-update");
+                            row.innerHTML = data;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            
+                        }
+                    });
+                </c:if>
+                <c:if test="${requestScope.SUCCESS!=null}">
                     const inputField = document.querySelectorAll("input[type=search]");
                     inputField.addEventListener('input',function(e){
                         $.ajax({
@@ -358,17 +371,6 @@
 
                             }
                         });
-                    });
-                    $.ajax({
-                        url:"/ETrans/driver?action=userUpdate",
-                        type:"get",
-                        success: function (data) {
-                            var row = document.getElementById("content-data-update");
-                            row.innerHTML = data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            
-                        }
                     });
                 </c:if>
             </c:if>
