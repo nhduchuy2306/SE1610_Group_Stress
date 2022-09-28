@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html; charset" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,9 +49,13 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h2 class="m-0 font-weight-bold text-primary">DRIVERS</h2>
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                        Add Driver 
-                                    </button>
+                                    <div>
+                                        <button type="button" class="ml-10 btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                            Add Driver 
+                                        </button>
+                                        <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                    </div>
+                                    
                                     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -125,7 +129,7 @@
                                                     <th>Delete</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="content-data-update">
                                             <c:forEach items="${requestScope.LIST_ALL_DRIVER}" var="d" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
@@ -203,7 +207,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="action" value="update" class="btn btn-primary">Save</button>
+                                                                            <button type="submit" name="action" value="update" class="update-button btn btn-primary">Save</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -334,15 +338,45 @@
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS!=null}">
-            $(document).ready(function () {
-                $("#showsuccess").modal('show');
-//                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
-            });
+                $(document).ready(function (e) {
+                    $("#showsuccess").modal('show');
+                });
+                <c:if test="${requestScope.SUCCESS!=null}">
+                    $.ajax({
+                        url:"/ETrans/driver?action=userUpdate",
+                        type:"get",
+                        success: function (data) {
+                            var row = document.getElementById("content-data-update");
+                            row.innerHTML = data;
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            
+                        }
+                    });
+                </c:if>
+                <c:if test="${requestScope.SUCCESS!=null}">
+                    const inputField = document.querySelectorAll("input[type=search]");
+                    inputField.addEventListener('input',function(e){
+                        $.ajax({
+                            url:"/ETrans/driver?action=search",
+                            type:"get",
+                            data:{
+                                txt : e.target.value
+                            },
+                            success: function (data) {
+                                var row = document.getElementById("content-data-update");
+                                row.innerHTML = data;
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+
+                            }
+                        });
+                    });
+                </c:if>
             </c:if>
             <c:if test="${requestScope.ERROR!=null}">
             $(document).ready(function () {
                 $("#showerror").modal('show');
-//                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
             });
             </c:if>
         </script>

@@ -16,20 +16,10 @@ import java.util.logging.Logger;
  */
 public class DBConnection {
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
-         Connection conn = null;
+        Connection conn = null;
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-        String url = "jdbc:sqlserver://localhost:1433;databaseName=ETransportationManagement;trustServerCertificate=true;";
+        String url = "jdbc:sqlserver://localhost:1433;databaseName=ETransportationManagement;trustServerCertificate=true;characterEncoding=UTF8";
         conn = DriverManager.getConnection(url, "sa", "12345");
         return conn;
-    }
-    
-    public static void main(String[] args) {
-        try {
-            System.out.println(DBConnection.getConnection());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(DBConnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

@@ -371,37 +371,36 @@
                                         </div>
                                         <div class="collapse" id="collapse">
                                             <div class="card card-body">
-                                                <ul class="modal-title nav nav-tabs" id="myTab"
-                                                    role="tablist">
+                                                <ul class="nav nav-tabs" role="tablist">
                                                     <li class="nav-item">
                                                         <a class="nav-link active" id="picture"
-                                                           data-toggle="tab" href="#picture" role="tab"
+                                                           data-toggle="tab" href="#1" role="tab"
                                                            aria-controls="picture"
                                                            aria-selected="true">Picture</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="utilies"
-                                                           data-toggle="tab" href="#utilies" role="tab"
+                                                        <a class="nav-link" id="utilies"
+                                                           data-toggle="tab" href="#2" role="tab"
                                                            aria-controls="utilies"
                                                            aria-selected="true">Utilities</a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="policy"
-                                                           data-toggle="tab" href="#policy" role="tab"
+                                                        <a class="nav-link" id="policy"
+                                                           data-toggle="tab" href="#3" role="tab"
                                                            aria-controls="policy"
                                                            aria-selected="true">Policy</a>
                                                     </li>
                                                 </ul>
-                                                <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="picture"
+                                                <div class="tab-content ">
+                                                    <div class="tab-pane active" id="1"
                                                          role="tabpanel" aria-labelledby="picture">
                                                         Picture
                                                     </div>
-                                                    <div class="tab-pane fade" id="utilities" role="tabpanel"
+                                                    <div class="tab-pane" id="2" role="tabpanel"
                                                          aria-labelledby="utilities">
                                                         Utility
                                                     </div>
-                                                    <div class="tab-pane fade" id="policy" role="tabpanel"
+                                                    <div class="tab-pane" id="3" role="tabpanel"
                                                          aria-labelledby="policy">
                                                         Policy
                                                     </div>

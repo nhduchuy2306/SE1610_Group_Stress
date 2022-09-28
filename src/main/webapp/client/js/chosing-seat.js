@@ -5,15 +5,15 @@ $(document).ready(function () {
     $total = $("#total-seat"),
     choice = [],
     sc = $("#seat-map-seat").seatCharts({
-      map: ["ee", "ee", "ee", "ee", "ee", "ee", "ee", "ee"],
+      map: ["eeee", "eeee", "ee", "ee", "ee", "ee", "ee", "ee"],
       seats: {
-        f: {
-          price: 100,
-          classes: "first-class", //your custom CSS class
-          category: "First Class",
-        },
+//        f: {
+//          price: 100,
+//          classes: "first-class", //your custom CSS class
+//          category: "First Class",
+//        },
         e: {
-          price: 40,
+          price: 70,
           classes: "economy-class", //your custom CSS class
           category: "Economy Class",
         },

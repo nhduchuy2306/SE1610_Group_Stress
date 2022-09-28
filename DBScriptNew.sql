@@ -2,12 +2,10 @@
 CREATE DATABASE ETransportationManagement
 use ETransportationManagement
 
----x---
 CREATE TABLE tblRoles(
     RoleID char(5) PRIMARY KEY,
     RoleName nvarchar(100)
 )
----x---
 CREATE TABLE tblUsers (
     UserID nvarchar(100) PRIMARY KEY,
     Username nvarchar(200) NOT NULL UNIQUE,
@@ -29,7 +27,6 @@ CREATE TABLE tblOrders(
     UserID nvarchar(100) FOREIGN KEY REFERENCES tblUsers(UserID) ON UPDATE CASCADE ON DELETE SET NULL,
     [Status] BIT DEFAULT 0
 )
----x---
 CREATE TABLE tblLocations(
     LocationID INT IDENTITY PRIMARY KEY,
     LocationName nvarchar(100),
@@ -41,7 +38,6 @@ CREATE TABLE tblCities(
     CityName nvarchar(100) UNIQUE
 
 )
----x---
 CREATE TABLE tblRoutes(
     RouteID INT IDENTITY PRIMARY KEY,
     RouteName nvarchar(100),
@@ -50,13 +46,11 @@ CREATE TABLE tblRoutes(
     [Description] nvarchar(1000),
     [Status] BIT DEFAULT 1
 )
----x---
 CREATE TABLE tblVehicleTypes(
     VehicleTypeID INT IDENTITY PRIMARY KEY,
     VehicleTypeName nvarchar(100),
     TotalSeat INT NOT NULL
 )
----x---
 CREATE TABLE tblVehicles(
     VehicleID char(5) PRIMARY KEY,
     VehicleName nvarchar(100),
@@ -64,7 +58,6 @@ CREATE TABLE tblVehicles(
     VehicleTypeID INT FOREIGN KEY REFERENCES tblVehicleTypes(VehicleTypeID) ON UPDATE CASCADE ON DELETE SET NULL,
     [Status] INT DEFAULT 1,
 )
----x---
 CREATE TABLE tblDriverLicenses(
     DriverLicenseID char(12) PRIMARY KEY,
     Nationality nvarchar(100),
@@ -81,7 +74,6 @@ CREATE TABLE tblDrivers(
     PhoneNumber char(11),
     [Status] INT DEFAULT 1
 )
-
 CREATE TABLE tblTrips(
     TripID char(5) NOT NULL PRIMARY KEY,
     TripName nvarchar(100),
@@ -93,7 +85,6 @@ CREATE TABLE tblTrips(
     SeatRemain INT,
     [Status] INT NOT NULL DEFAULT 1	
 )
-
 CREATE TABLE tblSeats(
     SeatID Char(5) NOT NULL, 
     Price Decimal,
@@ -101,7 +92,6 @@ CREATE TABLE tblSeats(
     TripID char(5) FOREIGN KEY REFERENCES tblTrips(TripID),
     PRIMARY KEY (SeatID,TripID) 
 )
-
 CREATE TABLE tblTickets(
     TicketID INT IDENTITY PRIMARY KEY,
     SeatID char(5) NOT NULL,

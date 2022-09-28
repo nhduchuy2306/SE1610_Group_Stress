@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 
@@ -159,6 +157,38 @@ public class DriverDAOImpl implements DriverDAO{
             if (conn != null) conn.close();
         }
         return null;
+    }
+
+    @Override
+    public List<Driver> getDriverByName(String driverName) throws SQLException {
+        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] FROM tblDrivers WHERE [DriverName] like ?";
+        List<Driver> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            ptm.setString(1, "%"+driverName+"%");
+            rs = ptm.executeQuery();
+            while(rs.next()){
+                list.add(new Driver(
+                        rs.getString("DriverID"), 
+                        rs.getString("DriverName"), 
+                        rs.getDate("DOB"), 
+                        rs.getBoolean("Sex"), 
+                        rs.getString("DriverPic"), 
+                        rs.getString("PhoneNumber"), 
+                        rs.getInt("Status"))
+                    );
+            }
+        } catch (Exception e) {
+        } finally {
+            if (rs != null) rs.close();
+            if (ptm != null) ptm.close();
+            if (conn != null) conn.close();
+        }
+        return list;
     }
 
 }
