@@ -28,15 +28,13 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         try {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
             switch (action) {
                 case "viewUser":
                     viewUser(request, response);
-                    break;
-                case "update":
-                    updateUser(request, response);
                     break;
                 case "delete":
                     deleteUser(request, response);
@@ -52,6 +50,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         try {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
@@ -169,6 +168,11 @@ public class UserController extends HttpServlet {
             boolean verify = VerifyRecaptcha.verify(captcha);
             System.out.println(verify);
             if(loginUser!=null && verify){
+            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+            VerifyRecaptcha verifyCaptcha=new VerifyRecaptcha();
+            boolean verify=verifyCaptcha.verifyCaptcha(gRecaptchaResponse);
+            System.out.println("Captcha: "+ verify);
+            if(loginUser!=null && verify==true){
                 HttpSession session =request.getSession();
                 
                 session.setAttribute("LOGIN_USER", loginUser);
