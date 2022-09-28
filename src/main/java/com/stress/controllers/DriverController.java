@@ -5,10 +5,7 @@ import com.stress.dto.Driver;
 import com.stress.service.DriverDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.nio.charset.StandardCharsets.ISO_8859_1;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -51,11 +48,14 @@ public class DriverController extends HttpServlet {
             case "show":
                 showDriverTable(request, response);
                 break;
-            case "userUpdate":
-                showUserUpdate(request, response);
+            case "driverUpdate":
+                showDriverUpdate(request, response);
                 break;
             case "search":
                 searchDriver(request, response);
+                break;
+            case "isContain":
+                showDriverID(request, response);
                 break;
             default:
 //                showErrorPage(request, response);
@@ -101,12 +101,13 @@ public class DriverController extends HttpServlet {
                 request.setAttribute("ERROR", "DUPLICATE DRIVER ID");
                 request.getRequestDispatcher("/driver?action=show").forward(request, response);
             } else {
-                Driver driver = new Driver(driverID, driverName, Date.valueOf(dob), Boolean.parseBoolean(sex),
+                driver = new Driver(driverID, driverName, Date.valueOf(dob), Boolean.parseBoolean(sex),
                         driverPic, phoneNumber, Integer.parseInt(status));
 
                 boolean check = dao.addNewDriver(driver);
                 if (check) {
                     request.setAttribute("SUCCESS", "ADD DRIVER SUCCESSFULLY");
+                    request.setAttribute("ADD", "SUCCESS");
                     request.getRequestDispatcher("/driver?action=show").forward(request, response);
                 } else {
                     request.setAttribute("ERROR", "CAN NOT ADD DRIVER");
@@ -157,7 +158,7 @@ public class DriverController extends HttpServlet {
 
             if (check) {
                 request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
-                request.setAttribute("ACTION", "UPDATE");
+                request.setAttribute("UPDATE", "SUCEESS");
                 request.getRequestDispatcher("/driver?action=show").forward(request, response);
             } else {
                 request.setAttribute("ERROR", "CAN NOT UPDATE DRIVER");
@@ -173,12 +174,16 @@ public class DriverController extends HttpServlet {
         request.getRequestDispatcher("/client/error.jsp").forward(request, response);
     }
 
-    private void showUserUpdate(HttpServletRequest request, HttpServletResponse response)
+    private void showDriverUpdate(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         try {
             DriverDAO dao = new DriverDAOImpl();
+            if(driver==null){
+                driver = new Driver("D001", "Nguyễn Hoàng Đức Huy", Date.valueOf("2002-06-23"), 
+                        true, "", "09812345678", 1);
+            }
             driver = dao.getDriverByID(driver.getDriverID());
             System.out.println(driver);
             String Driverstatus = "";
@@ -292,7 +297,21 @@ public class DriverController extends HttpServlet {
                     + "                                                        </div>\n"
                     + "                                                    </td>\n"
                     + "                                                </tr>");
-
+        } catch (Exception e) {
+        }
+    }
+    
+    private void showDriverID(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            String driverId = request.getParameter("driverId");
+            DriverDAO dao = new DriverDAOImpl();
+            driver = dao.getDriverByID(driverId);
+            PrintWriter out = response.getWriter();
+            out.println(driver);
+            out.close();
         } catch (Exception e) {
         }
     }
