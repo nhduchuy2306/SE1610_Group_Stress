@@ -17,11 +17,6 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private RoleDAO roleDAO = new RoleDAOImpl(); // DONT REMOVE this is use for get User by ID 
     
-//    private static final String GET_ALL_USER = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-//            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
-    private static final String LOGIN = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
-            + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
-    
     private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
             + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
 
@@ -120,10 +115,12 @@ public class UserDAOImpl implements UserDAO {
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
+        String login = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
+            + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(LOGIN);
+                ptm = conn.prepareStatement(login);
                 ptm.setString(1, userID);
                 ptm.setString(2, password);
                 rs = ptm.executeQuery();
@@ -313,7 +310,7 @@ public class UserDAOImpl implements UserDAO {
     public static void main(String[] args) {
         try {
             UserDAOImpl dao=new UserDAOImpl();
-            boolean check=dao.deleteUser("chu be dan 9");
+            List<User> check=dao.getAllUserDelete();
             System.out.println("check:" +check);
         } catch (Exception e) {
         }
@@ -349,4 +346,79 @@ public class UserDAOImpl implements UserDAO {
         }
         
     }
+
+    @Override
+    public List<User> getAllUserDelete() throws SQLException {
+        String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
+            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 0";
+        List<User> userList = new ArrayList();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(getAllUser);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String userID = rs.getString("UserID");
+                    String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    Date dob = rs.getDate("DOB");
+                    String address = rs.getString("Address");
+                    String phoneNumber =rs.getString("PhoneNumber");
+                    String email = rs.getString("Email");
+                    boolean sex = rs.getBoolean("Sex");
+                    String roleID = rs.getString("RoleID");
+                    String AccountBalance = rs.getString("AccountBalance");
+                    int status = rs.getInt("Status");
+                                        
+                    Role role = new RoleDAOImpl().getRoleByID(roleID);
+                    if(role != null)
+                    userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error at getAllUser:" +e.toString());
+        } finally {
+            if (rs1 != null) rs.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return userList;
+    }
+
+    @Override
+    public boolean activeUser(String userID) throws SQLException {
+boolean result = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        String delete = "UPDATE tblUsers SET [status]=1  WHERE UserID=?";
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(delete);
+                ptm.setString(1, userID);
+                result = ptm.executeUpdate()> 0 ? true : false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;    }
 }

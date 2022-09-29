@@ -18,11 +18,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author DELL
  */
-@WebServlet(name = "LogoutController", urlPatterns = {"/LogoutController"})
+@WebServlet(name = "LogoutController", urlPatterns = {"/Logout"})
 public class LogoutController extends HttpServlet {
 
-    static final String ERROR="error.jsp";
-    static final String SUCCESS="login.jsp";
+    static final String ERROR="./client/error.jsp";
+    static final String SUCCESS="./client/index.jsp";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -31,6 +31,7 @@ public class LogoutController extends HttpServlet {
             HttpSession session=request.getSession(false);
             if(session!=null){
                 session.invalidate();
+                url=SUCCESS;
             }
             
         } catch (Exception e) {
