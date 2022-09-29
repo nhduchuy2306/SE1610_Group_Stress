@@ -85,8 +85,8 @@ public class VehicleTypeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         
-        String vehicleName = request.getParameter("vehicleTypeName");
-        int totalSeat = Integer.parseInt(request.getParameter("totalSeat"));
+        String vehicleName = request.getParameter("vehicleTypeName").trim();
+        int totalSeat = Integer.parseInt(request.getParameter("totalSeat").trim());
         VehicleType newVehicleType = new VehicleType(0, vehicleName, totalSeat);
         VehicleTypeDAO vtDao = new VehicleTypeDAOImpl();
         try {
