@@ -106,11 +106,17 @@ public class VehicleController extends HttpServlet {
             VehicleType vType = new VehicleTypeDAOImpl().getVehicleTypeByID(vehicleTypeID);
             if (vType != null) {
                 Vehicle v = new Vehicle(vehicleID, vehicleName, licensePlate, vType, status);
-                if (vDAO.updateVehicle(v)) {
-                    request.setAttribute("SUCCESS", "Update Vehicle " + v.getVehicleID() + " Successfully");
-                    request.setAttribute("ACTION", "UPDATE");
-                    vehicle = v;
-                    showAllVehice(request, response, vDAO);
+                Vehicle vOld = vDAO.getVehicleByID(v.getVehicleID());
+                if (vOld.getStatus() == Vehicle.ONGOING && v.getStatus() == Vehicle.INACTIVE) {
+                    request.setAttribute("ERROR", "The Vehicle is OnGoing a Trip, can't not Update to INACTIVE");
+                    showOneVehicle(request, response, vDAO, v);
+                } else {
+                    if (vDAO.updateVehicle(v)) {
+                        request.setAttribute("SUCCESS", "Update Vehicle " + v.getVehicleID() + " Successfully");
+                        request.setAttribute("ACTION", "UPDATE");
+                        vehicle = v;
+                        showOneVehicle(request, response, vDAO, v);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -196,20 +202,22 @@ public class VehicleController extends HttpServlet {
         try {
             if (vehicle != null) {
                 String status = "";
-                if(vehicle.getStatus() == 0) {
+                if (vehicle.getStatus() == 0) {
                     status = "INACTIVE";
-                }else if(vehicle.getStatus() == 1) {
+                } else if (vehicle.getStatus() == 1) {
                     status = "ACTIVE";
-                }else status = "ONGOING";
+                } else {
+                    status = "ONGOING";
+                }
                 PrintWriter out = response.getWriter();
                 out.println(
                         "\n  <td>1</td>\n"
-                        + "                                                    <td>" +vehicle.getVehicleID()+"</td>\n"
-                        + "                                                    <td>" + vehicle.getVehicleName()+"</td>\n"
+                        + "                                                    <td>" + vehicle.getVehicleID() + "</td>\n"
+                        + "                                                    <td>" + vehicle.getVehicleName() + "</td>\n"
                         + "                                                    <td>" + vehicle.getLicensePlate() + "</td>\n"
                         + "                                                    <td>" + vehicle.getVehicleType().getVehicleTypeName() + "</td>\n"
                         + "                                                    <td>\n"
-                        + status                                                          
+                        + status
                         + "                                                    </td>\n"
                         + "                                                    <td>\n"
                         + "                                                        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#modify-${v.vehicleID}\">\n"
@@ -229,15 +237,15 @@ public class VehicleController extends HttpServlet {
                         + "                                                                            <div class=\"modal-body\">\n"
                         + "                                                                                <div class=\"form-group\">\n"
                         + "                                                                                    <label for=\"exampleInputEmail1\">Vehicle ID</label>\n"
-                        + "                                                                                    <input type=\"text\" name=\"vehicleID\" class=\"form-control\" value=\""+vehicle.getVehicleID()+"\" id=\"exampleInputEmail1\" readonly placeholder=\"Enter Vehicle ID\">\n"
+                        + "                                                                                    <input type=\"text\" name=\"vehicleID\" class=\"form-control\" value=\"" + vehicle.getVehicleID() + "\" id=\"exampleInputEmail1\" readonly placeholder=\"Enter Vehicle ID\">\n"
                         + "                                                                                </div>\n"
                         + "                                                                                <div class=\"form-group\">\n"
                         + "                                                                                    <label for=\"exampleInputEmail1\">Vehicle Name</label>\n"
-                        + "                                                                                    <input type=\"text\" name=\"vehicleName\" class=\"form-control\" value=\""+vehicle.getVehicleName()+"\" id=\"exampleInputEmail1\" placeholder=\"Enter Driver Name\">\n"
+                        + "                                                                                    <input type=\"text\" name=\"vehicleName\" class=\"form-control\" value=\"" + vehicle.getVehicleName() + "\" id=\"exampleInputEmail1\" placeholder=\"Enter Driver Name\">\n"
                         + "                                                                                </div>\n"
                         + "                                                                                <div class=\"form-group\">\n"
                         + "                                                                                    <label for=\"exampleInputEmail1\">LicensePlate</label>\n"
-                        + "                                                                                    <input type=\"text\" name=\"licensePlate\" class=\"form-control\" value=\""+vehicle.getLicensePlate()+"\" id=\"exampleInputEmail1\" placeholder=\"Enter DOB\">\n"
+                        + "                                                                                    <input type=\"text\" name=\"licensePlate\" class=\"form-control\" value=\"" + vehicle.getLicensePlate() + "\" id=\"exampleInputEmail1\" placeholder=\"Enter DOB\">\n"
                         + "                                                                                </div>\n"
                         + "                                                                                <div class=\"form-group\">\n"
                         + "                                                                                    <label for=\"exampleInputEmail1\">VehicleType</label>\n"
@@ -252,8 +260,8 @@ public class VehicleController extends HttpServlet {
                         + "                                                                                    <label for=\"exampleInputEmail1\">Status</label>\n"
                         + "                                                                                    <select name=\"status\" class=\"form-control\">\n"
                         + "                                                                                        <<option value=\"0\"" + (vehicle.getStatus() == 0 ? "selected" : "") + ">INACTIVE</option>\n"
-                    + "                                                                                        <option value=\"1\" " + (vehicle.getStatus() == 1 ? "selected" : "") + ">ACTIVE</option>\n"
-                    + "                                                                                        <option value=\"2\" " + (vehicle.getStatus() == 2 ? "selected" : "") + ">ONGOING</option>\n"
+                        + "                                                                                        <option value=\"1\" " + (vehicle.getStatus() == 1 ? "selected" : "") + ">ACTIVE</option>\n"
+                        + "                                                                                        <option value=\"2\" " + (vehicle.getStatus() == 2 ? "selected" : "") + ">ONGOING</option>\n"
                         + "                                                                                    </select>\n"
                         + "                                                                                </div>\n"
                         + "                                                                            </div>\n"
@@ -268,21 +276,21 @@ public class VehicleController extends HttpServlet {
                         + "                                                        </div>\n"
                         + "                                                    </td>\n"
                         + "                                                    <td>\n"
-                        + "                                                        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#delete-"+vehicle.getVehicleID()+">\n"
+                        + "                                                        <button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#delete-" + vehicle.getVehicleID() + ">\n"
                         + "                                                            <i class=\"fa fa-trash\" aria-hidden=\"true\"></i>\n"
                         + "                                                        </button>\n"
-                        + "                                                        <div class=\"modal fade\" id=\"delete-"+vehicle.getVehicleID()+"\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
+                        + "                                                        <div class=\"modal fade\" id=\"delete-" + vehicle.getVehicleID() + "\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n"
                         + "                                                            <div class=\"modal-dialog\" role=\"document\">\n"
                         + "                                                                <div class=\"modal-content\">\n"
                         + "                                                                    <div class=\"modal-header\">\n"
-                        + "                                                                        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Delete Vehice "+vehicle.getVehicleName()+"</h5>\n"
+                        + "                                                                        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Delete Vehice " + vehicle.getVehicleName() + "</h5>\n"
                         + "                                                                        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n"
                         + "                                                                            <span aria-hidden=\"true\">&times;</span>\n"
                         + "                                                                        </button>\n"
                         + "                                                                    </div>\n"
                         + "                                                                    <form action=\"VehicleController\">\n"
                         + "                                                                        <div class=\"modal-footer\">\n"
-                        + "                                                                            <input type=\"hidden\" name=\"vehicleID\" value=\""+vehicle.getVehicleID()+"\">\n"
+                        + "                                                                            <input type=\"hidden\" name=\"vehicleID\" value=\"" + vehicle.getVehicleID() + "\">\n"
                         + "                                                                            <button type=\"submit\" name=\"action\" value=\"delete\" class=\"btn btn-primary\">\n"
                         + "                                                                                Delete\n"
                         + "                                                                            </button>\n"
