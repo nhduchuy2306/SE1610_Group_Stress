@@ -48,6 +48,8 @@ public class LoginGoogleController extends HttpServlet {
                         }
                     } else {
                         if(userDao.registerByEmail(googlePojo)){
+                            User user=userDao.getUserByID(googlePojo.getId());
+                            session.setAttribute("LOGIN_USER", user);
                             url = USER;
                         }
                     }

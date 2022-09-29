@@ -38,12 +38,24 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800 text-center font-weight-bold">User Table</h1>
-
+                            <div class="row">
+                                <h1 class="col-md-6 m-0 font-weight-bold text-primary" style="color: #00b3ee;" >User Table</h1>
+                            <c:if test="${requestScope.DELETE_HISTORY!=null}">
+                                <div class="col-md-6">
+                                    <a href="${pageContext.request.contextPath}/user?action=viewUser" style="margin-right: 10px" class="btn btn-primary float-right">View All</a>                                    
+                                </div>
+                            </c:if>
+                            <c:if test="${requestScope.DELETE_HISTORY==null}">
+                                <div class="col-md-6">
+                                    <a href="${pageContext.request.contextPath}/user?action=deleteHistory" style="margin-right: 10px" class="btn btn-primary float-right">Delete History</a>
+                                </div>
+                            </c:if>
+                            </div>
+                            
                             <!-- DataTales Example -->
                             <div class="card shadow mb-4">
                                 <div class="card-body">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive" >
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
@@ -90,11 +102,19 @@
                                                             
                                                         </c:choose>
                                                         </td>
-
-                                                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Edit-${user.userID.trim()}">
-                                                                EDIT
-                                                            </button>
-                                                        </td> 
+                                                        <c:if test="${requestScope.DELETE_HISTORY!=null}">
+                                                            <td>
+                                                                <a href="${pageContext.request.contextPath}/user?action=activeUser&userID=${user.userID}">ACTIVE</a>
+                                                            </td>
+                                                        </c:if>
+                                                            
+                                                        <c:if test="${requestScope.DELETE_HISTORY==null}">
+                                                            <td>
+                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Edit-${user.userID.trim()}">
+                                                                    EDIT
+                                                                </button>
+                                                            </td>
+                                                        </c:if>
                                                     </tr>
 <!--                                                </form>-->
                                             <!--Start-Modal-->
@@ -109,14 +129,14 @@
                                                                         </button>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                       <form action="http://localhost:8080/CarBooking/user" method="POST">
+                                                                        <form action="${pageContext.request.contextPath}/user" method="POST" id="formUpdate">
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">UserID</label>
                                                                                 <input type="text" class="form-control" name="userID" readonly=""  value="${user.userID}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Name</label>
-                                                                                <input type="text" class="form-control" name="userName"  value="${user.username}">
+                                                                                <input type="text" class="form-control" id="nameInput" name="userName"  value="${user.username}" required="">
                                                                             </div>
                                                                             
                                                                             <div class="row" style="display: inline-flex">
@@ -136,11 +156,11 @@
                                                                             
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Email</label>
-                                                                                <input type="email" class="form-control" name="email"  value="${user.userID}">
+                                                                                <input type="email" class="form-control" name="email"  value="${user.email}" id="InputEmail">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Phone Number</label> <br/>
-                                                                                <input type="text" class="form-control" name="phoneNum"  value="${user.phoneNumber}">
+                                                                                <input type="text" class="form-control" name="phoneNum" id="InputPhoneNum"  value="${user.phoneNumber}">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="recipient-name" class="col-form-label">Address</label>
@@ -154,7 +174,6 @@
                                                                                             name="roleID">
                                                                                         <option  value="1" ${user.role.roleID eq "1"?"selected":""}>USER</option>
                                                                                         <option  value="2" ${user.role.roleID eq "2"?"selected":""}>STAFF</option>
-                                                                                        <option  value="3" ${user.role.roleID eq "3"?"selected":""} >ADMIN</option>
                                                                                     </select>
                                                                                 </div>
                                                                                     
@@ -164,14 +183,13 @@
                                                                                             name="status" aria-label="Default select example">
                                                                                         <option value="1" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
                                                                                         <option value="1" ${user.status eq 1?"selected":""}>ACTIVE NORMAL</option>
-                                                                                        <option value="0" ${user.status eq 0?"selected":""}>INACTIVE</option>
                                                                                     </select>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
                                                                                 <input style="background-color: #28fe09; padding: 5px 10px; border-color: grey" type="submit" name="action" value="update" >
                                                                                 <a style="text-decoration: none;border: 2px solid #fa0927; padding: 5px 12px; background-color: red; color: black"
-                                                                                   href="http://localhost:8080/CarBooking/user?action=delete&userID=${user.userID}">Delete</a>
+                                                                                   href="${pageContext.request.contextPath}/user?action=delete&userID=${user.userID}">Delete</a>
                                                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </form>
@@ -184,9 +202,10 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                    
                                 </div>
                             </div>
-
+    
                         </div>
                         <!-- /.container-fluid -->
 
@@ -245,5 +264,6 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/validationUpdateUser.js"></script>
     </body>
 </html>

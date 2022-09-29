@@ -9,7 +9,7 @@ import java.io.StringReader;
 import java.net.URL;
 import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonReade;
+import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.net.ssl.HttpsURLConnection;
 

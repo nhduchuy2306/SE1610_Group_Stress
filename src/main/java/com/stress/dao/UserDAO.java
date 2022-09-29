@@ -23,4 +23,6 @@ public interface UserDAO {
     boolean registerByEmail(GooglePojo googleUser) throws SQLException;
     boolean updateUser(String userID,String userName,String email,String DOB,String address,
         String phoneNumber,String sex,String roleID,String status) throws SQLException;
+    List<User> getAllUserDelete() throws SQLException;
+    boolean activeUser(String userID) throws SQLException;
 }

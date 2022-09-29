@@ -75,33 +75,35 @@
             } 
         </style>
     </head>
-
+    
     <body>
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
         </header>
 <!--        Login Form-->
-        <div class="modal fade bd-example-modal-lg" id="Login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+        
+        <div class="modal fade col-lg-12" id="loginForm" tabindex="-1">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="row">
-                        <!--<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>-->
-                        <img class="col-lg-6 d-none d-lg-block" 
-                             src="https://cdn.dribbble.com/users/5980575/screenshots/17141125/car-rental-instagram-social-media-post-banner-template-free-415705_4x.png?compress=1&resize=1000x750&vertical=top" alt="alt"/>
-                        <div class="col-lg-6">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
-                                </div>
-                                <form class="user" action="http://localhost:8080/CarBooking/user" method="post">
+                    <div class="modal-header">
+                        <h4 class="modal-title caps"><strong>Welcome Back!</strong></h4>
+                    </div>
+                    <div class="modal-body col-lg-12">
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <div class="p-2">
+                                    <form class="registration user" id="registration" action="${pageContext.request.contextPath}/user" method="post">
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
-                                               id="exampleInputEmail" aria-describedby="emailHelp"
-                                               placeholder="Enter Account..." name="userID">
+                                               id="userID" aria-describedby="emailHelp"
+                                               placeholder="Enter Account..." name="userID" oninput="checkUserID()"value="${requestScope.USERID}">
+                                        <p style="color: red;margin: 10px 0 0 20px;" id="error">${requestScope.ERROR_LOGIN1}</p>
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                               id="exampleInputPassword" placeholder="Password" name="password">
+                                               id="password" placeholder="Password" name="password" oninput="checkPassword()">
+                                        <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_LOGIN2}</p>
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
@@ -110,31 +112,29 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <div class="g-recaptcha" data-sitekey="6LfPMjQiAAAAAALfARSLcVMoKa8KB8kiQM1TLFYI"></div>
-
+                                    <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
+                                    
                                     <input style="margin-top: 10px" type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
                                     <hr>
-
                                     <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
                                        &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
-
                                         <i class="fab fa-google fa-fw"></i> Login with Google
-
                                     </a>
-                                    <a href="${pageContext.request.contextPath}/client/index.jsp" class="btn btn-facebook btn-user btn-block">
-                                    <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                </a>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="${pageContext.request.contextPath}/client/forgot-password.jsp">Forgot Password?</a>
-                            </div>
-                            <div class="text-center">
-                                <button type="button" class="modal-button btn btn-primary" data-toggle="modal" data-target="#Register">Create an Account!</button>
+    
+                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                    <div class="modal-footer text-center">
+                        <div class="col-lg-12" style="margin-top: -10px;">
+                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#demo-2" data-dismiss="modal">Forgot Password?</button>
+                        </div>
+                        <div class="col-lg-12" style="margin-top: -10px;">
+                           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#registerForm" data-dismiss="modal">Create an Account!</button>
+                        </div>
+                       
+                    </div>
                 </div>
             </div>
         </div>
@@ -143,91 +143,133 @@
 
         <!--Register Form-->
         
-        <div class="modal fade bd-example-modal-lg" id="Register" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+        <div class="modal fade" id="registerForm" tabindex="-1">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="row">
-                        <img class="col-lg-5 d-none d-lg-block" 
-                             src="https://cdn.dribbble.com/users/5980575/screenshots/17141125/car-rental-instagram-social-media-post-banner-template-free-415705_4x.png?compress=1&resize=1000x750&vertical=top" alt="alt"/>
-                        <div class="col-lg-7">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                                </div>
-                                <form class="user" action="http://localhost:8080/CarBooking/user" method="post">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail"
-                                               placeholder="User Name" name="userName">
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <input type="date" class="form-control form-control-user" id="exampleFirstName"
-                                                   placeholder="Birthday" name="birthday" value="">
+                    <div class="modal-header">
+                        <h4 class="modal-title caps"><strong>Create an Account!</strong></h4>
+                    </div>
+                    <div class="modal-body col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="p-15">
+                                    <form class="user" action="${pageContext.request.contextPath}/user" method="post" id="FromRegistration">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id="nameInput"
+                                                   placeholder="User Name" name="userName" required="" value="${requestScope.USER_TMP.username}">
                                         </div>
-                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                            <select class="form-select" style="width: 100%; height:
-                                                    100%;border-radius: 40px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                    name="gender" aria-label="Default select example">
-                                                <option selected>Gender</option>
-                                                <option value="1">Male</option>
-                                                <option value="0">Female</option>
-                                            </select>
-
-                                        </div>
-                                    </div>                   
-                                    <div class="form-group">
-                                        <input type="email" class="form-control form-control-user" id="InputEmail"
-                                               placeholder="Email Address" name="email">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="InputAddress"
-                                               placeholder="Address" name="address">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="number" class="form-control form-control-user" id="InputPhoneNum"
-                                               placeholder="Phone Number" name="phoneNum">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail"
-                                               placeholder="Account" value="" name="userID">
-                                    </div>
-                                    <p style="color: red; font-size: 20px;"><c:out value="${ERROR}"></c:out></p>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input type="password" class="form-control form-control-user"
-                                                       id="InputPassword" placeholder="Password" name="password">
+                                                <input type="date" class="form-control form-control-user" id="exampleFirstName"
+                                                       placeholder="Birthday" name="birthday" value="${requestScope.USER_TMP.dob}" required="">
                                             </div>
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <select class="form-select" style="width: 100%; height:
+                                                        100%;border-radius: 40px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
+                                                        name="gender" aria-label="Default select example" required="">
+                                                    <option value="1" ${requestScope.USER_TMP.sex eq true?"selected":""}>Male</option>
+                                                    <option value="0" ${requestScope.USER_TMP.sex eq false?"selected":""}>Female</option>
+                                                </select>
 
-                                            <div class="col-sm-6">
-                                                <input type="password" class="form-control form-control-user"
-                                                       id="RepeatPassword" placeholder="Repeat Password" name="repeatPassword">
-                                            </div> 
+                                            </div>
+                                        </div>                   
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user" id="InputEmail"
+                                                   placeholder="Email Address" name="email" required="" value="${requestScope.USER_TMP.email}">
                                         </div>
                                         <div class="form-group">
-                                            <input type="submit" class="form-control form-control-user" id=""
-                                                   name="action" value="RegisterAccount" style="background-color: #4e73df; color: white;
-                                                   padding:0;height: 6vh">
+                                            <input type="text" class="form-control form-control-user" id="InputAddress"
+                                                   placeholder="Address" name="address" required="" value="${requestScope.USER_TMP.address}">
                                         </div>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="${pageContext.request.contextPath}/client/login.jsp">Already have an account? Login!</a>
+                                        <div class="form-group">
+                                            <input type="number" class="form-control form-control-user" id="InputPhoneNum"
+                                                   placeholder="Phone Number" name="phoneNum" required="" value="${requestScope.USER_TMP.phoneNumber}">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" id="userIDRegister"
+                                                   placeholder="Account" value="${requestScope.USER_TMP.userID}" name="userID" required="">
+                                            <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_USERID}</p>
+                                        </div>
+                                        <p style="color: red; font-size: 20px;"><c:out value="${ERROR}"></c:out></p>
+                                            <div class="form-group row">
+                                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    <input type="password" class="form-control form-control-user"
+                                                           id="passwordRegister" placeholder="Password" name="password" required="" value="${requestScope.USER_TMP.password}">
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <input type="password" class="form-control form-control-user"
+                                                           id="password_repeat" placeholder="Repeat Password" name="repeatPassword" required=""value="${requestScope.USER_TMP.password}">
+                                                </div> 
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" class="form-control form-control-user" id=""
+                                                       name="action" value="RegisterAccount" style="background-color: #4e73df; color: white;
+                                                       padding:0;height: 6vh">
+                                            </div>
+                                            <hr>
+                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
+                                               &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
+                                                <i class="fab fa-google fa-fw"></i> Login with Google
+                                            </a>
+                                        </form>
+
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-lg-12"></div>
+                        <button type="button"  style="margin-left: auto;margin-right: auto; background:none; color: gray; border: none; margin-top: -10px;" 
+                                class="btn btn-primary" data-toggle="modal" data-target="#loginForm" data-dismiss="modal">Already have an account? Login!</button>
                     </div>
                 </div>
             </div>
         </div>
         
         <!--End Register Form-->
+        
+        <!--Forgot form-->
+        
+        <div class="modal fade" id="demo-2" tabindex="-1" style="">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title caps"><strong>Forgot Your Password?</strong></h4>
+                        </div>
+                        <div class="modal-body col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <div class="text-center" style="margin-top: -10px;">
+<!--                                            <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>-->
+                                                <p class="mb-4">We get it, stuff happens. Just enter your email address below
+                                                and we'll send you a link to reset your password!</p>
+                                        </div>
+                                        <form class="user">
+                                            <div class="form-group">
+                                                <input type="email" class="form-control form-control-user"
+                                                       id="exampleInputEmail" aria-describedby="emailHelp"
+                                                       placeholder="Enter Email Address...">
+                                            </div>
+                                            <a href="login.html" class="btn btn-primary btn-user btn-block">
+                                                Reset Password
+                                            </a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="margin-top: -40px;">
+                            <button style="margin-left: auto;margin-right: auto;"
+                                    type="button" class="modal-button btn btn-info" data-toggle="modal" data-target="#loginForm" data-dismiss="modal">Try to login again!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <!--End Forgot form-->
+        
         <!-- #header -->
         <!-- start banner Area -->
         <section class="banner-area relative">
@@ -663,6 +705,10 @@
             </div>
         </footer>
         <!-- End footer Area -->
+        
+
+        
+        </script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -677,7 +723,22 @@
         <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/validationRegister.js"></script>
     </body>
-
+        <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
+            <script>
+            $(window).load(function () {
+                $('#loginForm').modal('show');
+            });
+            </script>
+        </c:if>
+        <c:if test="${requestScope.ERROR_USERID!=null}">
+            <script>
+            $(window).load(function () {
+                $('#registerForm').modal('show');
+            });
+            </script>
+        </c:if>
 </html>
 </html>
