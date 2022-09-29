@@ -55,7 +55,7 @@
                                         <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
                                 </div>
 
-                                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="add-modal modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -64,41 +64,44 @@
                                                     <span aria-hidden="true">&times;</span>
                                                 </button>
                                             </div>
-                                            <form action="driver">
+                                            <form action="driver" method="post">
                                                 <div class="modal-body">
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Driver ID</label>
-                                                        <input type="text" name="driverID" class="add-driverID form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver ID" required>
-                                                        <small id="id-error"></small>
+                                                        <input type="text" name="driverID" class="add-driverID form-control" 
+                                                               id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver ID" required>
+                                                        <small style="color:red" id="id-error">${ADD_ERROR.driverID}</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Driver Name</label>
                                                         <input type="text" name="driverName" class="add-driverName form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Name" required>
-                                                        <small id="name-error"></small>
+                                                        <small style="color:red" id="name-error">${ADD_ERROR.driverName}</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">DOB</label>
-                                                        <input type="date" name="DOB" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB" required>
+                                                        <input type="date" name="DOB" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB" required>
+                                                        <small style="color:red" id="dob-error">${ADD_ERROR.DOB}</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Gender</label>
-                                                        <select name="sex" class="form-control">
+                                                        <select name="sex" class="form-control add-gender" required>
                                                             <option value="true" selected>MALE</option>
                                                             <option value="false">FEMALE</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Driver Picture</label>
-                                                        <input type="text" name="driverPic" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Picture" required>
+                                                        <input type="text" name="driverPic" class="add-picture form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Picture" required>
+                                                        <small style="color:red" id="url-error">${ADD_ERROR.driverPicture}</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Phone Number</label>
                                                         <input type="text" name="phoneNumber" class="add-number form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone Number" required>
-                                                        <small id="phone-error"></small>
+                                                        <small style="color:red" id="phone-error">${ADD_ERROR.phoneNumber}</small>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Status</label>
-                                                        <select name="status" class="form-control">
+                                                        <select name="status" class="form-control" required>
                                                             <option value="1" selected>ACTIVE</option>
                                                         </select>
                                                     </div>
@@ -137,7 +140,7 @@
                                                     <td>${d.driverName}</td>
                                                     <td>${d.DOB}</td>
                                                     <td>${d.sex eq "true"? "MALE":"FEMALE"}</td>
-                                                    <td><<img src="${d.driverPicture}" alt="alt"/></td>
+                                                    <td><img style="width: 150px; height: 200px;" src="${d.driverPicture}" alt="alt"/></td>
                                                     <td>${d.phoneNumber}</td>
                                                     <td>
                                                         <c:choose>
@@ -165,7 +168,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="driver">
+                                                                    <form action="driver" method="post">
                                                                         <div class="modal-body">
                                                                             <div class="modal-body">
                                                                                 <div class="form-group">
@@ -332,108 +335,43 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
-        <script type="text/javascript">
-//            var id_error = document.getElementById("id-error");
-//            var name_error = document.getElementById("name-error");
-//            var phone_error = document.getElementById("phone-error");
-//
-//            let driverIDField = document.querySelector(".add-driverID");
-//            let nameField = document.querySelector(".add-driverName");
-//            let phoneField = document.querySelector(".add-number");
 
-            
-        </script>
         <script type="text/javascript">
-//            $(document).ready(function (e) {
-//                $(".add-driverID").keyup(function(){
-//                    var driverID = $(this).val();
-//                    $.ajax({
-//                        url: "/ETrans/driver?action=isContain",
-//                        type: "get",
-//                        data: {
-//                            driverId = driverID
-//                        },
-//                        success: function (data) {
-//                            var id_error = $("#id-error");
-//                            if(data.){
-//                                id_error.text("DriverID is existed");
-//                            }
-//                            else{
-//                                id_error.text("DriverID is OK");
-//                            }
-//                        },
-//                        error: function (data) {
-//                            console.log(data);
-//                        }
-//                    });
-//                });
-//            });
             <c:if test="${requestScope.SUCCESS != null}">
                 $(document).ready(function (e) {
                     $("#showsuccess").modal('show');
                 });
-                <c:if test="${requestScope.SUCCESS != null}">
-                    $.ajax({
-                        url: "/ETrans/driver?action=driverUpdate",
-                        type: "get",
-                        success: function (data) {
-                            var row = document.getElementById("content-data-update");
-                            row.innerHTML = data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                        }
-                    });
-                </c:if>
-                <c:if test="${requestScope.SUCCESS != null}">
-                    const inputField = document.querySelectorAll("input[type=search]");
-                    inputField.addEventListener('input', function (e) {
-                        $.ajax({
-                            url: "/ETrans/driver?action=search",
-                            type: "get",
-                            data: {
-                                txt: e.target.value
-                            },
-                            success: function (data) {
-                                var row = document.getElementById("content-data-update");
-                                row.innerHTML = data;
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                            }
-                        });
-                    });
-                </c:if>
             </c:if>
-            <c:if test="${requestScope.ERROR != null}">
-                $(document).ready(function () {
-                    $("#showerror").modal('show');
+            
+            var driverID = document.querySelector("input[name=driverID]");
+            var driverName = document.querySelector("input[name=driverName]");
+            var DOB = document.querySelector("input[name=DOB]");
+            var sex = document.querySelector("select[name=sex]");
+            var driverPic = document.querySelector("input[name=driverPic]");
+            var phoneNumber = document.querySelector("input[name=phoneNumber]");
+            
+            document.querySelector("button[value=add]").addEventListener("click", function () {
+                sessionStorage.setItem("driverID",driverID.value);
+                sessionStorage.setItem("driverName",driverName.value);
+                sessionStorage.setItem("DOB",DOB.value);
+                sessionStorage.setItem("sex",sex.value);
+                sessionStorage.setItem("driverPic",driverPic.value);
+                sessionStorage.setItem("phoneNumber",phoneNumber.value);
+            });
+            
+            <c:if test="${requestScope.ADD_ERROR != null}">
+                $(document).ready(function (e) {
+                    $(".add-modal").modal('show');
                 });
+                
+                driverID.value = sessionStorage.getItem("driverID");
+                driverName.value = sessionStorage.getItem("driverName");
+                DOB.value = sessionStorage.getItem("DOB");
+                sex.value = sessionStorage.getItem("sex");
+                driverPic.value = sessionStorage.getItem("driverPic");
+                phoneNumber.value = sessionStorage.getItem("phoneNumber");
             </c:if>
-            <c:if test="${requestScope.SUCCESS == null}">
-                $(document).ready(function () {
-                    $(".add-driverID").keyup(function(){
-                        var driverID = $(this).val();
-                        $.ajax({
-                            url: "/ETrans/driver?action=isContain",
-                            type: "get",
-                            data: {
-                                driverId = driverID
-                            },
-                            success: function (data) {
-                                var id_error = $("#id-error");
-                                if(data.){
-                                    id_error.text("DriverID is existed");
-                                }
-                                else{
-                                    id_error.text("DriverID is OK");
-                                }
-                            },
-                            error: function (data) {
-                                console.log(data);
-                            }
-                        });
-                    });
-                });
-            </c:if>
+            
         </script>
     </body>
 </html>

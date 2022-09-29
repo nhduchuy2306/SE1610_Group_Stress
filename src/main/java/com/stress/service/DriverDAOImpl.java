@@ -17,7 +17,8 @@ public class DriverDAOImpl implements DriverDAO{
     
     @Override
     public List<Driver> getAllDriver() throws SQLException{
-        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] FROM tblDrivers";
+        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] FROM tblDrivers "
+                + "WHERE [Status] = 1 OR [Status] = 2";
         List<Driver> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -65,6 +66,7 @@ public class DriverDAOImpl implements DriverDAO{
             ptm.setInt(7, driver.getStatus());
             check = ptm.executeUpdate() > 0;
         } catch (Exception e) {
+            System.out.println(e.toString());
         } finally {
             if(ptm!=null) ptm.close();
             if(conn!=null) conn.close();
@@ -161,7 +163,8 @@ public class DriverDAOImpl implements DriverDAO{
 
     @Override
     public List<Driver> getDriverByName(String driverName) throws SQLException {
-        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] FROM tblDrivers WHERE [DriverName] like ?";
+        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] FROM tblDrivers "
+                + "WHERE [DriverName] like ?";
         List<Driver> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
