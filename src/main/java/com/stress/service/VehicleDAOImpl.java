@@ -16,6 +16,44 @@ import com.stress.dto.VehicleType;
 public class VehicleDAOImpl implements VehicleDAO {
     private static final String DELETE="UPDATE tblVehicles SET [Status] = ? WHERE VehicleID=?";
     @Override
+    public List<Vehicle> searchVehicle(String search) throws SQLException {
+        List<Vehicle> vList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [VehicleID], [VehicleName],[LicensePlate],[VehicleTypeID],[Status] FROM tblVehicles"
+                        + " WHERE VehicleName LIKE ?");
+                ptm.setString(1, "%" + search + "%");
+                rs = ptm.executeQuery();
+                while(rs.next()) {
+                    String vehicleID = rs.getString("VehicleID");
+                    String vehicleName = rs.getString("VehicleName");
+                    String licensePlate = rs.getString("LicensePlate");
+                    int VehicleTypeID = rs.getInt("VehicleTypeID");
+                    int status = rs.getInt("status");
+                    VehicleType vType = new VehicleTypeDAOImpl().getVehicleTypeByID(VehicleTypeID);
+                    if(vType != null) {
+                        vList.add(new Vehicle(vehicleID, vehicleName, licensePlate, vType, status));
+                    }else {
+                        throw new Exception();
+                    }
+                    
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return vList;
+        
+    }
+    @Override
     public boolean deleteVehicle(String VehicleID) throws SQLException{
         boolean result=false;
         Connection conn=null;
@@ -156,6 +194,33 @@ public class VehicleDAOImpl implements VehicleDAO {
             if(conn != null) conn.close();
         }
         return vList;
+    }
+    
+    @Override
+    public boolean duplicateVehicle(String vehicleID) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [VehicleName] FROM tblVehicles WHERE [VehicleID] = ?");
+                ptm.setString(1, vehicleID);
+                rs= ptm.executeQuery();
+                if(rs.next()) {
+                    check = true;
+                }
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
     }
     
     public static void main(String[] args) throws SQLException {
