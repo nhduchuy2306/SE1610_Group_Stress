@@ -152,7 +152,7 @@
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${d.driverName}</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${v.vehicleName}</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -337,38 +337,38 @@
 //                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
             });
             </c:if>
-            <c:if test="${requestScope.SUCCESS!=null}">
-                    $.ajax({
-                        url:"/ETrans/admin/VehicleController?action=vehicleUpdate",
-                        type:"get",
-                        success: function (data) {
-                            var row = document.getElementById("content-data-update");
-                            row.innerHTML = data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            
-                        }
-                    });
-                </c:if>
-                <c:if test="${requestScope.SUCCESS!=null}">
-                    const inputField = document.querySelectorAll("input[type=search]");
-                    inputField.addEventListener('input',function(e){
-                        $.ajax({
-                            url:"/ETrans/admin/VehicleController?action=search",
-                            type:"get",
-                            data:{
-                                txt : e.target.value
-                            },
-                            success: function (data) {
-                                var row = document.getElementById("content-data-update");
-                                row.innerHTML = data;
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-
-                            }
-                        });
-                    });
-                </c:if>
+//            <c:if test="${requestScope.SUCCESS!=null}">
+//                    $.ajax({
+//                        url:"/ETrans/admin/VehicleController?action=vehicleUpdate",
+//                        type:"get",
+//                        success: function (data) {
+//                            var row = document.getElementById("content-data-update");
+//                            row.innerHTML = data;
+//                        },
+//                        error: function (jqXHR, textStatus, errorThrown) {
+//                            
+//                        }
+//                    });
+//                </c:if>
+//                <c:if test="${requestScope.SUCCESS!=null}">
+//                    const inputField = document.querySelectorAll("input[type=search]");
+//                    inputField.addEventListener('input',function(e){
+//                        $.ajax({
+//                            url:"/ETrans/admin/VehicleController?action=search",
+//                            type:"get",
+//                            data:{
+//                                txt : e.target.value
+//                            },
+//                            success: function (data) {
+//                                var row = document.getElementById("content-data-update");
+//                                row.innerHTML = data;
+//                            },
+//                            error: function (jqXHR, textStatus, errorThrown) {
+//
+//                            }
+//                        });
+//                    });
+//                </c:if>
             
         </script>
     </body>
