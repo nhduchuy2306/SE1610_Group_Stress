@@ -284,7 +284,7 @@
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
                                     <input type="text" class="form-control date-picker" name="return" placeholder="Return "
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return'">
-                                    <a href="route.jsp" class="primary-btn text-uppercase">Search tickets</a>
+                                    <a href="${pageContext.request.contextPath}/client/route.jsp" class="primary-btn text-uppercase">Search tickets</a>
                                 </form>
                             </div>
                         </div>
