@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
+
 package com.stress.controllers;
 
 import com.stress.dao.VehicleDAO;
@@ -9,7 +6,6 @@ import com.stress.dto.Vehicle;
 import com.stress.dto.VehicleType;
 import com.stress.service.VehicleDAOImpl;
 import com.stress.service.VehicleTypeDAOImpl;
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;

@@ -281,10 +281,10 @@
                                         <option value="Vietnam">Vietnam</option>
                                     </datalist>
                                     <input type="text" class="form-control date-picker" name="start" placeholder="Start "
-                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'" value="${java.time.LocalDate.now()}">
                                     <input type="text" class="form-control date-picker" name="return" placeholder="Return "
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return'">
-                                    <a href="route.jsp" class="primary-btn text-uppercase">Search tickets</a>
+                                    <a href="${pageContext.request.contextPath}/client/route.jsp" class="primary-btn text-uppercase">Search tickets</a>
                                 </form>
                             </div>
                         </div>
