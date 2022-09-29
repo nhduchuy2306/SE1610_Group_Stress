@@ -165,16 +165,11 @@ public class UserController extends HttpServlet {
             String captcha = request.getParameter("g-recaptcha-response");
             UserDAO dao=new UserDAOImpl();
             User loginUser=dao.getUserByIDAndPassword(userID, password);
-            boolean verify = VerifyRecaptcha.verify(captcha);
-            System.out.println(verify);
-            if(loginUser!=null && verify){
             String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
             VerifyRecaptcha verifyCaptcha=new VerifyRecaptcha();
             boolean verify=verifyCaptcha.verifyCaptcha(gRecaptchaResponse);
-            System.out.println("Captcha: "+ verify);
             if(loginUser!=null && verify==true){
                 HttpSession session =request.getSession();
-                
                 session.setAttribute("LOGIN_USER", loginUser);
                 if(loginUser.getRole().getRoleID().equals("1")){
                     url="./client/index.jsp";

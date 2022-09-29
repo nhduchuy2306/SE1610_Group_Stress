@@ -1,66 +1,193 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
+package com.stress.controllers;
 
-package com.stress.utils;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
+import com.stress.dao.UserDAO;
+import com.stress.dto.User;
+import com.stress.service.UserDAOImpl;
+import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.net.URL;
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReade;
-import javax.json.JsonValue;
-import javax.net.ssl.HttpsURLConnection;
+import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class VerifyRecaptcha {
+/**
+ *
+ * @author KieuMinhHieu
+ */
+@WebServlet(name = "UserController", urlPatterns = {"/user"})
+public class UserController extends HttpServlet {
 
-    public static final String url = "https://www.google.com/recaptcha/api/siteverify";
-    public static final String secret = "6LfPMjQiAAAAAP9zEDjf5cigejb5KhrMjea0SEWt";
-    private final static String USER_AGENT = "Mozilla/5.0";
 
-    //Verify recaptcha using for LoginController
-    public boolean verifyCaptcha(String gRecaptchaResponse) throws IOException {
-        if (gRecaptchaResponse == null || "".equals(gRecaptchaResponse)) {
-            return false;
-        }
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         try {
-            URL obj = new URL(url);
-            HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-            // add reuqest header
-            con.setRequestMethod("POST");
-            con.setRequestProperty("User-Agent", USER_AGENT);
-            con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-            String postParams = "secret=" + secret + "&response="
-                    + gRecaptchaResponse;
-            // Send post request
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(postParams);
-            wr.flush();
-            wr.close();
-            int responseCode = con.getResponseCode();
-            System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + postParams);
-            System.out.println("Response Code : " + responseCode);
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+            String action = request.getParameter("action");
+            System.out.println("action:" + action);
+            switch (action) {
+                case "viewUser":
+                    viewUser(request, response);
+                    break;
+                case "delete":
+                    deleteUser(request, response);
+                    break;
             }
-            in.close();
-            // print result
-            System.out.println(response.toString());
-            //parse JSON response and return 'success' value
-            JsonReader jsonReader = Json.createReader(new StringReader(response.toString()));
-            JsonObject jsonObject = jsonReader.readObject();
-            jsonReader.close();
-            return jsonObject.getBoolean("success");
         } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            log("Error at UserController-doGet: "+e.toString());
+        }
+        
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        try {
+            String action = request.getParameter("action");
+            System.out.println("action:" + action);
+            switch (action) {
+                case "RegisterAccount":
+                    registerUser(request, response);
+                    break;
+                case "update":
+                    updateUser(request, response);
+                    break;
+                case "Login":
+                    loginUser(request, response);
+                    break;
+            }
+        } catch (Exception e) {
+
+        }    
+    }
+
+    private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String url="./client/register.jsp";
+        try {
+            String userName=request.getParameter("userName");
+            String birthday=request.getParameter("birthday");
+            String gender=request.getParameter("gender");
+            String email=request.getParameter("email");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String userID=request.getParameter("userID");
+            String password=request.getParameter("password");
+            String repeatPassword=request.getParameter("repeatPassword");
+            boolean checkValidation=true;
+            if(!password.equals(repeatPassword)){
+                request.setAttribute("ERROR", "Password is not match!");
+                checkValidation=false;
+            }
+            UserDAO dao=new UserDAOImpl();
+            boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
+            boolean check=dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender);
+            if(checkValidation==true){
+               if (checkDuplicate == true) {
+                    if (check == true) {
+                    url = "./client/login.jsp";
+                    }
+                }
+           }
+        } catch (Exception e) {
+            log("Error at UserController - Register:"+e.toString());
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
+
+    private void viewUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String url="./admin/404.jsp";
+        try {
+            UserDAO dao=new UserDAOImpl();
+            List <User> list=dao.getAllUser();
+            if(!list.isEmpty()){
+                request.setAttribute("LIST_USER", list);
+                url="./admin/userTable.jsp";
+            }
+        } catch (Exception e) {
+            log("Error at UserController - ViewUser: "+ e.toString());
+        }finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+
+    private void updateUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+        try {
+            String userID=request.getParameter("userID");
+            String userName=request.getParameter("userName");
+            String birthday=request.getParameter("birthday");
+            String gender=request.getParameter("gender");
+            String email=request.getParameter("email");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String roleID=request.getParameter("roleID");
+            String status=request.getParameter("status");
+            UserDAO dao=new UserDAOImpl();
+            boolean checkUpdate=dao.updateUser(userID, userName,email, birthday, address, phoneNum, gender, roleID, status);
+            if(checkUpdate){
+                viewUser(request, response);
+            }
+        } catch (Exception e) {
+            log("Error at UserController - updateUser: "+ e.toString());
+        }
+        
+    }
+
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        try {
+            String userID=request.getParameter("userID");
+            UserDAO dao=new UserDAOImpl();
+            boolean check=dao.deleteUser(userID);
+            if(check){
+                viewUser(request, response);
+            }
+        } catch (Exception e) {
+            log("Error at UserController - deleteUser: "+ e.toString());
+        } 
+    }
+
+    private void loginUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        String url="./client/login.jsp";
+        try {
+            String userID=request.getParameter("userID");
+            String password=request.getParameter("password");
+            UserDAO dao=new UserDAOImpl();
+            User loginUser=dao.getUserByIDAndPassword(userID, password);
+            String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+            VerifyRecaptcha verifyCaptcha=new VerifyRecaptcha();
+            boolean verify=verifyCaptcha.verifyCaptcha(gRecaptchaResponse);
+            System.out.println("Captcha: "+ verify);
+            if(loginUser!=null && verify==true){
+                HttpSession session =request.getSession();
+                session.setAttribute("LOGIN_USER", loginUser);
+                if(loginUser.getRole().getRoleID().equals("1")){
+                    url="./client/index.jsp";
+                }else if(loginUser.getRole().getRoleID().equals("2")){
+                    url="./admin/index.jsp";
+                }else{
+                    url="./admin/index.jsp";
+                }
+            }
+        } catch (Exception e) {
+            log("Error at UserController - Login: "+e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+        
+        
+    }
+    
+
+    
 }
