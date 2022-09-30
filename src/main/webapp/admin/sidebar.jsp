@@ -48,17 +48,17 @@
             <span>Route</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="VehicleTypeController?action=show">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Vehicle Type</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="VehicleController?action=show">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/VehicleController?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Vehicle</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="driverLicenseTable.jsp">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/driverlicense?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Driver License</span></a>
     </li>

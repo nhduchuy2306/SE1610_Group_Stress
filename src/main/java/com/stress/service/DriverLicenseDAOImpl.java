@@ -13,6 +13,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +24,34 @@ public class DriverLicenseDAOImpl implements DriverLicenseDAO {
 
     @Override
     public List<DriverLicense> getAllDriverLicense() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        List<DriverLicense> dlList = new ArrayList<>();
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [DriverLicenseID], [nationality], [Class],[DateExpired],[DriverID] FROM tblDriverLicenses");
+                rs = ptm.executeQuery();
+                while(rs.next()) {
+                    String driverLicenseID = rs.getString("DriverLicenseID");
+                    String nationality = rs.getString("Nationality");
+                    String classes = rs.getString("Class");
+                    Date dateExpired = rs.getDate("DateExpired");
+                    String driverID = rs.getString("DriverID");
+                    Driver driver = new DriverDAOImpl().getDriverByID(driverID);
+                    if(driver != null) {
+                        dlList.add(new DriverLicense(driverLicenseID, nationality, classes, dateExpired, driver));
+                    }
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return dlList;
     }
 
     @Override
@@ -35,15 +63,14 @@ public class DriverLicenseDAOImpl implements DriverLicenseDAO {
         try {
             conn = DBConnection.getConnection();
             if(conn != null) {
-                ptm = conn.prepareStatement("SELECT [nationality], [Class],[DateExpired],[DriverID] FROM tblDriverLicenses WHERE "
-                        + " [DriverLicenseID] = ?");
+                ptm = conn.prepareStatement("SELECT [nationality], [Class],[DateExpired],[DriverID] FROM tblDriverLicenses WHERE [DriverLicenseID] = ? ");
                 ptm.setString(1, licenseID);
                 rs = ptm.executeQuery();
                 if(rs.next()) {
                     String nationality = rs.getString("nationality");
-                    String classes = rs.getString("Classes");
+                    String classes = rs.getString("Class");
                     Date dateExpired = rs.getDate("DateExpired");
-                    String driverID = rs.getString("driverID");
+                    String driverID = rs.getString("driverID").trim();
                     Driver d = new DriverDAOImpl().getDriverByID(driverID);
                     if(d != null) {
                         dl = new DriverLicense(licenseID, nationality, classes, dateExpired, d);
@@ -54,6 +81,7 @@ public class DriverLicenseDAOImpl implements DriverLicenseDAO {
             }
             
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if(rs != null) rs.close();
             if(ptm != null) ptm.close();
@@ -117,7 +145,7 @@ public class DriverLicenseDAOImpl implements DriverLicenseDAO {
         try {
             conn = DBConnection.getConnection();
             if(conn != null) {
-                ptm = conn.prepareStatement("UPDATE tblVehicleLicenses SET [Nationality] = ?, [DateExpired] = ?, [Class] = ? WHERE [DriverLicenseID] = ?");
+                ptm = conn.prepareStatement("UPDATE tblDriverLicenses SET [Nationality] = ?, [DateExpired] = ?, [Class] = ? WHERE [DriverLicenseID] = ?");
                 ptm.setString(1, dl.getNationality());
                 ptm.setDate(2, dl.getDateExpired());
                 ptm.setString(3, dl.getClasses());
@@ -131,6 +159,20 @@ public class DriverLicenseDAOImpl implements DriverLicenseDAO {
             if(conn != null) conn.close();
         }
         return check;
+    }
+    
+    
+    //Testing 
+    public static void main(String[] args) {
+        try {
+            DriverLicenseDAO dlDao = new DriverLicenseDAOImpl();
+            List<DriverLicense> dlList = dlDao.getAllDriverLicense();
+            for (DriverLicense driverLicense : dlList) {
+                System.out.println(driverLicense);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

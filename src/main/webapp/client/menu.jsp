@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
         <div class="header-top">
@@ -31,9 +32,13 @@
                         <li><a href="packages.html">Packages</a></li>
                         <li><a href="hotels.html">Hotels</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><button type="button" class="login btn btn-primary" data-toggle="modal" data-target="#Login">LOGIN</button></li>
-                        <li><button type="button" class="login btn btn-primary" data-toggle="modal" data-target="#Register">REGISTER</button></li>
-                        <li><a href="">Logout</a></li>
+                        <c:if test="${sessionScope.LOGIN_USER==null}">
+                            <li><button type="button" class="login btn btn-primary" data-toggle="modal" data-target="#loginForm">LOGIN</button></li>
+                        </c:if>
+                        <c:if test="${sessionScope.LOGIN_USER!=null}">
+                            <li><a href="${pageContext.request.contextPath}/Logout">Logout</a></li>
+                        </c:if>
+                        
                     </ul>
                 </nav><!-- #nav-menu-container -->
             </div>
