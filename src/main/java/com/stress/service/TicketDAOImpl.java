@@ -96,25 +96,4 @@ public class TicketDAOImpl implements TicketDAO{
         }
         return check;
     }
-
-    @Override
-    public boolean deleteTicket(int ticketID) throws SQLException {
-        String sql = "DELETE FROM tblTickets "
-                    + "WHERE TicketID = ?";
-        boolean check = false;
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        try {
-            conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(sql);
-            ptm.setInt(1, ticketID);
-            check = ptm.executeUpdate() > 0;
-        } catch (Exception e) {
-        } finally {
-            if(conn!=null) conn.close();
-            if(ptm!=null) ptm.close();
-        }
-        return check;
-    }
-    
 }
