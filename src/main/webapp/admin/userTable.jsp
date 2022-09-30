@@ -90,11 +90,11 @@
                                                         <td>${user.email}</td>
                                                         <td>${user.phoneNumber}</td>
                                                         <td>${user.address}</td>
-                                                        <td>${user.password}</td>
+                                                        <td>*****</td>
                                                         <td>${user.role.roleName}</td>
                                                         <td><c:choose>
-                                                            <c:when test="${user.status eq 0}">
-                                                                INACTIVE
+                                                            <c:when test="${user.status eq 2}">
+                                                                ACTIVE GOOGLE
                                                             </c:when>
                                                             <c:when test="${user.status eq 1}">
                                                                 ACTIVE NORMAL
@@ -181,7 +181,7 @@
                                                                                     <label for="recipient-name" class="col-form-label">Status</label>      
                                                                                     <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
                                                                                             name="status" aria-label="Default select example">
-                                                                                        <option value="1" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
+                                                                                        <option value="2" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
                                                                                         <option value="1" ${user.status eq 1?"selected":""}>ACTIVE NORMAL</option>
                                                                                     </select>
                                                                                 </div>
@@ -247,7 +247,7 @@
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
+                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/Logout">Logout</a>
                         </div>
                     </div>
                 </div>
