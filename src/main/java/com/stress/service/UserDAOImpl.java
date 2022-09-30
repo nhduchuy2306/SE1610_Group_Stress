@@ -307,15 +307,6 @@ public class UserDAOImpl implements UserDAO {
         return check;
     }
     
-    public static void main(String[] args) {
-        try {
-            UserDAOImpl dao=new UserDAOImpl();
-            List<User> check=dao.getAllUserDelete();
-            System.out.println("check:" +check);
-        } catch (Exception e) {
-        }
-    }
-
     @Override
     public boolean updateUser(String userID,String userName,String email,String DOB,String address,
         String phoneNumber,String sex,String roleID,String status) throws SQLException {
@@ -323,7 +314,7 @@ public class UserDAOImpl implements UserDAO {
         Connection conn =null;
         PreparedStatement ptm = null;
         String updateUser="UPDATE tblUsers SET UserName=?,Email=?,DOB=?,Address=?,"
-                + "PhoneNumber=?,Sex=?,[RoleID]=?,[status]=?  WHERE UserID=?";
+                + "PhoneNumber=?,Sex=?,[RoleID]=?  WHERE UserID=?";
         try {
             conn=DBConnection.getConnection();
             if(conn!=null){
@@ -335,8 +326,7 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setString(5, phoneNumber);
                 ptm.setString(6, sex);
                 ptm.setString(7, roleID);
-                ptm.setString(8, status);
-                ptm.setString(9, userID);
+                ptm.setString(8, userID);
                 checkUpdate=ptm.executeUpdate()>0?true:false;
             }
         } catch (Exception e) {

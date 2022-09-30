@@ -27,12 +27,12 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>User</span></a>
     </li>
-    <li class="nav-item">
+<!--    <li class="nav-item">
         <a class="nav-link" href="roleTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Role</span></a>
-    </li>
-    <li class="nav-item">
+    </li>-->
+<!--    <li class="nav-item">
         <a class="nav-link" href="orderTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Order</span></a>
@@ -46,7 +46,7 @@
         <a class="nav-link" href="routeTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Route</span></a>
-    </li>
+    </li>-->
     <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -63,31 +63,31 @@
             <span>Driver License</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/admin/driver?action=show">
+        <a class="nav-link" href="${pageContext.request.contextPath}/driver?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Driver</span></a>
     </li>
-    <li class="nav-item">
+<!--    <li class="nav-item">
         <a class="nav-link" href="tripTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Trip</span></a>
-    </li>
-    <li class="nav-item">
+    </li>-->
+<!--    <li class="nav-item">
         <a class="nav-link" href="seatTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Seat</span></a>
-    </li>
-    <li class="nav-item">
+    </li>-->
+<!--    <li class="nav-item">
         <a class="nav-link" href="ticketTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Ticket</span></a>
-    </li>
+    </li>-->
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
+<!--    <li class="nav-item">
         <a class="nav-link" href="routeTable.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Charts</span></a>
-    </li>
+    </li>-->
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
     <!-- Sidebar Toggler (Sidebar) -->

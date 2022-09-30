@@ -237,7 +237,6 @@
         </a>
 
         <!-- Logout Modal-->
-        
         <!--Modal show success and fail-->
         <!-- Button trigger modal -->
         <!--<button type="button" class="btn btn-primary show-success-modal" style="" data-toggle="modal" data-target="#showsuccess">click</button>-->
