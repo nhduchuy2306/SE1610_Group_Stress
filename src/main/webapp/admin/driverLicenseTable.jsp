@@ -50,42 +50,42 @@
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h2 class="m-0 font-weight-bold text-primary">VEHICLES</h2>
                                     <div>
-                                    
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                        Add Driver License
-                                    </button>
+
+                                        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                            Add Driver License
+                                        </button>
                                         <a href="${pageContext.request.contextPath}/admin/driverlicense?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
-                                    </div>
-                                    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Add new Driver License</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="driverlicense" method="POST">
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Driver License ID</label>
-                                                            <input type="text" name="driverLicenseID" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver License ID" required="">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Nationality</label>
-                                                            <input type="text" name="nationality" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Nationality" required="">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Class</label>
-                                                            <input type="text" name="classes" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Class" required="">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Date Expired</label>
-                                                            <input type="date" name="dateExpired" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Date Expired" required="">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Driver</label>
-                                                            <select name="driverID" class="form-control">
+                                </div>
+                                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add new Driver License</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="driverlicense" method="POST">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Driver License ID</label>
+                                                        <input type="text" name="driverLicenseID" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver License ID" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Nationality</label>
+                                                        <input type="text" name="nationality" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Nationality" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Class</label>
+                                                        <input type="text" name="classes" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Class" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Date Expired</label>
+                                                        <input type="date" name="dateExpired" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Date Expired" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Driver</label>
+                                                        <select name="driverID" class="form-control">
                                                             <c:forEach items="${requestScope.DRIVER_LIST}" var="d" >
                                                                 <option value="${d.driverID.trim()}">${d.driverName}</option>
 
@@ -94,7 +94,7 @@
                                                     </div>
 
 
-                                                    
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -144,7 +144,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                        <form action="driverlicense" method="POST">
+                                                                    <form action="driverlicense" method="POST">
                                                                         <div class="modal-body">
                                                                             <div class="modal-body">
                                                                                 <div class="form-group">
@@ -164,7 +164,7 @@
                                                                                     <input type="date" name="dateExpired" class="form-control" value="${dl.dateExpired}" id="exampleInputEmail1" placeholder="Enter Date Expired">
                                                                                 </div>
 
-                                                                         
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -189,7 +189,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                        <form action="driverlicense" method="POST">
+                                                                    <form action="driverlicense" method="POST">
                                                                         <div class="modal-footer">
                                                                             <input type="hidden" name="driverLicenseID" value="${dl.driverLicenseID}">
                                                                             <button type="submit" name="action" value="delete" class="btn btn-primary">
@@ -345,7 +345,34 @@
 //                        });
 //                    });
 //                </c:if>
-            
+
+            </script>
+            <script>
+                var driverLicenseID = document.querySelector("input[name=driverLicenseID]");
+                var nationality = document.querySelector("input[name=nationality]");
+                var classes = document.querySelector("input[name=classes]");
+                var dateExpired = document.querySelector("input[name=dateExpired]");
+                var driver = document.querySelector("input[name=driverID]");
+
+                document.querySelector("button[value=create]").addEventListener("click", function () {
+                    sessionStorage.setItem("driverLicenseID", driverLicenseID.value);
+                    sessionStorage.setItem("nationality", nationality.value);
+                    sessionStorage.setItem("classes", classes.value);
+                    sessionStorage.setItem("dateExpired", dateExpired.value);
+                    sessionStorage.setItem("driverID", driverID.value);
+                }
+                );
+            <c:if test="${requestScope.ERROR != null}">
+                $(document).ready(function (e) {
+                    $(".add-modal").modal('show');
+                });
+                driverLicenseID.value = sessionStorage.getItem("driverLicenseID");
+                nationality.value = sessionStorage.getItem("nationality");
+                classes.value = sessionStorage.getItem("classes");
+                dateExpired.value = sessionStorage.getItem("dateExpired");
+                driverID.value = sessionStorage.getItem("driverID");
+
+            </c:if>
         </script>
     </body>
 </html>
