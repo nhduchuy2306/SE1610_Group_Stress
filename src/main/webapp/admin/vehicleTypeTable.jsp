@@ -48,10 +48,7 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                                For more information about DataTables, please visit the 
-                                <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+
                             <!-- DataTales Example -->
 
                             <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,98 +59,102 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="VehicleTypeController" method="POST">
+                                            
+                                            </div>
+                                    <div class="modal-body">
+                                        <form action="VehicleTypeController" method="POST">
 
 
-                                                <label for="vehicleTypeName">Vehicle Type Name</label>
-                                                <input type="text" name="vehicleTypeName" id="vehicleTypeName" required="">
-                                                <br>
-                                                <label for="totalSeat">Total Seat</label>
-                                                <input type="number" name="totalSeat" id="totalSeat" required="">
+                                            <label for="vehicleTypeName">Vehicle Type Name</label>
+                                            <input type="text" name="vehicleTypeName" id="vehicleTypeName" required="">
+                                            <br>
+                                            <label for="totalSeat">Total Seat</label>
+                                            <input type="number" name="totalSeat" id="totalSeat" required="">
 
 
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="submit" name="action" value="create" class="btn btn-primary">Create</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" name="action" value="create" class="btn btn-primary">Create</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3 d-flex justify-content-center align-items-center">
-
-                                        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                            Add Vehicle Type
-                                        </button>
+                            </div>
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-center align-items-center">
+                                    
+                                    <div>
+                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                        Add Vehicle Type
+                                    </button>
+                                    <a href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
                                     </div>
-                                    <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                <thead>
-                                                    <tr>
-                                                        <th> No. </th>
-                                                        <th>Vehicle Type ID</th>
-                                                        <th> Vehicle Type Name </th>
-                                                        <th> Total Seats </th>
-                                                        <th> Modify </th>
-                                                        <th> Delete </th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th> No. </th>
+                                                    <th>Vehicle Type ID</th>
+                                                    <th> Vehicle Type Name </th>
+                                                    <th> Total Seats </th>
+                                                    <th> Modify </th>
+                                                    <th> Delete </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 <c:forEach items="${requestScope.VEHICLE_TYPE_LIST}" var="v" varStatus="counter">
                                                     <tr>
-                                               
-                                                    <td>${counter.count}</td>
-                                                    <td>${v.vehicleTypeID}</td>
-                                                    <td>${v.vehicleTypeName}</td>
-                                                    <td>${v.totalSeat}</td>
 
-                                                    <td>
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${v.vehicleTypeID}">
-                                                            <i class="fa fa-pen"></i>
-                                                        </button>
-                                                        <div class="modal fade" id="modify-${v.vehicleTypeID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Update Vehicle Type</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form action="VehicleTypeController">
-                                                                            <input type="hidden" name="vehicleTypeID" value="${v.vehicleTypeID}">
-                                                                            <label for="vehicleTypeName">Vehicle Type Name</label>
-                                                                            <input type="text" name="vehicleTypeName" id="vehicleTypeName" required="" value="${v.vehicleTypeName}">
-                                                                            <br>
-                                                                            <label for="totalSeat">Total Seat</label>
-                                                                            <input type="number" name="totalSeat" id="totalSeat" required="" value="${v.totalSeat}">
+                                                        <td>${counter.count}</td>
+                                                        <td>${v.vehicleTypeID}</td>
+                                                        <td>${v.vehicleTypeName}</td>
+                                                        <td>${v.totalSeat}</td>
 
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                                <button type="submit" name="action" value="update" class="btn btn-primary">Modify</button>
-                                                                                
-                                                                            </div>
-                                                                        </form>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${v.vehicleTypeID}">
+                                                                <i class="fa fa-pen"></i>
+                                                            </button>
+                                                            <div class="modal fade" id="modify-${v.vehicleTypeID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Update Vehicle Type</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <form action="VehicleTypeController">
+                                                                                <input type="hidden" name="vehicleTypeID" value="${v.vehicleTypeID}">
+                                                                                <label for="vehicleTypeName">Vehicle Type Name</label>
+                                                                                <input type="text" name="vehicleTypeName" id="vehicleTypeName" required="" value="${v.vehicleTypeName}">
+                                                                                <br>
+                                                                                <label for="totalSeat">Total Seat</label>
+                                                                                <input type="number" name="totalSeat" id="totalSeat" required="" value="${v.totalSeat}">
+
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                                    <button type="submit" name="action" value="update" class="btn btn-primary">Modify</button>
+
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                    </td>
-                                                    <td>
-                                                        <form action="VehicleTypeController" method="GET">
-                                                        <input type="hidden" name="vehicleTypeID" value="${v.vehicleTypeID}">
-                                                        <input type="submit" name="action" value="delete">
-                                                        </form>
-                                                    </td>
-                                                
-                                                </tr>
-                                            </c:forEach>
+                                                        </td>
+                                                        <td>
+                                                            <form action="VehicleTypeController" method="GET">
+                                                                <input type="hidden" name="vehicleTypeID" value="${v.vehicleTypeID}">
+                                                                <input type="submit" name="action" value="delete">
+                                                            </form>
+                                                        </td>
+
+                                                    </tr>
+                                                </c:forEach>
                                             </tbody>
                                         </table>
                                     </div>
@@ -205,6 +206,32 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.SUCCESS}</h4>
+                            <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <i class="fa fa-ban" style="font-size:70px; color: red" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.ERROR}</h4>
+                            <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Bootstrap core JavaScript-->
             <script src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
             <script src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -221,7 +248,38 @@
 
             <!-- Page level custom scripts -->
             <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
-
+            <script>
+                <c:if test="${requestScope.SUCCESS!=null}">
+                $(document).ready(function () {
+                    $("#showsuccess").modal('show');
+//                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
+                });
+                </c:if>
+                <c:if test="${requestScope.ERROR!=null}">
+                $(document).ready(function () {
+                    $("#showerror").modal('show');
+//                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
+                });
+                </c:if>
+            </script>
+            
+            <script>
+                var vehicleTypeName = document.querySelector("input[name=vehicleTypeName]");
+                var totalSeat = document.querySelector("input[name=totalSeat]");
+                
+                document.querySelector("button[value=create]").addEventListener("click", function() {
+                    sessionStorage.setItem("vehicleTypeName", vehicleTypeName.value);
+                    sessionStorage.setItem("totalSeat", totalSeat.value);
+                }
+                        );
+                            <c:if test="${requestScope.ERROR != null}">
+                                $(document).ready(function (e) {
+                                   $(".add-modal").modal('show'); 
+                                }) ;
+                                vehicleTypeName.value = sessionStorage.getItem("vehicleTypeName");
+                                totalSeat.value = sessionStorage.getItem("totalSeat");
+                            </c:if>
+            </script>
     </body>
 
 </html>

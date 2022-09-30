@@ -43,7 +43,6 @@
                         <!-- Topbar -->
                     <jsp:include page="topbar.jsp"></jsp:include>
                         <!-- End of Topbar -->
-
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
                             <div class="card shadow mb-4">
@@ -54,82 +53,86 @@
                                             Add Driver 
                                         </button>
                                         <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
-                                    </div>
-                                    
-                                    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Add new Driver</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="driver">
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Driver ID</label>
-                                                            <input type="text" name="driverID" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver ID">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Driver Name</label>
-                                                            <input type="text" name="driverName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">DOB</label>
-                                                            <input type="date" name="DOB" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Gender</label>
-                                                            <select name="sex" class="form-control">
-                                                                <option value="true">MALE</option>
-                                                                <option value="false">FEMALE</option>
-                                                            </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Driver Picture</label>
-                                                            <input type="text" name="driverPic" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Picture">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Phone Number</label>
-                                                            <input type="text" name="phoneNumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone Number">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Status</label>
-                                                            <select name="status" class="form-control">
-                                                                <option value="0">INACTIVE</option>
-                                                                <option value="1" selected>ACTIVE</option>
-                                                                <option value="2">ONGOING</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                        <button type="submit" name="action" value="add" class="btn btn-primary">Save</button>
-                                                    </div>
-                                                </form>
+                                </div>
+
+                                <div class="add-modal modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add new Driver</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
                                             </div>
+                                            <form action="driver" method="post">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Driver ID</label>
+                                                        <input type="text" name="driverID" class="add-driverID form-control" 
+                                                               id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver ID" required>
+                                                        <small style="color:red" id="id-error">${ADD_ERROR.driverID}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Driver Name</label>
+                                                        <input type="text" name="driverName" class="add-driverName form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Name" required>
+                                                        <small style="color:red" id="name-error">${ADD_ERROR.driverName}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">DOB</label>
+                                                        <input type="date" name="DOB" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB" required>
+                                                        <small style="color:red" id="dob-error">${ADD_ERROR.DOB}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Gender</label>
+                                                        <select name="sex" class="form-control add-gender" required>
+                                                            <option value="true" selected>MALE</option>
+                                                            <option value="false">FEMALE</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Driver Picture</label>
+                                                        <input type="text" name="driverPic" class="add-picture form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Picture" required>
+                                                        <small style="color:red" id="url-error">${ADD_ERROR.driverPicture}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Phone Number</label>
+                                                        <input type="text" name="phoneNumber" class="add-number form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone Number" required>
+                                                        <small style="color:red" id="phone-error">${ADD_ERROR.phoneNumber}</small>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Status</label>
+                                                        <select name="status" class="form-control" required>
+                                                            <option value="1" selected>ACTIVE</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" name="action" value="add" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>No</th>
-                                                    <th>Driver ID</th>
-                                                    <th>Driver Name</th>
-                                                    <th>DOB</th>
-                                                    <th>Gender</th>
-                                                    <th>Driver Picture</th>
-                                                    <th>Phone Number</th>
-                                                    <th>Status</th>
-                                                    <th>Modify</th>
-                                                    <th>Delete</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="content-data-update">
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Driver ID</th>
+                                                <th>Driver Name</th>
+                                                <th>DOB</th>
+                                                <th>Gender</th>
+                                                <th>Driver Picture</th>
+                                                <th>Phone Number</th>
+                                                <th>Status</th>
+                                                <th>Modify</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="content-data-update">
                                             <c:forEach items="${requestScope.LIST_ALL_DRIVER}" var="d" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
@@ -137,7 +140,7 @@
                                                     <td>${d.driverName}</td>
                                                     <td>${d.DOB}</td>
                                                     <td>${d.sex eq "true"? "MALE":"FEMALE"}</td>
-                                                    <td><<img src="${d.driverPicture}" alt="alt"/></td>
+                                                    <td><img style="width: 150px; height: 200px;" src="${d.driverPicture}" alt="alt"/></td>
                                                     <td>${d.phoneNumber}</td>
                                                     <td>
                                                         <c:choose>
@@ -165,7 +168,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="driver">
+                                                                    <form action="driver" method="post">
                                                                         <div class="modal-body">
                                                                             <div class="modal-body">
                                                                                 <div class="form-group">
@@ -261,18 +264,14 @@
                     </div>
                 </footer>
                 <!-- End of Footer -->
-
             </div>
             <!-- End of Content Wrapper -->
-
         </div>
         <!-- End of Page Wrapper -->
-
         <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-
         <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -336,49 +335,43 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
+
         <script type="text/javascript">
-            <c:if test="${requestScope.SUCCESS!=null}">
+            <c:if test="${requestScope.SUCCESS != null}">
                 $(document).ready(function (e) {
                     $("#showsuccess").modal('show');
                 });
-                <c:if test="${requestScope.SUCCESS!=null}">
-                    $.ajax({
-                        url:"/ETrans/driver?action=userUpdate",
-                        type:"get",
-                        success: function (data) {
-                            var row = document.getElementById("content-data-update");
-                            row.innerHTML = data;
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            
-                        }
-                    });
-                </c:if>
-                <c:if test="${requestScope.SUCCESS!=null}">
-                    const inputField = document.querySelectorAll("input[type=search]");
-                    inputField.addEventListener('input',function(e){
-                        $.ajax({
-                            url:"/ETrans/driver?action=search",
-                            type:"get",
-                            data:{
-                                txt : e.target.value
-                            },
-                            success: function (data) {
-                                var row = document.getElementById("content-data-update");
-                                row.innerHTML = data;
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-
-                            }
-                        });
-                    });
-                </c:if>
             </c:if>
-            <c:if test="${requestScope.ERROR!=null}">
-            $(document).ready(function () {
-                $("#showerror").modal('show');
+            
+            var driverID = document.querySelector("input[name=driverID]");
+            var driverName = document.querySelector("input[name=driverName]");
+            var DOB = document.querySelector("input[name=DOB]");
+            var sex = document.querySelector("select[name=sex]");
+            var driverPic = document.querySelector("input[name=driverPic]");
+            var phoneNumber = document.querySelector("input[name=phoneNumber]");
+            
+            document.querySelector("button[value=add]").addEventListener("click", function () {
+                sessionStorage.setItem("driverID",driverID.value);
+                sessionStorage.setItem("driverName",driverName.value);
+                sessionStorage.setItem("DOB",DOB.value);
+                sessionStorage.setItem("sex",sex.value);
+                sessionStorage.setItem("driverPic",driverPic.value);
+                sessionStorage.setItem("phoneNumber",phoneNumber.value);
             });
+            
+            <c:if test="${requestScope.ADD_ERROR != null}">
+                $(document).ready(function (e) {
+                    $(".add-modal").modal('show');
+                });
+                
+                driverID.value = sessionStorage.getItem("driverID");
+                driverName.value = sessionStorage.getItem("driverName");
+                DOB.value = sessionStorage.getItem("DOB");
+                sex.value = sessionStorage.getItem("sex");
+                driverPic.value = sessionStorage.getItem("driverPic");
+                phoneNumber.value = sessionStorage.getItem("phoneNumber");
             </c:if>
+            
         </script>
     </body>
 </html>

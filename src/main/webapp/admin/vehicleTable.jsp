@@ -49,9 +49,13 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h2 class="m-0 font-weight-bold text-primary">VEHICLES</h2>
+                                    <div>
+                                    
                                     <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
                                         Add Vehicle
                                     </button>
+                                        <a href="${pageContext.request.contextPath}/admin/VehicleController?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                    </div>
                                     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -119,7 +123,7 @@
                                                 <th>Delete</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="content-data-update">
                                             <c:forEach items="${requestScope.VEHICLE_LIST}" var="v" varStatus="counter">
                                                 <tr>
                                                     <td>${counter.count}</td>
@@ -148,7 +152,7 @@
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${d.driverName}</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${v.vehicleName}</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
@@ -333,6 +337,67 @@
 //                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
             });
             </c:if>
+//            <c:if test="${requestScope.SUCCESS!=null}">
+//                    $.ajax({
+//                        url:"/ETrans/admin/VehicleController?action=vehicleUpdate",
+//                        type:"get",
+//                        success: function (data) {
+//                            var row = document.getElementById("content-data-update");
+//                            row.innerHTML = data;
+//                        },
+//                        error: function (jqXHR, textStatus, errorThrown) {
+//                            
+//                        }
+//                    });
+//                </c:if>
+//                <c:if test="${requestScope.SUCCESS!=null}">
+//                    const inputField = document.querySelectorAll("input[type=search]");
+//                    inputField.addEventListener('input',function(e){
+//                        $.ajax({
+//                            url:"/ETrans/admin/VehicleController?action=search",
+//                            type:"get",
+//                            data:{
+//                                txt : e.target.value
+//                            },
+//                            success: function (data) {
+//                                var row = document.getElementById("content-data-update");
+//                                row.innerHTML = data;
+//                            },
+//                            error: function (jqXHR, textStatus, errorThrown) {
+//
+//                            }
+//                        });
+//                    });
+//                </c:if>
+            
         </script>
+        
+         <script>
+                var vehicleID = document.querySelector("input[name=vehicleID]");
+                var vehicleName = document.querySelector("input[name=vehicleName]");
+                var licensePlate = document.querySelector("input[name=licensePlate]");
+                var vehicleType = document.querySelector("input[name=vehicleType]");
+                var status = document.querySelector("input[name=status]");
+                
+                document.querySelector("button[value=create]").addEventListener("click", function() {
+                    sessionStorage.setItem("vehicleID", vehicleID.value);
+                    sessionStorage.setItem("vehicleName", vehicleName.value);
+                    sessionStorage.setItem("licensePlate", licensePlate.value);
+                    sessionStorage.setItem("vehicleType", vehicleType.value);
+                    sessionStorage.setItem("status", status.value);
+                }
+                        );
+                            <c:if test="${requestScope.ERROR != null}">
+                                $(document).ready(function (e) {
+                                   $(".add-modal").modal('show'); 
+                                }) ;
+                                vehicleID.value = sessionStorage.getItem("vehicleID");
+                                vehicleName.value = sessionStorage.getItem("vehicleName");
+                                licensePlate.value = sessionStorage.getItem("licensePlate");
+                                vehicleType.value = sessionStorage.getItem("vehicleType");
+                                status.value = sessionStorage.getItem("status");
+                                
+                            </c:if>
+            </script>
     </body>
 </html>

@@ -66,140 +66,41 @@
                     </div>
                 </div>
                 <div class="container-fluid pt-5">
-                    <div class="row px-xl-5">
+                    <div class="row px-xl-5 justify-content-between">
                         <!-- Shop Sidebar Start -->
-                        <div class="col-lg-3 col-md-12">
+                        <div class="col-lg-3 col-md-12" id="">
                             <!-- Price Start -->
-                            <div class="border-bottom mb-4 pb-4">
+                            <div class="mb-4 pb-4">
                                 <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                                <form>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" checked id="price-all">
-                                        <label class="custom-control-label" for="price-all">All Price</label>
-                                        <span class="badge border font-weight-normal">1000</span>
+                                <form action="" c>
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <input type="text" name="lowPrice" style="width: 90px" placeholder="Low Price">
+                                        <span class="mr-10 ml-10"> - </span>
+                                        <input type="text" name="highPrice" style="width: 90px" placeholder="High Price">
                                     </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="price-1">
-                                        <label class="custom-control-label" for="price-1">$0 - $100</label>
-                                        <span class="badge border font-weight-normal">150</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="price-2">
-                                        <label class="custom-control-label" for="price-2">$100 - $200</label>
-                                        <span class="badge border font-weight-normal">295</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="price-3">
-                                        <label class="custom-control-label" for="price-3">$200 - $300</label>
-                                        <span class="badge border font-weight-normal">246</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="price-4">
-                                        <label class="custom-control-label" for="price-4">$300 - $400</label>
-                                        <span class="badge border font-weight-normal">145</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                        <input type="checkbox" class="custom-control-input" id="price-5">
-                                        <label class="custom-control-label" for="price-5">$400 - $500</label>
-                                        <span class="badge border font-weight-normal">168</span>
-                                    </div>
+                                    <button type="submit" class="btn btn-primary float-right">Go</button>
                                 </form>
                             </div>
                             <!-- Price End -->
 
-                            <!-- Color Start -->
-                            <div class="border-bottom mb-4 pb-4">
-                                <h5 class="font-weight-semi-bold mb-4">Filter by color</h5>
-                                <form>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" checked id="color-all">
-                                        <label class="custom-control-label" for="price-all">All Color</label>
-                                        <span class="badge border font-weight-normal">1000</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="color-1">
-                                        <label class="custom-control-label" for="color-1">Black</label>
-                                        <span class="badge border font-weight-normal">150</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="color-2">
-                                        <label class="custom-control-label" for="color-2">White</label>
-                                        <span class="badge border font-weight-normal">295</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="color-3">
-                                        <label class="custom-control-label" for="color-3">Red</label>
-                                        <span class="badge border font-weight-normal">246</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="color-4">
-                                        <label class="custom-control-label" for="color-4">Blue</label>
-                                        <span class="badge border font-weight-normal">145</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                        <input type="checkbox" class="custom-control-input" id="color-5">
-                                        <label class="custom-control-label" for="color-5">Green</label>
-                                        <span class="badge border font-weight-normal">168</span>
+                            <!-- Time Start -->
+                            <div class="mb-4 pb-4">
+                                <h5 class="font-weight-semi-bold mb-4">Filter by time</h5>
+                                <form action="">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div>
+                                            <button style="width: 100px;" class="btn btn-primary mb-3" type="button">Sáng sớm<br>(0h-6h)</button>
+                                            <button style="width: 100px;" class="btn btn-primary" type="button">Buổi sáng<br>(6h-12h)</button>
+                                        </div>
+                                        <div class="ml-3">
+                                            <button style="width: 100px;" class="btn btn-primary mb-3" type="button">Buổi chiều<br>(12h-18h)</button>
+                                            <button style="width: 100px;" class="btn btn-primary" type="button">Buổi tối<br>(18h-24h)</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
-                            <!-- Color End -->
+                            <!-- Time end -->
 
-                            <!-- Size Start -->
-                            <div class="mb-5">
-                                <h5 class="font-weight-semi-bold mb-4">Filter by size</h5>
-                                <form>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" checked id="size-all">
-                                        <label class="custom-control-label" for="size-all">All Size</label>
-                                        <span class="badge border font-weight-normal">1000</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="size-1">
-                                        <label class="custom-control-label" for="size-1">XS</label>
-                                        <span class="badge border font-weight-normal">150</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="size-2">
-                                        <label class="custom-control-label" for="size-2">S</label>
-                                        <span class="badge border font-weight-normal">295</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="size-3">
-                                        <label class="custom-control-label" for="size-3">M</label>
-                                        <span class="badge border font-weight-normal">246</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                        <input type="checkbox" class="custom-control-input" id="size-4">
-                                        <label class="custom-control-label" for="size-4">L</label>
-                                        <span class="badge border font-weight-normal">145</span>
-                                    </div>
-                                    <div
-                                        class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                        <input type="checkbox" class="custom-control-input" id="size-5">
-                                        <label class="custom-control-label" for="size-5">XL</label>
-                                        <span class="badge border font-weight-normal">168</span>
-                                    </div>
-                                </form>
-                            </div>
-                            <!-- Size End -->
                         </div>
                         <!-- Shop Sidebar End -->
                         <!-- Shop Product Start -->
@@ -223,9 +124,386 @@
                                                 Sort by
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                                <a class="dropdown-item" href="#">Latest</a>
-                                                <a class="dropdown-item" href="#">Popularity</a>
-                                                <a class="dropdown-item" href="#">Best Rating</a>
+                                                <a class="dropdown-item" href="#">Low to High</a>
+                                                <a class="dropdown-item" href="#">Time</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6 col-sm-12">
+                                    <div class="card product-item border-0 mb-4">
+                                        <div
+                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                                        </div>
+                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                            <div class="row">
+                                                <div class="ticket-car-name col-md-4">
+                                                    <div class="bus-icon">
+                                                        <i class="fa fa-bus" style="font-size: 40px; color: #007bff;" aria-hidden="true"></i>
+                                                        <h4 class="mt-10">An Anh Limousine</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-row-name col-md-4 ">
+                                                    <div class="ticket-from-to text-center">
+                                                        <div class="ticket-from d-flex justify-content-center align-items-center">
+                                                            <div class="mr-15">
+                                                                <i class="fa fa-circle" style="font-size: 25px; color:greenyellow;" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="text-center">23:15</h6>
+                                                                <span class="text-center">HCM's Gas Station</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ticket-from mt-10 d-flex justify-content-center align-items-center">
+                                                            <div class="mr-15">
+                                                                <i class="fa fa-map-marker" style="font-size: 25px; color: red;" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6>5:45</h6>
+                                                                <span>DaLat's Gas Station</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-car-description col-md-4">
+                                                    <p class="font-weight-bold" style="color:black;">Limousine with 20 rooms</p>
+                                                    <p class="seat-remain font-weight-bold" style="color:black;">20 seat remain</p>
+                                                </div>
+                                            </div>
+                                            <div class="price float-sm-right">
+                                                <h3 class="mr-30" style="color: #007bff;">350.000đ</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-light border d-flex justify-content-between align-items-center">
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                                                View more detail
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal" onclick="AlwaysFlightClick()">
+                                                Choose ticket
+                                            </button>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="/send" method="get">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Book car
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <ul class="modal-title nav nav-tabs" id="myTab"
+                                                                    role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active" id="flight-tab"
+                                                                           data-toggle="tab" href="#car" role="tab"
+                                                                           aria-controls="flight"
+                                                                           aria-selected="true">Cars</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link" id="hotel-tab" data-toggle="tab"
+                                                                           href="#hotel" role="tab" aria-controls="hotel"
+                                                                           aria-selected="false">Time</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content" id="myTabContent">
+                                                                    <div class="tab-pane fade show active" id="car"
+                                                                         role="tabpanel" aria-labelledby="flight-tab">
+                                                                        <div class="wrapper-seat">
+                                                                            <div class="container-seat">
+                                                                                <h1 class="text-center">Chosing seats</h1>
+                                                                                <div id="seat-map-seat">
+                                                                                    <div
+                                                                                        class="text-center front-indicator-seat">
+                                                                                        Chosing</div>
+                                                                                </div>
+                                                                                <div class="booking-details-seat">
+                                                                                    <h2>Booking Details</h2>
+                                                                                    <h3> Selected Seats (<span
+                                                                                            id="counter-seat">0</span>):
+                                                                                    </h3>
+                                                                                    <ul id="selected-seats"></ul>
+                                                                                    Total: <b>$<span
+                                                                                            id="total-seat">0</span></b>
+                                                                                    <button
+                                                                                        class="btn btn-secondary checkout-button-seat"
+                                                                                        type="button"
+                                                                                        onclick="nextInFlights()">Next
+                                                                                        &raquo;</button>
+                                                                                    <div id="legend-seat"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane fade" id="hotel" role="tabpanel"
+                                                                         aria-labelledby="hotel-tab">
+                                                                        <div style="height:300px; width: 100%"
+                                                                             class="container">
+                                                                            <div class="row pt-70">
+                                                                                <div class="col-lg-6 col-md-6 text-center">
+                                                                                    <h3>Start Time:</h3>
+                                                                                    <h5>13-Sep-22</h5>
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6 text-center">
+                                                                                    <h3>End Time:</h3>
+                                                                                    <h5>16-Sep-22</h5>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button style="position:absolute; bottom:10px; right:20px;" type="button" class="btn btn-secondary"
+                                                                                onclick=""> Next</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse" id="collapse">
+                                            <div class="card card-body">
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="picture"
+                                                           data-toggle="tab" href="#1" role="tab"
+                                                           aria-controls="picture"
+                                                           aria-selected="true">Picture</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="utilies"
+                                                           data-toggle="tab" href="#2" role="tab"
+                                                           aria-controls="utilies"
+                                                           aria-selected="true">Utilities</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="policy"
+                                                           data-toggle="tab" href="#3" role="tab"
+                                                           aria-controls="policy"
+                                                           aria-selected="true">Policy</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content ">
+                                                    <div class="tab-pane active" id="1"
+                                                         role="tabpanel" aria-labelledby="picture">
+                                                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                                            <div class="carousel-inner">
+                                                                <div class="carousel-item active">
+                                                                    <img style="width: 100px; height: 350px;" class="d-block w-100" src="https://i.ytimg.com/vi/dip_8dmrcaU/maxresdefault.jpg" alt="First slide">
+                                                                </div>
+                                                                <div class="carousel-item">
+                                                                    <img style="width: 100px; height: 350px;" class="d-block w-100" src="https://maserati.scene7.com/is/image/maserati/maserati/regional/us/models/my22/levante/22_LV_Trofeo_PS_T1_HomePage_1920x1080.jpg?$1920x2000$&fit=constrain" alt="Second slide">
+                                                                </div>
+                                                                <div class="carousel-item">
+                                                                    <img style="width: 100px; height: 350px;" class="d-block w-100" src="https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/apple_car_concept_199.jpeg" alt="Third slide">
+                                                                </div>
+                                                            </div>
+                                                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                <span class="sr-only">Previous</span>
+                                                            </a>
+                                                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                <span class="sr-only">Next</span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tab-pane" id="2" role="tabpanel"
+                                                         aria-labelledby="utilities">
+                                                        Utility
+                                                    </div>
+                                                    <div class="tab-pane" id="3" role="tabpanel"
+                                                         aria-labelledby="policy">
+                                                        Policy
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6 col-sm-12">
+                                    <div class="card product-item border-0 mb-4">
+                                        <div
+                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                                        </div>
+                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                            <div class="row">
+                                                <div class="ticket-car-name col-md-4">
+                                                    <div class="bus-icon">
+                                                        <i class="fa fa-bus" style="font-size: 40px; color: #007bff;" aria-hidden="true"></i>
+                                                        <h4 class="mt-10">An Anh Limousine</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-row-name col-md-4 ">
+                                                    <div class="ticket-from-to text-center">
+                                                        <div class="ticket-from d-flex justify-content-center align-items-center">
+                                                            <div class="mr-15">
+                                                                <i class="fa fa-circle" style="font-size: 25px; color:greenyellow;" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6 class="text-center">23:15</h6>
+                                                                <span class="text-center">HCM's Gas Station</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ticket-from mt-10 d-flex justify-content-center align-items-center">
+                                                            <div class="mr-15">
+                                                                <i class="fa fa-map-marker" style="font-size: 25px; color: red;" aria-hidden="true"></i>
+                                                            </div>
+                                                            <div>
+                                                                <h6>5:45</h6>
+                                                                <span>DaLat's Gas Station</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="ticket-car-description col-md-4">
+                                                    <p class="font-weight-bold" style="color:black;">Limousine with 20 rooms</p>
+                                                    <p class="seat-remain font-weight-bold" style="color:black;">20 seat remain</p>
+                                                </div>
+                                            </div>
+                                            <div class="price float-sm-right">
+                                                <h3 class="mr-30" style="color: #007bff;">350.000đ</h3>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer bg-light border d-flex justify-content-between align-items-center">
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                                                View more detail
+                                            </button>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#exampleModal" onclick="AlwaysFlightClick()">
+                                                Choose ticket
+                                            </button>
+                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="/send" method="get">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Book car
+                                                                </h5>
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                        aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <ul class="modal-title nav nav-tabs" id="myTab"
+                                                                    role="tablist">
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link active" id="flight-tab"
+                                                                           data-toggle="tab" href="#car" role="tab"
+                                                                           aria-controls="flight"
+                                                                           aria-selected="true">Cars</a>
+                                                                    </li>
+                                                                    <li class="nav-item">
+                                                                        <a class="nav-link" id="hotel-tab" data-toggle="tab"
+                                                                           href="#hotel" role="tab" aria-controls="hotel"
+                                                                           aria-selected="false">Time</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content" id="myTabContent">
+                                                                    <div class="tab-pane fade show active" id="car"
+                                                                         role="tabpanel" aria-labelledby="flight-tab">
+                                                                        <div class="wrapper-seat">
+                                                                            <div class="container-seat">
+                                                                                <h1 class="text-center">Chosing seats</h1>
+                                                                                <div id="seat-map-seat">
+                                                                                    <div
+                                                                                        class="text-center front-indicator-seat">
+                                                                                        Chosing</div>
+                                                                                </div>
+                                                                                <div class="booking-details-seat">
+                                                                                    <h2>Booking Details</h2>
+                                                                                    <h3> Selected Seats (<span
+                                                                                            id="counter-seat">0</span>):
+                                                                                    </h3>
+                                                                                    <ul id="selected-seats"></ul>
+                                                                                    Total: <b>$<span
+                                                                                            id="total-seat">0</span></b>
+                                                                                    <button
+                                                                                        class="btn btn-secondary checkout-button-seat"
+                                                                                        type="button"
+                                                                                        onclick="nextInFlights()">Next
+                                                                                        &raquo;</button>
+                                                                                    <div id="legend-seat"></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane fade" id="hotel" role="tabpanel"
+                                                                         aria-labelledby="hotel-tab">
+                                                                        <div style="height:300px; width: 100%"
+                                                                             class="container">
+                                                                            <div class="row pt-70">
+                                                                                <div class="col-lg-6 col-md-6 text-center">
+                                                                                    <h3>Start Time:</h3>
+                                                                                    <h5>13-Sep-22</h5>
+                                                                                </div>
+                                                                                <div class="col-lg-6 col-md-6 text-center">
+                                                                                    <h3>End Time:</h3>
+                                                                                    <h5>16-Sep-22</h5>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button style="position:absolute; bottom:10px; right:20px;" type="button" class="btn btn-secondary"
+                                                                                onclick=""> Next</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                        data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="collapse" id="collapse">
+                                            <div class="card card-body">
+                                                <ul class="nav nav-tabs" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="picture"
+                                                           data-toggle="tab" href="#1" role="tab"
+                                                           aria-controls="picture"
+                                                           aria-selected="true">Picture</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="utilies"
+                                                           data-toggle="tab" href="#2" role="tab"
+                                                           aria-controls="utilies"
+                                                           aria-selected="true">Utilities</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="policy"
+                                                           data-toggle="tab" href="#3" role="tab"
+                                                           aria-controls="policy"
+                                                           aria-selected="true">Policy</a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content ">
+                                                    <div class="tab-pane active" id="1"
+                                                         role="tabpanel" aria-labelledby="picture">
+                                                        Picture
+                                                    </div>
+                                                    <div class="tab-pane" id="2" role="tabpanel"
+                                                         aria-labelledby="utilities">
+                                                        Utility
+                                                    </div>
+                                                    <div class="tab-pane" id="3" role="tabpanel"
+                                                         aria-labelledby="policy">
+                                                        Policy
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -410,178 +688,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-6.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-7.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-8.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-eye text-primary mr-1"></i>View Detail</a>
-                                            <a href="" class="btn btn-sm text-dark p-0"><i
-                                                    class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 pb-1">
-                                    <div class="card product-item border-0 mb-4">
-                                        <div
-                                            class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                                        </div>
-                                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
-                                            <h6 class="text-truncate mb-3">Colorful Stylish Shirt</h6>
-                                            <div class="d-flex justify-content-center">
-                                                <h6>$123.00</h6>
-                                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-between bg-light border">
-                                            <a href="" class="btn btn-sm text-dark p-0">
-                                                <i class="fas fa-eye text-primary mr-1"></i>
-                                                View Detail
-                                            </a>
-                                            <a href="" class="btn btn-sm text-dark p-0">
-                                                <i class="fas fa-shopping-cart text-primary mr-1"></i>
-                                                Add To Cart
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="col-12 pb-1">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination justify-content-center mb-3">
