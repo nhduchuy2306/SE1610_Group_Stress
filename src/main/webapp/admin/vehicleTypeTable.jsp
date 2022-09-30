@@ -262,6 +262,24 @@
                 });
                 </c:if>
             </script>
+            
+            <script>
+                var vehicleTypeName = document.querySelector("input[name=vehicleTypeName]");
+                var totalSeat = document.querySelector("input[name=totalSeat]");
+                
+                document.querySelector("button[value=create]").addEventListener("click", function() {
+                    sessionStorage.setItem("vehicleTypeName", vehicleTypeName.value);
+                    sessionStorage.setItem("totalSeat", totalSeat.value);
+                }
+                        );
+                            <c:if test="${requestScope.ERROR != null}">
+                                $(document).ready(function (e) {
+                                   $(".add-modal").modal('show'); 
+                                }) ;
+                                vehicleTypeName.value = sessionStorage.getItem("vehicleTypeName");
+                                totalSeat.value = sessionStorage.getItem("totalSeat");
+                            </c:if>
+            </script>
     </body>
 
 </html>

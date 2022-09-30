@@ -371,5 +371,33 @@
 //                </c:if>
             
         </script>
+        
+         <script>
+                var vehicleID = document.querySelector("input[name=vehicleID]");
+                var vehicleName = document.querySelector("input[name=vehicleName]");
+                var licensePlate = document.querySelector("input[name=licensePlate]");
+                var vehicleType = document.querySelector("input[name=vehicleType]");
+                var status = document.querySelector("input[name=status]");
+                
+                document.querySelector("button[value=create]").addEventListener("click", function() {
+                    sessionStorage.setItem("vehicleID", vehicleID.value);
+                    sessionStorage.setItem("vehicleName", vehicleName.value);
+                    sessionStorage.setItem("licensePlate", licensePlate.value);
+                    sessionStorage.setItem("vehicleType", vehicleType.value);
+                    sessionStorage.setItem("status", status.value);
+                }
+                        );
+                            <c:if test="${requestScope.ERROR != null}">
+                                $(document).ready(function (e) {
+                                   $(".add-modal").modal('show'); 
+                                }) ;
+                                vehicleID.value = sessionStorage.getItem("vehicleID");
+                                vehicleName.value = sessionStorage.getItem("vehicleName");
+                                licensePlate.value = sessionStorage.getItem("licensePlate");
+                                vehicleType.value = sessionStorage.getItem("vehicleType");
+                                status.value = sessionStorage.getItem("status");
+                                
+                            </c:if>
+            </script>
     </body>
 </html>
