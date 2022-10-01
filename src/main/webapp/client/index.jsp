@@ -452,7 +452,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="single-other-issue">
                             <div class="thumb">
-                                <img class="img-fluid" src="img/o2.jpg" alt="">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o2.jpg" alt="">
                             </div>
                             <a href="#">
                                 <h4>Cruise Booking</h4>
@@ -465,7 +465,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="single-other-issue">
                             <div class="thumb">
-                                <img class="img-fluid" src="img/o3.jpg" alt="">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o3.jpg" alt="">
                             </div>
                             <a href="#">
                                 <h4>To Do List</h4>
@@ -479,7 +479,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="single-other-issue">
                             <div class="thumb">
-                                <img class="img-fluid" src="img/o4.jpg" alt="">
+                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o4.jpg" alt="">
                             </div>
                             <a href="#">
                                 <h4>Food Features</h4>
@@ -706,9 +706,6 @@
         </footer>
         <!-- End footer Area -->
         
-
-        
-        </script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -725,6 +722,7 @@
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js"></script>
     </body>
         <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
             <script>

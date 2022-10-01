@@ -126,7 +126,9 @@ public class DriverController extends HttpServlet {
                 boolean check = dao.addNewDriver(driver);
                 if (check) {
                     request.setAttribute("SUCCESS", "ADD DRIVER SUCCESSFULLY");
-                    showOneDriver(request,response,driver);
+//                    showOneDriver(request,response,driver);
+                    request.setAttribute("name", driverName);
+                    showDriverTable(request, response);
                 } else {
                     request.setAttribute("ERROR", "CAN NOT ADD DRIVER");
                     showDriverTable(request,response);
@@ -177,7 +179,9 @@ public class DriverController extends HttpServlet {
 
             if (check) {
                 request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
-                showOneDriver(request,response,driver);
+//                showOneDriver(request,response,driver);
+                request.setAttribute("name", driverName);
+                   showDriverTable(request, response);
             } else {
                 request.setAttribute("ERROR", "CAN NOT UPDATE DRIVER");
             }

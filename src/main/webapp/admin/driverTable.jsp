@@ -24,7 +24,12 @@
 
         <!-- Custom styles for this page -->
         <link href="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+        <style>
+            .showall{
+                visibility: hidden;
+                opacity: 0;
+            }
+        </style>
     </head>
 
     <body id="page-top">
@@ -52,7 +57,7 @@
                                         <button type="button" class="ml-10 btn btn-primary float-right" data-toggle="modal" data-target="#add">
                                             Add Driver 
                                         </button>
-                                        <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                        <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px;" class="showall btn btn-primary float-right">Show All</a>
                                 </div>
 
                                 <div class="add-modal modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -273,24 +278,6 @@
             <i class="fas fa-angle-up"></i>
         </a>
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/Logout">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--Modal show success and fail-->
         <!-- Button trigger modal -->
         <!--<button type="button" class="btn btn-primary show-success-modal" style="" data-toggle="modal" data-target="#showsuccess">click</button>-->
@@ -340,9 +327,17 @@
             <c:if test="${requestScope.SUCCESS != null}">
                 $(document).ready(function (e) {
                     $("#showsuccess").modal('show');
+                    $('input[type="search"]').val('${requestScope.name}').keyup();
                 });
+//                $('table').dataTable({searching: false, paging: false, info: false});
+//                document.querySelector(".showall").classList.remove("showall");
+                    
             </c:if>
-            
+                
+            <c:if test="${requestScope.SUCCESS == null}">
+                document.querySelector(".showall").classList.add("showall");
+            </c:if>
+                
             var driverID = document.querySelector("input[name=driverID]");
             var driverName = document.querySelector("input[name=driverName]");
             var DOB = document.querySelector("input[name=DOB]");

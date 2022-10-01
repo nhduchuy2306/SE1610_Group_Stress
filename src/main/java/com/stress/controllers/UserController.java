@@ -79,15 +79,15 @@ public class UserController extends HttpServlet {
 
     private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url="./client/index.jsp";
+        String url = "./client/index.jsp";
         try {
-            String userName=request.getParameter("userName");
-            String birthday=request.getParameter("birthday");
-            Date date=Date.valueOf(birthday);
-            String gender=request.getParameter("gender");
-            boolean sex=false;
-            if(gender.equals("1")){
-                sex=true;
+            String userName = request.getParameter("userName");
+            String birthday = request.getParameter("birthday");
+            Date date = Date.valueOf(birthday);
+            String gender = request.getParameter("gender");
+            boolean sex = false;
+            if (gender.equals("1")) {
+                sex = true;
             }
             String email=request.getParameter("email");
             String address=request.getParameter("address");
@@ -116,10 +116,9 @@ public class UserController extends HttpServlet {
         }
     }
 
-
-    private void viewUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void viewUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url="./admin/404.jsp";
+        String url = "./admin/404.jsp";
         try {
             UserDAO dao = new UserDAOImpl();
             List<User> list = dao.getAllUser();
@@ -158,7 +157,7 @@ public class UserController extends HttpServlet {
 
     }
 
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         try {
             String userID = request.getParameter("userID");
@@ -172,43 +171,45 @@ public class UserController extends HttpServlet {
         }
     }
 
-    private void loginUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url="./client/index.jsp";
+        String url = "./client/index.jsp";
         try {
             String userID = request.getParameter("userID");
             String password = request.getParameter("password");
-            String captcha = request.getParameter("g-recaptcha-response");
-            UserDAO dao=new UserDAOImpl();
-            User loginUser=dao.getUserByIDAndPassword(userID, password);
-            User userIDCheck=dao.getUserByID(userID);
-            if (userIDCheck != null) {
+            String gRecaptcha = request.getParameter("g-recaptcha-response");
+            UserDAO dao = new UserDAOImpl();
+            User loginUser = dao.getUserByIDAndPassword(userID, password);
+            User userIDCheck = dao.getUserByID(userID);
+            boolean verify = VerifyRecaptcha.verify(gRecaptcha);
+            System.out.println(verify);
+            if (userIDCheck != null && verify) {
                 if (loginUser != null) {
                     HttpSession session = request.getSession();
                     session.setAttribute("LOGIN_USER", loginUser);
                     if (loginUser.getRole().getRoleID().equals("1")) {
                         url = "./client/index.jsp";
-                    }else {
+                    } else {
                         url = "./admin/index.jsp";
                     }
-                }else{
+                } else {
                     request.setAttribute("USERID", userID);
                     request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                     request.setAttribute("ERROR_LOGIN2", "Incorect Password. Please try again!");
                 }
-            }else{
+            } else {
                 request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                 request.setAttribute("ERROR_LOGIN1", "The email you entered is not connected to any account.<br/>Find your account and log in.");
             }
-            
+
         } catch (Exception e) {
-            log("Error at UserController - Login: "+e.toString());
+            log("Error at UserController - Login: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
-        }      
+        }
     }
 
-    private void deleteHistory(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    private void deleteHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String url = "./admin/404.jsp";
         try {
@@ -218,8 +219,7 @@ public class UserController extends HttpServlet {
                 request.setAttribute("LIST_USER", list);
                 request.setAttribute("DELETE_HISTORY", "Delete History");
                 url = "./admin/userTable.jsp";
-            }
-            else{
+            } else {
                 viewUser(request, response);
             }
         } catch (Exception e) {
@@ -229,18 +229,17 @@ public class UserController extends HttpServlet {
         }
     }
 
-    private void activeUser(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    private void activeUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         try {
-            String userID=request.getParameter("userID");
-            UserDAO dao=new UserDAOImpl();
-            boolean check=dao.activeUser(userID);
-            if(check){
+            String userID = request.getParameter("userID");
+            UserDAO dao = new UserDAOImpl();
+            boolean check = dao.activeUser(userID);
+            if (check) {
                 viewUser(request, response);
             }
         } catch (Exception e) {
-            log("Error at UserController - deleteUser: "+ e.toString());
+            log("Error at UserController - deleteUser: " + e.toString());
         }
     }
 }
-

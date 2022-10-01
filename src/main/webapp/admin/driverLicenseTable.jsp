@@ -88,7 +88,6 @@
                                                         <select name="driverID" class="form-control">
                                                             <c:forEach items="${requestScope.DRIVER_LIST}" var="d" >
                                                                 <option value="${d.driverID.trim()}">${d.driverName}</option>
-
                                                             </c:forEach>
                                                         </select>
                                                     </div>
@@ -238,24 +237,6 @@
         </a>
 
         <!-- Logout Modal-->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/Logout">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <!--Modal show success and fail-->
         <!-- Button trigger modal -->
         <!--<button type="button" class="btn btn-primary show-success-modal" style="" data-toggle="modal" data-target="#showsuccess">click</button>-->
@@ -355,12 +336,12 @@
                 var driver = document.querySelector("input[name=driverID]");
 
                 document.querySelector("button[value=create]").addEventListener("click", function () {
-                    sessionStorage.setItem("driverLicenseID", driverLicenseID.value);
-                    sessionStorage.setItem("nationality", nationality.value);
-                    sessionStorage.setItem("classes", classes.value);
-                    sessionStorage.setItem("dateExpired", dateExpired.value);
-                    sessionStorage.setItem("driverID", driverID.value);
-                }
+                        sessionStorage.setItem("driverLicenseID", driverLicenseID.value);
+                        sessionStorage.setItem("nationality", nationality.value);
+                        sessionStorage.setItem("classes", classes.value);
+                        sessionStorage.setItem("dateExpired", dateExpired.value);
+                        sessionStorage.setItem("driverID", document.querySelector('select[name=driverID]').value);
+                    }
                 );
             <c:if test="${requestScope.ERROR != null}">
                 $(document).ready(function (e) {
