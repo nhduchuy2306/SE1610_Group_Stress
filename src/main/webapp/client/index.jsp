@@ -721,10 +721,8 @@
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/validationRegister.js"></script>
-        
+        <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
-        
     </body>
         <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
             <script>

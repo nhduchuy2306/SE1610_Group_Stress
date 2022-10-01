@@ -89,29 +89,26 @@ public class UserController extends HttpServlet {
             if (gender.equals("1")) {
                 sex = true;
             }
-            String email = request.getParameter("email");
-            String address = request.getParameter("address");
-            String phoneNum = request.getParameter("phoneNum");
-            String userID = request.getParameter("userID");
-            String password = request.getParameter("password");
-            Role role = new Role("1", "User");
-            UserDAO dao = new UserDAOImpl();
-            User user = dao.getUserByID(userID);
-            User userInfor = new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
-            boolean checkDuplicate = dao.checkDuplicateByID(userID, email);
-            boolean check = dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender); 
-            if (user == null) {
-                if (checkDuplicate == true) {
-                    if (check == true) {
+            String email=request.getParameter("email");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String userID=request.getParameter("userID");
+            String password=request.getParameter("password");
+            Role role=new Role("1", "User");
+            UserDAO dao=new UserDAOImpl();
+            User userInfor=new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
+            //boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
+            if(dao.getUserByID(userID)==null){
+               //if (checkDuplicate == true) {
+                    if (dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender)) {
                         request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                         url = "./client/index.jsp";
                     }
-                }
-            }
-            else{
-                request.setAttribute("USER_TMP", userInfor);
-                request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
-            }
+                //}
+           }else{
+            request.setAttribute("USER_TMP", userInfor);
+            request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
+        }
         } catch (Exception e) {
             log("Error at UserController - Register:" + e.toString());
         } finally {
