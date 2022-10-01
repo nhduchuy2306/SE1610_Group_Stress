@@ -325,40 +325,51 @@
 
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS != null}">
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var idField = parseInt($('input[type="search"]').val(), 10);
+                    var id = parseFloat(data[1]) || 1; // use data for the age column
+
+                    if ((isNaN(idField)) || (isNaN(idField)) ||
+                            (idField <= id) || (idField <= id) ) {
+                        return true;
+                    }
+                    return false;
+                });
                 $(document).ready(function (e) {
                     $("#showsuccess").modal('show');
-                    $('input[type="search"]').val('${requestScope.name}').keyup();
+                    var table = $('#example').DataTable();
+                    // Event listener to the two range filtering inputs to redraw on input
+                    $('input[type="search"]').keyup(function () {
+                        table.draw();
+                    });
+                    $('input[type="search"]').val('${driverID}').keyup();
                 });
-//                $('table').dataTable({searching: false, paging: false, info: false});
-//                document.querySelector(".showall").classList.remove("showall");
-                    
             </c:if>
-                
             <c:if test="${requestScope.SUCCESS == null}">
                 document.querySelector(".showall").classList.add("showall");
             </c:if>
-                
+
             var driverID = document.querySelector("input[name=driverID]");
             var driverName = document.querySelector("input[name=driverName]");
             var DOB = document.querySelector("input[name=DOB]");
             var sex = document.querySelector("select[name=sex]");
             var driverPic = document.querySelector("input[name=driverPic]");
             var phoneNumber = document.querySelector("input[name=phoneNumber]");
-            
+
             document.querySelector("button[value=add]").addEventListener("click", function () {
-                sessionStorage.setItem("driverID",driverID.value);
-                sessionStorage.setItem("driverName",driverName.value);
-                sessionStorage.setItem("DOB",DOB.value);
-                sessionStorage.setItem("sex",sex.value);
-                sessionStorage.setItem("driverPic",driverPic.value);
-                sessionStorage.setItem("phoneNumber",phoneNumber.value);
+                sessionStorage.setItem("driverID", driverID.value);
+                sessionStorage.setItem("driverName", driverName.value);
+                sessionStorage.setItem("DOB", DOB.value);
+                sessionStorage.setItem("sex", sex.value);
+                sessionStorage.setItem("driverPic", driverPic.value);
+                sessionStorage.setItem("phoneNumber", phoneNumber.value);
             });
-            
+
             <c:if test="${requestScope.ADD_ERROR != null}">
                 $(document).ready(function (e) {
                     $(".add-modal").modal('show');
                 });
-                
+
                 driverID.value = sessionStorage.getItem("driverID");
                 driverName.value = sessionStorage.getItem("driverName");
                 DOB.value = sessionStorage.getItem("DOB");
@@ -366,7 +377,7 @@
                 driverPic.value = sessionStorage.getItem("driverPic");
                 phoneNumber.value = sessionStorage.getItem("phoneNumber");
             </c:if>
-            
+
         </script>
     </body>
 </html>

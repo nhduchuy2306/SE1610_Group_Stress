@@ -127,7 +127,7 @@ public class DriverController extends HttpServlet {
                 if (check) {
                     request.setAttribute("SUCCESS", "ADD DRIVER SUCCESSFULLY");
 //                    showOneDriver(request,response,driver);
-                    request.setAttribute("name", driverName);
+                    request.setAttribute("driverID", driverID);
                     showDriverTable(request, response);
                 } else {
                     request.setAttribute("ERROR", "CAN NOT ADD DRIVER");
@@ -180,7 +180,7 @@ public class DriverController extends HttpServlet {
             if (check) {
                 request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
 //                showOneDriver(request,response,driver);
-                request.setAttribute("name", driverName);
+                request.setAttribute("driverID", driverID);
                    showDriverTable(request, response);
             } else {
                 request.setAttribute("ERROR", "CAN NOT UPDATE DRIVER");
