@@ -1,4 +1,4 @@
-﻿
+﻿Drop DATABASE ETransportationManagement
 CREATE DATABASE ETransportationManagement
 use ETransportationManagement
 
@@ -8,7 +8,7 @@ CREATE TABLE tblRoles(
 )
 CREATE TABLE tblUsers (
     UserID nvarchar(100) PRIMARY KEY,
-    Username nvarchar(200) NOT NULL UNIQUE,
+    Username nvarchar(200) NOT NULL,
     [Password] nvarchar(200) NOT NULL,
     Email nvarchar(100) NOT NULL,
     DOB date, 

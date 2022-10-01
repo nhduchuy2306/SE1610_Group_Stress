@@ -96,18 +96,16 @@ public class UserController extends HttpServlet {
             String password=request.getParameter("password");
             Role role=new Role("1", "User");
             UserDAO dao=new UserDAOImpl();
-            User user=dao.getUserByID(userID);
             User userInfor=new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
-            boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
-            boolean check=dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender);
-            if(user==null){
-               if (checkDuplicate == true) {
-                    if (check == true) {
+            //boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
+            if(dao.getUserByID(userID)==null){
+               //if (checkDuplicate == true) {
+                    if (dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender)) {
                         request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                         url = "./client/index.jsp";
                     }
-                }
-           }{
+                //}
+           }else{
             request.setAttribute("USER_TMP", userInfor);
             request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
         }

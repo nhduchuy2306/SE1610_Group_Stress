@@ -180,9 +180,9 @@ var emailValidityChecks = [
 var nameValidityChecks = [
 	{
 		isInvalid: function(input){
-			return input.value.length < 4 | input.value.length > 50;
+			return input.value.length < 6 | input.value.length > 50;
 		},
-		invalidityMessage: 'This input needs to be between 4 and 50 characters'
+		invalidityMessage: 'This input needs to be between 6 and 50 characters'
 	},
 	{
 		isInvalid: function(input){
@@ -195,6 +195,12 @@ var nameValidityChecks = [
 			return input.value.match(/[0-9]/g);
 		},
 		invalidityMessage: 'Name does not contain numbers'
+	},
+	{
+		isInvalid: function(input){
+			return !input.value.match(/[a-z]/g);
+		},
+		invalidityMessage: 'Name must contain at least 1 word'
 	}
 ];
 
