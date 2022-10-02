@@ -110,8 +110,8 @@ public class VehicleController extends HttpServlet {
                     if (vDAO.updateVehicle(v)) {
                         request.setAttribute("SUCCESS", "Update Vehicle " + v.getVehicleID() + " Successfully");
                         request.setAttribute("ACTION", "UPDATE");
-                        vehicle = v;
-                        showOneVehicle(request, response, vDAO, v);
+                        request.setAttribute("VEHICLE_ID", vehicleID);
+                        showAllVehice(request, response, vDAO);
                     }
                 }
             }
@@ -181,7 +181,8 @@ public class VehicleController extends HttpServlet {
 
                     if (vDAO.createVehicle(createItem)) {
                         request.setAttribute("SUCCESS", "Create Vehicle " + vehicleID + " Success!");
-                        showOneVehicle(request, response, vDAO, createItem);
+                        request.setAttribute("VEHICLE_ID", vehicleID);
+                        showAllVehice(request, response, vDAO);
                     }
                 }
             }
