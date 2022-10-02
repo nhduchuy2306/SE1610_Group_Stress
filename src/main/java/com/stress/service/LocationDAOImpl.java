@@ -13,8 +13,8 @@ import java.util.List;
 public class LocationDAOImpl implements LocationDAO {
 
     @Override
-    public Location getLocationById(int LocationId) throws SQLException {
-        String getLocationById = "SELECT [LocationID],[LocationName] FROM tblLocations WHERE [LocationId]=?";
+    public Location getLocationById(int locationID) throws SQLException {
+        String getLocationById = "SELECT [LocationID],[LocationName],[CityID] FROM tblLocations WHERE [locationID]=?";
         Location loc = null;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -23,11 +23,14 @@ public class LocationDAOImpl implements LocationDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(getLocationById);
-                ptm.setInt(1, LocationId);
+                ptm.setInt(1, locationID);
                 rs = ptm.executeQuery();
                 if (rs.next()) {
-                    String LocationName = rs.getString("LocationName");
-                    loc = new Location(LocationId, LocationName);
+                    String locationName = rs.getString("LocationName");
+                    String address = rs.getString("Address");
+                    int cityID = rs.getInt("CityID");
+                    boolean status = rs.getBoolean("Status");
+                    loc = new Location(locationID, locationName,address,cityID,status);
                 }
             }
         } catch (Exception e) {
@@ -47,8 +50,8 @@ public class LocationDAOImpl implements LocationDAO {
     }
 
     @Override
-    public Location getLocationByName(String LocationName) throws SQLException {
-        String getLocationByName = "SELECT [LocationID],[LocationName] FROM tblLocations WHERE [LocationName]=?";
+    public Location getLocationByName(String locationName) throws SQLException {
+        String getLocationByName = "SELECT [LocationID],[LocationName],[Address],[CityID],[Status] FROM tblLocations WHERE [LocationName]=?";
         Location loc = null;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -57,11 +60,14 @@ public class LocationDAOImpl implements LocationDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(getLocationByName);
-                ptm.setString(1, LocationName);
+                ptm.setString(1, locationName);
                 rs = ptm.executeQuery();
                 if (rs.next()) {
-                    int LocationID = rs.getInt("LocationID");
-                    loc = new Location(LocationID, LocationName);
+                    int locationID = rs.getInt("LocationID");
+                    String address = rs.getString("Address");
+                    int cityID = rs.getInt("CityID");
+                    boolean status = rs.getBoolean("Status");
+                    loc = new Location(locationID, locationName,address,cityID,status);
                 }
             }
         } catch (Exception e) {
@@ -82,30 +88,29 @@ public class LocationDAOImpl implements LocationDAO {
 
     @Override
     public List<Location> getAllLocation() throws SQLException {
-        String getAllLocation = "SELECT [LocationID],[LocationName] FROM tblLocations";
+        String getAllLocation = "SELECT [LocationID],[LocationName],[Address],[CityID],[Status] FROM tblLocations";
         List<Location> locationList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
-        ResultSet rs1 = null;
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(getAllLocation);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    int LocationID = rs.getInt("LocationID");
-                    String LocationName = rs.getString("LocationName");
-                    locationList.add(new Location(LocationID, LocationName));
+                    int locationID = rs.getInt("LocationID");
+                    String locationName = rs.getString("LocationName");
+                    String address = rs.getString("Address");
+                    int CityID = rs.getInt("CityID");
+                    boolean status = rs.getBoolean("status");
+                    locationList.add(new Location(locationID, locationName,address,CityID,status));
                 }
             }
 
         } catch (Exception e) {
             System.out.println("Error at getAllLocation:" + e.toString());
         } finally {
-            if (rs1 != null) {
-                rs.close();
-            }
             if (rs != null) {
                 rs.close();
             }
@@ -120,12 +125,11 @@ public class LocationDAOImpl implements LocationDAO {
     }
     @Override
     public List<Location> searchLocation(String search) throws SQLException {
-        String SEARCH = "SELECT [LocationID],[LocationName] FROM tblLocations WHERE [LocationName] like ?";
+        String SEARCH = "SELECT [locationID],[LocationName],[Address], [CityID],[Status] FROM tblLocations WHERE [LocationName] like ?";
         List<Location> locationList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
-        ResultSet rs1 = null;
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
@@ -133,18 +137,18 @@ public class LocationDAOImpl implements LocationDAO {
                 ptm.setString(1, "%"+search+"%");
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    int LocationID = rs.getInt("LocationID");
-                    String LocationName = rs.getString("LocationName");
-                    locationList.add(new Location(LocationID, LocationName));
+                    int locationID = rs.getInt("LocationID");
+                    String locationName = rs.getString("LocationName");
+                    String address = rs.getString("Address");
+                    int cityID = rs.getInt("CityID");
+                    boolean status = rs.getBoolean("status");
+                    locationList.add(new Location(locationID, locationName,address,cityID,status));
                 }
             }
 
         } catch (Exception e) {
             System.out.println("Error at getAllLocation:" + e.toString());
         } finally {
-            if (rs1 != null) {
-                rs.close();
-            }
             if (rs != null) {
                 rs.close();
             }
@@ -158,17 +162,20 @@ public class LocationDAOImpl implements LocationDAO {
         return locationList;
     }
     @Override
-    public boolean addLocation(int locationID, String locationName) throws SQLException {
-        String register="INSERT INTO tblLocations ([LocationID],[LocationName]) VALUES (?,?)";
+    public boolean addLocation(int locationID, String locationName,String address,int cityID,boolean status) throws SQLException {
+        String add="INSERT INTO tblLocations ([LocationID],[LocationName],[Address],[CityID],[Status]) VALUES (?,?,?,?,?)";
         boolean check=false;
         Connection conn=null;
         PreparedStatement ptm =null;
         try {
             conn=DBConnection.getConnection();
             if(conn!=null){
-                ptm=conn.prepareStatement(register);
+                ptm=conn.prepareStatement(add);
                 ptm.setInt(1, locationID);
                 ptm.setString(2, locationName);
+                ptm.setString(3,address );
+                ptm.setInt(4, cityID);
+                ptm.setBoolean(5, status );
                 check=ptm.executeUpdate()>0? true:false;         
             }
         } catch (Exception e) {
@@ -176,6 +183,109 @@ public class LocationDAOImpl implements LocationDAO {
         }finally{
             if(ptm!=null)ptm.close();
             if(conn!=null)conn.close();
+        }
+        return check;
+    }
+    @Override
+    public boolean checkDuplicateByID(int locationId) throws SQLException{
+        String checkDuplicate = "SELECT [locationID] FROM tblLocations WHERE [locationID]=?";
+        boolean check = true;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(checkDuplicate);
+                ptm.setInt(1, locationId);
+                rs = ptm.executeQuery();
+                if (rs.next()) {
+                    check = false;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    @Override
+    public boolean addLocation(Location location) throws SQLException {
+        String register="INSERT INTO tblLocations ([LocationID],[LocationName],[Address],[CityID],[Status]) VALUES (?,?,?,?,?)";
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
+        try {
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(register);
+                ptm.setInt(1, location.getLocationID());
+                ptm.setString(2, location.getLocationName());
+                ptm.setString(3, location.getAddress());
+                ptm.setInt(4, location.getCityID());
+                ptm.setBoolean(5, location.isStatus());
+                check=ptm.executeUpdate()>0? true:false;         
+            }
+        } catch (Exception e) {
+            System.out.println("Error at addLocation:"+ e.toString());
+        }finally{
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
+        }
+        return check;
+    }
+    @Override
+    public boolean deleteLocation(String locationID) throws SQLException{
+        String DELETE="UPDATE tblLocations SET [Status]= 0  WHERE LocationID=?";
+        boolean result=false;
+        Connection conn=null;
+        PreparedStatement ptm=null;
+        try{
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(DELETE);
+                int tmp=Integer.parseInt(locationID);
+                ptm.setInt(1,tmp);
+                result=ptm.executeUpdate()>0? true:false;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return result;
+    }
+    @Override
+    public boolean updateLocation(Location location) throws SQLException{
+        String UPDATE = "UPDATE tblLocations SET [LocationName] = ?,[Address] = ?,[CityID] = ?,[Status] = ? WHERE [locationID] = ?";
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(UPDATE);
+                ptm.setString(1, location.getLocationName());
+                ptm.setString(2, location.getAddress());
+                ptm.setInt(3, location.getCityID());
+                ptm.setBoolean(4, location.isStatus());
+                ptm.setInt(5, location.getLocationID());
+                check = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
         }
         return check;
     }
