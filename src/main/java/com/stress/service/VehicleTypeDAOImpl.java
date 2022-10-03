@@ -51,8 +51,8 @@ public class VehicleTypeDAOImpl implements VehicleTypeDAO {
     }
 
     @Override
-    public boolean createVehicleType(VehicleType newVehicleType) throws SQLException {
-         boolean check = false;
+    public int createVehicleType(VehicleType newVehicleType) throws SQLException {
+        int vehicleTypeID = 0;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
@@ -61,16 +61,45 @@ public class VehicleTypeDAOImpl implements VehicleTypeDAO {
                 ptm = conn.prepareStatement("INSERT INTO tblVehicleTypes(VehicleTypeName, TotalSeat) VALUES(?, ?)");
                 ptm.setString(1, newVehicleType.getVehicleTypeName());
                 ptm.setInt(2, newVehicleType.getTotalSeat());
-                check = ptm.executeUpdate() > 0;
+                if(ptm.executeUpdate() > 0) {
+                    vehicleTypeID = getMaxVehicleType();
+                    
+                }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
+           
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+            
+        }
+        return vehicleTypeID;
+    }
+    @Override
+    public int getMaxVehicleType() throws SQLException {
+        int result = 0;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT MAX(VehicleTypeID) AS [VehicleTypeID] FROM tblVehicleTypes");
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    result = rs.getInt("vehicleTypeID");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
             if(ptm != null) ptm.close();
             if(conn != null) conn.close();
         }
-        return check;
+        return result;
     }
-    
 
     @Override
     public boolean updateVehicleType(VehicleType updateVehicleType) throws SQLException {

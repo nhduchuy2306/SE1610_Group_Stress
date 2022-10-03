@@ -354,6 +354,27 @@
                 driverID.value = sessionStorage.getItem("driverID");
 
             </c:if>
+                <c:if test="${requestScope.SUCCESS != null}">
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var idField = parseInt($('input[type="search"]').val(), 10);
+                    var id = parseFloat(data[1]) || 1; // use data for the age column
+
+                    if ((isNaN(idField)) || (isNaN(idField)) ||
+                            (idField <= id) || (idField <= id)) {
+                        return true;
+                    }
+                    return false;
+                });
+                $(document).ready(function (e) {
+                    $("#showsuccess").modal('show');
+                    var table = $('#example').DataTable();
+                    // Event listener to the two range filtering inputs to redraw on input
+                    $('input[type="search"]').keyup(function () {
+                        table.draw();
+                    });
+                    $('input[type="search"]').val('${DRIVER_LICENSE_ID}').keyup();
+                });
+                </c:if>
         </script>
     </body>
 </html>

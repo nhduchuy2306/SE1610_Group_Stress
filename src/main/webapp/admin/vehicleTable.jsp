@@ -50,38 +50,38 @@
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h2 class="m-0 font-weight-bold text-primary">VEHICLES</h2>
                                     <div>
-                                    
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                        Add Vehicle
-                                    </button>
+
+                                        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                            Add Vehicle
+                                        </button>
                                         <a href="${pageContext.request.contextPath}/admin/VehicleController?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
-                                    </div>
-                                    <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Add new Vehicle</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <form action="VehicleController" method="POST">
-                                                    <div class="modal-body">
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">VehicleID</label>
-                                                            <input type="text" name="vehicleID" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Vehicle ID" required="">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">Vehicle Name</label>
-                                                            <input type="text" name="vehicleName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Vehice Name">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">License Plate</label>
-                                                            <input type="text" name="licensePlate" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter License Plate">
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInputEmail1">VehicleType</label>
-                                                            <select name="vehicleTypeID" class="form-control">
+                                </div>
+                                <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Add new Vehicle</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="VehicleController" method="POST">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">VehicleID</label>
+                                                        <input type="text" name="vehicleID" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Vehicle ID" required="">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">Vehicle Name</label>
+                                                        <input type="text" name="vehicleName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Vehice Name">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">License Plate</label>
+                                                        <input type="text" name="licensePlate" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter License Plate">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="exampleInputEmail1">VehicleType</label>
+                                                        <select name="vehicleTypeID" class="form-control">
                                                             <c:forEach items="${requestScope.VEHICLE_TYPE_LIST}" var="vT" >
                                                                 <option value="${vT.vehicleTypeID}">${vT.vehicleTypeName}</option>
 
@@ -367,35 +367,57 @@
 //                        });
 //                    });
 //                </c:if>
-            
-        </script>
-        
-         <script>
+
+            </script>
+
+            <script>
                 var vehicleID = document.querySelector("input[name=vehicleID]");
                 var vehicleName = document.querySelector("input[name=vehicleName]");
                 var licensePlate = document.querySelector("input[name=licensePlate]");
                 var vehicleType = document.querySelector("input[name=vehicleType]");
                 var status = document.querySelector("input[name=status]");
-                
-                document.querySelector("button[value=create]").addEventListener("click", function() {
+
+                document.querySelector("button[value=create]").addEventListener("click", function () {
                     sessionStorage.setItem("vehicleID", vehicleID.value);
                     sessionStorage.setItem("vehicleName", vehicleName.value);
                     sessionStorage.setItem("licensePlate", licensePlate.value);
                     sessionStorage.setItem("vehicleType", vehicleType.value);
                     sessionStorage.setItem("status", status.value);
                 }
-                        );
-                            <c:if test="${requestScope.ERROR != null}">
-                                $(document).ready(function (e) {
-                                   $(".add-modal").modal('show'); 
-                                }) ;
-                                vehicleID.value = sessionStorage.getItem("vehicleID");
-                                vehicleName.value = sessionStorage.getItem("vehicleName");
-                                licensePlate.value = sessionStorage.getItem("licensePlate");
-                                vehicleType.value = sessionStorage.getItem("vehicleType");
-                                status.value = sessionStorage.getItem("status");
-                                
-                            </c:if>
-            </script>
+                );
+            <c:if test="${requestScope.ERROR != null}">
+                $(document).ready(function (e) {
+                    $(".add-modal").modal('show');
+                });
+                vehicleID.value = sessionStorage.getItem("vehicleID");
+                vehicleName.value = sessionStorage.getItem("vehicleName");
+                licensePlate.value = sessionStorage.getItem("licensePlate");
+                vehicleType.value = sessionStorage.getItem("vehicleType");
+                status.value = sessionStorage.getItem("status");
+
+            </c:if>
+
+            <c:if test="${requestScope.SUCCESS != null}">
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var idField = parseInt($('input[type="search"]').val(), 10);
+                    var id = parseFloat(data[1]) || 1; // use data for the age column
+
+                    if ((isNaN(idField)) || (isNaN(idField)) ||
+                            (idField <= id) || (idField <= id)) {
+                        return true;
+                    }
+                    return false;
+                });
+                $(document).ready(function (e) {
+                    $("#showsuccess").modal('show');
+                    var table = $('#example').DataTable();
+                    // Event listener to the two range filtering inputs to redraw on input
+                    $('input[type="search"]').keyup(function () {
+                        table.draw();
+                    });
+                 $('input[type="search"]').val('${VEHICLE_ID}').keyup();
+                });
+            </c:if>
+        </script>
     </body>
 </html>

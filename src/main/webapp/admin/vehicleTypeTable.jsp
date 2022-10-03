@@ -59,36 +59,36 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
-                                            
-                                            </div>
-                                    <div class="modal-body">
-                                        <form action="VehicleTypeController" method="POST">
+
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="VehicleTypeController" method="POST">
 
 
-                                            <label for="vehicleTypeName">Vehicle Type Name</label>
-                                            <input type="text" name="vehicleTypeName" id="vehicleTypeName" required="">
-                                            <br>
-                                            <label for="totalSeat">Total Seat</label>
-                                            <input type="number" name="totalSeat" id="totalSeat" required="">
+                                                <label for="vehicleTypeName">Vehicle Type Name</label>
+                                                <input type="text" name="vehicleTypeName" id="vehicleTypeName" required="">
+                                                <br>
+                                                <label for="totalSeat">Total Seat</label>
+                                                <input type="number" name="totalSeat" id="totalSeat" required="">
 
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                <button type="submit" name="action" value="create" class="btn btn-primary">Create</button>
-                                            </div>
-                                        </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" name="action" value="create" class="btn btn-primary">Create</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex justify-content-center align-items-center">
-                                    
-                                    <div>
-                                    <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                        Add Vehicle Type
-                                    </button>
-                                    <a href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 d-flex justify-content-center align-items-center">
+
+                                        <div>
+                                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                                Add Vehicle Type
+                                            </button>
+                                            <a href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -262,23 +262,44 @@
                 });
                 </c:if>
             </script>
-            
+
             <script>
                 var vehicleTypeName = document.querySelector("input[name=vehicleTypeName]");
                 var totalSeat = document.querySelector("input[name=totalSeat]");
-                
-                document.querySelector("button[value=create]").addEventListener("click", function() {
+
+                document.querySelector("button[value=create]").addEventListener("click", function () {
                     sessionStorage.setItem("vehicleTypeName", vehicleTypeName.value);
                     sessionStorage.setItem("totalSeat", totalSeat.value);
                 }
-                        );
-                            <c:if test="${requestScope.ERROR != null}">
-                                $(document).ready(function (e) {
-                                   $(".add-modal").modal('show'); 
-                                }) ;
-                                vehicleTypeName.value = sessionStorage.getItem("vehicleTypeName");
-                                totalSeat.value = sessionStorage.getItem("totalSeat");
-                            </c:if>
+                );
+                <c:if test="${requestScope.ERROR != null}">
+                $(document).ready(function (e) {
+                    $(".add-modal").modal('show');
+                });
+                vehicleTypeName.value = sessionStorage.getItem("vehicleTypeName");
+                totalSeat.value = sessionStorage.getItem("totalSeat");
+                </c:if>
+                <c:if test="${requestScope.SUCCESS != null}">
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var idField = parseInt($('input[type="search"]').val(), 10);
+                    var id = parseFloat(data[1]) || 1; // use data for the age column
+
+                    if ((isNaN(idField)) || (isNaN(idField)) ||
+                            (idField <= id) || (idField <= id)) {
+                        return true;
+                    }
+                    return false;
+                });
+                $(document).ready(function (e) {
+                    $("#showsuccess").modal('show');
+                    var table = $('#example').DataTable();
+                    // Event listener to the two range filtering inputs to redraw on input
+                    $('input[type="search"]').keyup(function () {
+                        table.draw();
+                    });
+                    $('input[type="search"]').val('${VEHICLE_TYPE_ID}').keyup();
+                });
+                </c:if>
             </script>
     </body>
 
