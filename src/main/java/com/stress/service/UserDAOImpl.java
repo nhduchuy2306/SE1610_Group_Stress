@@ -411,4 +411,82 @@ boolean result = false;
             }
         }
         return result;    }
+
+    @Override
+    public List<User> searchUser(String search) throws SQLException {
+    String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
+            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE UserName like ?";
+        List<User> user = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        ResultSet rs1 = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(getAllUser);
+                ptm.setString(1, "%"+search+"%");
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    String userID = rs.getString("UserID");
+                    String username = rs.getString("Username");
+                    String password = rs.getString("Password");
+                    Date dob = rs.getDate("DOB");
+                    String address = rs.getString("Address");
+                    String phoneNumber =rs.getString("PhoneNumber");
+                    String email = rs.getString("Email");
+                    boolean sex = rs.getBoolean("Sex");
+                    String roleID = rs.getString("RoleID");
+                    String AccountBalance = rs.getString("AccountBalance");
+                    int status = rs.getInt("Status");
+                                        
+                    Role role = new RoleDAOImpl().getRoleByID(roleID);
+                    if(role != null)
+                    user.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error at getAllUser:" +e.toString());
+        } finally {
+            if (rs1 != null) rs.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public boolean updatePassword(String userID, String password,String email) throws SQLException {
+        boolean check=false;
+        Connection conn=null;
+        PreparedStatement ptm =null;
+        ResultSet rs= null;
+        String updatePassword = "UPDATE tblUsers SET [Password]=? WHERE userID=? AND [Email]=?";
+
+        try{
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(updatePassword);
+                ptm.setString(1, password);
+                ptm.setString(2, userID);
+                ptm.setString(3, email);
+                check=ptm.executeUpdate()>0?true:false;
+            }
+        }catch(Exception e){
+            System.out.println("Error at updatePassword:"+ e.toString());
+        }finally{
+            if(rs!=null)rs.close();
+            if(ptm!=null)ptm.close();
+            if(conn!=null)conn.close();
+        }
+        return check; 
+    }
 }
