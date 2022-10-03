@@ -184,8 +184,35 @@ public class RouteDAOImpl implements RouteDAO {
     }
     
     @Override
-    public Route getRouteByID(String routeID) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Route getRouteByID(int routeID) throws SQLException {
+        String sql = "SELECT RouteID,RouteName,"
+                + "StartLocation,EndLocation,[Description],[Status] "
+                + "FROM tblRoutes "
+                + "WHERE RouteID = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, routeID);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    return new Route(rs.getInt("RouteID"), 
+                            rs.getString("RouteName"), 
+                            locationDao.getLocationById(rs.getInt("StartLocation")), 
+                            locationDao.getLocationById(rs.getInt("EndLocation")), 
+                            rs.getString("Description"), rs.getBoolean("Status"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if (rs != null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return null;
     }
 
     @Override
