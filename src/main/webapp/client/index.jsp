@@ -102,19 +102,20 @@
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                               id="password" placeholder="Password" name="password" oninput="checkPassword()">
+                                               id="password" placeholder="Password" name="password" oninput="checkPassword()" >
                                         <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_LOGIN2}</p>
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                                            <input type="checkbox" class="custom-control-input" id="customCheck" value="lsRememberMe">
                                             <label class="custom-control-label" for="customCheck">Remember
                                                 Me</label>
                                         </div>
                                     </div>
                                     <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
+                                    <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_RECAPTCHA}</p>
                                     
-                                    <input style="margin-top: 10px" type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
+                                    <input style="margin-top: 10px" onclick="lsRememberMe()" type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
                                     <hr>
                                     <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
                                        &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
@@ -243,18 +244,18 @@
                                     <div class="p-5">
                                         <div class="text-center" style="margin-top: -10px;">
 <!--                                            <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>-->
-                                                <p class="mb-4">We get it, stuff happens. Just enter your email address below
-                                                and we'll send you a link to reset your password!</p>
+                                                <p class="mb-4">We get it, stuff happens. Just enter your account address below
+                                                and we'll send your new password to email!</p>
                                         </div>
-                                        <form class="user">
+                                        <form class="user" action="${pageContext.request.contextPath}/user">
                                             <div class="form-group">
-                                                <input type="email" class="form-control form-control-user"
+                                                <input type="text" class="form-control form-control-user"
                                                        id="exampleInputEmail" aria-describedby="emailHelp"
-                                                       placeholder="Enter Email Address...">
+                                                       placeholder="Enter Your Account ..." name="userID" required="">
                                             </div>
-                                            <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                                Reset Password
-                                            </a>
+                                            <p style="color: #28fe09; font-size: 20px;">${requestScope.SUCCESS}</p>
+                                            <p style="color: red; font-size: 20px;">${requestScope.ERROR_FORGOT}</p>
+                                            <input type="submit" name="action" value="Get Password by Email" class="btn btn-primary btn-user btn-block">
                                         </form>
                                     </div>
                                 </div>
@@ -735,6 +736,13 @@
             <script>
             $(window).load(function () {
                 $('#registerForm').modal('show');
+            });
+            </script>
+        </c:if>
+        <c:if test="${requestScope.RESET_PASSWORD!=null}">
+            <script>
+            $(window).load(function () {
+                $('#demo-2').modal('show');
             });
             </script>
         </c:if>
