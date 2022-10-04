@@ -12,4 +12,5 @@ public interface TripDAO {
     boolean addTrip(Trip trip) throws SQLException;
     List<Trip> getAllTrip() throws SQLException;
     boolean updateTrip(Trip trip) throws SQLException;
+    List<Trip> getAllTripByRouteAndStartDay(int routeID, String date) throws SQLException;
 }

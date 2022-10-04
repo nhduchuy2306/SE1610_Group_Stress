@@ -10,7 +10,7 @@ $(document).ready(function () {
             "ee_ee",
             "ee_ee",
             "ee_ee",
-            "ee_ee",
+            "ee___",
             "ee_ee",
             "ee_ee",
             "ee_ee",
@@ -108,8 +108,6 @@ $(document).ready(function () {
         window.location.replace(newurl+'order?' + "tripID=" + 1 + "&" + "seatID=" + choice.toString());
     });
 });
-
-
 
 function recalculateTotal(sc) {
     var total = 0;

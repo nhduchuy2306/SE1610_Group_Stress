@@ -8,6 +8,7 @@ import com.stress.dao.VehicleDAO;
 import com.stress.dto.Trip;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,6 +73,7 @@ public class TripDAOImpl implements TripDAO{
         } finally {
             if (ptm != null) ptm.close();
             if (conn != null) conn.close();
+            if(rs!=null) rs.close();
         }
         return null;
     }
@@ -99,6 +101,7 @@ public class TripDAOImpl implements TripDAO{
                 check = ptm.executeUpdate() > 0; 
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         } finally {
             if (ptm != null) ptm.close();
             if (conn != null) conn.close();
@@ -110,7 +113,7 @@ public class TripDAOImpl implements TripDAO{
     public List<Trip> getAllTrip() throws SQLException {
         List<Trip> list = new ArrayList<>();
         String sql = "SELECT [TripID],[TripName], [StartDateTime],[Policy], [RouteID], "
-                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips ";
+                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips WHERE [Status] = 1";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -150,23 +153,62 @@ public class TripDAOImpl implements TripDAO{
             conn = DBConnection.getConnection();
             if(conn!=null){
                 ptm = conn.prepareStatement(sql);
-                ptm.setString(1, trip.getTripID());
-                ptm.setString(2, trip.getTripName());
-                ptm.setDate(3, trip.getStartDateTime());
-                ptm.setString(4,trip.getPolicy());
-                ptm.setInt(5, trip.getRoute().getRouteID());
-                ptm.setString(6, trip.getVehicle().getVehicleID());
-                ptm.setString(7, trip.getDriver().getDriverID());
-                ptm.setInt(8, trip.getSeatRemain());
-                ptm.setInt(9, trip.getStatus());
+                ptm.setString(1, trip.getTripName());
+                ptm.setDate(2, trip.getStartDateTime());
+                ptm.setString(3,trip.getPolicy());
+                ptm.setInt(4, trip.getRoute().getRouteID());
+                ptm.setString(5, trip.getVehicle().getVehicleID());
+                ptm.setString(6, trip.getDriver().getDriverID());
+                ptm.setInt(7, trip.getSeatRemain());
+                ptm.setInt(8, trip.getStatus());
+                ptm.setString(9, trip.getTripID());
                 check = ptm.executeUpdate() > 0; 
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         } finally {
             if (ptm != null) ptm.close();
             if (conn != null) conn.close();
         }
         return check;
+    }
+
+    @Override
+    public List<Trip> getAllTripByRouteAndStartDay(int routeID, String day) throws SQLException {
+        String sql = "SELECT [TripID],[TripName], [StartDateTime],[Policy], [RouteID], "
+                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE RouteID = ? AND StartDateTime = ?";
+        List<Trip> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, routeID);
+                ptm.setString(2, day);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    list.add(new Trip(rs.getString("TripID"), 
+                            rs.getString("TripName"), 
+                            rs.getDate("StartDateTime"), 
+                            rs.getString("Policy"), 
+                            routeDAO.getRouteByID(rs.getInt("RouteID")), 
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")), 
+                            driverDAO.getDriverByID(rs.getString("DriverID")), 
+                            rs.getInt("SeatRemain"), 
+                            rs.getInt("Status")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+            if(rs!=null) rs.close();
+        }
+        return list;
     }
     
 }

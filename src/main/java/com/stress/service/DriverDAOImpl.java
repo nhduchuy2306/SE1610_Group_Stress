@@ -143,14 +143,14 @@ public class DriverDAOImpl implements DriverDAO{
             rs = ptm.executeQuery();
             while(rs.next()){
                 return new Driver(
-                        rs.getString("DriverID"), 
-                        rs.getString("DriverName"), 
-                        rs.getDate("DOB"), 
-                        rs.getBoolean("Sex"), 
-                        rs.getString("DriverPic"), 
-                        rs.getString("PhoneNumber"), 
-                        rs.getInt("Status")
-                    );
+                    rs.getString("DriverID"), 
+                    rs.getString("DriverName"), 
+                    rs.getDate("DOB"), 
+                    rs.getBoolean("Sex"), 
+                    rs.getString("DriverPic"), 
+                    rs.getString("PhoneNumber"), 
+                    rs.getInt("Status")
+                );
             }
         } catch (Exception e) {
         } finally {
@@ -190,6 +190,39 @@ public class DriverDAOImpl implements DriverDAO{
             if (rs != null) rs.close();
             if (ptm != null) ptm.close();
             if (conn != null) conn.close();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Driver> getAllActiveDriver() throws SQLException {
+        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] "
+                    + "FROM tblDrivers "
+                    + "WHERE [Status] = 1";
+        List<Driver> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            rs = ptm.executeQuery();
+            while(rs.next()){
+                list.add(new Driver(
+                        rs.getString("DriverID"), 
+                        rs.getString("DriverName"), 
+                        rs.getDate("DOB"), 
+                        rs.getBoolean("Sex"), 
+                        rs.getString("DriverPic"), 
+                        rs.getString("PhoneNumber"), 
+                        rs.getInt("Status")
+                    ));
+            }
+        } catch (Exception e) {
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+            if(rs!=null) rs.close();
         }
         return list;
     }

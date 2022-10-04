@@ -76,7 +76,7 @@ public class RouteDAOImpl implements RouteDAO {
     @Override
     public boolean updateRoute(int RouteID, String RouteName, Location StartLocation, Location EndLocation, String Description, boolean Status) throws SQLException {
         String sql = "UPDATE tblRoutes SET RouteName = ?, StartLocation = ?, "
-                + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";;
+                + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -294,5 +294,69 @@ public class RouteDAOImpl implements RouteDAO {
             }
         }
         return routeList;
+    }
+
+    @Override
+    public List<Route> getAllActiveRoute() throws SQLException {
+        List<Route> list = new ArrayList<>();
+        String sql = "SELECT [RouteID],[RouteName],[StartLocation], [EndLocation], [Description], [Status] FROM tblRoutes WHERE [Status] = 1";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    list.add(new Route(rs.getInt("RouteID"), 
+                            rs.getString("RouteName"), 
+                            locationDao.getLocationById(rs.getInt("StartLocation")), 
+                            locationDao.getLocationById(rs.getInt("EndLocation")), 
+                            rs.getString("Description"), 
+                            rs.getBoolean("Status")));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+            if(rs!=null) rs.close();
+        }
+        return list;
+    }
+
+    @Override
+    public Route getRouteByStartLocationAndEndLocation(int start, int end) throws SQLException {
+        String sql = "SELECT RouteID,RouteName,"
+                + "StartLocation,EndLocation,[Description],[Status] "
+                + "FROM tblRoutes "
+                + "WHERE StartLocation = ? AND EndLocation = ?";
+        
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            ptm.setInt(1, start);
+            ptm.setInt(2, end);
+            rs = ptm.executeQuery();
+            while (rs.next()) {
+                 return new Route(rs.getInt("RouteID"), 
+                        rs.getString("RouteName"), 
+                        locationDao.getLocationById(rs.getInt("StartLocation")), 
+                        locationDao.getLocationById(rs.getInt("EndLocation")),
+                        rs.getString("Description"), 
+                        rs.getBoolean("Status"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            if (conn != null) conn.close();
+            if (ptm != null) ptm.close();
+            if (rs != null) rs.close();
+        } 
+        return null;
     }
 }

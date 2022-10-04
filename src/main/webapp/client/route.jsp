@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,18 +20,18 @@
         <title>Car Booking</title>
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
-        <link rel="stylesheet" href="css/linearicons.css">
-        <link rel="stylesheet" href="css/font-awesome.min.css">
-        <link rel="stylesheet" href="css/bootstrap.css">
-        <link rel="stylesheet" href="css/magnific-popup.css">
-        <link rel="stylesheet" href="css/jquery-ui.css">
-        <link rel="stylesheet" href="css/nice-select.css">
-        <link rel="stylesheet" href="css/animate.min.css">
-        <link rel="stylesheet" href="css/owl.carousel.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/jquery-ui.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/nice-select.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/animate.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
         <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="css/jquery.seat-charts.css">
-        <link rel="stylesheet" href="css/stylechoosecar.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">
     </head>
 
     <body>
@@ -130,7 +131,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-12 col-md-6 col-sm-12">
+                                    <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
+                                        <div class="col-lg-12 col-md-6 col-sm-12">
                                         <div class="card product-item border-0 mb-4">
                                             <div
                                                 class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -141,7 +143,7 @@
                                                     <div class="ticket-car-name col-md-4">
                                                         <div class="bus-icon">
                                                             <i class="fa fa-bus" style="font-size: 40px; color: #007bff;" aria-hidden="true"></i>
-                                                            <h4 class="mt-10">An Anh Limousine</h4>
+                                                            <h4 class="mt-10">${trip.tripName}</h4>
                                                         </div>
                                                     </div>
                                                     <div class="ticket-row-name col-md-4 ">
@@ -167,8 +169,8 @@
                                                         </div>
                                                     </div>
                                                     <div class="ticket-car-description col-md-4">
-                                                        <p class="font-weight-bold" style="color:black;">Limousine with 20 rooms</p>
-                                                        <p class="seat-remain font-weight-bold" style="color:black;">20 seat remain</p>
+                                                        <p class="font-weight-bold" style="color:black;">${trip.vehicle.vehicleName}</p>
+                                                        <p class="seat-remain font-weight-bold" style="color:black;">${trip.seatRemain} seat remain</p>
                                                     </div>
                                                 </div>
                                                 <div class="price float-sm-right">
@@ -176,14 +178,14 @@
                                                 </div>
                                             </div>
                                             <div class="card-footer bg-light border d-flex justify-content-between align-items-center">
-                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse" aria-expanded="false" aria-controls="collapseExample">
+                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample">
                                                     View more detail
                                                 </button>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#exampleModal" onclick="AlwaysFlightClick()">
+                                                <button type="button" class="btn-choose-seat btn btn-primary" data-toggle="modal"
+                                                        data-target="#choose-${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
                                                     Choose ticket
                                                 </button>
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                                <div class="modal fade" id="choose-${trip.tripID.trim()}" tabindex="-1" role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
@@ -201,35 +203,34 @@
                                                                         role="tablist">
                                                                         <li class="nav-item">
                                                                             <a class="nav-link active" id="flight-tab"
-                                                                               data-toggle="tab" href="#car" role="tab"
+                                                                               data-toggle="tab" href="#car-${trip.tripID.trim()}" role="tab"
                                                                                aria-controls="flight"
                                                                                aria-selected="true">Cars</a>
                                                                         </li>
                                                                         <li class="nav-item">
                                                                             <a class="nav-link" id="hotel-tab" data-toggle="tab"
-                                                                               href="#hotel" role="tab" aria-controls="hotel"
+                                                                               href="#hotel-${trip.tripID.trim()}" role="tab" aria-controls="hotel"
                                                                                aria-selected="false">Time</a>
                                                                         </li>
                                                                     </ul>
                                                                     <div class="tab-content" id="myTabContent">
-                                                                        <div class="tab-pane fade show active" id="car"
+                                                                        <div class="tab-pane fade show active" id="car-${trip.tripID.trim()}"
                                                                              role="tabpanel" aria-labelledby="flight-tab">
                                                                             <div class="wrapper-seat">
                                                                                 <div class="container-seat">
                                                                                     <h1 class="text-center">Chosing seats</h1>
-                                                                                    <div id="seat-map-seat">
-                                                                                        <div
-                                                                                            class="text-center front-indicator-seat">
+                                                                                    <div class="seat-map-seat">
+                                                                                        <div class="text-center front-indicator-seat">
                                                                                             Chosing</div>
                                                                                     </div>
                                                                                     <div class="booking-details-seat">
                                                                                         <h2>Booking Details</h2>
                                                                                         <h3> Selected Seats (<span
-                                                                                                id="counter-seat">0</span>):
+                                                                                                class="counter-seat">0</span>):
                                                                                         </h3>
-                                                                                        <ul id="selected-seats"></ul>
+                                                                                        <ul class="selected-seats"></ul>
                                                                                         Total: <b>$<span
-                                                                                                id="total-seat">0</span></b>
+                                                                                                class="total-seat">0</span></b>
                                                                                         <button
                                                                                             class="btn btn-secondary checkout-button-seat"
                                                                                             type="button"
@@ -240,7 +241,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="tab-pane fade" id="hotel" role="tabpanel"
+                                                                        <div class="tab-pane fade" id="hotel-${trip.tripID.trim()}" role="tabpanel"
                                                                              aria-labelledby="hotel-tab">
                                                                             <div style="height:300px; width: 100%"
                                                                                  class="container">
@@ -261,38 +262,37 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary"
-                                                                            data-dismiss="modal">Close</button>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="collapse" id="collapse">
+                                            <div class="collapse" id="collapse-${trip.tripID.trim()}">
                                                 <div class="card card-body">
                                                     <ul class="nav nav-tabs" role="tablist">
                                                         <li class="nav-item">
                                                             <a class="nav-link active" id="picture"
-                                                               data-toggle="tab" href="#1" role="tab"
+                                                               data-toggle="tab" href="#1-${trip.tripID.trim()}" role="tab"
                                                                aria-controls="picture"
                                                                aria-selected="true">Picture</a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="utilies"
-                                                               data-toggle="tab" href="#2" role="tab"
+                                                               data-toggle="tab" href="#2-${trip.tripID.trim()}" role="tab"
                                                                aria-controls="utilies"
                                                                aria-selected="true">Utilities</a>
                                                         </li>
                                                         <li class="nav-item">
                                                             <a class="nav-link" id="policy"
-                                                               data-toggle="tab" href="#3" role="tab"
+                                                               data-toggle="tab" href="#3-${trip.tripID.trim()}" role="tab"
                                                                aria-controls="policy"
                                                                aria-selected="true">Policy</a>
                                                         </li>
                                                     </ul>
                                                     <div class="tab-content ">
-                                                        <div class="tab-pane active" id="1"
+                                                        <div class="tab-pane active" id="1-${trip.tripID.trim()}"
                                                              role="tabpanel" aria-labelledby="picture">
                                                             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                                                 <div class="carousel-inner">
@@ -316,11 +316,11 @@
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="tab-pane" id="2" role="tabpanel"
+                                                        <div class="tab-pane" id="2-${trip.tripID.trim()}" role="tabpanel"
                                                              aria-labelledby="utilities">
                                                             Utility
                                                         </div>
-                                                        <div class="tab-pane" id="3" role="tabpanel"
+                                                        <div class="tab-pane" id="3-${trip.tripID.trim()}" role="tabpanel"
                                                              aria-labelledby="policy">
                                                             Policy
                                                         </div>
@@ -329,7 +329,10 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    </c:forEach>
+                                        
+                                    
+                                    <!--Phân trang-->
                                     <div class="col-12 pb-1">
                                         <nav aria-label="Page navigation">
                                             <ul class="pagination justify-content-center mb-3">
@@ -424,14 +427,14 @@
                             <div class="single-footer-widget mail-chimp">
                                 <h6 class="mb-20">InstaFeed</h6>
                                 <ul class="instafeed d-flex flex-wrap">
-                                    <li><img src="img/i1.jpg" alt=""></li>
-                                    <li><img src="img/i2.jpg" alt=""></li>
-                                    <li><img src="img/i3.jpg" alt=""></li>
-                                    <li><img src="img/i4.jpg" alt=""></li>
-                                    <li><img src="img/i5.jpg" alt=""></li>
-                                    <li><img src="img/i6.jpg" alt=""></li>
-                                    <li><img src="img/i7.jpg" alt=""></li>
-                                    <li><img src="img/i8.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i2.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i3.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i4.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i5.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i6.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i7.jpg" alt=""></li>
+                                    <li><img src="${pageContext.request.contextPath}/client/img/i8.jpg" alt=""></li>
                                 </ul>
                             </div>
                         </div>
@@ -457,22 +460,22 @@
             </footer>
             <!-- End footer Area -->
 
-            <script src="js/vendor/jquery-2.2.4.min.js"></script>
-            <script src="js/popper.min.js"></script>
-            <script src="js/vendor/bootstrap.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-            <script src="js/jquery-ui.js"></script>
-            <script src="js/easing.min.js"></script>
-            <script src="js/hoverIntent.js"></script>
-            <script src="js/superfish.min.js"></script>
-            <script src="js/jquery.ajaxchimp.min.js"></script>
-            <script src="js/jquery.magnific-popup.min.js"></script>
-            <script src="js/jquery.nice-select.min.js"></script>
-            <script src="js/owl.carousel.min.js"></script>
-            <script src="js/mail-script.js"></script>
-            <script src="js/main.js"></script>
-            <script src="js/jquery.seat-charts.js"></script>
-            <script src="js/chosing-seat.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
+            <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
+            <!--<script src="js/chosing-seat.js"></script>-->
             
             <script>
                 var flight_tab = document.querySelector("#flight-tab");
@@ -490,7 +493,8 @@
                 function nextInHotels() {
                     holiday_tab.click();
                 }
-        </script>
+            </script>
+            <jsp:include page="/client/seat-script.jsp"></jsp:include>
     </body>
 
 </html>

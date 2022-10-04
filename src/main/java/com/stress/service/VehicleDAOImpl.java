@@ -231,4 +231,39 @@ public class VehicleDAOImpl implements VehicleDAO {
             System.out.println(vehicle);
         }
     }
+
+    @Override
+    public List<Vehicle> getAllActiveVehicle() throws SQLException {
+        List<Vehicle> list = new ArrayList<>();
+        Connection conn = null;
+        ResultSet rs = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement("SELECT [VehicleID], [VehicleName],[LicensePlate],[VehicleTypeID],[Status] FROM tblVehicles WHERE [Status] = 1");
+                rs = ptm.executeQuery();
+                while(rs.next()) {
+                    String vehicleID = rs.getString("VehicleID");
+                    String vehicleName = rs.getString("VehicleName");
+                    String licensePlate = rs.getString("LicensePlate");
+                    int VehicleTypeID = rs.getInt("VehicleTypeID");
+                    int status = rs.getInt("status");
+                    VehicleType vType = new VehicleTypeDAOImpl().getVehicleTypeByID(VehicleTypeID);
+                    if(vType != null) {
+                        list.add(new Vehicle(vehicleID, vehicleName, licensePlate, vType, status));
+                    }else {
+                        throw new Exception();
+                    }
+                    
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return list;
+    }
 }

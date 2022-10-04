@@ -11,7 +11,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Driver Tables</title>
+        <title>Trip Tables</title>
 
         <!-- Custom fonts for this template -->
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -24,12 +24,6 @@
 
         <!-- Custom styles for this page -->
         <link href="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <style>
-            .showall{
-                visibility: hidden;
-                opacity: 0;
-            }
-        </style>
     </head>
 
     <body id="page-top">
@@ -52,7 +46,7 @@
                         <div class="container-fluid">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
-                                    <h2 class="m-0 font-weight-bold text-primary">DRIVERS</h2>
+                                    <h2 class="m-0 font-weight-bold text-primary">TRIPS</h2>
                                     <div>
                                         <button type="button" class="ml-10 btn btn-primary float-right" data-toggle="modal" data-target="#add">
                                             Add Trip 
@@ -68,56 +62,47 @@
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
-                                                <form action="driver" method="post">
+                                                <form action="trip" method="post">
                                                     <div class="modal-body">
                                                         <div class="form-group">
-                                                            <h3 class="text-info">Route Detail</h3>
-                                                            <div class="col-md-6 form-group mb-5">
-                                                                <label for="" class="col-form-label">Route Name: </label>
-                                                                <select class="form-control form-select" aria-label="Default select example">
-                                                                    <option value="1">Hồ Chí Minh - Hà Nội</option>
-                                                                    <option value="2">Hồ Chí Minh - Đà Lạt</option>
-                                                                    <option value="3">Hồ Chí Minh - Nha Trang</option>
-                                                                </select>
-                                                            </div>
+                                                            <label for="exampleInputEmail1">Trip ID</label>
+                                                            <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <h3 class="text-info">Vehicle Detail</h3>
-                                                            <div class="col-md-6 form-group mb-5">
-                                                                <label for="" class="col-form-label">Vehicle Name: </label>
-                                                                <select class="form-control form-select" aria-label="Default select example">
-                                                                    <option value="1">Hồ Chí Minh - Hà Nội</option>
-                                                                    <option value="2">Hồ Chí Minh - Đà Lạt</option>
-                                                                    <option value="3">Hồ Chí Minh - Nha Trang</option>
-                                                                </select>
-                                                            </div>
+                                                            <label for="exampleInputEmail1">Trip Name</label>
+                                                            <input type="text" name="tripName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleInputEmail1">DOB</label>
-                                                            <input type="date" name="DOB" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter DOB" required>
-                                                            <small style="color:red" id="dob-error">${ADD_ERROR.DOB}</small>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">Gender</label>
-                                                        <select name="sex" class="form-control add-gender" required>
-                                                            <option value="true" selected>MALE</option>
-                                                            <option value="false">FEMALE</option>
+                                                            <label for="exampleInputEmail1">Start Date Time</label>
+                                                            <input type="date" name="startdate" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Policy</label>
+                                                            <textarea style="height: 150px" type="text" name="policy" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Policy" required>   
+                                                            </textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Route Name: </label>
+                                                            <select class="form-control form-select" aria-label="Default select example" name="routeID">
+                                                            <c:forEach var="ar" items="${requestScope.LIST_ACTIVE_ROUTE}">
+                                                                <option value="${ar.routeID}">${ar.routeName}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">Driver Picture</label>
-                                                        <input type="text" name="driverPic" class="add-picture form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Driver Picture" required>
-                                                        <small style="color:red" id="url-error">${ADD_ERROR.driverPicture}</small>
+                                                        <label for="exampleInputEmail1">Vehicle Name: </label>
+                                                        <select class="form-control form-select" aria-label="Default select example" name="vehicleID">
+                                                            <c:forEach var="av" items="${requestScope.LIST_ACTIVE_VEHICLE}">
+                                                                <option value="${av.vehicleID}">${av.vehicleName}</option>
+                                                            </c:forEach>
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">Phone Number</label>
-                                                        <input type="text" name="phoneNumber" class="add-number form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Phone Number" required>
-                                                        <small style="color:red" id="phone-error">${ADD_ERROR.phoneNumber}</small>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">Status</label>
-                                                        <select name="status" class="form-control" required>
-                                                            <option value="1" selected>ACTIVE</option>
+                                                        <label for="exampleInputEmail1">Driver Name: </label>
+                                                        <select class="form-control form-select" aria-label="Default select example" name="driverID">
+                                                            <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
+                                                                <option value="${ad.driverID}">${ad.driverName}</option>
+                                                            </c:forEach>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -163,83 +148,101 @@
                                                     <td>${t.seatRemain}</td>
                                                     <td>${t.status}</td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${d.driverID.trim()}">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${t.tripID.trim()}">
                                                             <i class="fa fa-pen"></i>
                                                         </button>
-<!--                                                        <div class="modal fade" id="modify-${d.driverID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="modify-${t.tripID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Driver ${d.driverName}</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Modify Trip ${t.tripName}</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="driver" method="post">
+                                                                    <form action="trip" method="post">
                                                                         <div class="modal-body">
-                                                                            <div class="modal-body">
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Driver ID</label>
-                                                                                    <input type="text" name="driverID" class="form-control" value="${d.driverID.trim()}" id="exampleInputEmail1" readonly placeholder="Enter Driver ID">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Driver Name</label>
-                                                                                    <input type="text" name="driverName" class="form-control" value="${d.driverName.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Name">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">DOB</label>
-                                                                                    <input type="date" name="DOB" class="form-control" value="${d.DOB}" id="exampleInputEmail1" placeholder="Enter DOB">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Gender</label>
-                                                                                    <select name="sex" class="form-control">
-                                                                                        <option value="true" ${d.sex eq "1"?"selected":""}>MALE</option>
-                                                                                        <option value="false" ${d.sex eq "0"?"selected":""}>FEMALE</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Driver Picture</label>
-                                                                                    <input type="text" name="driverPic" class="form-control" value="${d.driverPicture.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Picture">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Phone Number</label>
-                                                                                    <input type="text" name="phoneNumber" class="form-control" value="${d.phoneNumber.trim()}" id="exampleInputEmail1" placeholder="Enter Phone Number">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Status</label>
-                                                                                    <select name="status" class="form-control">
-                                                                                        <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
-                                                                                        <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
-                                                                                        <option value="2" ${d.status eq 2?"selected":""}>ONGOING</option>
-                                                                                    </select>
-                                                                                </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Trip ID</label>
+                                                                                <input type="text" name="tripID" class="add-dob form-control" value="${t.tripID}" placeholder="Enter Trip ID" readonly>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Trip Name</label>
+                                                                                <input type="text" name="tripName" class="add-dob form-control" value="${t.tripName}"  placeholder="Enter Trip Name" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Start Date Time</label>
+                                                                                <input type="date" name="startdate" class="add-dob form-control" value="${t.startDateTime}"  placeholder="Enter Start Date" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Policy</label>
+                                                                                <textarea style="height: 150px" type="text" name="policy" class="form-control" placeholder="Enter Policy" required>   
+                                                                                    ${t.policy}
+                                                                                </textarea>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Route Name: </label>
+                                                                                <select class="form-control form-select" aria-label="Default select example" name="routeID">
+                                                                                    <c:forEach var="ar" items="${requestScope.LIST_ACTIVE_ROUTE}">
+                                                                                        <option value="${ar.routeID}">${ar.routeName}</option>
+                                                                                    </c:forEach>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Vehicle Name: </label>
+                                                                                <select class="form-control form-select" aria-label="Default select example" name="vehicleID">
+                                                                                    <option value="${t.vehicle.vehicleID}" selected>${t.vehicle.vehicleName}</option>
+                                                                                    <c:forEach var="av" items="${requestScope.LIST_ACTIVE_VEHICLE}">
+                                                                                        <option value="${av.vehicleID}">${av.vehicleName}</option>
+                                                                                    </c:forEach>    
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Driver Name: </label>
+                                                                                <select class="form-control form-select" aria-label="Default select example" name="driverID">
+                                                                                    <option value="${t.driver.driverID}" selected>${t.driver.driverName}</option>
+                                                                                    <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
+                                                                                        <option value="${ad.driverID}">${ad.driverName}</option>
+                                                                                    </c:forEach>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Seat Remain</label>
+                                                                                <input type="number" name="seatRemain" class="add-dob form-control" value="${t.seatRemain}"  placeholder="Enter Trip Name" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Status</label>
+                                                                                <select class="form-control form-select" aria-label="Default select example" name="status">
+                                                                                    <option value="1" selected>ACTIVE</option>
+                                                                                    <option value="0">INACTIVE</option>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="action" value="update" class="update-button btn btn-primary">Save</button>
+                                                                            <button type="submit" name="action" value="update" class="btn btn-primary">Save</button>
                                                                         </div>
                                                                     </form>
                                                                 </div>
                                                             </div>
-                                                        </div>-->
+                                                        </div>
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${d.driverID.trim()}">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${t.tripID.trim()}">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </button>
-<!--                                                        <div class="modal fade" id="delete-${d.driverID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="delete-${t.tripID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Driver ${d.driverName}</h5>
+                                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Driver ${t.tripName}</h5>
                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="driver">
+                                                                    <form action="trip" method="post">
                                                                         <div class="modal-footer">
-                                                                            <input type="hidden" name="driverID" value="${d.driverID.trim()}">
+                                                                            <input type="hidden" name="tripID" value="${t.tripID.trim()}">
                                                                             <button type="submit" name="action" value="delete" class="btn btn-primary">
                                                                                 Delete
                                                                             </button>
@@ -248,7 +251,7 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
-                                                        </div>-->
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -344,11 +347,8 @@
                 $('input[type="search"]').keyup(function () {
                     table.draw();
                 });
-                $('input[type="search"]').val('${driverID}').keyup();
+                $('input[type="search"]').val('${tripID}').keyup();
             });
-            </c:if>
-            <c:if test="${requestScope.SUCCESS == null}">
-            document.querySelector(".showall").classList.add("showall");
             </c:if>
 
             var driverID = document.querySelector("input[name=driverID]");

@@ -15,4 +15,5 @@ public interface VehicleDAO {
     boolean duplicateVehicle(String ID)throws SQLException;
     List<Vehicle> searchVehicle(String search) throws SQLException;
     List<Vehicle> getAllVehicle() throws SQLException;
+    List<Vehicle> getAllActiveVehicle() throws SQLException;
 }
