@@ -42,6 +42,7 @@
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Route</span></a>
         </li>-->
+
     <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -63,15 +64,15 @@
             <span>Driver</span></a>
     </li>
     <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/location?action=viewLocation">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Location</span></a>
-        </li>
-    <!--    <li class="nav-item">
-            <a class="nav-link" href="tripTable.jsp">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Trip</span></a>
-        </li>-->
+        <a class="nav-link" href="${pageContext.request.contextPath}/location?action=viewLocation">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Location</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/trip?action=show">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Trip</span></a>
+    </li>
     <!--    <li class="nav-item">
             <a class="nav-link" href="seatTable.jsp">
                 <i class="fas fa-fw fa-chart-area"></i>

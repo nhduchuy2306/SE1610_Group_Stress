@@ -79,7 +79,7 @@ public class TripController extends HttpServlet {
             List<Trip> list = tripDAO.getAllTrip();
             List<Route> activeRoute = routeDAO.getAllActiveRoute();
             List<Vehicle> activeVehicle = vehicleDAO.getAllActiveVehicle();
-            List<Driver> activeDriver = driverDAO.getAllActiveDriver();
+            List<Driver> activeDriver = driverDAO.getDriverWithLicense();
             request.setAttribute("LIST_ALL_TRIP", list);
             request.setAttribute("LIST_ACTIVE_ROUTE", activeRoute);
             request.setAttribute("LIST_ACTIVE_VEHICLE", activeVehicle);
