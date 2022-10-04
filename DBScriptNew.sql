@@ -1,4 +1,4 @@
-﻿Drop DATABASE ETransportationManagement
+    ﻿Drop DATABASE ETransportationManagement
 CREATE DATABASE ETransportationManagement
 use ETransportationManagement
 

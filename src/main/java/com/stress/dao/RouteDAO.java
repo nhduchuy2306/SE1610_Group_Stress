@@ -16,4 +16,6 @@ public interface RouteDAO {
     Route getRouteByID(int routeID) throws SQLException;
     boolean checkDuplicateByID(int routeID) throws SQLException;
     List<Route> getAllRoute() throws SQLException;
+    List<Route> getAllActiveRoute() throws SQLException;
+    Route getRouteByStartLocationAndEndLocation(int startLocation, int endLocation) throws SQLException;
 }

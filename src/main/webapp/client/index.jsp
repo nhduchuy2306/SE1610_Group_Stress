@@ -295,9 +295,9 @@
                         </ul>
                         <div class="tab-content" id="myTabContent"> 
                             <div class="tab-pane fade show active" id="flight" role="tabpanel">
-                                <form class="form-wrap">
+                                <form action="trip" class="form-wrap">
                                     <input list="froms" class="form-control" placeholder="From" name="from" id="browser">
-                                    <datalist id="froms">
+                                    <datalist id="froms" name="from">
                                         <option value="Cambodia">Cambodia</option>
                                         <option value="Hong Kong">Hong Kong</option>
                                         <option value="India">India</option>
@@ -310,7 +310,7 @@
                                         <option value="Vietnam">Vietnam</option>
                                     </datalist>
                                     <input list="tos" class="form-control" placeholder="To" name="to" id="browser">
-                                    <datalist id="tos">
+                                    <datalist id="tos" name="to">
                                         <option value="Cambodia">Cambodia</option>
                                         <option value="Hong Kong">Hong Kong</option>
                                         <option value="India">India</option>
@@ -323,10 +323,9 @@
                                         <option value="Vietnam">Vietnam</option>
                                     </datalist>
                                     <input type="text" class="form-control date-picker" name="start" placeholder="Start "
-                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'" value="${java.time.LocalDate.now()}">
-                                    <input type="text" class="form-control date-picker" name="return" placeholder="Return "
-                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Return'">
-                                    <a href="${pageContext.request.contextPath}/client/route.jsp" class="primary-btn text-uppercase">Search tickets</a>
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
+                                    <button type="submit" name="action" value="showTrip" class="primary-btn text-uppercase">Search tickets</button>
+                                    <!--<a href="${pageContext.request.contextPath}/client/route.jsp" class="primary-btn text-uppercase">Search tickets</a>-->
                                 </form>
                             </div>
                         </div>
