@@ -56,7 +56,11 @@
                             <div class="card shadow mb-4">
                                 <div class="card-body">
                                     <div class="table-responsive" >
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+<!--                                        <form class="float-right mb-4"action="${pageContext.request.contextPath}/user">
+                        Search:  <input style="border-color: #D1D3E2"  type="text" name="search" id="gfg" value="${requestScope.SEARCH}">
+                                              <input type="hidden" name="action" value="Search">
+                                        </form>-->
+                                        <table class="showall table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -73,7 +77,7 @@
                                                     <th>EDIT</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody id="geeks">
                                             <c:forEach var="user" varStatus="counter" items="${requestScope.LIST_USER}">
 <!--                                                <form action="MainController">-->
                                                     <tr>
@@ -90,16 +94,19 @@
                                                         <td>${user.email}</td>
                                                         <td>${user.phoneNumber}</td>
                                                         <td>${user.address}</td>
+                                                        
                                                         <td>*****</td>
                                                         <td>${user.role.roleName}</td>
                                                         <td><c:choose>
                                                             <c:when test="${user.status eq 2}">
-                                                                ACTIVE GOOGLE
+                                                                GOOGLE
                                                             </c:when>
                                                             <c:when test="${user.status eq 1}">
-                                                                ACTIVE NORMAL
+                                                                NORMAL
                                                             </c:when>
-                                                            
+                                                            <c:when test="${user.status eq 0}">
+                                                                DELETE
+                                                            </c:when>
                                                         </c:choose>
                                                         </td>
                                                         <c:if test="${requestScope.DELETE_HISTORY!=null}">
@@ -110,94 +117,114 @@
                                                             
                                                         <c:if test="${requestScope.DELETE_HISTORY==null}">
                                                             <td>
-                                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Edit-${user.userID.trim()}">
-                                                                    EDIT
-                                                                </button>
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Edit-${user.userID.trim()}">EDIT</button>
                                                             </td>
                                                         </c:if>
                                                     </tr>
-<!--                                                </form>-->
-                                            <!--Start-Modal-->
+                                            <!--Start-Modal Update-->
+                                            
+                                            <div class="modal fade" id="Edit-${user.userID.trim()}" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title caps"><strong>USER</strong></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="${pageContext.request.contextPath}/user" method="POST" id="formUpdate">
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">UserID</label>
+                                                                    <input type="text" class="form-control" name="userID" readonly=""  value="${user.userID}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Name</label>
+                                                                    <input type="text" class="form-control" id="nameInput" name="userName"  value="${user.username}" required="">
+                                                                </div>
 
-                                                        <div class="modal fade" id="Edit-${user.userID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">USER</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
+                                                                <div class="row" style="display: inline-flex">
+                                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                        <label for="recipient-name" class="col-form-label">Gender</label>
+                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
+                                                                                name="gender" aria-label="Default select example">
+                                                                            <option value="1"${user.sex eq true?"selected":""}>Male</option>
+                                                                            <option value="0"${user.sex eq false?"selected":""}>Female</option>
+                                                                        </select>
                                                                     </div>
-                                                                    <div class="modal-body">
-                                                                        <form action="${pageContext.request.contextPath}/user" method="POST" id="formUpdate">
-                                                                            <div class="form-group">
-                                                                                <label for="recipient-name" class="col-form-label">UserID</label>
-                                                                                <input type="text" class="form-control" name="userID" readonly=""  value="${user.userID}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="recipient-name" class="col-form-label">Name</label>
-                                                                                <input type="text" class="form-control" id="nameInput" name="userName"  value="${user.username}" required="">
-                                                                            </div>
-                                                                            
-                                                                            <div class="row" style="display: inline-flex">
-                                                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                                    <label for="recipient-name" class="col-form-label">Gender</label>
-                                                                                    <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                            name="gender" aria-label="Default select example">
-                                                                                        <option value="1"${user.sex eq true?"selected":""}>Male</option>
-                                                                                        <option value="0"${user.sex eq false?"selected":""}>Female</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group col-sm-6 mb-3 mb-sm-0">
-                                                                                    <label for="recipient-name" class="col-form-label">Birthday</label>
-                                                                                    <input type="date" class="form-control" name="birthday"  value="${user.dob}">
-                                                                                </div>
-                                                                            </div>
-                                                                            
-                                                                            <div class="form-group">
-                                                                                <label for="recipient-name" class="col-form-label">Email</label>
-                                                                                <input type="email" class="form-control" name="email"  value="${user.email}" id="InputEmail">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="recipient-name" class="col-form-label">Phone Number</label> <br/>
-                                                                                <input type="text" class="form-control" name="phoneNum" id="InputPhoneNum"  value="${user.phoneNumber}">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="recipient-name" class="col-form-label">Address</label>
-                                                                                <input type="text" class="form-control" name="address"  value="${user.address}">
-                                                                            </div>
-                                                                            <div class="form-group row" style="display: inline-flex">
-                                                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                                    <label for="recipient-name" class="col-form-label">Role</label><br/> 
-                                                                                   
-                                                                                    <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                            name="roleID">
-                                                                                        <option  value="1" ${user.role.roleID eq "1"?"selected":""}>USER</option>
-                                                                                        <option  value="2" ${user.role.roleID eq "2"?"selected":""}>STAFF</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                    
-                                                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                                    <label for="recipient-name" class="col-form-label">Status</label>      
-                                                                                    <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                            name="status" aria-label="Default select example">
-                                                                                        <option value="2" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
-                                                                                        <option value="1" ${user.status eq 1?"selected":""}>ACTIVE NORMAL</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="modal-footer">
-                                                                                <input style="background-color: #28fe09; padding: 5px 10px; border-color: grey" type="submit" name="action" value="update" >
-                                                                                <a style="text-decoration: none;border: 2px solid #fa0927; padding: 5px 12px; background-color: red; color: black"
-                                                                                   href="${pageContext.request.contextPath}/user?action=delete&userID=${user.userID}">Delete</a>
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            </div>
-                                                                        </form>
+                                                                    <div class="form-group col-sm-6 mb-3 mb-sm-0">
+                                                                        <label for="recipient-name" class="col-form-label">Birthday</label>
+                                                                        <input type="date" class="form-control" name="birthday"  value="${user.dob}">
                                                                     </div>
                                                                 </div>
-                                                            </div>
+
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Email</label>
+                                                                    <input type="email" class="form-control" name="email"  value="${user.email}" id="InputEmail" required="">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Phone Number</label> <br/>
+                                                                    <input type="text" class="form-control" name="phoneNum" id="InputPhoneNum"  value="${user.phoneNumber}">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label for="recipient-name" class="col-form-label">Address</label>
+                                                                    <input type="text" class="form-control" name="address"  value="${user.address}">
+                                                                </div>
+                                                                <div class="form-group row" style="display: inline-flex">
+                                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                        <label for="recipient-name" class="col-form-label">Role</label><br/> 
+
+                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
+                                                                                name="roleID">
+                                                                            <option  value="1" ${user.role.roleID eq "1"?"selected":""}>USER</option>
+                                                                            <option  value="2" ${user.role.roleID eq "2"?"selected":""}>STAFF</option>
+                                                                        </select>
+                                                                    </div>
+
+                                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                        <label for="recipient-name" class="col-form-label">Status</label>      
+                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
+                                                                                name="status" aria-label="Default select example">
+                                                                            <option value="2" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
+                                                                            <option value="1" ${user.status eq 1?"selected":""}>ACTIVE NORMAL</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <input style="background-color: #28fe09;border-radius: 5px; padding: 5px 10px; border-color: grey" type="submit" name="action" value="Update" >
+                                                                    <button type="button" class="btn btn-info" style="background-color:  #ff253a" data-toggle="modal" data-target="#delete-${user.userID.trim()}" data-dismiss="modal">Delete</button>
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                            <!-- End- Modal-->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                           
+                                            <!-- End- Modal Update-->
+                                            
+                                            <!--Start-Modal Delete-->
+                                            <div class="modal fade" id="delete-${user.userID.trim()}" tabindex="-1">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title caps"><strong>Delete USER ${user.username}</strong></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="${pageContext.request.contextPath}/user" method="GET">
+                                                                <div class="float-right">
+                                                                    <input type="hidden" name="userID" value="${user.userID.trim()}">
+                                                                    <button type="submit" style="background-color: #ff253a" name="action" value="delete" class="btn btn-primary">
+                                                                        Delete
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Edit-${user.userID.trim()}" data-dismiss="modal">Close</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  
+                                            <!--END-Modal Delete-->
                                             </c:forEach>
                                             </tbody>
                                         </table>
@@ -252,6 +279,18 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.SUCCESS}</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- Bootstrap core JavaScript-->
             <script src="${pageContext.request.contextPath}/admin/vendor/jquery/jquery.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -265,5 +304,27 @@
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
         <script src="${pageContext.request.contextPath}/admin/js/validationUpdateUser.js"></script>
+        <script type="text/javascript">
+            <c:if test="${requestScope.SUCCESS != null}">
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                    var idField = parseInt($('input[type="search"]').val(), 10);
+                    var id = parseFloat(data[1]) || 1; // use data for the age column
+                    if ((isNaN(idField)) || (isNaN(idField)) ||
+                            (idField <= id) || (idField <= id) ) {
+                        return true;
+                    }
+                    return false;
+                });
+                $(document).ready(function (e) {
+                    $("#showsuccess").modal('show');
+                    var table = $('#example').DataTable();
+                    // Event listener to the two range filtering inputs to redraw on input
+                    $('input[type="search"]').keyup(function () {
+                        table.draw();
+                    });
+                    $('input[type="search"]').val('${userID}').keyup();
+                });
+            </c:if>
+        </script>
     </body>
 </html>

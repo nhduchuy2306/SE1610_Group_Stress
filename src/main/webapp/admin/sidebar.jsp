@@ -38,11 +38,6 @@
                 <span>Order</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="locationTable.jsp">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Location</span></a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="routeTable.jsp">
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Route</span></a>
@@ -67,6 +62,11 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Driver</span></a>
     </li>
+    <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/location?action=viewLocation">
+                <i class="fas fa-fw fa-chart-area"></i>
+                <span>Location</span></a>
+        </li>
     <!--    <li class="nav-item">
             <a class="nav-link" href="tripTable.jsp">
                 <i class="fas fa-fw fa-chart-area"></i>

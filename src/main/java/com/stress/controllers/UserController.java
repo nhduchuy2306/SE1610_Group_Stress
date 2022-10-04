@@ -9,6 +9,9 @@ import com.stress.dao.UserDAO;
 import com.stress.dto.Role;
 import com.stress.dto.User;
 import com.stress.service.UserDAOImpl;
+import com.stress.utils.ContentIdGenerator;
+import com.stress.utils.Email;
+import com.stress.utils.Hash;
 import com.stress.utils.VerifyRecaptcha;
 import java.io.IOException;
 import java.sql.Date;
@@ -47,6 +50,12 @@ public class UserController extends HttpServlet {
                 case "activeUser":
                     activeUser(request, response);
                     break;
+                case "Search":
+                    searchUser(request, response);
+                    break;
+                case "Get Password by Email":
+                    updatePassword(request, response);
+                    break;
             }
         } catch (Exception e) {
             log("Error at UserController-doGet: " + e.toString());
@@ -65,7 +74,7 @@ public class UserController extends HttpServlet {
                 case "RegisterAccount":
                     registerUser(request, response);
                     break;
-                case "update":
+                case "Update":
                     updateUser(request, response);
                     break;
                 case "Login":
@@ -94,13 +103,14 @@ public class UserController extends HttpServlet {
             String phoneNum=request.getParameter("phoneNum");
             String userID=request.getParameter("userID");
             String password=request.getParameter("password");
+            String hashPassword=Hash.hash(password);
             Role role=new Role("1", "User");
             UserDAO dao=new UserDAOImpl();
             User userInfor=new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
             //boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
             if(dao.getUserByID(userID)==null){
                //if (checkDuplicate == true) {
-                    if (dao.registerNewUSer(userID, userName, password, email, birthday, address, phoneNum, gender)) {
+                    if (dao.registerNewUSer(userID, userName, hashPassword, email, birthday, address, phoneNum, gender)) {
                         request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                         url = "./client/index.jsp";
                     }
@@ -149,6 +159,8 @@ public class UserController extends HttpServlet {
             UserDAO dao = new UserDAOImpl();
             boolean checkUpdate = dao.updateUser(userID, userName, email, birthday, address, phoneNum, gender, roleID, status);
             if (checkUpdate) {
+                request.setAttribute("SUCCESS", "UPDATE USER SUCCESSFULLY");
+                request.setAttribute("userID", userID);
                 viewUser(request, response);
             }
         } catch (Exception e) {
@@ -164,6 +176,7 @@ public class UserController extends HttpServlet {
             UserDAO dao = new UserDAOImpl();
             boolean check = dao.deleteUser(userID);
             if (check) {
+                request.setAttribute("SUCCESS", "DELETE USER SUCCESSFULLY");
                 viewUser(request, response);
             }
         } catch (Exception e) {
@@ -177,30 +190,39 @@ public class UserController extends HttpServlet {
         try {
             String userID = request.getParameter("userID");
             String password = request.getParameter("password");
+            String hashPassword=Hash.hash(password);
             String gRecaptcha = request.getParameter("g-recaptcha-response");
             UserDAO dao = new UserDAOImpl();
-            User loginUser = dao.getUserByIDAndPassword(userID, password);
+            User loginUser = dao.getUserByIDAndPassword(userID, hashPassword);
+            System.out.println("hash: "+hashPassword);
             User userIDCheck = dao.getUserByID(userID);
             boolean verify = VerifyRecaptcha.verify(gRecaptcha);
             System.out.println(verify);
-            if (userIDCheck != null && verify) {
-                if (loginUser != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("LOGIN_USER", loginUser);
-                    if (loginUser.getRole().getRoleID().equals("1")) {
-                        url = "./client/index.jsp";
+            if (verify) {
+                if (userIDCheck != null) {
+                    if (loginUser != null) {
+                        HttpSession session = request.getSession();
+                        session.setAttribute("LOGIN_USER", loginUser);
+                        if (loginUser.getRole().getRoleID().equals("1")) {
+                            url = "./client/index.jsp";
+                        } else {
+                            url = "./admin/index.jsp";
+                        }
                     } else {
-                        url = "./admin/index.jsp";
+                        request.setAttribute("USERID", userID);
+                        request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
+                        request.setAttribute("ERROR_LOGIN2", "Incorect Password. Please try again!");
                     }
                 } else {
-                    request.setAttribute("USERID", userID);
                     request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
-                    request.setAttribute("ERROR_LOGIN2", "Incorect Password. Please try again!");
+                    request.setAttribute("ERROR_LOGIN1", "Incorrect Account. Please try again!");
                 }
-            } else {
+            }else{
+                request.setAttribute("USERID", userID);
                 request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
-                request.setAttribute("ERROR_LOGIN1", "The email you entered is not connected to any account.<br/>Find your account and log in.");
+                request.setAttribute("ERROR_RECAPTCHA", "You missed the Captcha");
             }
+            
 
         } catch (Exception e) {
             log("Error at UserController - Login: " + e.toString());
@@ -240,6 +262,55 @@ public class UserController extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at UserController - deleteUser: " + e.toString());
+        }
+    }
+
+    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.setCharacterEncoding("utf-8");
+        String url="./admin/404.jsp";
+        try {
+            String search=request.getParameter("search");
+            UserDAO userDAO=new UserDAOImpl();
+            List<User> user=userDAO.searchUser(search);
+            if(!user.isEmpty()){
+                request.setAttribute("LIST_USER", user);
+                request.setAttribute("SEARCH", search);
+                url = "./admin/userTable.jsp";
+            }
+            
+        } catch (Exception e) {
+            log("Error at UserController - deleteUser: " + e.toString());
+        }
+        finally{
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+
+    private void updatePassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        String url = "./client/index.jsp";
+        try {
+            UserDAO dao = new UserDAOImpl();
+            String userID=request.getParameter("userID");
+            String password=ContentIdGenerator.getRandomWord(10);
+            String hashPassword=Hash.hash(password);
+            User user=dao.getUserByID(userID);
+            request.setAttribute("RESET_PASSWORD", "reset");
+            if(user!=null){
+                boolean check=dao.updatePassword(userID, hashPassword, user.getEmail());
+                if(check){
+                    boolean checkSend=Email.sendEmail(user.getEmail(), password);
+                    if(checkSend){
+                        request.setAttribute("SUCCESS", "New password have been sent!");
+                    }
+                }
+            }else{
+                request.setAttribute("ERROR_FORGOT", "Your account dose not exist!");
+            }
+        } catch (Exception e) {
+            log("Error at UserController - updatePassword: "+ e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 }

@@ -83,7 +83,9 @@ public class VehicleTypeController extends HttpServlet {
         } else {
             try {
                 if (vDAO.updateVehicleType(updateVehicleTypeItem)) {
-                    showOneVehicleType(request, response, vDAO, updateVehicleTypeItem);
+                    request.setAttribute("SUCCESS", "Update Success");
+                    request.setAttribute("VEHICLE_TYPE_ID", updateVehicleTypeItem.getVehicleTypeID());
+                    showAllVehicleType(request, response, vDAO);
                 }
             } catch (Exception e) {
                 System.out.println("Error at Update Vehicle Type " + e.toString());
@@ -118,9 +120,11 @@ public class VehicleTypeController extends HttpServlet {
             showAllVehicleType(request, response, vtDao);
         } else {
             try {
-                if (vtDao.createVehicleType(newVehicleType)) {
+                newVehicleType.setVehicleTypeID(vtDao.createVehicleType(newVehicleType));
+                if (newVehicleType.getVehicleTypeID() > 0) {
                     request.setAttribute("SUCCESS", "Create Success");
-                    showOneVehicleType(request, response, vtDao, newVehicleType);
+                    request.setAttribute("VEHICLE_TYPE_ID", newVehicleType.getVehicleTypeID());
+                    showAllVehicleType(request, response, vtDao);
                 }
 
             } catch (Exception e) {

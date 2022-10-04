@@ -145,7 +145,8 @@ public class DriverLicenseController extends HttpServlet {
                 oldDL.setNationality(nationality);
                 if(dlDAO.updateDriverLicense(oldDL)) {
                     request.setAttribute("SUCCESS", "Update Driver License " + oldDL.getDriverLicenseID() + " Successfully!" );
-                    showOneDriverLicense(request, response, dlDAO, oldDL);
+                    request.setAttribute("DRIVER_LICENSE_ID", oldDL.getDriverLicenseID());
+                    showAllVehicleLicense(request, response, dlDAO);
                 }
             }
 
@@ -177,7 +178,8 @@ public class DriverLicenseController extends HttpServlet {
                 DriverLicense createDL = new DriverLicense(driverLicenseID, nationality, classes, dateExpired, driver);
                 if (dlDao.createDriverLicense(createDL)) {
                     request.setAttribute("SUCCESS", "Create Driver License Success");
-                    showOneDriverLicense(request, response, dlDao, createDL);
+                    request.setAttribute("DRIVER_LICENSE_ID", createDL.getDriverLicenseID());
+                    showAllVehicleLicense(request, response, dlDao);
                 } else {
                     request.setAttribute("ERROR", "Created Failed! Something Went Wrong! Please Try Again!");
                     showAllVehicleLicense(request, response, dlDao);

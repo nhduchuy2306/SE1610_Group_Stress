@@ -25,4 +25,6 @@ public interface UserDAO {
         String phoneNumber,String sex,String roleID,String status) throws SQLException;
     List<User> getAllUserDelete() throws SQLException;
     boolean activeUser(String userID) throws SQLException;
+    List<User> searchUser(String search)throws SQLException;
+    boolean updatePassword(String userID,String password,String email) throws SQLException;
 }
