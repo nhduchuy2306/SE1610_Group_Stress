@@ -45,22 +45,22 @@ public class RouteDAOImpl implements RouteDAO {
     }
     
     @Override
-    public boolean addRoute(Route route) throws SQLException {
-        String sql = "INSERT INTO tblRoutes(RouteID,RouteName,"
-                + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?,?)";
-        boolean check = false;
+    public int addRoute(Route route) throws SQLException {
+        String sql = "INSERT INTO tblRoutes(RouteName,"
+                + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?)";
+        int id = 0;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
-            ptm.setInt(1, route.getRouteID());
-            ptm.setString(2, route.getRouteName());
-            ptm.setInt(3, route.getStartLocation().getLocationID());
-            ptm.setInt(4, route.getEndLocation().getLocationID());
-            ptm.setString(5, route.getDescription());
-            ptm.setBoolean(6, route.isStatus());
-            check = ptm.executeUpdate() > 0;
+            ptm.setString(1, route.getRouteName());
+            ptm.setInt(2, route.getStartLocation().getLocationID());
+            ptm.setInt(3, route.getEndLocation().getLocationID());
+            ptm.setString(4, route.getDescription());
+            ptm.setBoolean(5, route.isStatus());
+            if(ptm.executeUpdate() > 0) id = getMaxRoute();
+            
         } catch (Exception e) {
         } finally {
             if (ptm != null) {
@@ -70,7 +70,30 @@ public class RouteDAOImpl implements RouteDAO {
                 conn.close();
             }
         }
-        return check;
+        return id;
+    }
+    @Override 
+    public int getMaxRoute() throws SQLException {
+        int id = 0;
+        String sql = "SELECT MAX(RouteID) AS RouteID FROM tbLRoutes";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+               ptm = conn.prepareStatement(sql);
+               rs = ptm.executeQuery();
+               if(rs.next()) id = rs.getInt("RouteID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return id;
     }
     
     @Override
@@ -83,12 +106,12 @@ public class RouteDAOImpl implements RouteDAO {
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
-            ptm.setInt(1, RouteID);
-            ptm.setString(2, RouteName);
-            ptm.setString(3, Integer.toString(StartLocation.getLocationID()));
-            ptm.setString(4, Integer.toString(EndLocation.getLocationID()));
-            ptm.setString(5, Description);
-            ptm.setString(6, Boolean.toString(Status));
+            ptm.setInt(6, RouteID);
+            ptm.setString(1, RouteName);
+            ptm.setInt(2, StartLocation.getLocationID());
+            ptm.setInt(3, EndLocation.getLocationID());
+            ptm.setString(4, Description);
+            ptm.setString(5, Boolean.toString(Status));
             check = ptm.executeUpdate() > 0;
         } catch (Exception e) {
         } finally {

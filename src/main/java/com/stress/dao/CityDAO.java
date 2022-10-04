@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CityDAO {
     List<City> getAllCity() throws SQLException;
+    
+    City getCityByID(int id) throws SQLException;
 }
