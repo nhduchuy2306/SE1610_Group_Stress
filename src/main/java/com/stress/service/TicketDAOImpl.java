@@ -5,6 +5,7 @@ import com.stress.dao.OrderDAO;
 import com.stress.dao.SeatDAO;
 import com.stress.dao.TicketDAO;
 import com.stress.dao.TripDAO;
+import com.stress.dto.Seat;
 import com.stress.dto.Ticket;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
@@ -33,13 +34,15 @@ public class TicketDAOImpl implements TicketDAO{
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(sql);
-            rs = ptm.executeQuery();
-            while(rs.next()){
-                list.add(new Ticket(rs.getInt("TicketID"), 
-                        seatDAO.getSeatByID(rs.getString("SeatID")), 
-                        tripDAO.getTripByID(rs.getString("TripID")), 
-                        orderDAO.getOderByID("OrderID")));
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    list.add(new Ticket(rs.getInt("TicketID"), 
+                            seatDAO.getSeatByID(rs.getString("SeatID")), 
+                            tripDAO.getTripByID(rs.getString("TripID")), 
+                            orderDAO.getOderByID("OrderID")));
+                }
             }
         } catch (Exception e) {
         } finally {
@@ -52,19 +55,20 @@ public class TicketDAOImpl implements TicketDAO{
 
     @Override
     public boolean addNewTicket(Ticket ticket) throws SQLException {
-        String sql = "INSERT INTO tblTickets(TicketID,SeatID,TripID,OrderID) "
-                + "VALLUES(?,?,?,?)";
+        String sql = "INSERT INTO tblTickets(SeatID,TripID,OrderID) "
+                + "VALLUES(?,?,?)";
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(sql);
-            ptm.setInt(1, ticket.getTicketID());
-            ptm.setString(2, ticket.getSeat().getSeatID());
-            ptm.setString(3, ticket.getTrip().getTripID());
-            ptm.setString(4, ticket.getOrder().getOrderID());
-            check = ptm.executeUpdate() > 0;
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, ticket.getSeat().getSeatID());
+                ptm.setString(2, ticket.getTrip().getTripID());
+                ptm.setString(3, ticket.getOrder().getOrderID());
+                check = ptm.executeUpdate() > 0;
+            }
         } catch (Exception e) {
         } finally {
             if(conn!=null) conn.close();
@@ -83,17 +87,27 @@ public class TicketDAOImpl implements TicketDAO{
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(sql);
-            ptm.setString(1, ticket.getSeat().getSeatID());
-            ptm.setString(2, ticket.getTrip().getTripID());
-            ptm.setString(3, ticket.getOrder().getOrderID());
-            ptm.setInt(4, ticket.getTicketID());
-            check = ptm.executeUpdate() > 0;
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, ticket.getSeat().getSeatID());
+                ptm.setString(2, ticket.getTrip().getTripID());
+                ptm.setString(3, ticket.getOrder().getOrderID());
+                ptm.setInt(4, ticket.getTicketID());
+                check = ptm.executeUpdate() > 0;
+            }
         } catch (Exception e) {
         } finally {
             if(conn!=null) conn.close();
             if(ptm!=null) ptm.close();
         }
         return check;
+    }
+    
+    public static void main(String[] args) {
+        SeatDAO seatDAO = new SeatDAOImpl();
+        TripDAO tripDAO = new TripDAOImpl();
+        OrderDAO orderDAO = new OrderDAOImpl();
+        TicketDAO dao = new TicketDAOImpl();
+//        boolean c = dao.addNewTicket(ticket);
     }
 }

@@ -105,10 +105,10 @@ public class LocationController extends HttpServlet {
             int locationID=Integer.parseInt(tmpLocationID);
             int cityID=Integer.parseInt(tmpCityID);
             boolean status=Boolean.parseBoolean(tmpStatus);
-            
+           
             LocationDAO dao = new LocationDAOImpl();
             boolean checkDuplicate = dao.checkDuplicateByID(locationID);
-            boolean check = dao.addLocation(new Location(locationID, locationName,address,cityID,status));
+            boolean check = dao.addLocation(new Location(locationID, locationName,address,new CityDAOImpl().getCityByID(cityID),status));
             if (checkDuplicate == false) {
                 if (check == true) {
                     viewLocation(request, response);
@@ -132,7 +132,7 @@ public class LocationController extends HttpServlet {
             int cityID=Integer.parseInt(tmpCityID);
             boolean status=Boolean.parseBoolean(tmpStatus);
             LocationDAO dao=new LocationDAOImpl();
-            boolean checkUpdate=dao.updateLocation(new Location(locationID, locationName,address,cityID,status));
+            boolean checkUpdate=dao.updateLocation(new Location(locationID, locationName,address,new CityDAOImpl().getCityByID(cityID),status));
             System.out.println("check"+checkUpdate);
             if(checkUpdate){
                 viewLocation(request, response);

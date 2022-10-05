@@ -1,4 +1,7 @@
-﻿
+<<<<<<< HEAD
+    ﻿Drop DATABASE ETransportationManagement
+=======
+>>>>>>> 1482f69fe6ef2f41a912323d7a19adab9975a282
 CREATE DATABASE ETransportationManagement
 use ETransportationManagement
 
@@ -41,7 +44,6 @@ CREATE TABLE tblLocations(
     CityID INT FOREIGN KEY REFERENCES tblCities(CityID),
     [Status] BIT DEFAULT 0
 )
-
 CREATE TABLE tblRoutes(
     RouteID INT IDENTITY PRIMARY KEY,
     RouteName nvarchar(100),
@@ -64,7 +66,6 @@ CREATE TABLE tblVehicles(
     VehicleTypeID INT FOREIGN KEY REFERENCES tblVehicleTypes(VehicleTypeID) ON UPDATE CASCADE ON DELETE SET NULL,
     [Status] INT DEFAULT 1,
 )
-
 CREATE TABLE tblDrivers(
     DriverID char(12) PRIMARY KEY,
     DriverName nvarchar(150) NOT NULL,
@@ -96,7 +97,7 @@ CREATE TABLE tblTrips(
 )
 
 CREATE TABLE tblSeats(
-    SeatID Char(5) NOT NULL, 
+    SeatID Char(5) NOT NULL,
     Price Decimal,
     [Status] BIT DEFAULT 1,
     TripID char(5) FOREIGN KEY REFERENCES tblTrips(TripID),
@@ -260,42 +261,42 @@ INSERT INTO tblVehicles(VehicleID,VehicleName,LicensePlate,VehicleTypeID,[Status
 VAlUES('VE012','Huyndai Aero Town','51C-13560',4,1)
 
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D001',N'Kiều Minh Hiếu','2002-08-23',1,'','0912345678',1)
+VALUES('030202034704',N'Kiều Minh Hiếu','2002-08-23',1,'','0912345678',1)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D002',N'Nguyễn Hiển Vinh','2002-06-24',1,'','0912345678',1)
+VALUES('065947369485',N'Nguyễn Hiển Vinh','2002-06-24',1,'','0912345678',1)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D003',N'Lê Tuấn Tài','1993-07-29',1,'','0912345678',1)
+VALUES('384950384739',N'Lê Tuấn Tài','1993-07-29',1,'','0912345678',1)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D004',N'Trần Nhật Tuân','1995-07-26',1,'','0912345678',2)
+VALUES('483957209388',N'Trần Nhật Tuân','1995-07-26',1,'','0912345678',2)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D005',N'Nguyễn Vinh Hoa','1992-07-29',1,'','0912345678',0)
+VALUES('574839205937',N'Nguyễn Vinh Hoa','1992-07-29',1,'','0912345678',0)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D006',N'Đặng Tuấn Tài','1994-07-23',1,'','0912345678',1)
+VALUES('844958937398',N'Đặng Tuấn Tài','1994-07-23',1,'','0912345678',1)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D007',N'Tô Mỹ Lệ','2000-01-27',0,'','0912345678',1)
+VALUES('849504739458',N'Tô Mỹ Lệ','2000-01-27',0,'','0912345678',1)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D008',N'Ngô Ngọc Vân Trang','2002-02-24',0,'','0912345678',2)
+VALUES('889378529034',N'Ngô Ngọc Vân Trang','2002-02-24',0,'','0912345678',2)
 INSERT INTO tblDrivers(DriverID,DriverName,DOB,Sex,DriverPic,PhoneNumber,[Status])
-VALUES('D009',N'Đăng Thị Hương','1997-03-12',0,'','0912345678',0)
+VALUES('894590459723',N'Đăng Thị Hương','1997-03-12',0,'','0912345678',0)
 
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT001',N'Việt Nam','B1','1997-03-12' ,'D001')
+VALUES('VT001',N'Việt Nam','B1','1997-03-12' ,'030202034704')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT002',N'Việt Nam','D','1997-03-12','D002')
+VALUES('VT002',N'Việt Nam','D','1997-03-12','065947369485')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT003',N'Việt Nam','C','1997-03-12','D009')
+VALUES('VT003',N'Việt Nam','C','1997-03-12','384950384739')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT004',N'Việt Nam','B2','1997-03-12','D003')
+VALUES('VT004',N'Việt Nam','B2','1997-03-12','483957209388')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT005',N'Việt Nam','C','1997-03-12','D005')
+VALUES('VT005',N'Việt Nam','C','1997-03-12','574839205937')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT006',N'Việt Nam','D','1997-03-12','D004')
+VALUES('VT006',N'Việt Nam','D','1997-03-12','844958937398')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT007',N'Việt Nam','B2','1997-03-12','D006')
+VALUES('VT007',N'Việt Nam','B2','1997-03-12','849504739458')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT008',N'Việt Nam','C','1997-03-12','D007')
+VALUES('VT008',N'Việt Nam','C','1997-03-12','889378529034')
 INSERT INTO tblDriverLicenses(DriverLicenseID,Nationality,Class,DateExpired,DriverID) 
-VALUES('VT009',N'Việt Nam','D','1997-03-12','D008')
+VALUES('VT009',N'Việt Nam','D','1997-03-12','894590459723')
 
 INSERT INTO tblRoutes(RouteName,StartLocation,EndLocation,[Description],[Status])
 VALUES(N'Hồ Chí Minh - Đà Lạt', 1,3,'',1)
@@ -382,3 +383,4 @@ INSERT INTO tblCities VALUES
     (N'Vĩnh Long'),
     (N'Vĩnh Phúc'),
     (N'Yên Bái');
+
