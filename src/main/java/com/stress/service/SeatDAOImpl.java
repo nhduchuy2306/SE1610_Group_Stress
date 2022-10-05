@@ -16,7 +16,7 @@ public class SeatDAOImpl implements SeatDAO{
 
     @Override
     public Seat getSeatByID(String string) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
     
 }

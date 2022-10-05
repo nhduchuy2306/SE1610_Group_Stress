@@ -300,6 +300,7 @@
                                         aria-controls="flight" aria-selected="true">Book A Car</a> -->
                             </li>
                         </ul>
+
                         <div class="tab-content" id="myTabContent" style="height: 10vh"> 
                             <div class="tab-pane fade show active row" id="flight" role="tabpanel">
                                 <form class="form-wrap col-md-12" style="display: inline-flex" action="trip">
@@ -330,7 +331,6 @@
                                     
                                     <div id="universe" class="col-md-3" style="margin:-35px 28px 0 0;height: 9vh;  padding:0 0 0 3vw;">
                                         <ul class="select-list-group2 d-flex" id="listtwo">
-<!--                                            <i class="fa fa-map-marker" aria-hidden="false" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>-->
                                             <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
                                             <li>
                                                 <div style="" class="col-md-12">

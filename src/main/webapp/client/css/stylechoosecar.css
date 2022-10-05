@@ -69,7 +69,7 @@ div.seatCharts-seat.unavailable {
 }
 div.seatCharts-container {
 	border-right: 1px dotted #adadad;
-	width: 200px;
+	width: 270px;
 	padding: 20px;
 	float: left;
 	margin-right: 30px;
@@ -92,7 +92,7 @@ span.seatCharts-legendDescription {
 	font-size: 14px;
 }
 #selected-seats {
-	max-height: 90px;
+	max-height: 230px;
 	overflow-y: scroll;
 	overflow-x: none;
 	width: 170px;

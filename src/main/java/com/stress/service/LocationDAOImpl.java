@@ -1,6 +1,7 @@
 package com.stress.service;
 
 import com.stress.dao.LocationDAO;
+import com.stress.dto.City;
 import com.stress.dto.Location;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
@@ -14,7 +15,7 @@ public class LocationDAOImpl implements LocationDAO {
 
     @Override
     public Location getLocationById(int locationID) throws SQLException {
-        String getLocationById = "SELECT [LocationID],[LocationName],[CityID] FROM tblLocations WHERE [locationID]=?";
+        String getLocationById = "SELECT [LocationID],[LocationName],[CityID],[Address],[Status] FROM tblLocations WHERE [locationID]=?";
         Location loc = null;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -29,8 +30,9 @@ public class LocationDAOImpl implements LocationDAO {
                     String locationName = rs.getString("LocationName");
                     String address = rs.getString("Address");
                     int cityID = rs.getInt("CityID");
+                    City city = new CityDAOImpl().getCityByID(cityID);
                     boolean status = rs.getBoolean("Status");
-                    loc = new Location(locationID, locationName,address,cityID,status);
+                    loc = new Location(locationID, locationName,address,city,status);
                 }
             }
         } catch (Exception e) {
@@ -66,8 +68,9 @@ public class LocationDAOImpl implements LocationDAO {
                     int locationID = rs.getInt("LocationID");
                     String address = rs.getString("Address");
                     int cityID = rs.getInt("CityID");
+                    City city = new CityDAOImpl().getCityByID(cityID);
                     boolean status = rs.getBoolean("Status");
-                    loc = new Location(locationID, locationName,address,cityID,status);
+                    loc = new Location(locationID, locationName,address,city,status);
                 }
             }
         } catch (Exception e) {
@@ -103,8 +106,9 @@ public class LocationDAOImpl implements LocationDAO {
                     String locationName = rs.getString("LocationName");
                     String address = rs.getString("Address");
                     int CityID = rs.getInt("CityID");
+                    City city = new CityDAOImpl().getCityByID(CityID);
                     boolean status = rs.getBoolean("status");
-                    locationList.add(new Location(locationID, locationName,address,CityID,status));
+                    locationList.add(new Location(locationID, locationName,address,city,status));
                 }
             }
 
@@ -141,8 +145,9 @@ public class LocationDAOImpl implements LocationDAO {
                     String locationName = rs.getString("LocationName");
                     String address = rs.getString("Address");
                     int cityID = rs.getInt("CityID");
+                    City city = new CityDAOImpl().getCityByID(cityID);
                     boolean status = rs.getBoolean("status");
-                    locationList.add(new Location(locationID, locationName,address,cityID,status));
+                    locationList.add(new Location(locationID, locationName,address,city,status));
                 }
             }
 
@@ -231,7 +236,7 @@ public class LocationDAOImpl implements LocationDAO {
                 ptm.setInt(1, location.getLocationID());
                 ptm.setString(2, location.getLocationName());
                 ptm.setString(3, location.getAddress());
-                ptm.setInt(4, location.getCityID());
+                ptm.setInt(4, location.getCity().getCityID());
                 ptm.setBoolean(5, location.isStatus());
                 check=ptm.executeUpdate()>0? true:false;         
             }
@@ -277,7 +282,7 @@ public class LocationDAOImpl implements LocationDAO {
                 ptm = conn.prepareStatement(UPDATE);
                 ptm.setString(1, location.getLocationName());
                 ptm.setString(2, location.getAddress());
-                ptm.setInt(3, location.getCityID());
+                ptm.setInt(3, location.getCity().getCityID());
                 ptm.setBoolean(4, location.isStatus());
                 ptm.setInt(5, location.getLocationID());
                 check = ptm.executeUpdate() > 0;

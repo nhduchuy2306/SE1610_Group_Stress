@@ -45,22 +45,22 @@ public class RouteDAOImpl implements RouteDAO {
     }
     
     @Override
-    public boolean addRoute(Route route) throws SQLException {
-        String sql = "INSERT INTO tblRoutes(RouteID,RouteName,"
-                + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?,?)";
-        boolean check = false;
+    public int addRoute(Route route) throws SQLException {
+        String sql = "INSERT INTO tblRoutes(RouteName,"
+                + "StartLocation,EndLocation,[Description],[Status]) VALUES(?,?,?,?,?)";
+        int id = 0;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
-            ptm.setInt(1, route.getRouteID());
-            ptm.setString(2, route.getRouteName());
-            ptm.setInt(3, route.getStartLocation().getLocationID());
-            ptm.setInt(4, route.getEndLocation().getLocationID());
-            ptm.setString(5, route.getDescription());
-            ptm.setBoolean(6, route.isStatus());
-            check = ptm.executeUpdate() > 0;
+            ptm.setString(1, route.getRouteName());
+            ptm.setInt(2, route.getStartLocation().getLocationID());
+            ptm.setInt(3, route.getEndLocation().getLocationID());
+            ptm.setString(4, route.getDescription());
+            ptm.setBoolean(5, route.isStatus());
+            if(ptm.executeUpdate() > 0) id = getMaxRoute();
+            
         } catch (Exception e) {
         } finally {
             if (ptm != null) {
@@ -70,25 +70,48 @@ public class RouteDAOImpl implements RouteDAO {
                 conn.close();
             }
         }
-        return check;
+        return id;
+    }
+    @Override 
+    public int getMaxRoute() throws SQLException {
+        int id = 0;
+        String sql = "SELECT MAX(RouteID) AS RouteID FROM tbLRoutes";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+               ptm = conn.prepareStatement(sql);
+               rs = ptm.executeQuery();
+               if(rs.next()) id = rs.getInt("RouteID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return id;
     }
     
     @Override
     public boolean updateRoute(int RouteID, String RouteName, Location StartLocation, Location EndLocation, String Description, boolean Status) throws SQLException {
         String sql = "UPDATE tblRoutes SET RouteName = ?, StartLocation = ?, "
-                + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";;
+                + "EndLocation = ?, [Description] = ?, [Status] = ? WHERE RouteID = ?";
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
-            ptm.setInt(1, RouteID);
-            ptm.setString(2, RouteName);
-            ptm.setString(3, Integer.toString(StartLocation.getLocationID()));
-            ptm.setString(4, Integer.toString(EndLocation.getLocationID()));
-            ptm.setString(5, Description);
-            ptm.setString(6, Boolean.toString(Status));
+            ptm.setInt(6, RouteID);
+            ptm.setString(1, RouteName);
+            ptm.setInt(2, StartLocation.getLocationID());
+            ptm.setInt(3, EndLocation.getLocationID());
+            ptm.setString(4, Description);
+            ptm.setString(5, Boolean.toString(Status));
             check = ptm.executeUpdate() > 0;
         } catch (Exception e) {
         } finally {
@@ -184,8 +207,35 @@ public class RouteDAOImpl implements RouteDAO {
     }
     
     @Override
-    public Route getRouteByID(String routeID) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Route getRouteByID(int routeID) throws SQLException {
+        String sql = "SELECT RouteID,RouteName,"
+                + "StartLocation,EndLocation,[Description],[Status] "
+                + "FROM tblRoutes "
+                + "WHERE RouteID = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, routeID);
+                rs = ptm.executeQuery();
+                if(rs.next()){
+                    return new Route(rs.getInt("RouteID"), 
+                            rs.getString("RouteName"), 
+                            locationDao.getLocationById(rs.getInt("StartLocation")), 
+                            locationDao.getLocationById(rs.getInt("EndLocation")), 
+                            rs.getString("Description"), rs.getBoolean("Status"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if (rs != null) rs.close();
+            if(ptm!=null) ptm.close();
+            if(conn!=null) conn.close();
+        }
+        return null;
     }
 
     @Override
@@ -267,5 +317,69 @@ public class RouteDAOImpl implements RouteDAO {
             }
         }
         return routeList;
+    }
+
+    @Override
+    public List<Route> getAllActiveRoute() throws SQLException {
+        List<Route> list = new ArrayList<>();
+        String sql = "SELECT [RouteID],[RouteName],[StartLocation], [EndLocation], [Description], [Status] FROM tblRoutes WHERE [Status] = 1";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    list.add(new Route(rs.getInt("RouteID"), 
+                            rs.getString("RouteName"), 
+                            locationDao.getLocationById(rs.getInt("StartLocation")), 
+                            locationDao.getLocationById(rs.getInt("EndLocation")), 
+                            rs.getString("Description"), 
+                            rs.getBoolean("Status")));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+            if(rs!=null) rs.close();
+        }
+        return list;
+    }
+
+    @Override
+    public Route getRouteByStartLocationAndEndLocation(int start, int end) throws SQLException {
+        String sql = "SELECT RouteID,RouteName,"
+                + "StartLocation,EndLocation,[Description],[Status] "
+                + "FROM tblRoutes "
+                + "WHERE StartLocation = ? AND EndLocation = ?";
+        
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            ptm.setInt(1, start);
+            ptm.setInt(2, end);
+            rs = ptm.executeQuery();
+            while (rs.next()) {
+                 return new Route(rs.getInt("RouteID"), 
+                        rs.getString("RouteName"), 
+                        locationDao.getLocationById(rs.getInt("StartLocation")), 
+                        locationDao.getLocationById(rs.getInt("EndLocation")),
+                        rs.getString("Description"), 
+                        rs.getBoolean("Status"));
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            if (conn != null) conn.close();
+            if (ptm != null) ptm.close();
+            if (rs != null) rs.close();
+        } 
+        return null;
     }
 }
