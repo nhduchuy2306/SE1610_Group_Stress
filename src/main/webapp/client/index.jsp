@@ -303,21 +303,20 @@
 
                         <div class="tab-content" id="myTabContent" style="height: 10vh"> 
                             <div class="tab-pane fade show active row" id="flight" role="tabpanel">
-                                <form class="form-wrap col-md-12" style="display: inline-flex" action="${pageContext.request.contextPath}/client/route.jsp">
+                                <form class="form-wrap col-md-12" style="display: inline-flex" action="trip">
                                     <div id="universe" class="col-md-3 d-flex" style="margin:-35px 0 0 -20px;">
                                         <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
                                         <ul class="select-list-group" id="listone">
                                             <li>
                                                 <div class="col-md-12">
                                                     <div>
-                                                        <input type="text"  class="select-list-group__search" placeholder="From" id="myInput1"
-                                                               style="font-size: 25px"/>
+                                                        <input type="text" class="select-list-group__search" placeholder="From" id="data1"
+                                                               style="font-size: 25px" name="from"/>
                                                     </div>
                                                     <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
                                                         <c:forEach var="city" items="${requestScope.LIST_CITY}">
                                                             <li class="select-list-group__list-item" data-display="true" data-highlight="false">${city.cityName}</li>
                                                         </c:forEach>
-                                                        
                                                     </ul>
                                                 </div>
                                                 
@@ -325,39 +324,40 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0; ">
-                                        <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; color: #00b3ee " onclick="changeValue()"></i>
+                                    <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0;" >
+                                        <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; color: #00b3ee"  onclick="changeData()"></i>
                                     </div>
                                     
-                                    <div id="universe" class="col-md-3" style="margin:-35px 28px 0 0;height: 9vh;  padding:0 0 0 3vw;">
+                                    <div id="universe" class="col-md-3" style="margin:-35px 40px 0 -20px;height: 9vh;  padding:0 0 0 3vw;">
                                         <ul class="select-list-group2 d-flex" id="listtwo">
                                             <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
                                             <li>
                                                 <div style="" class="col-md-12">
-                                                    <div style="display: block">
-                                                        <input type="text" class="select-list-group__search2 col-md-12" placeholder="To" id="myInput2"
-                                                           style="font-size: 25px;border-right: 1px solid #D1D3E2;"/>
+                                                    <div style="display: block;padding-right: 80px;">
+                                                        <input type="text" class="select-list-group__search2 col-md-12" placeholder="To" id="data2"
+                                                               style="font-size: 25px;border-right: 1px solid #D1D3E2;width: 12vw" name="to"/>
                                                     </div>
                                                     
                                                 
                                                     <ul class="select-list-group__list2" data-toggle="false" style="margin-left: 0px">
                                                         <c:forEach var="city" items="${requestScope.LIST_CITY}">
-                                                            <li class="select-list-group__list-item" data-display="true" data-highlight="false">${city.cityName}</li>
+                                                            <li class="select-list-group__list-item2" data-display="true" data-highlight="false">${city.cityName}</li>
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="col-md-3 d-flex" style="">
-                                        <i  class="fa-solid fa-calendar-days" style="font-size: 50px; margin: -20px 0 0 0px;padding-left: 30px;color: #36b9cc"></i>
-                                        <input type="text" class="form-control date-picker " s name="start" placeholder="Start "
+                                    
+                                    <div class="col-md-3 d-flex" style=" margin-left: 50px">
+                                        <i  class="fa-solid fa-calendar-days" style="font-size: 50px; margin: -20px 0 0 0px;padding-left: 0px;color: #36b9cc"></i>
+                                        <input type="text" class="form-control date-picker "  name="start" placeholder="Start "
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
                                            style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">
                                     </div>
                                     
                                     <button type="submit" class="primary-btn text-uppercase col-md-2 float-right"
-                                            style="height: 10vh; margin: -40px 0 0 25px; font-size: 20px">Search</button>
+                                            style="height: 10vh; margin: -40px 0 0 0px; font-size: 20px" name="action" value="showTrip">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -782,10 +782,10 @@
         </c:if>
             
         <script>
-            function changeValue(){
-                var tmp=document.getElementById("myInput1").value;
-                document.getElementById("myInput1").value=document.getElementById("myInput2").value;
-                document.getElementById("myInput2").value=tmp;
+            function changeData(){
+                var tmp=document.getElementById("data1").value;
+                document.getElementById("data1").value=document.getElementById("data2").value;
+                document.getElementById("data2").value=tmp;
             }
         </script>
 </html>
