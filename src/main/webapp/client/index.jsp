@@ -302,7 +302,7 @@
                         </ul>
                         <div class="tab-content" id="myTabContent" style="height: 10vh"> 
                             <div class="tab-pane fade show active row" id="flight" role="tabpanel">
-                                <form class="form-wrap col-md-12" style="display: inline-flex" action="${pageContext.request.contextPath}/client/route.jsp">
+                                <form class="form-wrap col-md-12" style="display: inline-flex" action="trip">
                                     <div id="universe" class="col-md-3 d-flex" style="margin:-35px 0 0 -20px;">
                                         <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
                                         <ul class="select-list-group" id="listone">
@@ -310,7 +310,7 @@
                                                 <div class="col-md-12">
                                                     <div>
                                                         <input type="text"  class="select-list-group__search" placeholder="From" id="myInput1"
-                                                               style="font-size: 25px"/>
+                                                               style="font-size: 25px" name="from"/>
                                                     </div>
                                                     <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
                                                         <c:forEach var="city" items="${requestScope.LIST_CITY}">
@@ -336,7 +336,7 @@
                                                 <div style="" class="col-md-12">
                                                     <div style="display: block">
                                                         <input type="text" class="select-list-group__search2 col-md-12" placeholder="To" id="myInput2"
-                                                           style="font-size: 25px;border-right: 1px solid #D1D3E2;"/>
+                                                               style="font-size: 25px;border-right: 1px solid #D1D3E2;" name="to"/>
                                                     </div>
                                                     
                                                 
@@ -357,7 +357,7 @@
                                     </div>
                                     
                                     <button type="submit" class="primary-btn text-uppercase col-md-2 float-right"
-                                            style="height: 10vh; margin: -40px 0 0 25px; font-size: 20px">Search</button>
+                                            style="height: 10vh; margin: -40px 0 0 25px; font-size: 20px" name="action">Search</button>
                                 </form>
                             </div>
                         </div>
