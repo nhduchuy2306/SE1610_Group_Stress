@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-    ﻿Drop DATABASE ETransportationManagement
-=======
->>>>>>> 1482f69fe6ef2f41a912323d7a19adab9975a282
+﻿Drop DATABASE ETransportationManagement
 CREATE DATABASE ETransportationManagement
 use ETransportationManagement
 

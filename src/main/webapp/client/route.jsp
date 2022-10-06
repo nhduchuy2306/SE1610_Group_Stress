@@ -131,8 +131,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
-                                        <div class="col-lg-12 col-md-6 col-sm-12">
+                                <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
+                                    <input type="hidden" name="tripID" value="${trip.tripID}">
+                                    <div class="col-lg-12 col-md-6 col-sm-12">
                                         <div class="card product-item border-0 mb-4">
                                             <div
                                                 class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
@@ -294,7 +295,7 @@
                                                     <div class="tab-content ">
                                                         <div class="tab-pane active" id="1-${trip.tripID.trim()}"
                                                              role="tabpanel" aria-labelledby="picture">
-                                                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                                                            <div id="carousel-${trip.tripID.trim()}" class="carousel slide" data-ride="carousel">
                                                                 <div class="carousel-inner">
                                                                     <div class="carousel-item active">
                                                                         <img style="width: 100px; height: 350px;" class="d-block w-100" src="https://i.ytimg.com/vi/dip_8dmrcaU/maxresdefault.jpg" alt="First slide">
@@ -306,11 +307,11 @@
                                                                         <img style="width: 100px; height: 350px;" class="d-block w-100" src="https://www.notebookcheck.net/fileadmin/Notebooks/News/_nc3/apple_car_concept_199.jpeg" alt="Third slide">
                                                                     </div>
                                                                 </div>
-                                                                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                                                                <a class="carousel-control-prev" href="#carousel-${trip.tripID.trim()}" role="button" data-slide="prev">
                                                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                                     <span class="sr-only">Previous</span>
                                                                 </a>
-                                                                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                                                                <a class="carousel-control-next" href="#carousel-${trip.tripID.trim()}" role="button" data-slide="next">
                                                                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                                     <span class="sr-only">Next</span>
                                                                 </a>
@@ -329,172 +330,172 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </c:forEach>
-                                        
-                                    
-                                    <!--Phân trang-->
-                                    <div class="col-12 pb-1">
-                                        <nav aria-label="Page navigation">
-                                            <ul class="pagination justify-content-center mb-3">
-                                                <li class="page-item disabled">
-                                                    <a class="page-link" href="#" aria-label="Previous">
-                                                        <span aria-hidden="true">&laquo;</span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                </li>
-                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                <li class="page-item">
-                                                    <a class="page-link" href="#" aria-label="Next">
-                                                        <span aria-hidden="true">&raquo;</span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
+                                </c:forEach>
 
+
+                                <!--Phân trang-->
+                                <div class="col-12 pb-1">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center mb-3">
+                                            <li class="page-item disabled">
+                                                <a class="page-link" href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                            </li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Shop Product End -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End destinations Area -->
+
+        <!-- start footer Area -->
+        <footer class="footer-area section-gap">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h6>About Agency</h6>
+                            <p>
+                                The world has become so fast paced that people don’t want to stand by reading a page of
+                                information, they would much rather look at a presentation and understand the message. It
+                                has come to a point
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h6>Navigation Links</h6>
+                            <div class="row">
+                                <div class="col">
+                                    <ul>
+                                        <li><a href="#">Home</a></li>
+                                        <li><a href="#">Feature</a></li>
+                                        <li><a href="#">Services</a></li>
+                                        <li><a href="#">Portfolio</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <ul>
+                                        <li><a href="#">Team</a></li>
+                                        <li><a href="#">Pricing</a></li>
+                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="#">Contact</a></li>
+                                    </ul>
                                 </div>
                             </div>
-                            <!-- Shop Product End -->
+                        </div>
+                    </div>
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h6>Newsletter</h6>
+                            <p>
+                                For business professionals caught between high OEM price and mediocre print and graphic
+                                output.
+                            </p>
+                            <div id="mc_embed_signup">
+                                <form target="_blank"
+                                      action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                      method="get" class="subscription relative">
+                                    <div class="input-group d-flex flex-row">
+                                        <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Email Address '" required="" type="email">
+                                        <button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
+                                    </div>
+                                    <div class="mt-10 info"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget mail-chimp">
+                            <h6 class="mb-20">InstaFeed</h6>
+                            <ul class="instafeed d-flex flex-wrap">
+                                <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i2.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i3.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i4.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i5.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i6.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i7.jpg" alt=""></li>
+                                <li><img src="${pageContext.request.contextPath}/client/img/i8.jpg" alt=""></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            </section>
-            <!-- End destinations Area -->
 
-            <!-- start footer Area -->
-            <footer class="footer-area section-gap">
-                <div class="container">
-
-                    <div class="row">
-                        <div class="col-lg-3  col-md-6 col-sm-6">
-                            <div class="single-footer-widget">
-                                <h6>About Agency</h6>
-                                <p>
-                                    The world has become so fast paced that people don’t want to stand by reading a page of
-                                    information, they would much rather look at a presentation and understand the message. It
-                                    has come to a point
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="single-footer-widget">
-                                <h6>Navigation Links</h6>
-                                <div class="row">
-                                    <div class="col">
-                                        <ul>
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">Feature</a></li>
-                                            <li><a href="#">Services</a></li>
-                                            <li><a href="#">Portfolio</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col">
-                                        <ul>
-                                            <li><a href="#">Team</a></li>
-                                            <li><a href="#">Pricing</a></li>
-                                            <li><a href="#">Blog</a></li>
-                                            <li><a href="#">Contact</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3  col-md-6 col-sm-6">
-                            <div class="single-footer-widget">
-                                <h6>Newsletter</h6>
-                                <p>
-                                    For business professionals caught between high OEM price and mediocre print and graphic
-                                    output.
-                                </p>
-                                <div id="mc_embed_signup">
-                                    <form target="_blank"
-                                          action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                          method="get" class="subscription relative">
-                                        <div class="input-group d-flex flex-row">
-                                            <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'Email Address '" required="" type="email">
-                                            <button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
-                                        </div>
-                                        <div class="mt-10 info"></div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3  col-md-6 col-sm-6">
-                            <div class="single-footer-widget mail-chimp">
-                                <h6 class="mb-20">InstaFeed</h6>
-                                <ul class="instafeed d-flex flex-wrap">
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i2.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i3.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i4.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i5.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i6.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i7.jpg" alt=""></li>
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i8.jpg" alt=""></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row footer-bottom d-flex justify-content-between align-items-center">
-                        <p class="col-lg-8 col-sm-12 footer-text m-0">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;
-                            <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
-                            made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                                                                                             target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </p>
-                        <div class="col-lg-4 col-sm-12 footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                            <a href="#"><i class="fa fa-behance"></i></a>
-                        </div>
+                <div class="row footer-bottom d-flex justify-content-between align-items-center">
+                    <p class="col-lg-8 col-sm-12 footer-text m-0">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
+                        made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                                                         target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                    <div class="col-lg-4 col-sm-12 footer-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-dribbble"></i></a>
+                        <a href="#"><i class="fa fa-behance"></i></a>
                     </div>
                 </div>
-            </footer>
-            <!-- End footer Area -->
+            </div>
+        </footer>
+        <!-- End footer Area -->
 
-            <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-            <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
-            <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
-            <!--<script src="js/chosing-seat.js"></script>-->
-            
-            <script>
-                var flight_tab = document.querySelector("#flight-tab");
-                var hotel_tab = document.querySelector("#hotel-tab");
-                var holiday_tab = document.querySelector("#holiday-tab");
+        <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
+        <!--<script src="js/chosing-seat.js"></script>-->
 
-                function AlwaysFlightClick() {
-                    flight_tab.click();
-                }
+        <script>
+                            var flight_tab = document.querySelector("#flight-tab");
+                            var hotel_tab = document.querySelector("#hotel-tab");
+                            var holiday_tab = document.querySelector("#holiday-tab");
 
-                function nextInFlights() {
-                    hotel_tab.click();
-                }
+                            function AlwaysFlightClick() {
+                                flight_tab.click();
+                            }
 
-                function nextInHotels() {
-                    holiday_tab.click();
-                }
-            </script>
-            <jsp:include page="/client/seat-script.jsp"></jsp:include>
+                            function nextInFlights() {
+                                hotel_tab.click();
+                            }
+
+                            function nextInHotels() {
+                                holiday_tab.click();
+                            }
+        </script>
+        <jsp:include page="/client/seat-script.jsp"></jsp:include>
     </body>
 
 </html>
