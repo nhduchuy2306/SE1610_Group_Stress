@@ -395,7 +395,11 @@
                 driverPic.value = sessionStorage.getItem("driverPic");
                 phoneNumber.value = sessionStorage.getItem("phoneNumber");
             </c:if>
-
+            <c:if test="${requestScope.ERROR!=null}">
+                $(document).ready(function (e) {
+                    $("#showerror").modal('show');
+                });
+            </c:if>
         </script>
     </body>
 </html>

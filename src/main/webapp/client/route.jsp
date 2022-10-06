@@ -155,7 +155,7 @@
                                                                 </div>
                                                                 <div>
                                                                     <h6 class="text-center">23:15</h6>
-                                                                    <span class="text-center">HCM's Gas Station</span>
+                                                                    <span class="text-center">${trip.route.startLocation.locationName}</span>
                                                                 </div>
                                                             </div>
                                                             <div class="ticket-from mt-10 d-flex justify-content-center align-items-center">
@@ -163,8 +163,8 @@
                                                                     <i class="fa fa-map-marker" style="font-size: 25px; color: red;" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div>
-                                                                    <h6>5:45</h6>
-                                                                    <span>DaLat's Gas Station</span>
+                                                                    <h6></h6>
+                                                                    <span>${trip.route.endLocation.locationName}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -175,7 +175,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="price float-sm-right">
-                                                    <h3 class="mr-30" style="color: #007bff;">350.000đ</h3>
+                                                    <h3 class="mr-30" style="color: #007bff;">
+                                                        <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
+                                                            ${trip.vehicle.vehicleType.PRICE_16} đ
+                                                        </c:if>
+                                                        <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
+                                                            ${trip.vehicle.vehicleType.PRICE_29} đ
+                                                        </c:if>
+                                                        <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
+                                                            ${trip.vehicle.vehicleType.PRICE_45} đ
+                                                        </c:if>
+                                                    </h3>
                                                 </div>
                                             </div>
                                             <div class="card-footer bg-light border d-flex justify-content-between align-items-center">
@@ -219,6 +229,19 @@
                                                                              role="tabpanel" aria-labelledby="flight-tab">
                                                                             <div class="wrapper-seat">
                                                                                 <div class="container-seat">
+                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="tripID" value="${trip.tripID.trim()}">
+                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="price" value="
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
+                                                                                               ${trip.vehicle.vehicleType.PRICE_16}
+                                                                                           </c:if>
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
+                                                                                               ${trip.vehicle.vehicleType.PRICE_29}
+                                                                                           </c:if>
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
+                                                                                               ${trip.vehicle.vehicleType.PRICE_45}
+                                                                                           </c:if>
+                                                                                        ">
+                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="totalSeat" value="${trip.vehicle.vehicleType.totalSeat}">
                                                                                     <h1 class="text-center">Chosing seats</h1>
                                                                                     <div class="seat-map-seat">
                                                                                         <div class="text-center front-indicator-seat">
@@ -230,8 +253,8 @@
                                                                                                 class="counter-seat">0</span>):
                                                                                         </h3>
                                                                                         <ul class="selected-seats"></ul>
-                                                                                        Total: <b>$<span
-                                                                                                class="total-seat">0</span></b>
+                                                                                        Total: <b><span
+                                                                                                class="total-seat">0</span> vnđ</b>
                                                                                         <button
                                                                                             class="btn btn-secondary checkout-button-seat"
                                                                                             type="button"

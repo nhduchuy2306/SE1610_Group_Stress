@@ -34,6 +34,7 @@ public class TripController extends HttpServlet {
     private VehicleDAO vehicleDAO = new VehicleDAOImpl();
     private DriverDAO driverDAO = new DriverDAOImpl();
     private SeatDAO seatDAO = new SeatDAOImpl();
+    private CityDAO cityDAO = new CityDAOImpl();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -215,13 +216,13 @@ public class TripController extends HttpServlet {
             String to = request.getParameter("to");
            
             String startDay = request.getParameter("start");
-//            Route route = routeDAO.getRouteByStartLocationAndEndLocation(Integer.parseInt(from), Integer.parseInt(to));
-            CityDAO cityDAO=new CityDAOImpl();
+            
             Route route = routeDAO.getRouteByStartLocationAndEndLocation(cityDAO.getCityIDByName(from), cityDAO.getCityIDByName(to));
             
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(route.getRouteID(), startDay);
             
-            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip); 
+            
             request.getRequestDispatcher("./client/route.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e.toString());

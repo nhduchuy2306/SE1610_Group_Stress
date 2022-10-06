@@ -13,6 +13,7 @@ public interface TripDAO {
     List<Trip> getAllTrip() throws SQLException;
     boolean updateTrip(Trip trip) throws SQLException;
     List<Trip> getAllTripByRouteAndStartDay(int routeID, String date) throws SQLException;
+    List<Trip> getAllTripByStartEndLocationAndStartDay(String startLocation, String endLocation, String date) throws SQLException;
     
     
     //Check that Trip has any BookedTicket or not

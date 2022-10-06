@@ -1,5 +1,6 @@
 package com.stress.service;
 
+import com.stress.dao.CityDAO;
 import com.stress.dao.DriverDAO;
 import com.stress.dao.RouteDAO;
 import com.stress.dao.TripDAO;
@@ -19,6 +20,7 @@ public class TripDAOImpl implements TripDAO {
     private RouteDAO routeDAO = new RouteDAOImpl();
     private VehicleDAO vehicleDAO = new VehicleDAOImpl();
     private DriverDAO driverDAO = new DriverDAOImpl();
+    private CityDAO cityDAO = new CityDAOImpl();
 
     @Override
     public boolean checkBookedTicket(String tripID) throws SQLException {
@@ -31,21 +33,29 @@ public class TripDAOImpl implements TripDAO {
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn != null) {
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, tripID);
                 rs = ptm.executeQuery();
-                if(rs.next()) {
+                if (rs.next()) {
                     String tripName = rs.getString("TripName");
-                    if(!tripName.isBlank()) check = true; 
+                    if (!tripName.isBlank()) {
+                        check = true;
+                    }
                 }
-                       
+
             }
         } catch (Exception e) {
         } finally {
-            if(rs != null) rs.close();
-            if(ptm != null) ptm.close();
-            if(conn != null) conn.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
@@ -238,6 +248,55 @@ public class TripDAOImpl implements TripDAO {
                 ptm = conn.prepareStatement(sql);
                 ptm.setInt(1, routeID);
                 ptm.setString(2, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Trip> getAllTripByStartEndLocationAndStartDay(String start, String end, String date)
+            throws SQLException {
+        String sql = "SELECT t.TripID,t.StartDateTime,t.TripName,t.[Policy],t.RouteID,t.VehicleID,t.DriverID,t.SeatRemain,t.[Status]\n"
+                + "FROM tblTrips t \n"
+                + "INNER JOIN tblRoutes r\n"
+                + "ON t.RouteID = r.RouteID AND t.StartDateTime = ?\n"
+                + "WHERE StartLocation IN(SELECT LocationID FROM tblLocations WHERE CityID = ?)\n"
+                + "AND EndLocation IN (SELECT LocationID FROM tblLocations WHERE CityID = ?)";
+        List<Trip> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, date);
+                ptm.setInt(2, cityDAO.getCityIDByName(start));
+                ptm.setInt(3, cityDAO.getCityIDByName(end));
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     list.add(new Trip(rs.getString("TripID"),

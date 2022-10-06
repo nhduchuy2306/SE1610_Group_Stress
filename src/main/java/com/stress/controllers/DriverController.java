@@ -150,12 +150,19 @@ public class DriverController extends HttpServlet {
         try {
             String driverID = request.getParameter("driverID").trim();
             DriverDAO dao = new DriverDAOImpl();
-            boolean check = dao.deleteDriver(driverID);
-            if (check) {
-                request.setAttribute("SUCCESS", "DELETE DRIVER SUCCESSFULLY");
+            Driver d = dao.getDriverByID(driverID);
+            if(d.getStatus()==2){
+                request.setAttribute("ERROR", "DRIVER IS ONGOING");
                 showDriverTable(request, response);
-            } else {
-                request.setAttribute("ERROR", "CAN NOT DELETE DRIVER");
+            }
+            else{
+                boolean check = dao.deleteDriver(driverID);
+                if (check) {
+                    request.setAttribute("SUCCESS", "DELETE DRIVER SUCCESSFULLY");
+                    showDriverTable(request, response);
+                } else {
+                    request.setAttribute("ERROR", "CAN NOT DELETE DRIVER");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
