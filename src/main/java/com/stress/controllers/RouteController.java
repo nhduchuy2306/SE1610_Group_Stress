@@ -73,22 +73,20 @@ public class RouteController extends HttpServlet {
     private void viewRoute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        String url = "./admin/404.jsp";
+        String url = "./404.jsp";
         try {
             RouteDAO dao = new RouteDAOImpl();
             List<Route> list = dao.getAllRoute();
             List<Location> allLocation = new LocationDAOImpl().getAllLocation();
             List<City> cityList = new CityDAOImpl().getAllCity();
-            if (!list.isEmpty()) {
-                List<Vehicle> activeVehicle = new VehicleDAOImpl().getAllActiveVehicle();
-                List<Driver> activeDriver = new DriverDAOImpl().getDriverWithLicense();
-                request.setAttribute("ROUTE_LIST", list);
-                request.setAttribute("CITY_LIST", cityList);
-                request.setAttribute("LIST_ACTIVE_VEHICLE", activeVehicle);
-                request.setAttribute("LIST_ACTIVE_DRIVER", activeDriver);
-                request.setAttribute("LOCATION_LIST", allLocation);
-                url = "./routeTable.jsp";
-            }
+            List<Vehicle> activeVehicle = new VehicleDAOImpl().getAllActiveVehicle();
+            List<Driver> activeDriver = new DriverDAOImpl().getDriverWithLicense(); 
+            request.setAttribute("ROUTE_LIST", list);
+            request.setAttribute("CITY_LIST", cityList);
+            request.setAttribute("LIST_ACTIVE_VEHICLE", activeVehicle);
+            request.setAttribute("LIST_ACTIVE_DRIVER", activeDriver);
+            request.setAttribute("LOCATION_LIST", allLocation);
+            url = "./routeTable.jsp";
         } catch (Exception e) {
             log("Error at RouteController - viewRoute: " + e.toString());
         } finally {
@@ -100,19 +98,18 @@ public class RouteController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try {
-
-            String routeName = request.getParameter("routeName");
             String startLocID = request.getParameter("startLocation");
             String endLocID = request.getParameter("endLocation");
             String description = request.getParameter("description");
             String tmpStatus = request.getParameter("status");
             //==================Conversion process======================//
-
+            
             int sLID = Integer.parseInt(startLocID);
             int eLID = Integer.parseInt(endLocID);
             LocationDAO LDAO = new LocationDAOImpl();
             Location startLocation = LDAO.getLocationById(sLID);
             Location endLocation = LDAO.getLocationById(eLID);
+            String routeName = startLocation.getLocationName() + "-" + endLocation.getLocationName();
 
             //===========================================================//
             RouteDAO RDAO = new RouteDAOImpl();

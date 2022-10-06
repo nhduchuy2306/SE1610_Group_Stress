@@ -17,7 +17,6 @@
             }
         }
     });
-//'A_2', 'D_1', 'C_4', 'D_5'
     function drawMapSeat(id,seatAreChosen) {
         var cart = $(".selected-seats").eq(id),
                 counter = $(".counter-seat").eq(id),
