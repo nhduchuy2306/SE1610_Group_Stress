@@ -4,7 +4,11 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.CityDAO;
+import com.stress.dto.City;
+import com.stress.service.CityDAOImpl;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +30,18 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("./client/index.jsp").forward(request, response);
+        try {
+            CityDAO dao=new CityDAOImpl();
+            List<City> listCity=dao.getAllCity();
+            if(!listCity.isEmpty()){
+                request.setAttribute("LIST_CITY", listCity);
+            }
+            
+        } catch (Exception e) {
+        } finally {
+            request.getRequestDispatcher("./client/index.jsp").forward(request, response);
+        }
+        
     }
 
 
