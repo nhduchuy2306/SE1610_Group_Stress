@@ -53,7 +53,11 @@
                                             Add Route
                                         </button>
                                         <a href="${pageContext.request.contextPath}/admin/route?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                    <a href="${pageContext.request.contextPath}/admin/route?action=showDelete" style="margin-right: 10px" class="btn btn-primary float-right">Delete History</a>
                                 </div>
+
+
+
                                 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -65,6 +69,7 @@
                                             </div>
                                             <form action="route" method="POST">
                                                 <div class="modal-body">
+
                                                     <div class="form-group">                                                      
                                                         <label for="exampleInputEmail1">Start Location</label>
                                                         <select name="startLocation" class="form-control" data-live-search="true">
@@ -107,21 +112,71 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>No.</th>
-                                                <th>Route ID</th>
-                                                <th>Route Name</th>
-                                                <th>Start Location</th>
-                                                <th>End Location</th>
-                                                <th>Description</th>
-                                                <th>Modify</th>
-                                                <th>Delete</th>
-                                                <th>Create Trip</th>
+                                                <c:if test="${requestScope.ROUTE_LIST != null}">
+                                                    <th>Route ID</th>
+                                                    <th>Route Name</th>
+                                                    <th>Start Location</th>
+                                                    <th>End Location</th>
+                                                    <th>Description</th>
+                                                    <th>Modify</th>
+                                                    <th>Delete</th>
+                                                    <th>Create Trip</th>
+                                                    </c:if>
+                                                    <c:if test="${requestScope.DELETE_LIST != null}"> 
+                                                    <th>Route ID</th>
+                                                    <th>Route Name</th>
+                                                    <th>Start Location</th>
+                                                    <th>End Location</th>
+                                                    <th>Description</th>
+                                                    <th>Recover</th>
+                                                    </c:if>
                                             </tr>
                                         </thead>
                                         <tbody id="content-data-update">
+                                            <c:if test="${requestScope.DELETE_LIST != null}"> 
+                                                <c:forEach items="${requestScope.DELETE_LIST}" var="r">
+                                                    <tr>
+                                                        <td>${r.routeID}</td>
+                                                        <td>${r.routeName}</td>
+                                                        <td>${r.startLocation.getLocationName()}</td>
+                                                        <td>${r.endLocation.getLocationName()}</td>
+                                                        <td>
+                                                            ${r.description}
+                                                        </td>
+
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${r.routeID}">
+                                                                <i class="fa fa-solid fa-arrow-up" aria-hidden="true"></i>
+                                                            </button>
+                                                            <div class="modal fade" id="delete-${r.routeID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Recover Route ${r.routeName}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <form action="route" method="POST">
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="routeID" value="${r.routeID}">
+                                                                                <button type="submit" name="action" value="recover" class="btn btn-primary">
+                                                                                    Recover
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr></c:forEach>
+                                            </c:if>
+
                                             <c:forEach items="${requestScope.ROUTE_LIST}" var="r" varStatus="counter">
                                                 <tr>
-                                                    <td>${counter.count}</td>
+
                                                     <td>${r.routeID}</td>
                                                     <td>${r.routeName}</td>
                                                     <td>${r.startLocation.getLocationName()}</td>
@@ -196,7 +251,7 @@
                                                                     </div>
                                                                     <form action="route" method="POST">
                                                                         <div class="modal-footer">
-                                                                            <input type="hidden" name="vehicleID" value="${r.routeID}">
+                                                                            <input type="hidden" name="routeID" value="${r.routeID}">
                                                                             <button type="submit" name="action" value="delete" class="btn btn-primary">
                                                                                 Delete
                                                                             </button>

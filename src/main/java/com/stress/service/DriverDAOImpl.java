@@ -22,7 +22,7 @@ public class DriverDAOImpl implements DriverDAO {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement("SELECT d.[DriverID], [DriverName], [DOB], [Sex],[DriverPic],[PhoneNumber],[Status] "
                     + "FROM tblDrivers d INNER JOIN tblDriverLicenses dl\n"
-                    + " ON d.driverID = dl.driverID");
+                    + " ON d.driverID = dl.driverID WHERE [Status] = 1");
             rs = ptm.executeQuery();
             while (rs.next()) {
                 driverList.add(new Driver(
