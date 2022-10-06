@@ -324,7 +324,7 @@
                                         </ul>
                                         
                                     </div>
-                                    <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0;" >
+                                    <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0; cursor:pointer;" >
                                         <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; color: #00b3ee"  onclick="changeData()"></i>
                                     </div>
                                     
