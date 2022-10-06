@@ -4,11 +4,13 @@ package com.stress.service;
 import com.stress.dao.SeatDAO;
 import com.stress.dto.Seat;
 import com.stress.dto.Trip;
+import com.stress.utils.DBConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,43 +22,97 @@ public class SeatDAOImpl implements SeatDAO{
     public Seat getSeatByID(String string) throws SQLException {
         return null;
     }
-    
-    private static List<String> creatSeatID(String tripID) throws SQLException{
-        List<String> list = new ArrayList<>();
-//        Trip trip = new TripDAOImpl().getTripByID(tripID);
-//        int numOfRow = trip.getVehicle().getVehicleType().getTotalSeat()/4;
-        int numOfRow = 7;
-        char start = 'A';
-        String seatID = "";
-        int[] cols = {0,1,2,3,4,5};
-        for(int i = 0; i < numOfRow; i++){
-            start += i;
-            for(int j = 1; j < cols.length; j++){
-                seatID = "";
-                if(i<numOfRow && j != 3){
-                    seatID = seatID + start + "_" +cols[j];
-                    list.add(seatID);
-                }
-                else if(i==numOfRow-1){
-                    seatID = seatID + start + "_" +cols[j];
-                    list.add(seatID);
-                }
-            }
-            start = 'A';
+    @Override
+    public List<String> setMap(int number) throws SQLException{
+        List<String> list = null;
+        if(number==16) {
+            String[] seatID = {
+                "A_4","A_5",
+                "B_1","B_2","B_4","B_5",
+                "C_1","C_2","C_4","C_5",
+                "D_1","D_2","D_3","D_4","D_5"
+            };
+            list = new ArrayList<>(Arrays.asList(seatID));
+        }
+        if(number==29) {
+            String[] seatID = {
+                "B_1","B_2","B_4","B_5",
+                "C_1","C_2","C_4","C_5",
+                "D_1","D_2","D_4","D_5",
+                "E_1","E_2","E_4","E_5",
+                "F_1","F_2","F_4","F_5",
+                "G_1","G_2","G_4","G_5",
+                "H_1","H_2","H_3","H_4","H_5"
+            };
+            list = new ArrayList<>(Arrays.asList(seatID));
+        }
+        if(number==45) {
+            String[] seatID = {
+                "B_1","B_2","B_4","B_5",
+                "C_1","C_2","C_4","C_5",
+                "D_1","D_2","D_4","D_5",
+                "E_1","E_2","E_4","E_5",
+                "F_1","F_2","F_4","F_5",
+                "G_1","G_2","G_4","G_5",
+                "H_1","H_2","H_4","H_5",
+                "I_1","I_2","I_4","I_5",
+                "J_1","J_2","J_4","J_5",
+                "K_1","K_2","K_4","K_5",
+                "L_1","L_2","L_3","L_4","L_5",
+            };
+            list = new ArrayList<>(Arrays.asList(seatID));
         }
         return list;
     }
 
     @Override
-    public boolean addSeat(String tripID) throws SQLException {
-        
-        return true;
-    }
-    public static void main(String[] args) {
+    public boolean addSeat(String tripID, String seatID) throws SQLException {
+        String sql = "INSERT INTO tblSeats(SeatID,TripID,Price,[Status]) VALUES(?,?,?,?)";
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
         try {
-            System.out.println(creatSeatID("").toString());
-        } catch (SQLException ex) {
-            Logger.getLogger(SeatDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, seatID);
+                ptm.setString(2, tripID);
+                ptm.setInt(3, 150000);  
+                ptm.setBoolean(4, true);
+                check = ptm.executeUpdate() > 0;
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
         }
+        return check;
+    }
+
+    @Override
+    public boolean updateSeat(String tripID, String seatID) throws SQLException {
+        boolean check = false;
+        String sql = "UPDATE tblSeats SET [Status] = ?, Price = ? WHERE SeatID = ? AND TRIPID = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setBoolean(1, false);
+                ptm.setInt(2, 150000);
+                ptm.setString(3, seatID);
+                ptm.setString(4, tripID);
+                check = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+        }
+        return check;
     }
 }
