@@ -273,7 +273,7 @@ public class RouteDAOImpl implements RouteDAO {
 
     @Override
     public List<Route> getAllRoute() throws SQLException {
-        String getAllRoute = "SELECT [RouteID],[RouteName],[StartLocation], [EndLocation], [Description], [Status] FROM tblRoutes WHERE [Status] = 1 OR [Status] = 2";
+        String getAllRoute = "SELECT [RouteID],[RouteName],[StartLocation], [EndLocation], [Description], [Status] FROM tblRoutes WHERE [Status] = 1";
         List<Route> routeList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -296,8 +296,8 @@ public class RouteDAOImpl implements RouteDAO {
                     Location StartLocation = LDAO.getLocationById(tmpStartLocation);
                     Location EndLocation = LDAO.getLocationById(tmpEndLocation);
                     String tmp=Integer.toString(tmpStatus);
-                    boolean Status=Boolean.parseBoolean(tmp);
-                    routeList.add(new Route(RouteID, RouteName, StartLocation, EndLocation, Description, Status));
+                    
+                    routeList.add(new Route(RouteID, RouteName, StartLocation, EndLocation, Description, true));
                 }
             }
         } catch (Exception e) {

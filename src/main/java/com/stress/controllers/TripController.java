@@ -130,14 +130,19 @@ public class TripController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
-            boolean check = tripDAO.deleteTrip(tripID);
-            if(check){
+            if(tripDAO.checkBookedTicket(tripID)) {
+                request.setAttribute("ERROR", "Cant Delete! This Trip Has Booked Ticket Already!");
+                showTripTable(request, response);
+            }else {
+            if(tripDAO.deleteTrip(tripID)){
+                
                 request.setAttribute("SUCCESS", "DELETE TRIP SUCCESSFULLY");
                 showTripTable(request, response);
             }
             else{
                 request.setAttribute("ERROR", "DELETE TRIP SUCCESSFULLY");
                 showTripTable(request, response);
+            }
             }
         } catch (Exception e) {
         }

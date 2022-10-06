@@ -60,9 +60,9 @@ public class CityDAOImpl implements CityDAO{
                 ptm.setInt(1, id);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    int cityID = rs.getInt("CityID");
+                    
                     String cityName = rs.getString("CityName");
-                    result = new City(cityID, cityName);
+                    result = new City(id, cityName);
                 }
             }
         } catch (Exception e) {
