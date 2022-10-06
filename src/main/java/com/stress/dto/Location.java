@@ -14,6 +14,6 @@ public class Location {
     private int locationID;
     private String locationName;
     private String Address;
-    private int cityID;
+    private City city;
     private boolean status;
 }

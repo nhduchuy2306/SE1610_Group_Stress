@@ -1,6 +1,7 @@
 
 package com.stress.controllers;
 
+import com.stress.dao.CityDAO;
 import com.stress.dao.DriverDAO;
 import com.stress.dao.RouteDAO;
 import com.stress.dao.TripDAO;
@@ -9,6 +10,7 @@ import com.stress.dto.Driver;
 import com.stress.dto.Route;
 import com.stress.dto.Trip;
 import com.stress.dto.Vehicle;
+import com.stress.service.CityDAOImpl;
 import com.stress.service.DriverDAOImpl;
 import com.stress.service.RouteDAOImpl;
 import com.stress.service.TripDAOImpl;
@@ -79,7 +81,7 @@ public class TripController extends HttpServlet {
             List<Trip> list = tripDAO.getAllTrip();
             List<Route> activeRoute = routeDAO.getAllActiveRoute();
             List<Vehicle> activeVehicle = vehicleDAO.getAllActiveVehicle();
-            List<Driver> activeDriver = driverDAO.getAllActiveDriver();
+            List<Driver> activeDriver = driverDAO.getDriverWithLicense();
             request.setAttribute("LIST_ALL_TRIP", list);
             request.setAttribute("LIST_ACTIVE_ROUTE", activeRoute);
             request.setAttribute("LIST_ACTIVE_VEHICLE", activeVehicle);
@@ -191,11 +193,15 @@ public class TripController extends HttpServlet {
 
     private void showTripView(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException{
+        request.setCharacterEncoding("utf-8");
         try {
             String from = request.getParameter("from");
             String to = request.getParameter("to");
+           
             String startDay = request.getParameter("start");
-            Route route = routeDAO.getRouteByStartLocationAndEndLocation(Integer.parseInt(from), Integer.parseInt(to));
+//            Route route = routeDAO.getRouteByStartLocationAndEndLocation(Integer.parseInt(from), Integer.parseInt(to));
+            CityDAO cityDAO=new CityDAOImpl();
+            Route route = routeDAO.getRouteByStartLocationAndEndLocation(cityDAO.getCityIDByName(from), cityDAO.getCityIDByName(to));
             
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(route.getRouteID(), startDay);
             

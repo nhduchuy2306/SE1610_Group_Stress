@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/animate.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">				
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
+       
         
         
         <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
@@ -36,6 +37,10 @@
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
+        
+<!--        test-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/datalist.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <style>
             datalist {
                 position: absolute;
@@ -72,7 +77,7 @@
                 background: none;
                 border: none;
                 box-shadow: none;
-            } 
+            }
         </style>
     </head>
     
@@ -277,56 +282,82 @@
             <div class="overlay overlay-bg"></div>
             <div class="container">
                 <div class="row fullscreen align-items-center justify-content-between">
-                    <div class="col-lg-6 col-md-6 banner-left">
-                        <h6 class="text-white">Away from monotonous life</h6>
-                        <h1 class="text-white">Magical Travel</h1>
-                        <p class="text-white">
+                    <div class="col-lg-12 col-md-12 mt-60 pt-60">
+<!--                        <h6 class="text-white">Away from monotonous life</h6>-->
+                        <h1 class="text-white" style="font-size: 500%">Magical Travel</h1>
+                        <p class="text-white" style="font-size: 120%">
                             If you are looking at blank cassettes on the web, you may be very confused at the difference in
                             price. You may see some for as low as $.17 each.
                         </p>
-                        <a href="#" class="primary-btn text-uppercase">Get Started</a>
+<!--                        <a href="#" class="primary-btn text-uppercase">Get Started</a>-->
                     </div>
-                    <div class="col-lg-5 col-md-6 banner-right">
+                    <div class="col-lg-12 col-md-12 banner-right" style="margin-top: -40px; height: 300px;">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <h3 class="nav-link bg-white" style="cursor: pointer">Book A Car</h3>
+                                <h3 class="nav-link bg-white" style="cursor: pointer; color: #00b3ee">
+                                    <i class="fa fa-bus" aria-hidden="true" style="padding-right: 10px">    Booking</i></h3>
                                 <!-- <a class="nav-link active" id="flight-tab" data-toggle="tab" href="#flight" role="tab"
                                         aria-controls="flight" aria-selected="true">Book A Car</a> -->
                             </li>
                         </ul>
-                        <div class="tab-content" id="myTabContent"> 
-                            <div class="tab-pane fade show active" id="flight" role="tabpanel">
-                                <form action="trip" class="form-wrap">
-                                    <input list="froms" class="form-control" placeholder="From" name="from" id="browser">
-                                    <datalist id="froms" name="from">
-                                        <option value="Cambodia">Cambodia</option>
-                                        <option value="Hong Kong">Hong Kong</option>
-                                        <option value="India">India</option>
-                                        <option value="Japan">Japan</option>
-                                        <option value="Korea">Korea</option>
-                                        <option value="Laos">Laos</option>
-                                        <option value="Myanmar">Myanmar</option>
-                                        <option value="Singapore">Singapore</option>
-                                        <option value="Thailand">Thailand</option>
-                                        <option value="Vietnam">Vietnam</option>
-                                    </datalist>
-                                    <input list="tos" class="form-control" placeholder="To" name="to" id="browser">
-                                    <datalist id="tos" name="to">
-                                        <option value="Cambodia">Cambodia</option>
-                                        <option value="Hong Kong">Hong Kong</option>
-                                        <option value="India">India</option>
-                                        <option value="Japan">Japan</option>
-                                        <option value="Korea">Korea</option>
-                                        <option value="Laos">Laos</option>
-                                        <option value="Myanmar">Myanmar</option>
-                                        <option value="Singapore">Singapore</option>
-                                        <option value="Thailand">Thailand</option>
-                                        <option value="Vietnam">Vietnam</option>
-                                    </datalist>
-                                    <input type="text" class="form-control date-picker" name="start" placeholder="Start "
-                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'">
-                                    <button type="submit" name="action" value="showTrip" class="primary-btn text-uppercase">Search tickets</button>
-                                    <!--<a href="${pageContext.request.contextPath}/client/route.jsp" class="primary-btn text-uppercase">Search tickets</a>-->
+
+                        <div class="tab-content" id="myTabContent" style="height: 10vh"> 
+                            <div class="tab-pane fade show active row" id="flight" role="tabpanel">
+                                <form class="form-wrap col-md-12" style="display: inline-flex" action="trip">
+                                    <div id="universe" class="col-md-3 d-flex" style="margin:-35px 0 0 -20px;">
+                                        <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
+                                        <ul class="select-list-group" id="listone">
+                                            <li>
+                                                <div class="col-md-12">
+                                                    <div>
+                                                        <input type="text" class="select-list-group__search" placeholder="From" id="data1"
+                                                               style="font-size: 25px" name="from"/>
+                                                    </div>
+                                                    <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
+                                                        <c:forEach var="city" items="${requestScope.LIST_CITY}">
+                                                            <li class="select-list-group__list-item" data-display="true" data-highlight="false">${city.cityName}</li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                                
+                                            </li>
+                                        </ul>
+                                        
+                                    </div>
+                                    <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0;" >
+                                        <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; color: #00b3ee"  onclick="changeData()"></i>
+                                    </div>
+                                    
+                                    <div id="universe" class="col-md-3" style="margin:-35px 40px 0 -20px;height: 9vh;  padding:0 0 0 3vw;">
+                                        <ul class="select-list-group2 d-flex" id="listtwo">
+                                            <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
+                                            <li>
+                                                <div style="" class="col-md-12">
+                                                    <div style="display: block;padding-right: 80px;">
+                                                        <input type="text" class="select-list-group__search2 col-md-12" placeholder="To" id="data2"
+                                                               style="font-size: 25px;border-right: 1px solid #D1D3E2;width: 12vw" name="to"/>
+                                                    </div>
+                                                    
+                                                
+                                                    <ul class="select-list-group__list2" data-toggle="false" style="margin-left: 0px">
+                                                        <c:forEach var="city" items="${requestScope.LIST_CITY}">
+                                                            <li class="select-list-group__list-item2" data-display="true" data-highlight="false">${city.cityName}</li>
+                                                        </c:forEach>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="col-md-3 d-flex" style=" margin-left: 50px">
+                                        <i  class="fa-solid fa-calendar-days" style="font-size: 50px; margin: -20px 0 0 0px;padding-left: 0px;color: #36b9cc"></i>
+                                        <input type="text" class="form-control date-picker "  name="start" placeholder="Start "
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
+                                           style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">
+                                    </div>
+                                    
+                                    <button type="submit" class="primary-btn text-uppercase col-md-2 float-right"
+                                            style="height: 10vh; margin: -40px 0 0 0px; font-size: 20px" name="action" value="showTrip">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -723,6 +754,10 @@
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
+        
+<!--        test-->
+        <script src="${pageContext.request.contextPath}/client/js/datalist.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/datalist2.js"></script>
     </body>
         <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
             <script>
@@ -745,5 +780,13 @@
             });
             </script>
         </c:if>
+            
+        <script>
+            function changeData(){
+                var tmp=document.getElementById("data1").value;
+                document.getElementById("data1").value=document.getElementById("data2").value;
+                document.getElementById("data2").value=tmp;
+            }
+        </script>
 </html>
-</html>
+

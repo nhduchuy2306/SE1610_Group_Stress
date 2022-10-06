@@ -44,4 +44,73 @@ public class CityDAOImpl implements CityDAO{
         }
         return cityList;
     }
+
+    // Method get A specific City by ID
+    @Override
+    public City getCityByID(int id) throws SQLException {
+        String sql = "SELECT [CityName] FROM tblCities WHERE [CityID] = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        City result = null;
+         try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, id);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    int cityID = rs.getInt("CityID");
+                    String cityName = rs.getString("CityName");
+                    result = new City(cityID, cityName);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error at getAllLocation:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return result;
+    }
+//    Moi them
+    @Override
+    public int getCityIDByName(String name) throws SQLException {
+        int id=0;
+        String sql = "SELECT [CityID] FROM tblCities WHERE [CityName] = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+         try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, name);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    id = rs.getInt("CityID");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error at getAllLocation:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return id;
+    }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public interface RouteDAO {
-    boolean addRoute(Route route) throws SQLException;
+    int addRoute(Route route) throws SQLException;
     boolean updateRoute(int RouteID, String RouteName, Location StartLocation, Location EndLocation, String Description, boolean Status) throws SQLException;
     boolean deleteRoute(String routeID) throws SQLException;
     List<Route> searchServiceByStartLocation(int startLocation) throws SQLException;
@@ -18,4 +18,5 @@ public interface RouteDAO {
     List<Route> getAllRoute() throws SQLException;
     List<Route> getAllActiveRoute() throws SQLException;
     Route getRouteByStartLocationAndEndLocation(int startLocation, int endLocation) throws SQLException;
+    int getMaxRoute() throws SQLException;
 }
