@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "TripController", urlPatterns = {"/trip"})
+@WebServlet(name = "TripController", urlPatterns = {"/admin/trip"})
 public class TripController extends HttpServlet {
 
     private TripDAO tripDAO = new TripDAOImpl();

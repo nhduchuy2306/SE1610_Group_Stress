@@ -19,4 +19,7 @@ public interface RouteDAO {
     List<Route> getAllActiveRoute() throws SQLException;
     Route getRouteByStartLocationAndEndLocation(int startLocation, int endLocation) throws SQLException;
     int getMaxRoute() throws SQLException;
+    boolean checkDuplicate(Route route) throws SQLException;
+    List<Route> getDeleteHistory() throws SQLException;
+    boolean recoverRoute(String routeID) throws SQLException;
 }
