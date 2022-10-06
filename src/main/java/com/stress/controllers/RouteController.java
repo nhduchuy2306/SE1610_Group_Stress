@@ -28,6 +28,8 @@ public class RouteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
@@ -46,12 +48,14 @@ public class RouteController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
             switch (action) {
 
-                case "add":
+                case "create":
                     addRoute(request, response);
                     break;
                 case "update":
@@ -67,6 +71,8 @@ public class RouteController extends HttpServlet {
     }
 
     private void viewRoute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         String url = "./admin/404.jsp";
         try {
             RouteDAO dao = new RouteDAOImpl();
@@ -92,13 +98,14 @@ public class RouteController extends HttpServlet {
 
     private void addRoute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
 
-            String routeName = request.getParameter("RouteName");
-            String startLocID = request.getParameter("StartLocation");
-            String endLocID = request.getParameter("EndLocation");
+            String routeName = request.getParameter("routeName");
+            String startLocID = request.getParameter("startLocation");
+            String endLocID = request.getParameter("endLocation");
             String description = request.getParameter("description");
-            String tmpStatus = request.getParameter("Status");
+            String tmpStatus = request.getParameter("status");
             //==================Conversion process======================//
 
             int sLID = Integer.parseInt(startLocID);
@@ -106,15 +113,16 @@ public class RouteController extends HttpServlet {
             LocationDAO LDAO = new LocationDAOImpl();
             Location startLocation = LDAO.getLocationById(sLID);
             Location endLocation = LDAO.getLocationById(eLID);
-            boolean Status = Boolean.parseBoolean(tmpStatus);
+
             //===========================================================//
             RouteDAO RDAO = new RouteDAOImpl();
-            Route createItem = new Route(0, routeName, startLocation, endLocation, description, Status);
+            Route createItem = new Route(0, routeName, startLocation, endLocation, description, true);
             int routeID = RDAO.addRoute(createItem);
             createItem.setRouteID(routeID);
 
             if (routeID > 0) {
                 request.setAttribute("ROUTE_ID", routeID);
+                request.setAttribute("SUCCESS", "Create Success");
                 viewRoute(request, response);
             }
 

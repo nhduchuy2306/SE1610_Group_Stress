@@ -69,25 +69,26 @@
                                                         <label for="exampleInputEmail1">Route Name</label>
                                                         <input type="text" name="routeName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Route Name">
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="exampleInputEmail1">City</label>
-                                                        <input type="text" name="startCity" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+                                                    <div class="form-group">                                                      
+                                                        <select name="startLocation" class="form-control" data-live-search="true">
+                                                            <c:forEach var="start" items="${requestScope.LOCATION_LIST}">
+                                                                <option value="${start.locationID}" data-display="true" data-highlight="false">${start.locationName} (${start.city.cityName})</option>
+                                                            </c:forEach>
 
-                                                        <label for="exampleInputEmail1">StartLocation</label>
-                                                        <input type="text" name="startLocation" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
-
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">City</label>
-                                                        <input type="text" name="endCity" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
 
-                                                        <label for="exampleInputEmail1">EndLocation</label>
-                                                        <input type="text" name="endLocation" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                        <select name="endLocation" class="form-control" data-live-search="true">
+                                                            <c:forEach var="end" items="${requestScope.LOCATION_LIST}">
+                                                                <option value="${end.locationID}" data-display="true" data-highlight="false">${end.locationName} (${end.city.cityName})</option>
+                                                            </c:forEach>
 
+                                                        </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Description</label>
-                                                        <textarea style="height: 150px" name="description" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Policy" required>   
+                                                        <textarea style="height: 150px" name="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description">   
                                                         </textarea>
                                                     </div>
 
@@ -248,8 +249,8 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Route Name: </label>
-                                                                                <input type="text" name="routeName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="${r.routeName}">
-                                                                                <input type="hidden" name="routeID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="${r.routeID}">
+                                                                                <input type="text" name="routeName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="${r.routeName}" readonly="">
+                                                                                <input type="hidden" name="routeID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="${r.routeID}" readonly="">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Vehicle Name: </label>
@@ -469,6 +470,14 @@
                     $('input[type="search"]').val('${ROUTE_ID}').keyup();
                 });
             </c:if>
+
         </script>
-    </body>
+        <script>
+            function changeData() {
+                var tmp = document.getElementById("data1").value;
+                document.getElementById("data1").value = document.getElementById("data2").value;
+                document.getElementById("data2").value = tmp;
+            }
+        </script>
+    </body> 
 </html>

@@ -1,4 +1,3 @@
-
 package com.stress.service;
 
 import com.stress.dao.DriverDAO;
@@ -15,13 +14,42 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+public class TripDAOImpl implements TripDAO {
 
-public class TripDAOImpl implements TripDAO{
-    
     private RouteDAO routeDAO = new RouteDAOImpl();
     private VehicleDAO vehicleDAO = new VehicleDAOImpl();
     private DriverDAO driverDAO = new DriverDAOImpl();
-    
+
+    @Override
+    public boolean checkBookedTicket(String tripID) throws SQLException {
+        String sql = "SELECT [TripName] AS [TripName] FROM tblTrips t INNER JOIN tblSeats s \n"
+                + " ON t.TripID = s.TripID \n"
+                + " WHERE t.TripID = ? AND s.[Status] = 1";
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, tripID);
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    String tripName = rs.getString("TripName");
+                    if(!tripName.isBlank()) check = true; 
+                }
+                       
+            }
+        } catch (Exception e) {
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
+
     @Override
     public boolean deleteTrip(String tripID) throws SQLException {
         String sql = "UPDATE tblTrips SET [Status] = 0 WHERE TripID = ?";
@@ -30,15 +58,19 @@ public class TripDAOImpl implements TripDAO{
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, tripID);
                 check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
         } finally {
-            if (ptm != null) ptm.close();
-            if (conn != null) conn.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
@@ -53,27 +85,33 @@ public class TripDAOImpl implements TripDAO{
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, tripID);
                 rs = ptm.executeQuery();
-                while(rs.next()){
-                    return new Trip(rs.getString("TripID"), 
-                            rs.getString("TripName"), 
-                            rs.getDate("StartDateTime"), 
-                            rs.getString("Policy"), 
-                            routeDAO.getRouteByID(rs.getInt("RouteID")), 
-                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")), 
-                            driverDAO.getDriverByID(rs.getString("DriverID")), 
-                            rs.getInt("SeatRemain"), 
+                while (rs.next()) {
+                    return new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
                             rs.getInt("Status"));
                 }
             }
         } catch (Exception e) {
         } finally {
-            if (ptm != null) ptm.close();
-            if (conn != null) conn.close();
-            if(rs!=null) rs.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
         }
         return null;
     }
@@ -87,24 +125,28 @@ public class TripDAOImpl implements TripDAO{
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, trip.getTripID());
                 ptm.setString(2, trip.getTripName());
                 ptm.setDate(3, trip.getStartDateTime());
-                ptm.setString(4,trip.getPolicy());
+                ptm.setString(4, trip.getPolicy());
                 ptm.setInt(5, trip.getRoute().getRouteID());
                 ptm.setString(6, trip.getVehicle().getVehicleID());
                 ptm.setString(7, trip.getDriver().getDriverID());
                 ptm.setInt(8, trip.getSeatRemain());
                 ptm.setInt(9, trip.getStatus());
-                check = ptm.executeUpdate() > 0; 
+                check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         } finally {
-            if (ptm != null) ptm.close();
-            if (conn != null) conn.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
@@ -119,25 +161,29 @@ public class TripDAOImpl implements TripDAO{
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 rs = ptm.executeQuery();
-                while(rs.next()){
-                    list.add(new Trip(rs.getString("TripID"), 
-                            rs.getString("TripName"), 
-                            rs.getDate("StartDateTime"), 
-                            rs.getString("Policy"), 
-                            routeDAO.getRouteByID(rs.getInt("RouteID")), 
-                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")), 
-                            driverDAO.getDriverByID(rs.getString("DriverID")), 
-                            rs.getInt("SeatRemain"), 
+                while (rs.next()) {
+                    list.add(new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
                             rs.getInt("Status")));
                 }
             }
         } catch (Exception e) {
         } finally {
-            if (ptm != null) ptm.close();
-            if (conn != null) conn.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return list;
     }
@@ -151,24 +197,28 @@ public class TripDAOImpl implements TripDAO{
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, trip.getTripName());
                 ptm.setDate(2, trip.getStartDateTime());
-                ptm.setString(3,trip.getPolicy());
+                ptm.setString(3, trip.getPolicy());
                 ptm.setInt(4, trip.getRoute().getRouteID());
                 ptm.setString(5, trip.getVehicle().getVehicleID());
                 ptm.setString(6, trip.getDriver().getDriverID());
                 ptm.setInt(7, trip.getSeatRemain());
                 ptm.setInt(8, trip.getStatus());
                 ptm.setString(9, trip.getTripID());
-                check = ptm.executeUpdate() > 0; 
+                check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         } finally {
-            if (ptm != null) ptm.close();
-            if (conn != null) conn.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
@@ -184,31 +234,37 @@ public class TripDAOImpl implements TripDAO{
         ResultSet rs = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
+            if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setInt(1, routeID);
                 ptm.setString(2, day);
                 rs = ptm.executeQuery();
-                while(rs.next()){
-                    list.add(new Trip(rs.getString("TripID"), 
-                            rs.getString("TripName"), 
-                            rs.getDate("StartDateTime"), 
-                            rs.getString("Policy"), 
-                            routeDAO.getRouteByID(rs.getInt("RouteID")), 
-                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")), 
-                            driverDAO.getDriverByID(rs.getString("DriverID")), 
-                            rs.getInt("SeatRemain"), 
+                while (rs.next()) {
+                    list.add(new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
                             rs.getInt("Status")));
                 }
             }
         } catch (Exception e) {
             System.out.println(e.toString());
         } finally {
-            if(ptm != null) ptm.close();
-            if(conn != null) conn.close();
-            if(rs!=null) rs.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
         }
         return list;
     }
-    
+
 }
