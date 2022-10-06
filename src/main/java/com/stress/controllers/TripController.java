@@ -4,6 +4,7 @@ package com.stress.controllers;
 import com.stress.dao.CityDAO;
 import com.stress.dao.DriverDAO;
 import com.stress.dao.RouteDAO;
+import com.stress.dao.SeatDAO;
 import com.stress.dao.TripDAO;
 import com.stress.dao.VehicleDAO;
 import com.stress.dto.Driver;
@@ -13,6 +14,7 @@ import com.stress.dto.Vehicle;
 import com.stress.service.CityDAOImpl;
 import com.stress.service.DriverDAOImpl;
 import com.stress.service.RouteDAOImpl;
+import com.stress.service.SeatDAOImpl;
 import com.stress.service.TripDAOImpl;
 import com.stress.service.VehicleDAOImpl;
 import java.io.IOException;
@@ -31,6 +33,7 @@ public class TripController extends HttpServlet {
     private RouteDAO routeDAO = new RouteDAOImpl();
     private VehicleDAO vehicleDAO = new VehicleDAOImpl();
     private DriverDAO driverDAO = new DriverDAOImpl();
+    private SeatDAO seatDAO = new SeatDAOImpl();
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -86,7 +89,7 @@ public class TripController extends HttpServlet {
             request.setAttribute("LIST_ACTIVE_ROUTE", activeRoute);
             request.setAttribute("LIST_ACTIVE_VEHICLE", activeVehicle);
             request.setAttribute("LIST_ACTIVE_DRIVER", activeDriver);
-            request.getRequestDispatcher("/admin/tripTable.jsp").forward(request, response);
+            request.getRequestDispatcher("./tripTable.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }
@@ -111,12 +114,20 @@ public class TripController extends HttpServlet {
             boolean check = tripDAO.addTrip(
                     new Trip(tripID, tripName, Date.valueOf(startdate), 
                      policy, r, v, d,v.getVehicleType().getTotalSeat() , 1));
+            
             if(check){
-                request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                request.setAttribute("tripID", tripID);
-                vehicleDAO.updateVehicle(v);
-                driverDAO.updateDriver(d);
-                showTripTable(request, response);
+                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
+                boolean checkAddSeat = false;
+                for (String s : setMap) {
+                    checkAddSeat = seatDAO.addSeat(tripID,s);
+                }
+                if(checkAddSeat){
+                    vehicleDAO.updateVehicle(v);
+                    driverDAO.updateDriver(d);
+                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                    request.setAttribute("tripID", tripID);
+                    showTripTable(request, response);
+                }
             }
             else{
                 request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
@@ -211,7 +222,7 @@ public class TripController extends HttpServlet {
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(route.getRouteID(), startDay);
             
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
-            request.getRequestDispatcher("/client/route.jsp").forward(request, response);
+            request.getRequestDispatcher("./client/route.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e.toString());
         }

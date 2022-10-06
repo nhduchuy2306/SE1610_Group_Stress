@@ -71,6 +71,7 @@
                                                 <div class="modal-body">
 
                                                     <div class="form-group">                                                      
+                                                        <label for="exampleInputEmail1">Start Location</label>
                                                         <select name="startLocation" class="form-control" data-live-search="true">
                                                             <c:forEach var="start" items="${requestScope.LOCATION_LIST}">
                                                                 <option value="${start.locationID}" data-display="true" data-highlight="false">${start.locationName} (${start.city.cityName})</option>
@@ -79,26 +80,22 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-
+                                                        <label for="exampleInputEmail1">Start Location</label>
                                                         <select name="endLocation" class="form-control" data-live-search="true">
                                                             <c:forEach var="end" items="${requestScope.LOCATION_LIST}">
                                                                 <option value="${end.locationID}" data-display="true" data-highlight="false">${end.locationName} (${end.city.cityName})</option>
                                                             </c:forEach>
-
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Description</label>
-                                                        <textarea style="height: 150px" name="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Description">   
+                                                        <textarea rows="5" type="text"  name="description" class="form-control" id="exampleInputEmail1">   
                                                         </textarea>
                                                     </div>
-
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Status</label>
                                                         <select name="status" class="form-control">
-
                                                             <option value="1" selected>ACTIVE</option>
-
                                                         </select>
                                                     </div>
                                                 </div>
@@ -295,7 +292,7 @@
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Policy</label>
-                                                                                <textarea style="height: 150px" name="policy" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Policy" required>   
+                                                                                <textarea type="text" rows="5" name="policy" class="add-dob form-control" id="exampleInputEmail1">   
                                                                                 </textarea>
                                                                             </div>
                                                                             <div class="form-group">
@@ -307,7 +304,7 @@
                                                                                 <label for="exampleInputEmail1">Vehicle Name: </label>
                                                                                 <select class="form-control form-select" aria-label="Default select example" name="vehicleID">
                                                                                     <c:forEach var="av" items="${requestScope.LIST_ACTIVE_VEHICLE}">
-                                                                                        <option value="${av.vehicleID}">${av.vehicleName}</option>
+                                                                                        <option value="${av.vehicleID}">${av.vehicleName}(Total seat: ${av.vehicleType.totalSeat})</option>
                                                                                     </c:forEach>
                                                                                 </select>
                                                                             </div>

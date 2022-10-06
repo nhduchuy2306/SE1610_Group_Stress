@@ -27,6 +27,11 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>User</span></a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/route?action=show">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Route</span></a>
+    </li>
     <!--    <li class="nav-item">
             <a class="nav-link" href="roleTable.jsp">
                 <i class="fas fa-fw fa-chart-area"></i>
@@ -37,11 +42,7 @@
                 <i class="fas fa-fw fa-chart-area"></i>
                 <span>Order</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="routeTable.jsp">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Route</span></a>
-        </li>-->
+    -->        
 
     <li class="nav-item">
         <a class="nav-link" href="${pageContext.request.contextPath}/admin/VehicleTypeController?action=show">
@@ -69,7 +70,7 @@
             <span>Location</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/trip?action=show">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/trip?action=show">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Trip</span></a>
     </li>
