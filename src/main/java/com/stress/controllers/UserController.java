@@ -132,10 +132,10 @@ public class UserController extends HttpServlet {
         try {
             UserDAO dao = new UserDAOImpl();
             List<User> list = dao.getAllUser();
-            if (!list.isEmpty()) {
+            //if (!list.isEmpty()) {
                 request.setAttribute("LIST_USER", list);
                 url = "./admin/userTable.jsp";
-            }
+            //}
         } catch (Exception e) {
             log("Error at UserController - ViewUser: " + e.toString());
         } finally {

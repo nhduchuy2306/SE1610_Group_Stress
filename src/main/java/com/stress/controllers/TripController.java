@@ -62,7 +62,7 @@ public class TripController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "add":
+                case "Save":
                     addTrip(request,response);
                     break;
                 case "delete":
@@ -111,28 +111,34 @@ public class TripController extends HttpServlet {
             Driver d = driverDAO.getDriverByID(driverID);
             d.setStatus(2);
             
-            boolean check = tripDAO.addTrip(
+//            Trip tripExist=tripDAO.getTripByID(tripID);
+//            if (tripExist == null) {
+                boolean check = tripDAO.addTrip(
                     new Trip(tripID, tripName, Date.valueOf(startdate), 
                      policy, r, v, d,v.getVehicleType().getTotalSeat() , 1));
-            
-            if(check){
-                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
-                boolean checkAddSeat = false;
-                for (String s : setMap) {
-                    checkAddSeat = seatDAO.addSeat(tripID,s);
-                }
-                if(checkAddSeat){
-                    vehicleDAO.updateVehicle(v);
-                    driverDAO.updateDriver(d);
-                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                    request.setAttribute("tripID", tripID);
+                if (check) {
+                    List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
+                    boolean checkAddSeat = false;
+                    for (String s : setMap) {
+                        checkAddSeat = seatDAO.addSeat(tripID, s);
+                    }
+                    if (checkAddSeat) {
+                        vehicleDAO.updateVehicle(v);
+                        driverDAO.updateDriver(d);
+                        request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                        request.setAttribute("tripID", tripID);
+                        showTripTable(request, response);
+                    }
+                } else {
+                    request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
                     showTripTable(request, response);
                 }
-            }
-            else{
-                request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
-                showTripTable(request, response);
-            }
+//            }
+//            else{
+//                request.setAttribute("ID_EXIST", "create-"+tripID);
+//                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+//            }
+            
         } catch (Exception e) {
         }
     }
