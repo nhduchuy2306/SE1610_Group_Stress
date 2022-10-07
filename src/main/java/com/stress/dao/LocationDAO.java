@@ -11,8 +11,8 @@ public interface LocationDAO {
     Location getLocationByName(String locationName) throws SQLException;
     List<Location> getAllLocation() throws SQLException;
     List<Location> searchLocation(String search) throws SQLException;
-    boolean addLocation(int locationID, String locationName,String address,int cityID,boolean status) throws SQLException;
-    boolean checkDuplicateByID(int locationId) throws SQLException;
+    boolean addLocation(String locationName,String address,int cityID,boolean status) throws SQLException;
+    boolean checkDuplicateByName(String locationName) throws SQLException;
     boolean addLocation(Location location) throws SQLException;
     boolean deleteLocation(String locationID) throws SQLException;
     boolean updateLocation(Location location) throws SQLException;

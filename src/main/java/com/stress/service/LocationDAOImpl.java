@@ -167,8 +167,8 @@ public class LocationDAOImpl implements LocationDAO {
         return locationList;
     }
     @Override
-    public boolean addLocation(int locationID, String locationName,String address,int cityID,boolean status) throws SQLException {
-        String add="INSERT INTO tblLocations ([LocationID],[LocationName],[Address],[CityID],[Status]) VALUES (?,?,?,?,?)";
+    public boolean addLocation(String locationName,String address,int cityID,boolean status) throws SQLException {
+        String add="INSERT INTO tblLocations ([LocationName],[Address],[CityID],[Status]) VALUES (?,?,?,?)";
         boolean check=false;
         Connection conn=null;
         PreparedStatement ptm =null;
@@ -176,11 +176,10 @@ public class LocationDAOImpl implements LocationDAO {
             conn=DBConnection.getConnection();
             if(conn!=null){
                 ptm=conn.prepareStatement(add);
-                ptm.setInt(1, locationID);
-                ptm.setString(2, locationName);
-                ptm.setString(3,address );
-                ptm.setInt(4, cityID);
-                ptm.setBoolean(5, status );
+                ptm.setString(1, locationName);
+                ptm.setString(2,address );
+                ptm.setInt(3, cityID);
+                ptm.setBoolean(4, status );
                 check=ptm.executeUpdate()>0? true:false;         
             }
         } catch (Exception e) {
@@ -192,8 +191,8 @@ public class LocationDAOImpl implements LocationDAO {
         return check;
     }
     @Override
-    public boolean checkDuplicateByID(int locationId) throws SQLException{
-        String checkDuplicate = "SELECT [locationID] FROM tblLocations WHERE [locationID]=?";
+    public boolean checkDuplicateByName(String locationName) throws SQLException{
+        String checkDuplicate = "SELECT [LocationName] FROM tblLocations WHERE [LocationName]=?";
         boolean check = true;
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -202,7 +201,7 @@ public class LocationDAOImpl implements LocationDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(checkDuplicate);
-                ptm.setInt(1, locationId);
+                ptm.setString(1, locationName);
                 rs = ptm.executeQuery();
                 if (rs.next()) {
                     check = false;
@@ -225,19 +224,18 @@ public class LocationDAOImpl implements LocationDAO {
     }
     @Override
     public boolean addLocation(Location location) throws SQLException {
-        String register="INSERT INTO tblLocations ([LocationID],[LocationName],[Address],[CityID],[Status]) VALUES (?,?,?,?,?)";
+        String add="INSERT INTO tblLocations ([LocationName],[Address],[CityID],[Status]) VALUES (?,?,?,?)";
         boolean check=false;
         Connection conn=null;
         PreparedStatement ptm =null;
         try {
             conn=DBConnection.getConnection();
             if(conn!=null){
-                ptm=conn.prepareStatement(register);
-                ptm.setInt(1, location.getLocationID());
-                ptm.setString(2, location.getLocationName());
-                ptm.setString(3, location.getAddress());
-                ptm.setInt(4, location.getCity().getCityID());
-                ptm.setBoolean(5, location.isStatus());
+                ptm=conn.prepareStatement(add);
+                ptm.setString(1, location.getLocationName());
+                ptm.setString(2,location.getAddress());
+                ptm.setInt(3, location.getCity().getCityID());
+                ptm.setBoolean(4, location.isStatus());
                 check=ptm.executeUpdate()>0? true:false;         
             }
         } catch (Exception e) {
@@ -293,5 +291,11 @@ public class LocationDAOImpl implements LocationDAO {
             if(conn != null) conn.close();
         }
         return check;
+    }
+    public static void main(String[] args) throws SQLException {
+        LocationDAO dao= new LocationDAOImpl();
+        Location l = new Location(0,"BX Miền Đông mới" , "292 Đinh Bộ Lĩnh, Phường 26, Quận Bình Thạnh, Thành phố Hồ Chí Minh",
+                new CityDAOImpl().getCityByID(58), true);
+        System.out.println(dao.addLocation(l));
     }
 }
