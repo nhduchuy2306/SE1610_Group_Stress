@@ -303,7 +303,7 @@
 
                         <div class="tab-content" id="myTabContent" style="height: 10vh"> 
                             <div class="tab-pane fade show active row" id="flight" role="tabpanel">
-                                <form class="form-wrap col-md-12" style="display: inline-flex" action="trip">
+                                <form class="form-wrap col-md-12" style="display: inline-flex" action="book">
                                     <div id="universe" class="col-md-3 d-flex" style="margin:-35px 0 0 -20px;">
                                         <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
                                         <ul class="select-list-group" id="listone">
@@ -319,10 +319,8 @@
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
-                                                
                                             </li>
                                         </ul>
-                                        
                                     </div>
                                     <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0; cursor:pointer;" >
                                         <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; color: #00b3ee"  onclick="changeData()"></i>

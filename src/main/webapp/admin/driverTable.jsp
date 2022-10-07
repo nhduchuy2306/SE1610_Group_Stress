@@ -24,12 +24,6 @@
 
         <!-- Custom styles for this page -->
         <link href="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-        <style>
-            .showall{
-                visibility: hidden;
-                opacity: 0;
-            }
-        </style>
     </head>
 
     <body id="page-top">
@@ -57,7 +51,17 @@
                                         <button type="button" class="ml-10 btn btn-primary float-right" data-toggle="modal" data-target="#add">
                                             Add Driver 
                                         </button>
-                                        <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px;" class="showall btn btn-primary float-right">Show All</a>
+                                        <%
+                                            String action = request.getParameter("action");
+                                            if(!action.equals("deleteHistory")){
+                                        %>
+                                        <a href="${pageContext.request.contextPath}/driver?action=deleteHistory" style="margin-right: 10px;" class="btn btn-primary float-right">Delete History</a>
+                                        <%}%>
+                                        <%
+                                            if(action.equals("deleteHistory")){
+                                        %>
+                                        <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px;" class="btn btn-primary float-right">Show All</a>
+                                        <%}%>
                                 </div>
 
                                 <div class="add-modal modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,7 +138,11 @@
                                                 <th>Phone Number</th>
                                                 <th>Status</th>
                                                 <th>Modify</th>
+                                                <%
+                                                    if(!action.equals("deleteHistory")){
+                                                %>
                                                 <th>Delete</th>
+                                                <%}%>
                                             </tr>
                                         </thead>
                                         <tbody id="content-data-update">
@@ -160,6 +168,17 @@
                                                             </c:when>
                                                         </c:choose>
                                                     </td>
+                                                    <%if(action.equals("deleteHistory")){%>
+                                                    <td>
+                                                        <form action="driver" method="post">
+                                                            <input type="hidden" name="driverID" value="${d.driverID.trim()}">
+                                                            <button type="submit" class="btn btn-primary" name="action" value="activeDriver">
+                                                                <i class="fa fa-pen"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                    <%}%>
+                                                    <%if(!action.equals("deleteHistory")){%>
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${d.driverID.trim()}">
                                                             <i class="fa fa-pen"></i>
@@ -222,6 +241,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${d.driverID.trim()}">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -235,7 +255,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="driver">
+                                                                    <form action="driver" method="post">
                                                                         <div class="modal-footer">
                                                                             <input type="hidden" name="driverID" value="${d.driverID.trim()}">
                                                                             <button type="submit" name="action" value="delete" class="btn btn-primary">
@@ -248,6 +268,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
+                                                    <%}%>
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
@@ -345,9 +366,6 @@
                     $('input[type="search"]').val('${driverID}').keyup();
                 });
             </c:if>
-            <c:if test="${requestScope.SUCCESS == null}">
-                document.querySelector(".showall").classList.add("showall");
-            </c:if>
 
             var driverID = document.querySelector("input[name=driverID]");
             var driverName = document.querySelector("input[name=driverName]");
@@ -377,7 +395,11 @@
                 driverPic.value = sessionStorage.getItem("driverPic");
                 phoneNumber.value = sessionStorage.getItem("phoneNumber");
             </c:if>
-
+            <c:if test="${requestScope.ERROR!=null}">
+                $(document).ready(function (e) {
+                    $("#showerror").modal('show');
+                });
+            </c:if>
         </script>
     </body>
 </html>

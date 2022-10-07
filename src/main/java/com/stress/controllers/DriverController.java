@@ -5,9 +5,7 @@ import com.stress.dto.Driver;
 import com.stress.dto.DriverError;
 import com.stress.service.DriverDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +39,9 @@ public class DriverController extends HttpServlet {
             case "update":
                 updateDriver(request, response);
                 break;
+            case "activeDriver":
+                activeDriver(request, response);
+                break;
         }
     }
 
@@ -53,6 +54,9 @@ public class DriverController extends HttpServlet {
         switch (action) {
             case "show":
                 showDriverTable(request, response);
+                break;
+            case "deleteHistory":
+                showDeletedDriverTable(request, response);
                 break;
             default:
                 break;
@@ -146,12 +150,19 @@ public class DriverController extends HttpServlet {
         try {
             String driverID = request.getParameter("driverID").trim();
             DriverDAO dao = new DriverDAOImpl();
-            boolean check = dao.deleteDriver(driverID);
-            if (check) {
-                request.setAttribute("SUCCESS", "DELETE DRIVER SUCCESSFULLY");
-                request.getRequestDispatcher("/driver?action=show").forward(request, response);
-            } else {
-                request.setAttribute("ERROR", "CAN NOT DELETE DRIVER");
+            Driver d = dao.getDriverByID(driverID);
+            if(d.getStatus()==2){
+                request.setAttribute("ERROR", "DRIVER IS ONGOING");
+                showDriverTable(request, response);
+            }
+            else{
+                boolean check = dao.deleteDriver(driverID);
+                if (check) {
+                    request.setAttribute("SUCCESS", "DELETE DRIVER SUCCESSFULLY");
+                    showDriverTable(request, response);
+                } else {
+                    request.setAttribute("ERROR", "CAN NOT DELETE DRIVER");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,6 +215,45 @@ public class DriverController extends HttpServlet {
             request.setAttribute("LIST_ALL_DRIVER", list);
             request.getRequestDispatcher("admin/driverTable.jsp").forward(request, response);
         } catch (Exception e) {
+        }
+    }
+
+    private void showDeletedDriverTable(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            DriverDAO dao = new DriverDAOImpl();
+            List<Driver> list = dao.getAllInActiveDriver();
+            if (list != null) {
+                request.setAttribute("LIST_ALL_DRIVER", list);
+                request.getRequestDispatcher("/admin/driverTable.jsp").forward(request, response);
+            } else {
+                showErrorPage(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void activeDriver(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        try {
+            String driverID = request.getParameter("driverID");
+            DriverDAO dao = new DriverDAOImpl();
+            Driver d = dao.getDriverByID(driverID);
+            d.setStatus(1);
+            boolean check = dao.updateDriver(d);
+            if(check){
+                showDriverTable(request, response);
+            }
+            else {
+                showErrorPage(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

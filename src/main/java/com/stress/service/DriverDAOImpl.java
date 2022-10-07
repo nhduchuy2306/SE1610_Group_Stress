@@ -298,4 +298,43 @@ public class DriverDAOImpl implements DriverDAO {
         return list;
     }
 
+    @Override
+    public List<Driver> getAllInActiveDriver() throws SQLException {
+        String sql = "SELECT [DriverID],[DriverName],[DOB],[Sex],[DriverPic],[PhoneNumber],[Status] "
+                + "FROM tblDrivers "
+                + "WHERE [Status] = 0";
+        List<Driver> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            rs = ptm.executeQuery();
+            while (rs.next()) {
+                list.add(new Driver(
+                        rs.getString("DriverID"),
+                        rs.getString("DriverName"),
+                        rs.getDate("DOB"),
+                        rs.getBoolean("Sex"),
+                        rs.getString("DriverPic"),
+                        rs.getString("PhoneNumber"),
+                        rs.getInt("Status")
+                ));
+            }
+        } catch (Exception e) {
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
 }

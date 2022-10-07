@@ -76,7 +76,6 @@
                                                             <c:forEach var="start" items="${requestScope.LOCATION_LIST}">
                                                                 <option value="${start.locationID}" data-display="true" data-highlight="false">${start.locationName} (${start.city.cityName})</option>
                                                             </c:forEach>
-
                                                         </select>
                                                     </div>
                                                     <div class="form-group">

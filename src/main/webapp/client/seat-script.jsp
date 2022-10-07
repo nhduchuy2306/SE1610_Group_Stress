@@ -3,10 +3,11 @@
     var btn_choose_seat = $('.btn-choose-seat');
     console.log(btn_choose_seat);
     var firstSeatLabel = 1;
+    var price = $("input[name=price]").val();
     $(document).ready(function () { 
         for(let i = 0; i < btn_choose_seat.length; i++){
             if(i===0){
-                drawMapSeat(i,['A_1', 'B_1', 'C_4', 'D_5']);
+                drawMapSeat(i,['A_1','B_1', 'C_4', 'D_5']);
             }
             else{
                 drawMapSeat(i,[
@@ -28,20 +29,15 @@
                 "ee_ee",
                 "ee_ee",
                 "ee_ee",
-                "ee___",
+                "ee_ee",
                 "ee_ee",
                 "ee_ee",
                 "ee_ee",
                 "eeeee"
             ],
             seats: {
-//        f: {
-//          price: 100,
-//          classes: "first-class", //your custom CSS class
-//          category: "First Class",
-//        },
                 e: {
-                    price: 70,
+                    price: parseInt(price.trim()),
                     classes: "economy-class", //your custom CSS class
                     category: "Economy Class"
                 }
@@ -69,7 +65,7 @@
                     $(
                             "<li>" +
                             this.settings.id +
-                            ": <b>$" +
+                            ": <b>" +
                             this.data().price +
                             '</b> <a class="cancel-cart-item"></a></li>'
                             )
