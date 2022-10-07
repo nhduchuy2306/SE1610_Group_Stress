@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "LocationController", urlPatterns = {"/location"})
+@WebServlet(name = "LocationController", urlPatterns = {"/admin/location"})
 public class LocationController extends HttpServlet {
 
     @Override
@@ -27,16 +27,16 @@ public class LocationController extends HttpServlet {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
             switch (action) {
-                case "viewLocation":
+                case "view":
                     viewLocation(request, response);
                     break;
-                case "addLocation":
+                case "add":
                     addLocation(request, response);
                     break;
-                case "updateLocation":
+                case "update":
                     updateLocation(request, response);
                     break;
-                case "deleteLocation":
+                case "delete":
                     deleteLocation(request, response);
                     break;
             }
@@ -56,16 +56,16 @@ public class LocationController extends HttpServlet {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
             switch (action) {
-                case "viewLocation":
+                case "view":
                     viewLocation(request, response);
                     break;
-                case "addLocation":
+                case "add":
                     addLocation(request, response);
                     break;
-                case "updateLocation":
+                case "update":
                     updateLocation(request, response);
                     break;
-                case "deleteLocation":
+                case "delete":
                     deleteLocation(request, response);
                     break;
             }
@@ -84,7 +84,7 @@ public class LocationController extends HttpServlet {
             if (!listLocation.isEmpty() && !listCity.isEmpty()) {
                 request.setAttribute("LIST_LOCATION", listLocation);
                 request.setAttribute("LIST_CITY", listCity);
-                url = "./admin/locationTable.jsp";
+                url = "./locationTable.jsp";
             }
         } catch (Exception e) {
             log("Error at LocationController - viewLocation: " + e.toString());
@@ -96,19 +96,17 @@ public class LocationController extends HttpServlet {
     private void addLocation(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String tmpLocationID = request.getParameter("LocationID");
             String locationName = request.getParameter("LocationName");
             String address = request.getParameter("Address");
-            String tmpCityID = request.getParameter("CityID");
+            String tmpCity = request.getParameter("City");
             String tmpStatus = request.getParameter("Status");
             //conversion
-            int locationID=Integer.parseInt(tmpLocationID);
-            int cityID=Integer.parseInt(tmpCityID);
+            int cityID=Integer.parseInt(tmpCity);
             boolean status=Boolean.parseBoolean(tmpStatus);
-           
             LocationDAO dao = new LocationDAOImpl();
-            boolean checkDuplicate = dao.checkDuplicateByID(locationID);
-            boolean check = dao.addLocation(new Location(locationID, locationName,address,new CityDAOImpl().getCityByID(cityID),status));
+            boolean checkDuplicate = dao.checkDuplicateByName(locationName);
+            Location tmp = new Location(0, locationName,address,new CityDAOImpl().getCityByID(cityID),status);
+            boolean check = dao.addLocation(tmp);
             if (checkDuplicate == false) {
                 if (check == true) {
                     viewLocation(request, response);
