@@ -281,6 +281,11 @@
                                                                                 <label for="exampleInputEmail1">Trip ID</label>
                                                                                 <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
                                                                             </div>-->
+                                                                                <input type="text" name="tripID" class="add-dob form-control" id="exampleInputTripID" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
+                                                                                <!--<c:if test="${requestScope.ID_EXIST!=null}">
+                                                                                    <p style="color: red">ID have been existed! </p>
+                                                                                </c:if>-->
+                                                                            </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
                                                                                 <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
@@ -323,6 +328,7 @@
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                             <input type="submit" name="action" value="add" class="btn btn-primary" id="createTrip">
+
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -426,6 +432,7 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/validationTripForm.js"></script>
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS!=null}">
             $(document).ready(function () {
@@ -439,6 +446,11 @@
 //                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
             });
             </c:if>
+//            <c:if test="${requestScope.ID_EXIST!=null}">
+//            $(document).ready(function () {
+ //               $("#${requestScope.ID_EXIST}").modal('show');
+//            });
+//            </c:if>
 //            <c:if test="${requestScope.SUCCESS!=null}">
 //                    $.ajax({
 //                        url:"/ETrans/admin/VehicleController?action=vehicleUpdate",
