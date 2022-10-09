@@ -16,9 +16,11 @@ import com.stress.service.RouteDAOImpl;
 import com.stress.service.SeatDAOImpl;
 import com.stress.service.TripDAOImpl;
 import com.stress.service.VehicleDAOImpl;
+import com.stress.utils.CommonFunction;
 import com.stress.utils.ExcelUtils;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -123,9 +125,13 @@ public class TripController extends HttpServlet {
     private void addTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String tripID = request.getParameter("tripID").trim();
+//            String tripID = request.getParameter("tripID").trim();
+//            String tripID = CommonFunction.generateID("tblTrips", "Trip");
+            String tripID = "T1005";
             String tripName = request.getParameter("tripName").trim();
-            String startdate = request.getParameter("startdate").trim();
+            String startdate = request.getParameter("startdate");
+            String startTime = request.getParameter("startTime");
+            startTime += ":00";
             String policy = request.getParameter("policy").trim();
             String routeID = request.getParameter("routeID").trim();
             String vehicleID = request.getParameter("vehicleID").trim();
@@ -138,6 +144,22 @@ public class TripController extends HttpServlet {
             d.setStatus(2);
 
             
+            Trip trip = new Trip(tripID, tripName, Date.valueOf(startdate), Time.valueOf(startTime), 
+                    policy, r, v, d, v.getVehicleType().getTotalSeat(), 1);
+            
+            boolean check = tripDAO.addTrip(trip);
+            
+            if(check){
+                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
+                boolean checkAddSeat = false;
+                for (String s : setMap) {
+                    checkAddSeat = seatDAO.addSeat(tripID,s);
+                }
+                if(checkAddSeat){
+                    vehicleDAO.updateVehicle(v);
+                    driverDAO.updateDriver(d);
+                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                    request.setAttribute("tripID", tripID);
 //            Trip tripExist=tripDAO.getTripByID(tripID);
 //            if (tripExist == null) {
                 boolean check = tripDAO.addTrip(
@@ -168,6 +190,7 @@ public class TripController extends HttpServlet {
             
 
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -175,20 +198,27 @@ public class TripController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
-            if (tripDAO.checkBookedTicket(tripID)) {
+            Trip trip = tripDAO.getTripByID(tripID);
+            if(tripDAO.checkBookedTicket(tripID)) {
                 request.setAttribute("ERROR", "Cant Delete! This Trip Has Booked Ticket Already!");
                 showTripTable(request, response);
-            } else {
-                if (tripDAO.deleteTrip(tripID)) {
-
-                    request.setAttribute("SUCCESS", "DELETE TRIP SUCCESSFULLY");
-                    showTripTable(request, response);
-                } else {
-                    request.setAttribute("ERROR", "DELETE TRIP SUCCESSFULLY");
-                    showTripTable(request, response);
-                }
+            }else {
+            if(tripDAO.deleteTrip(tripID)){
+                Vehicle v = trip.getVehicle();
+                v.setStatus(1);
+                vehicleDAO.updateVehicle(v);
+                Driver d = trip.getDriver();
+                d.setStatus(1);
+                driverDAO.updateDriver(d);
+                request.setAttribute("SUCCESS", "DELETE TRIP SUCCESSFULLY");
+                showTripTable(request, response);
+            }
+            else{
+                request.setAttribute("ERROR", "DELETE TRIP SUCCESSFULLY");
+                showTripTable(request, response);
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -198,6 +228,7 @@ public class TripController extends HttpServlet {
             String tripID = request.getParameter("tripID").trim();
             String tripName = request.getParameter("tripName").trim();
             String startdate = request.getParameter("startdate").trim();
+            String startTime = request.getParameter("startTime").trim();
             String policy = request.getParameter("policy").trim();
             String routeID = request.getParameter("routeID").trim();
             String vehicleID = request.getParameter("vehicleID").trim();
@@ -213,10 +244,9 @@ public class TripController extends HttpServlet {
             d.setStatus(2);
 
             boolean check = tripDAO.updateTrip(
-                    new Trip(tripID, tripName, Date.valueOf(startdate),
-                            policy, r, v, d, Integer.parseInt(seatRemain), Integer.parseInt(status)));
-
-            if (check) {
+                    new Trip(tripID, tripName, Date.valueOf(startdate), Time.valueOf(startTime),
+                        policy, r, v, d,Integer.parseInt(seatRemain) , Integer.parseInt(status)));
+            
                 request.setAttribute("SUCCESS", "UPDATE TRIP SUCCESSFULLY");
                 if (!oldTrip.getVehicle().getVehicleID().equals(v.getVehicleID())) {
                     Vehicle oldVehicle = oldTrip.getVehicle();

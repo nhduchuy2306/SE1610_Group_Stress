@@ -30,4 +30,6 @@ public class Constants {
     public static String REQUEST_ID = UUID.randomUUID().toString();
     public static String REQUEST_TYPE = "captureWallet";
     public static String EXTRA_DATA = "";
+    
+    
 }
