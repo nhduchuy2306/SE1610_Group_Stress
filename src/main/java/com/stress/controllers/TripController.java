@@ -37,6 +37,9 @@ public class TripController extends HttpServlet {
     private DriverDAO driverDAO = new DriverDAOImpl();
     private SeatDAO seatDAO = new SeatDAOImpl();
 
+    private CityDAO cityDAO = new CityDAOImpl();
+    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -67,8 +70,10 @@ public class TripController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "add":
-                    addTrip(request, response);
+
+                case "Save":
+                    addTrip(request,response);
+
                     break;
                 case "delete":
                     deleteTrip(request, response);
@@ -132,27 +137,36 @@ public class TripController extends HttpServlet {
             Driver d = driverDAO.getDriverByID(driverID);
             d.setStatus(2);
 
-            boolean check = tripDAO.addTrip(
-                    new Trip(tripID, tripName, Date.valueOf(startdate),
-                            policy, r, v, d, v.getVehicleType().getTotalSeat(), 1));
-
-            if (check) {
-                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
-                boolean checkAddSeat = false;
-                for (String s : setMap) {
-                    checkAddSeat = seatDAO.addSeat(tripID, s);
-                }
-                if (checkAddSeat) {
-                    vehicleDAO.updateVehicle(v);
-                    driverDAO.updateDriver(d);
-                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                    request.setAttribute("tripID", tripID);
+            
+//            Trip tripExist=tripDAO.getTripByID(tripID);
+//            if (tripExist == null) {
+                boolean check = tripDAO.addTrip(
+                    new Trip(tripID, tripName, Date.valueOf(startdate), 
+                     policy, r, v, d,v.getVehicleType().getTotalSeat() , 1));
+                if (check) {
+                    List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
+                    boolean checkAddSeat = false;
+                    for (String s : setMap) {
+                        checkAddSeat = seatDAO.addSeat(tripID, s);
+                    }
+                    if (checkAddSeat) {
+                        vehicleDAO.updateVehicle(v);
+                        driverDAO.updateDriver(d);
+                        request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                        request.setAttribute("tripID", tripID);
+                        showTripTable(request, response);
+                    }
+                } else {
+                    request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
                     showTripTable(request, response);
                 }
-            } else {
-                request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
-                showTripTable(request, response);
-            }
+//            }
+//            else{
+//                request.setAttribute("ID_EXIST", "create-"+tripID);
+//                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+//            }
+            
+
         } catch (Exception e) {
         }
     }
@@ -233,13 +247,17 @@ public class TripController extends HttpServlet {
             String to = request.getParameter("to");
 
             String startDay = request.getParameter("start");
-//            Route route = routeDAO.getRouteByStartLocationAndEndLocation(Integer.parseInt(from), Integer.parseInt(to));
-            CityDAO cityDAO = new CityDAOImpl();
+
+            
+
             Route route = routeDAO.getRouteByStartLocationAndEndLocation(cityDAO.getCityIDByName(from), cityDAO.getCityIDByName(to));
 
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(route.getRouteID(), startDay);
 
-            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+            
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip); 
+            
+
             request.getRequestDispatcher("./client/route.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e.toString());

@@ -21,8 +21,60 @@
                     <div id="content">
                     <jsp:include page="topbar.jsp"></jsp:include>
                         <div class="container-fluid">
+                            <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add a Location</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="${pageContext.request.contextPath}/admin/location?action=add" method="POST">
+                                            <div class="form-group">
+                                                <label for="LocationName">Location Name</label>
+                                                <input type="text" name="LocationName" class="form-control" value="${location.locationName}" id="LocationName" placeholder="Enter Location Name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Address">Address</label>
+                                                <input type="text" name="Address" class="form-control" value="${location.address}" id="Address" placeholder="Enter Address">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="City">City</label>
+                                                <select name="City" class="form-control">
+                                                    <c:forEach items="${LIST_CITY}" var="city">
+                                                        <option value="${city.cityID}">${city.cityName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="Status">Status</label>
+                                                <select name="Status" class="form-control">
+                                                    <option value="true" selected>ACTIVE</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="submit" name="action" value="create" class="btn btn-primary">Create</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             <h1 class="h3 mb-2 text-gray-800 text-center font-weight-bold">Location Table</h1>
+                            
                             <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-center align-items-center">
+
+                                        <div>
+                                            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#add">
+                                                Add a Location
+                                            </button>
+                                            <a href="${pageContext.request.contextPath}/admin/location?action=view" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                    </div>
+                                </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -31,7 +83,7 @@
                                                     <th>Location ID</th>
                                                     <th>Location Name</th>
                                                     <th>Address</th>
-                                                    <th>City ID</th>
+                                                    <th>CityID - CityName</th>
                                                     <th>Status</th>
                                                     <th>EDIT</th>
                                                     <th>DELETE</th>
@@ -44,7 +96,7 @@
                                                     <td>${location.locationID}</td>
                                                     <td>${location.locationName}</td>
                                                     <td>${location.address}</td>
-                                                    <td>${location.cityID}</td>
+                                                    <td>${location.city}</td>
                                                     <c:if test="${location.status==true}">
                                                         <td>Active</td>
                                                     </c:if>
@@ -62,12 +114,12 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="${pageContext.request.contextPath}/location?action=updateLocation" method="POST" accept-charset="utf-8">
+                                                                    <form action="${pageContext.request.contextPath}/admin/location?action=update" method="POST" accept-charset="utf-8">
                                                                         <div class="modal-body">
                                                                             <div class="modal-body">
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">Location ID</label>
-                                                                                    <input type="text" name="LocationID" class="form-control" value="${location.locationID}" id="exampleInputEmail1" readonly placeholder="Enter Location ID">
+                                                                                    <input type="text" name="LocationID" class="form-control" value="${location.locationID}" id="exampleInputEmail1" readonly>
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">Location Name</label>
@@ -78,7 +130,7 @@
                                                                                     <input type="text" name="Address" class="form-control" value="${location.address}" id="exampleInputEmail1" placeholder="Enter Address">
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">CityID</label>
+                                                                                    <label for="exampleInputEmail1">City</label>
                                                                                     <select name="CityID" class="form-control">
                                                                                         <c:forEach items="${LIST_CITY}" var="city">
                                                                                             <option value="${city.cityID}">${city.cityName}</option>
@@ -117,7 +169,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="${pageContext.request.contextPath}/location?action=deleteLocation" method="POST" accept-charset="utf-8">
+                                                                    <form action="${pageContext.request.contextPath}/admin/location?action=delete" method="POST" accept-charset="utf-8">
                                                                         <div class="modal-footer">
                                                                             <input type="hidden" name="LocationID" value="${location.locationID}">
                                                                             <button type="submit" name="action" value="delete" class="btn btn-primary">

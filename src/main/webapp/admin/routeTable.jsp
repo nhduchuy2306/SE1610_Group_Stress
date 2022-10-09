@@ -76,7 +76,6 @@
                                                             <c:forEach var="start" items="${requestScope.LOCATION_LIST}">
                                                                 <option value="${start.locationID}" data-display="true" data-highlight="false">${start.locationName} (${start.city.cityName})</option>
                                                             </c:forEach>
-
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
@@ -276,19 +275,22 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="trip" method="post">
+                                                                        <form action="trip" method="post" id="createTripForm">
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip ID</label>
-                                                                                <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
+                                                                                <input type="text" name="tripID" class="add-dob form-control" id="exampleInputTripID" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
+                                                                                <!--<c:if test="${requestScope.ID_EXIST!=null}">
+                                                                                    <p style="color: red">ID have been existed! </p>
+                                                                                </c:if>-->
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
-                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
+                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Date Time</label>
-                                                                                <input type="date" name="startdate" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                                                <input type="date" name="startdate" class="add-dob form-control" id="exampleInputDate" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Policy</label>
@@ -319,7 +321,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="action" value="add" class="btn btn-primary">Save</button>
+                                                                            <input type="submit" name="action" value="Save" class="btn btn-primary" id="createTrip">
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -422,6 +424,7 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/validationTripForm.js"></script>
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS!=null}">
             $(document).ready(function () {
@@ -435,6 +438,11 @@
 //                    window.location.replace("${pageContext.request.contextPath}/driver?action=show");
             });
             </c:if>
+//            <c:if test="${requestScope.ID_EXIST!=null}">
+//            $(document).ready(function () {
+ //               $("#${requestScope.ID_EXIST}").modal('show');
+//            });
+//            </c:if>
 //            <c:if test="${requestScope.SUCCESS!=null}">
 //                    $.ajax({
 //                        url:"/ETrans/admin/VehicleController?action=vehicleUpdate",
@@ -526,6 +534,30 @@
                 document.getElementById("data1").value = document.getElementById("data2").value;
                 document.getElementById("data2").value = tmp;
             }
+        </script>
+        
+        <script>
+        const dayInput=document.getElementById('exampleInputDate');
+       
+        function myFunction(){
+            const currentDate=new Date();
+            let dayCheck=new Date(dayInput.value);
+            if(currentDate>dayCheck){
+                console.log(currentDate<dayCheck);
+                document.getElementById('exampleInputDate').setCustomValidity('Day Start must higher than current day!');
+            }else{
+                document.getElementById('exampleInputDate').setCustomValidity('');
+            }
+            
+        }
+        var inputs = document.querySelectorAll('input:not([type="submit"])');
+
+
+        var submit = document.querySelector('input[type="submit"');
+        var form = document.getElementById('createTripForm');
+
+        submit.addEventListener('click', myFunction);
+        form.addEventListener('submit', myFunction);
         </script>
     </body> 
 </html>

@@ -65,7 +65,7 @@
             <span>Driver</span></a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/location?action=viewLocation">
+        <a class="nav-link" href="${pageContext.request.contextPath}/admin/location?action=view">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Location</span></a>
     </li>

@@ -15,4 +15,5 @@ public interface DriverDAO{
     List<Driver> getDriverByName(String driverName) throws SQLException;
     List<Driver> getAllActiveDriver() throws SQLException;
     List<Driver> getDriverWithLicense() throws SQLException;
+    List<Driver> getAllInActiveDriver() throws SQLException;
 }
