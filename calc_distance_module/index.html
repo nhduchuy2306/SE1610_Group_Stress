@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<body class="container">
+    <div class="m-3">
+        <button class="btn btn-success mb-2" onclick="getDistance('Trường Sơn, Phường 2, Tân Bình, Thành phố Hồ Chí Minh'
+        ,'318/1 Bùi Hữu Nghĩa, Phường 1, Bình Thạnh, Thành phố Hồ Chí Minh')">Get Distance</button>
+        <div class="alert alert-success mb-2" id="result"></div>
+      </div>
+  <script>
+    var api_key='xRKmWEDO-Klnp-dO7uJSfPp6UvyntWZleIa9mNEWE1w'; //HERE Maps API KEY
+    async function getDistance(startLocation,endLocation) {
+        var orgin = await getLatLng(startLocation);
+        var destination = await getLatLng(endLocation);
+        var resultElement = document.getElementById("result");
+        var url = 'https://router.hereapi.com/v8/routes?origin='+orgin+'&destination='+destination+'&return=summary&transportMode=car&apikey='+api_key;
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                  console.log(data)
+                  data.routes.forEach(function (route) {
+                      route.sections.forEach(function (section) {
+                            resultElement.style.display = "block";
+                            resultElement.innerText = "Distance: " + ((section.summary.length > 999) ? 
+                                            (section.summary.length / 1000) + " KM" : section.summary.length + " M") + 
+                                            "\nDuration: " + ((section.summary.duration/60 > 60) ? 
+                                            ((section.summary.duration/60)/60).toFixed(2) + " hours" : (section.summary.duration/60).toFixed(2) + " minutes")
+                  });
+              });
+          })
+    }
+    async function getLatLng(address){
+    const response = await fetch('https://geocode.search.hereapi.com/v1/geocode?q='+address+'&apiKey='+api_key);
+    const data = await response.json();
+    return data["items"][0]["position"].lat+','+data["items"][0]["position"].lng;
+  }
+  </script>
+</body>

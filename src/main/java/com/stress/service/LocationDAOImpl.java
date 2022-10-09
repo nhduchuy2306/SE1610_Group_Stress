@@ -108,7 +108,8 @@ public class LocationDAOImpl implements LocationDAO {
                     int CityID = rs.getInt("CityID");
                     City city = new CityDAOImpl().getCityByID(CityID);
                     boolean status = rs.getBoolean("status");
-                    locationList.add(new Location(locationID, locationName,address,city,status));
+                    Location loc = new Location(locationID, locationName,address,city,status);
+                    locationList.add(loc);
                 }
             }
 
