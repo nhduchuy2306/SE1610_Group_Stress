@@ -66,7 +66,7 @@ CREATE TABLE tblVehicles(
 CREATE TABLE tblDrivers(
     DriverID char(12) PRIMARY KEY,
     DriverName nvarchar(150) NOT NULL,
-    DOB DATE, 
+    DOB DATE,   
     Sex BIT,
     DriverPic nvarchar(300) NOT NULL,
     PhoneNumber char(11),
@@ -85,6 +85,7 @@ CREATE TABLE tblTrips(
     TripID char(5) NOT NULL PRIMARY KEY,
     TripName nvarchar(100),
     StartDateTime DATETIME NOT NULL,
+    StartTime TIME NOT NULL,
     [Policy] nvarchar(2000),
     RouteID INT FOREIGN KEY REFERENCES tblRoutes(RouteID) ON UPDATE CASCADE ON DELETE SET NULL,
     VehicleID char(5) FOREIGN KEY REFERENCES tblVehicles(VehicleID) ON UPDATE CASCADE ON DELETE SET NULL,

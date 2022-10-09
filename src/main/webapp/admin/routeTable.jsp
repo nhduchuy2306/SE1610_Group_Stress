@@ -275,19 +275,23 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="trip" method="post">
+                                                                        <form action="trip" method="post" id="createTripForm">
                                                                         <div class="modal-body">
-                                                                            <div class="form-group">
+<!--                                                                            <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip ID</label>
                                                                                 <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
-                                                                            </div>
+                                                                            </div>-->
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
-                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
+                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Date Time</label>
-                                                                                <input type="date" name="startdate" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                                                <input type="date" name="startdate" class="add-dob form-control" id="exampleInputDate" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Start Time</label>
+                                                                                <input type="time" name="startTime" class="add-dob form-control"  placeholder="Enter Start Date" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Policy</label>
@@ -318,7 +322,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <button type="submit" name="action" value="add" class="btn btn-primary">Save</button>
+                                                                            <input type="submit" name="action" value="add" class="btn btn-primary" id="createTrip">
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -416,6 +420,7 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="${pageContext.request.contextPath}/admin/js/sb-admin-2.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/validationTripForm.js"></script>
         <!-- Page level plugins -->
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -525,6 +530,29 @@
                 document.getElementById("data1").value = document.getElementById("data2").value;
                 document.getElementById("data2").value = tmp;
             }
+        </script>
+        <script>
+        const dayInput=document.getElementById('exampleInputDate');
+       
+        function myFunction(){
+            const currentDate=new Date();
+            let dayCheck=new Date(dayInput.value);
+            if(currentDate>dayCheck){
+                console.log(currentDate<dayCheck);
+                document.getElementById('exampleInputDate').setCustomValidity('Day Start must higher than current day!');
+            }else{
+                document.getElementById('exampleInputDate').setCustomValidity('');
+            }
+            
+        }
+        var inputs = document.querySelectorAll('input:not([type="submit"])');
+
+
+        var submit = document.querySelector('input[type="submit"');
+        var form = document.getElementById('createTripForm');
+
+        submit.addEventListener('click', myFunction);
+        form.addEventListener('submit', myFunction);
         </script>
     </body> 
 </html>
