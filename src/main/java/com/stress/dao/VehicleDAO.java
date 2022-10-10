@@ -16,4 +16,6 @@ public interface VehicleDAO {
     List<Vehicle> searchVehicle(String search) throws SQLException;
     List<Vehicle> getAllVehicle() throws SQLException;
     List<Vehicle> getAllActiveVehicle() throws SQLException;
+    List<Vehicle> getDeleteVehicleHistory() throws SQLException;
+    
 }

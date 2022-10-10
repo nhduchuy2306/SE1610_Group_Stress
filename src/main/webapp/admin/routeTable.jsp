@@ -81,6 +81,7 @@
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Start Location</label>
                                                         <select name="endLocation" class="form-control" data-live-search="true">
+
                                                             <c:forEach var="end" items="${requestScope.LOCATION_LIST}">
                                                                 <option value="${end.locationID}" data-display="true" data-highlight="false">${end.locationName} (${end.city.cityName})</option>
                                                             </c:forEach>
@@ -205,23 +206,51 @@
                                                                                     <input type="text" name="routeID" class="form-control" value="${r.routeID}" id="exampleInputEmail1" readonly placeholder="Enter Vehicle ID">
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Vehicle Name</label>
-                                                                                    <input type="text" name="routeName" class="form-control" value="${r.routeName}" id="exampleInputEmail1" placeholder="Enter Driver Name">
+                                                                                    <label for="exampleInputEmail1"></label>
+                                                                                    <input type="text" name="routeName" class="form-control" value="${r.routeName}" id="exampleInputEmail1" placeholder="Enter Driver Name" readonly="">
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">LicensePlate</label>
-                                                                                    <input type="text" name="startLocation" class="form-control" value="${r.startLocation.getLocationName()}" id="exampleInputEmail1" placeholder="Enter DOB">
+                                                                                    <label for="exampleInputEmail1">Start Location</label>
+                                                                                    <select name="startLocation" class="form-control">
+                                                                                        <option value="${r.startLocation.getLocationID()}">${r.startLocation.getLocationName()}</option>
+                                                                                        <c:forEach items="${LOCATION_LIST}" var="sL">
+
+
+                                                                                            <c:if test="${sL.locationID != r.startLocation.getLocationID()}">
+                                                                                                <option value="${sL.locationID}">${sL.locationName}</option>
+                                                                                            </c:if>
+                                                                                        </c:forEach>
+
+                                                                                    </select>
+
                                                                                 </div>
+
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">End Location</label>
+                                                                                    <select name="endLocation" class="form-control">
+                                                                                        <option value="${r.endLocation.getLocationID()}">${r.endLocation.getLocationName()}</option>
+                                                                                        <c:forEach items="${LOCATION_LIST}" var="eL">
+
+
+                                                                                            <c:if test="${eL.locationID != r.endLocation.getLocationID()}">
+                                                                                                <option value="${eL.locationID}">${eL.locationName}</option>
+                                                                                            </c:if>
+                                                                                        </c:forEach>
+
+                                                                                    </select>
+
+                                                                                </div>       
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">VehicleType</label>
-                                                                                    <input type="text" name="endLocation" class="form-control" value="${r.endLocation.getLocationName()}" id="exampleInputEmail1" placeholder="Enter DOB">
+                                                                                    <input type="text" name="description" class="form-control" value="${r.description}" id="exampleInputEmail1" placeholder="Enter Description">
                                                                                 </div>
 
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">Status</label>
                                                                                     <select name="status" class="form-control">
-                                                                                        <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
                                                                                         <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
+                                                                                        <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
+                                                                                        
 
                                                                                     </select>
                                                                                 </div>
@@ -275,7 +304,7 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                        <form action="trip" method="post" id="createTripForm">
+                                                                    <form action="trip" method="post" id="createTripForm">
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip ID</label>
@@ -440,7 +469,7 @@
             </c:if>
 //            <c:if test="${requestScope.ID_EXIST!=null}">
 //            $(document).ready(function () {
- //               $("#${requestScope.ID_EXIST}").modal('show');
+            //               $("#${requestScope.ID_EXIST}").modal('show');
 //            });
 //            </c:if>
 //            <c:if test="${requestScope.SUCCESS!=null}">
@@ -535,29 +564,29 @@
                 document.getElementById("data2").value = tmp;
             }
         </script>
-        
+
         <script>
-        const dayInput=document.getElementById('exampleInputDate');
-       
-        function myFunction(){
-            const currentDate=new Date();
-            let dayCheck=new Date(dayInput.value);
-            if(currentDate>dayCheck){
-                console.log(currentDate<dayCheck);
-                document.getElementById('exampleInputDate').setCustomValidity('Day Start must higher than current day!');
-            }else{
-                document.getElementById('exampleInputDate').setCustomValidity('');
+            const dayInput = document.getElementById('exampleInputDate');
+
+            function myFunction() {
+                const currentDate = new Date();
+                let dayCheck = new Date(dayInput.value);
+                if (currentDate > dayCheck) {
+                    console.log(currentDate < dayCheck);
+                    document.getElementById('exampleInputDate').setCustomValidity('Day Start must higher than current day!');
+                } else {
+                    document.getElementById('exampleInputDate').setCustomValidity('');
+                }
+
             }
-            
-        }
-        var inputs = document.querySelectorAll('input:not([type="submit"])');
+            var inputs = document.querySelectorAll('input:not([type="submit"])');
 
 
-        var submit = document.querySelector('input[type="submit"');
-        var form = document.getElementById('createTripForm');
+            var submit = document.querySelector('input[type="submit"');
+            var form = document.getElementById('createTripForm');
 
-        submit.addEventListener('click', myFunction);
-        form.addEventListener('submit', myFunction);
+            submit.addEventListener('click', myFunction);
+            form.addEventListener('submit', myFunction);
         </script>
     </body> 
 </html>
