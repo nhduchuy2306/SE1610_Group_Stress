@@ -281,11 +281,6 @@
                                                                                 <label for="exampleInputEmail1">Trip ID</label>
                                                                                 <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
                                                                             </div>-->
-                                                                                <input type="text" name="tripID" class="add-dob form-control" id="exampleInputTripID" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
-                                                                                <!--<c:if test="${requestScope.ID_EXIST!=null}">
-                                                                                    <p style="color: red">ID have been existed! </p>
-                                                                                </c:if>-->
-                                                                            </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
                                                                                 <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>

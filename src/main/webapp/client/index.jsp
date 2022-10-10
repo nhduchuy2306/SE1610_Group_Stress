@@ -95,7 +95,6 @@
                     </div>
                     <div class="modal-body col-lg-12">
                         <div class="row">
-
                             <div class="col-lg-12">
                                 <div class="p-2">
                                     <form class="registration user" id="registration" action="${pageContext.request.contextPath}/user" method="post">
