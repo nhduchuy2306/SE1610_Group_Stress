@@ -277,8 +277,10 @@
                                                                     </div>
                                                                         <form action="trip" method="post" id="createTripForm">
                                                                         <div class="modal-body">
-                                                                            <div class="form-group">
+<!--                                                                            <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip ID</label>
+                                                                                <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
+                                                                            </div>-->
                                                                                 <input type="text" name="tripID" class="add-dob form-control" id="exampleInputTripID" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
                                                                                 <!--<c:if test="${requestScope.ID_EXIST!=null}">
                                                                                     <p style="color: red">ID have been existed! </p>
@@ -291,6 +293,10 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Date Time</label>
                                                                                 <input type="date" name="startdate" class="add-dob form-control" id="exampleInputDate" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Start Time</label>
+                                                                                <input type="time" name="startTime" class="add-dob form-control"  placeholder="Enter Start Date" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Policy</label>
@@ -321,7 +327,8 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <input type="submit" name="action" value="Save" class="btn btn-primary" id="createTrip">
+                                                                            <input type="submit" name="action" value="add" class="btn btn-primary" id="createTrip">
+
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -419,6 +426,7 @@
         <script src="${pageContext.request.contextPath}/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="${pageContext.request.contextPath}/admin/js/sb-admin-2.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/validationTripForm.js"></script>
         <!-- Page level plugins -->
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
@@ -535,7 +543,6 @@
                 document.getElementById("data2").value = tmp;
             }
         </script>
-        
         <script>
         const dayInput=document.getElementById('exampleInputDate');
        
