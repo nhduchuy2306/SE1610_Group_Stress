@@ -157,6 +157,13 @@ public class TripController extends HttpServlet {
                 request.setAttribute("ID_EXIST", "create-" + tripID);
                 request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
             }
+//            }
+//            else{
+//                request.setAttribute("ID_EXIST", "create-"+tripID);
+//                request.setAttribute("action", "show");
+//                request.getRequestDispatcher("${pageContext.request.contextPath}/admin/route").forward(request, response);
+//            }
+            
         } catch (Exception e) {
         }
     }
@@ -165,6 +172,7 @@ public class TripController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
+
             Trip trip = tripDAO.getTripByID(tripID);
 
             if (tripDAO.checkBookedTicket(tripID)) {

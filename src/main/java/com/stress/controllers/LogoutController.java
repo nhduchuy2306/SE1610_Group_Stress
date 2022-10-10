@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class LogoutController extends HttpServlet {
 
     static final String ERROR="./client/error.jsp";
-    static final String SUCCESS="./client/index.jsp";
+    static final String SUCCESS="./home";
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
