@@ -149,6 +149,7 @@ public class TripController extends HttpServlet {
             
             boolean check = tripDAO.addTrip(trip);
             
+
             if(check){
                 List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
                 boolean checkAddSeat = false;
@@ -185,7 +186,8 @@ public class TripController extends HttpServlet {
 //            }
 //            else{
 //                request.setAttribute("ID_EXIST", "create-"+tripID);
-//                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+//                request.setAttribute("action", "show");
+//                request.getRequestDispatcher("${pageContext.request.contextPath}/admin/route").forward(request, response);
 //            }
             
 
@@ -198,6 +200,7 @@ public class TripController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
+
             Trip trip = tripDAO.getTripByID(tripID);
             if(tripDAO.checkBookedTicket(tripID)) {
                 request.setAttribute("ERROR", "Cant Delete! This Trip Has Booked Ticket Already!");

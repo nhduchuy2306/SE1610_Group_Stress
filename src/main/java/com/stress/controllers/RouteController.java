@@ -31,7 +31,13 @@ public class RouteController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try {
-            String action = request.getParameter("action");
+//            String action=null;
+//            if(request.getAttribute("action")!=null){
+//                action=(String)request.getAttribute("action");
+//            }else{
+                String action = request.getParameter("action");
+//            }
+            
             System.out.println("action:" + action);
             switch (action) {
                 case "show":
