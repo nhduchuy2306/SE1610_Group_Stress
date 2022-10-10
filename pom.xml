@@ -88,13 +88,16 @@
             <artifactId>javax.json-api</artifactId>
             <version>1.1.4</version>
         </dependency>
-        
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>4.1.0</version>
         </dependency>
-        
+        <dependency>
+            <groupId>com.squareup.okhttp</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>2.7.5</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
