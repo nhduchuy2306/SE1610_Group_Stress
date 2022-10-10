@@ -163,6 +163,7 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="nameInput"
                                                    placeholder="User Name" name="userName" required="" value="${requestScope.USER_TMP.username}">
+                                            <p style="color: red;margin: 10px 0 0 20px;" id="nameError"></p>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
@@ -182,6 +183,7 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="InputEmail"
                                                    placeholder="Email Address" name="email" required="" value="${requestScope.USER_TMP.email}">
+                                            <p style="color: red;margin: 10px 0 0 20px;" id="emailError"></p>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="InputAddress"
@@ -190,22 +192,25 @@
                                         <div class="form-group">
                                             <input type="number" class="form-control form-control-user" id="InputPhoneNum"
                                                    placeholder="Phone Number" name="phoneNum" required="" value="${requestScope.USER_TMP.phoneNumber}">
+                                            <p style="color: red;margin: 10px 0 0 20px;" id="phoneError"></p>
                                         </div>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="userIDRegister"
                                                    placeholder="Account" value="${requestScope.USER_TMP.userID}" name="userID" required="">
-                                            <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_USERID}</p>
+                                            <p style="color: red;margin: 10px 0 0 20px;" id="userIDError">${requestScope.ERROR_USERID}</p>
                                         </div>
                                         <p style="color: red; font-size: 20px;"><c:out value="${ERROR}"></c:out></p>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     <input type="password" class="form-control form-control-user"
                                                            id="passwordRegister" placeholder="Password" name="password" required="" value="${requestScope.USER_TMP.password}">
-                                                </div>
+                                                <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword"></p>
+                                            </div>
 
                                                 <div class="col-sm-6">
                                                     <input type="password" class="form-control form-control-user"
                                                            id="password_repeat" placeholder="Repeat Password" name="repeatPassword" required=""value="${requestScope.USER_TMP.password}">
+                                                    <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword"></p>
                                                 </div> 
                                             </div>
                                             <div class="form-group">
@@ -219,7 +224,6 @@
                                                 <i class="fab fa-google fa-fw"></i> Login with Google
                                             </a>
                                         </form>
-
                                 </div>
                             </div>
                         </div>
@@ -248,7 +252,6 @@
                                 <div class="col-lg-12">
                                     <div class="p-5">
                                         <div class="text-center" style="margin-top: -10px;">
-<!--                                            <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>-->
                                                 <p class="mb-4">We get it, stuff happens. Just enter your account address below
                                                 and we'll send your new password to email!</p>
                                         </div>
@@ -275,7 +278,43 @@
             </div>
         
         <!--End Forgot form-->
+        <!-- Confirm email-->
         
+        <div class="modal fade comfirmEmail" id="confirmEmail" tabindex="-1" style="">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title caps"><strong>Confirm Email</strong></h4>
+                        </div>
+                        <div class="modal-body col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <div class="text-center" style="margin-top: -10px;">
+                                                <p class="mb-4">Please check your email!</p>
+                                        </div>
+                                        <form class="user" action="${pageContext.request.contextPath}/user">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control form-control-user"
+                                                       id="exampleInputEmail" aria-describedby="emailHelp"
+                                                       placeholder="Enter Code . . ." name="codeEmail" required="">
+                                            </div>
+                                            <p style="color: red; font-size: 20px;">${requestScope.ERROR_CODE}</p>
+                                            <input type="submit" name="action" value="Confirm" class="btn btn-primary btn-user btn-block">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="margin-top: -40px;">
+                            <button style="margin-left: auto;margin-right: auto;"
+                                    type="button" class="modal-button btn btn-info" data-toggle="modal" data-target="#registerForm" data-dismiss="modal">Back to Register Form!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <!--End confirm email-->
         <!-- #header -->
         <!-- start banner Area -->
         <section class="banner-area relative">
@@ -751,6 +790,7 @@
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
         
 <!--        test-->
@@ -775,6 +815,13 @@
             <script>
             $(window).load(function () {
                 $('#demo-2').modal('show');
+            });
+            </script>
+        </c:if>
+        <c:if test="${requestScope.CHECK_MAIL!=null}">
+            <script>
+            $(window).load(function () {
+                $('#confirmEmail').modal('show');
             });
             </script>
         </c:if>

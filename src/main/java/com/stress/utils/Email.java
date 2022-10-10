@@ -28,7 +28,7 @@ import javax.mail.internet.MimeMultipart;
  */
 public class Email {
 
-    public static boolean sendEmail(String email, String newPassword) {
+    public static boolean sendEmail(String email, String code,String content,String subject) {
         boolean test = false;
 
         String toEmail = email;
@@ -60,8 +60,8 @@ public class Email {
             mess.setRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 
             //set email subject
-            mess.setSubject("Reset Password");
-            String message = "New password is "+ newPassword;
+            mess.setSubject(subject);
+            String message = content+ code;
             mess.setText(message, "utf-8");
             Transport.send(mess);
             test = true;

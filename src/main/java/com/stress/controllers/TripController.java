@@ -112,7 +112,7 @@ public class TripController extends HttpServlet {
             Driver d = driverDAO.getDriverByID(driverID);
             d.setStatus(2);
             
-//            Trip tripExist=tripDAO.getTripByID(tripID);
+            Trip tripExist=tripDAO.getTripByID(tripID);
 //            if (tripExist == null) {
                 boolean check = tripDAO.addTrip(
                     new Trip(tripID, tripName, Date.valueOf(startdate), 
@@ -137,7 +137,8 @@ public class TripController extends HttpServlet {
 //            }
 //            else{
 //                request.setAttribute("ID_EXIST", "create-"+tripID);
-//                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+//                request.setAttribute("action", "show");
+//                request.getRequestDispatcher("${pageContext.request.contextPath}/admin/route").forward(request, response);
 //            }
             
         } catch (Exception e) {
@@ -148,19 +149,18 @@ public class TripController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
-            if(tripDAO.checkBookedTicket(tripID)) {
+            if (tripDAO.checkBookedTicket(tripID)) {
                 request.setAttribute("ERROR", "Cant Delete! This Trip Has Booked Ticket Already!");
                 showTripTable(request, response);
-            }else {
-            if(tripDAO.deleteTrip(tripID)){
-                
-                request.setAttribute("SUCCESS", "DELETE TRIP SUCCESSFULLY");
-                showTripTable(request, response);
-            }
-            else{
-                request.setAttribute("ERROR", "DELETE TRIP SUCCESSFULLY");
-                showTripTable(request, response);
-            }
+            } else {
+                if (tripDAO.deleteTrip(tripID)) {
+
+                    request.setAttribute("SUCCESS", "DELETE TRIP SUCCESSFULLY");
+                    showTripTable(request, response);
+                } else {
+                    request.setAttribute("ERROR", "DELETE TRIP SUCCESSFULLY");
+                    showTripTable(request, response);
+                }
             }
         } catch (Exception e) {
         }

@@ -181,8 +181,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean registerNewUSer(String userID,String userName,String password,String email,String DOB,String address,
-        String phoneNumber,String sex) throws SQLException {
+    public boolean registerNewUSer(User user) throws SQLException {
             String register="INSERT INTO tblUsers(UserID,Username,[Password]"
                      + ",Email,DOB,[Address],PhoneNumber,Sex,RoleID,AccountBalance,[Status]) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
@@ -193,14 +192,14 @@ public class UserDAOImpl implements UserDAO {
             conn=DBConnection.getConnection();
             if(conn!=null){
                 ptm=conn.prepareStatement(register);
-                ptm.setString(1, userID);
-                ptm.setString(2, userName);
-                ptm.setString(3, password);
-                ptm.setString(4, email);
-                ptm.setString(5, DOB);
-                ptm.setString(6, address);
-                ptm.setString(7, phoneNumber);
-                ptm.setString(8, sex);
+                ptm.setString(1, user.getUserID());
+                ptm.setString(2, user.getUsername());
+                ptm.setString(3, user.getPassword());
+                ptm.setString(4, user.getEmail());
+                ptm.setDate(5, user.getDob());
+                ptm.setString(6, user.getAddress());
+                ptm.setString(7, user.getPhoneNumber());
+                ptm.setBoolean(8, user.isSex());
                 ptm.setString(9, "1");
                 ptm.setDouble(10, 0);
                 ptm.setInt(11, User.ACTIVE_NORMAL);

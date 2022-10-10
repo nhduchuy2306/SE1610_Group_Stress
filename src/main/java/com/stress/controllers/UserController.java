@@ -35,9 +35,30 @@ public class UserController extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         try {
+            this.doPost(request, response);
+        } catch (Exception e) {
+            log("Error at UserController-doGet: " + e.toString());
+        }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        try {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
             switch (action) {
+                case "RegisterAccount":
+                    sendCode(request,response);
+                    break;
+                case "Update":
+                    updateUser(request, response);
+                    break;
+                case "Login":
+                    loginUser(request, response);
+                    break;
                 case "viewUser":
                     viewUser(request, response);
                     break;
@@ -56,29 +77,8 @@ public class UserController extends HttpServlet {
                 case "Get Password by Email":
                     updatePassword(request, response);
                     break;
-            }
-        } catch (Exception e) {
-            log("Error at UserController-doGet: " + e.toString());
-        }
-
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        try {
-            String action = request.getParameter("action");
-            System.out.println("action:" + action);
-            switch (action) {
-                case "RegisterAccount":
+                case "Confirm":
                     registerUser(request, response);
-                    break;
-                case "Update":
-                    updateUser(request, response);
-                    break;
-                case "Login":
-                    loginUser(request, response);
                     break;
             }
         } catch (Exception e) {
@@ -88,36 +88,24 @@ public class UserController extends HttpServlet {
 
     private void registerUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url = "./client/index.jsp";
+        String url = "/home";
         try {
-            String userName = request.getParameter("userName");
-            String birthday = request.getParameter("birthday");
-            Date date = Date.valueOf(birthday);
-            String gender = request.getParameter("gender");
-            boolean sex = false;
-            if (gender.equals("1")) {
-                sex = true;
-            }
-            String email=request.getParameter("email");
-            String address=request.getParameter("address");
-            String phoneNum=request.getParameter("phoneNum");
-            String userID=request.getParameter("userID");
-            String password=request.getParameter("password");
-            String hashPassword=Hash.hash(password);
-            Role role=new Role("1", "User");
+            HttpSession session=request.getSession();
+            String userCode=request.getParameter("codeEmail");
+            String code=(String) session.getAttribute("CODE");
+            
+            User userRegister=(User) session.getAttribute("USER_REGISTER");
             UserDAO dao=new UserDAOImpl();
-            User userInfor=new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
-            //boolean checkDuplicate=dao.checkDuplicateByID(userID,email);
-            if(dao.getUserByID(userID)==null){
-               //if (checkDuplicate == true) {
-                    if (dao.registerNewUSer(userID, userName, hashPassword, email, birthday, address, phoneNum, gender)) {
-                        request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
-                        url = "./client/index.jsp";
-                    }
-                //}
-           }else{
-            request.setAttribute("USER_TMP", userInfor);
-            request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
+            if(code.equals(userCode)){
+                if (dao.registerNewUSer(userRegister)) {
+                    request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
+                    session.removeAttribute("CODE");
+                    session.removeAttribute("USER_REGISTER");
+                    url = "/home";
+                }
+            }
+            else{
+            request.setAttribute("ERROR_CODE", "Your code is not correct!");
         }
         } catch (Exception e) {
             log("Error at UserController - Register:" + e.toString());
@@ -204,7 +192,7 @@ public class UserController extends HttpServlet {
                         HttpSession session = request.getSession();
                         session.setAttribute("LOGIN_USER", loginUser);
                         if (loginUser.getRole().getRoleID().equals("1")) {
-                            url = "./client/index.jsp";
+                            url = "/home";
                         } else {
                             url = "./admin/index.jsp";
                         }
@@ -288,7 +276,7 @@ public class UserController extends HttpServlet {
 
     private void updatePassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url = "./client/index.jsp";
+        String url = "/home";
         try {
             UserDAO dao = new UserDAOImpl();
             String userID=request.getParameter("userID");
@@ -299,7 +287,7 @@ public class UserController extends HttpServlet {
             if(user!=null){
                 boolean check=dao.updatePassword(userID, hashPassword, user.getEmail());
                 if(check){
-                    boolean checkSend=Email.sendEmail(user.getEmail(), password);
+                    boolean checkSend=Email.sendEmail(user.getEmail(), password,"New password is ","Reset Password");
                     if(checkSend){
                         request.setAttribute("SUCCESS", "New password have been sent!");
                     }
@@ -309,6 +297,48 @@ public class UserController extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at UserController - updatePassword: "+ e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+
+    private void sendCode(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        String url = "/home";
+        try {
+            String userName = request.getParameter("userName");
+            String birthday = request.getParameter("birthday");
+            Date date = Date.valueOf(birthday);
+            String gender = request.getParameter("gender");
+            boolean sex = false;
+            if (gender.equals("1")) {
+                sex = true;
+            }
+            String email=request.getParameter("email");
+            String address=request.getParameter("address");
+            String phoneNum=request.getParameter("phoneNum");
+            String userID=request.getParameter("userID");
+            String password=request.getParameter("password");
+            String hashPassword=Hash.hash(password);
+            Role role=new Role("1", "User");
+            UserDAO dao=new UserDAOImpl();
+            User userRegister=new User(userID, userName, hashPassword, email, date, address, phoneNum, sex, role, "0", 1);
+            User userInfor=new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
+            HttpSession session=request.getSession();
+            request.setAttribute("USER_TMP", userInfor);
+            if(dao.getUserByID(userID)==null){
+                    String code=ContentIdGenerator.getRandomWord(7);
+                    boolean sendCode=Email.sendEmail(email, code, "Verify code: ","Vetify Email");
+                    if(sendCode){
+                        session.setAttribute("USER_REGISTER", userRegister);
+                        session.setAttribute("CODE", code);
+                        request.setAttribute("CHECK_MAIL","mail");
+                    }
+           }else{
+            request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
+        }
+        } catch (Exception e) {
+            log("Error at UserController - Register:" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
