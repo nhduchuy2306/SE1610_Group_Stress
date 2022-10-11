@@ -690,13 +690,11 @@ INSERT [dbo].[tblVehicles] ([VehicleID], [VehicleName], [LicensePlate], [Vehicle
 GO
 SET IDENTITY_INSERT [dbo].[tblVehicleTypes] ON 
 GO
-INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (1, N'Xe 24 chỗ', 24)
+INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (1, N'Xe 16 chỗ', 16)
 GO
-INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (2, N'Xe 22 chỗ', 22)
+INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (2, N'Xe 29 chỗ', 29)
 GO
-INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (3, N'Xe 34 chỗ', 34)
-GO
-INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (4, N'Xe 42 chỗ', 42)
+INSERT [dbo].[tblVehicleTypes] ([VehicleTypeID], [VehicleTypeName], [TotalSeat]) VALUES (3, N'Xe 45 chỗ', 45)
 GO
 SET IDENTITY_INSERT [dbo].[tblVehicleTypes] OFF
 GO
