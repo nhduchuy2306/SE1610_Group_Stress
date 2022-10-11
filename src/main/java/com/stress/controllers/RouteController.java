@@ -1,9 +1,7 @@
 package com.stress.controllers;
 
-import com.stress.dao.DriverDAO;
 import com.stress.dao.LocationDAO;
 import com.stress.dao.RouteDAO;
-import com.stress.dao.VehicleDAO;
 import com.stress.dto.City;
 import com.stress.dto.Driver;
 import com.stress.dto.Location;
@@ -194,7 +192,7 @@ public class RouteController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try {
             String tmpRouteID = request.getParameter("RouteID");
-            String RouteName = request.getParameter("RouteName");
+            
             String startLocID = request.getParameter("StartLocation");
             String endLocID = request.getParameter("EndLocation");
             String Description = request.getParameter("Description");
@@ -206,12 +204,13 @@ public class RouteController extends HttpServlet {
             LocationDAO LDAO = new LocationDAOImpl();
             Location StartLocation = LDAO.getLocationById(sLID);
             Location EndLocation = LDAO.getLocationById(eLID);
+            String RouteName = StartLocation.getLocationName() + "_" + EndLocation.getLocationName();
             boolean Status = Boolean.parseBoolean(tmpStatus);
             //===========================================================//
             RouteDAO dao = new RouteDAOImpl();
             boolean checkUpdate = dao.updateRoute(RouteID, RouteName, StartLocation, EndLocation, Description, Status);
             if (checkUpdate) {
-                request.setAttribute("ROUTE_ID", RouteID);
+                request.setAttribute("ROUTE_ID", RouteName);
                 viewRoute(request, response);
             }
         } catch (Exception e) {

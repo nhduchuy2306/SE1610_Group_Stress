@@ -53,6 +53,7 @@
                                             Add Vehicle
                                         </button>
                                         <a href="${pageContext.request.contextPath}/admin/VehicleController?action=show" style="margin-right: 10px" class="btn btn-primary float-right">Show All</a>
+                                    <a href="${pageContext.request.contextPath}/admin/VehicleController?action=showDelete" style="margin-right: 10px" class="btn btn-primary float-right">Delete History</a>
                                 </div>
                                 <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -118,7 +119,10 @@
                                                 <th>Vehicle Type</th>
                                                 <th>Status</th>
                                                 <th>Modify</th>
-                                                <th>Delete</th>
+                                                <th>
+                                                    <c:if test="${requestScope.DELETE_HISTORY == null}"> Delete </c:if>
+                                                    <c:if test="${requestScope.DELETE_HISTORY != null}"> Recover </c:if>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody id="content-data-update">
@@ -199,30 +203,62 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${v.vehicleID}">
-                                                            <i class="fa fa-trash" aria-hidden="true"></i>
-                                                        </button>
-                                                        <div class="modal fade" id="delete-${v.vehicleID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">Delete Vehice ${v.vehicleName}</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
-                                                                    </div>
-                                                                    <form action="VehicleController">
-                                                                        <div class="modal-footer">
-                                                                            <input type="hidden" name="vehicleID" value="${v.vehicleID}">
-                                                                            <button type="submit" name="action" value="delete" class="btn btn-primary">
-                                                                                Delete
+
+
+                                                        <c:if test="${requestScope.DELETE_HISTORY != null}"> 
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#recover-${v.vehicleID}">
+                                                                <i class="fa fa-solid fa-arrow-up" aria-hidden="true"></i>
+                                                            </button>
+
+                                                            <div class="modal fade" id="recover-${v.vehicleID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Recover Vehice ${v.vehicleName}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
                                                                             </button>
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                         </div>
-                                                                    </form>
+                                                                            <form action="VehicleController" method="POST">
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="vehicleID" value="${v.vehicleID}">
+                                                                                <button type="submit" name="action" value="recover" class="btn btn-primary">
+                                                                                    Recover
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </c:if>
+                                                        <c:if test="${requestScope.DELETE_HISTORY == null}">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${v.vehicleID}">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </button>
+
+                                                            <div class="modal fade" id="delete-${v.vehicleID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">Delete Vehice ${v.vehicleName}</h5>
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <form action="VehicleController">
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="vehicleID" value="${v.vehicleID}">
+                                                                                <button type="submit" name="action" value="delete" class="btn btn-primary">
+                                                                                    Delete
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </c:if>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -413,7 +449,7 @@
                     $('input[type="search"]').keyup(function () {
                         table.draw();
                     });
-                 $('input[type="search"]').val('${VEHICLE_ID}').keyup();
+                    $('input[type="search"]').val('${VEHICLE_ID}').keyup();
                 });
             </c:if>
         </script>
