@@ -39,7 +39,7 @@
             rel="stylesheet">
         
 <!--        test-->
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/datalist.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/datalist2.css">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
         <style>
             datalist {
@@ -97,15 +97,15 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="p-2">
-                                    <form class="registration user" id="registration" action="${pageContext.request.contextPath}/user" method="post">
+                                    <form class="registration user" id="registration" action="${pageContext.request.contextPath}/user" method="post" >
                                     <div class="form-group">
                                         <input type="text" class="form-control form-control-user"
-                                               id="userID" aria-describedby="emailHelp"
+                                               id="userID" aria-describedby="emailHelp"autocomplete="off"
                                                placeholder="Enter Account..." name="userID" oninput="checkUserID()"value="${requestScope.USERID}">
                                         <p style="color: red;margin: 10px 0 0 20px;" id="error">${requestScope.ERROR_LOGIN1}</p>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user"
+                                        <input type="password" class="form-control form-control-user"autocomplete="off"
                                                id="password" placeholder="Password" name="password" oninput="checkPassword()" >
                                         <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_LOGIN2}</p>
                                     </div>
@@ -161,13 +161,13 @@
                                     <form class="user" action="${pageContext.request.contextPath}/user" method="post" id="FromRegistration">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user" id="nameInput"
-                                                   placeholder="User Name" name="userName" required="" value="${requestScope.USER_TMP.username}">
+                                                   placeholder="User Name" name="userName" required="" value="${requestScope.USER_TMP.username}" autocomplete="off">
                                             <p style="color: red;margin: 10px 0 0 20px;" id="nameError"></p>
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <input type="date" class="form-control form-control-user" id="exampleFirstName"
-                                                       placeholder="Birthday" name="birthday" value="${requestScope.USER_TMP.dob}" required="">
+                                                       placeholder="Birthday" name="birthday" value="${requestScope.USER_TMP.dob}" required="" autocomplete="off">
                                             </div>
                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                 <select class="form-select" style="width: 100%; height:
@@ -180,28 +180,28 @@
                                             </div>
                                         </div>                   
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="InputEmail"
+                                            <input type="email" class="form-control form-control-user" id="InputEmail" autocomplete="off"
                                                    placeholder="Email Address" name="email" required="" value="${requestScope.USER_TMP.email}">
                                             <p style="color: red;margin: 10px 0 0 20px;" id="emailError"></p>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="InputAddress"
+                                            <input type="text" class="form-control form-control-user" id="InputAddress" autocomplete="off"
                                                    placeholder="Address" name="address" required="" value="${requestScope.USER_TMP.address}">
                                         </div>
                                         <div class="form-group">
-                                            <input type="number" class="form-control form-control-user" id="InputPhoneNum"
+                                            <input type="number" class="form-control form-control-user" id="InputPhoneNum" autocomplete="off"
                                                    placeholder="Phone Number" name="phoneNum" required="" value="${requestScope.USER_TMP.phoneNumber}">
                                             <p style="color: red;margin: 10px 0 0 20px;" id="phoneError"></p>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="userIDRegister"
+                                            <input type="text" class="form-control form-control-user" id="userIDRegister" autocomplete="off"
                                                    placeholder="Account" value="${requestScope.USER_TMP.userID}" name="userID" required="">
                                             <p style="color: red;margin: 10px 0 0 20px;" id="userIDError">${requestScope.ERROR_USERID}</p>
                                         </div>
                                         <p style="color: red; font-size: 20px;"><c:out value="${ERROR}"></c:out></p>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input type="password" class="form-control form-control-user"
+                                                    <input type="password" class="form-control form-control-user" autocomplete="off"
                                                            id="passwordRegister" placeholder="Password" name="password" required="" value="${requestScope.USER_TMP.password}">
                                                 <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword"></p>
                                             </div>
@@ -257,7 +257,7 @@
                                         <form class="user" action="${pageContext.request.contextPath}/user">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="exampleInputEmail" aria-describedby="emailHelp"
+                                                       id="exampleInputEmail" aria-describedby="emailHelp" autocomplete="off"
                                                        placeholder="Enter Your Account ..." name="userID" required="">
                                             </div>
                                             <p style="color: #28fe09; font-size: 20px;">${requestScope.SUCCESS}</p>
@@ -295,7 +295,7 @@
                                         <form class="user" action="${pageContext.request.contextPath}/user">
                                             <div class="form-group">
                                                 <input type="text" class="form-control form-control-user"
-                                                       id="exampleInputEmail" aria-describedby="emailHelp"
+                                                       id="exampleInputEmail" aria-describedby="emailHelp" autocomplete="off"
                                                        placeholder="Enter Code . . ." name="codeEmail" required="">
                                             </div>
                                             <p style="color: red; font-size: 20px;">${requestScope.ERROR_CODE}</p>
@@ -342,42 +342,18 @@
                         <div class="tab-content" id="myTabContent" style="height: 10vh"> 
                             <div class="tab-pane fade show active row" id="flight" role="tabpanel">
                                 <form class="form-wrap col-md-12" style="display: inline-flex" action="book">
-                                    <div id="universe" class="col-md-3 d-flex" style="margin:-35px 0 0 -20px;">
-                                        <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
+                                    <div id="universe" class="col-md-7 d-flex" style="margin:-39px 0 0 -20px;">
+                                        <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 15px;color: #36b9cc"></i>
                                         <ul class="select-list-group" id="listone">
                                             <li>
                                                 <div class="col-md-12">
                                                     <div>
-                                                        <input type="text" class="select-list-group__search" placeholder="From" id="data1"
-                                                               style="font-size: 25px" name="from"/>
+                                                        <input type="text" class="select-list-group__search" placeholder="Place . . ." id="data1" autocomplete="off"
+                                                               style="font-size: 25px" name="routeName"/>
                                                     </div>
                                                     <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
-                                                        <c:forEach var="city" items="${requestScope.LIST_CITY}">
-                                                            <li class="select-list-group__list-item" data-display="true" data-highlight="false">${city.cityName}</li>
-                                                        </c:forEach>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-1" style="margin:-12px 0 30px 0;padding: 5px 0 0 0; cursor:pointer;" >
-                                        <i class="fa-solid fa-arrow-right-arrow-left" style="font-size: 30px; color: #00b3ee"  onclick="changeData()"></i>
-                                    </div>
-                                    
-                                    <div id="universe" class="col-md-3" style="margin:-35px 40px 0 -20px;height: 9vh;  padding:0 0 0 3vw;">
-                                        <ul class="select-list-group2 d-flex" id="listtwo">
-                                            <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 12px;color: #36b9cc"></i>
-                                            <li>
-                                                <div style="" class="col-md-12">
-                                                    <div style="display: block;padding-right: 80px;">
-                                                        <input type="text" class="select-list-group__search2 col-md-12" placeholder="To" id="data2"
-                                                               style="font-size: 25px;border-right: 1px solid #D1D3E2;width: 12vw" name="to"/>
-                                                    </div>
-                                                    
-                                                
-                                                    <ul class="select-list-group__list2" data-toggle="false" style="margin-left: 0px">
-                                                        <c:forEach var="city" items="${requestScope.LIST_CITY}">
-                                                            <li class="select-list-group__list-item2" data-display="true" data-highlight="false">${city.cityName}</li>
+                                                        <c:forEach var="route" items="${requestScope.LIST_ROUTE}">
+                                                            <li class="select-list-group__list-item" data-display="true" data-highlight="false">${route.routeName}</li>
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
@@ -385,15 +361,15 @@
                                         </ul>
                                     </div>
                                     
-                                    <div class="col-md-3 d-flex" style=" margin-left: 50px">
+                                    <div class="col-md-3 d-flex" style=" margin-left: 25px">
                                         <i  class="fa-solid fa-calendar-days" style="font-size: 50px; margin: -20px 0 0 0px;padding-left: 0px;color: #36b9cc"></i>
-                                        <input type="text" class="form-control date-picker "  name="start" placeholder="Start "
+                                        <input type="text" class="form-control date-picker "  name="start" placeholder="Start " autocomplete="off"
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
                                            style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">
                                     </div>
                                     
                                     <button type="submit" class="primary-btn text-uppercase col-md-2 float-right"
-                                            style="height: 10vh; margin: -40px 0 0 0px; font-size: 20px" name="action" value="showTrip">Search</button>
+                                            style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="showTrip">Search</button>
                                 </form>
                             </div>
                         </div>
@@ -793,7 +769,7 @@
         <script src="https://www.google.com/recaptcha/api.js"></script>
         
 <!--        test-->
-        <script src="${pageContext.request.contextPath}/client/js/datalist.js"></script>
+<!--        <script src="${pageContext.request.contextPath}/client/js/datalist.js"></script>-->
         <script src="${pageContext.request.contextPath}/client/js/datalist2.js"></script>
     </body>
         <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">

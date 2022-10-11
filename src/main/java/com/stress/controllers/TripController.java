@@ -68,7 +68,7 @@ public class TripController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "Save":
+                case "Add":
                     addTrip(request, response);
                     break;
                 case "delete":
