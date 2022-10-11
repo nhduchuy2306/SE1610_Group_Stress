@@ -16,12 +16,12 @@ import com.stress.service.RouteDAOImpl;
 import com.stress.service.SeatDAOImpl;
 import com.stress.service.TripDAOImpl;
 import com.stress.service.VehicleDAOImpl;
+import com.stress.utils.CommonFunction;
 import com.stress.utils.ExcelUtils;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,9 +36,7 @@ public class TripController extends HttpServlet {
     private VehicleDAO vehicleDAO = new VehicleDAOImpl();
     private DriverDAO driverDAO = new DriverDAOImpl();
     private SeatDAO seatDAO = new SeatDAOImpl();
-
     private CityDAO cityDAO = new CityDAOImpl();
-    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -70,10 +68,8 @@ public class TripController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-
                 case "Save":
-                    addTrip(request,response);
-
+                    addTrip(request, response);
                     break;
                 case "delete":
                     deleteTrip(request, response);
@@ -81,7 +77,6 @@ public class TripController extends HttpServlet {
                 case "update":
                     updateTrip(request, response);
                     break;
-
                 default:
                     throw new AssertionError();
             }
@@ -92,7 +87,7 @@ public class TripController extends HttpServlet {
     private void report(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("application/vnd.ms-excel");
-        
+
         ExcelUtils reporter = new ExcelUtils();
         try {
             String fileName = reporter.getFileName("tblTrips".concat("_Export"));
@@ -123,9 +118,10 @@ public class TripController extends HttpServlet {
     private void addTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String tripID = request.getParameter("tripID").trim();
+            String tripID = CommonFunction.generateID("tblTrips", "Trip");
             String tripName = request.getParameter("tripName").trim();
-            String startdate = request.getParameter("startdate").trim();
+            String startdate = request.getParameter("startdate");
+            String startTime = request.getParameter("startTime")+":00";
             String policy = request.getParameter("policy").trim();
             String routeID = request.getParameter("routeID").trim();
             String vehicleID = request.getParameter("vehicleID").trim();
@@ -137,36 +133,37 @@ public class TripController extends HttpServlet {
             Driver d = driverDAO.getDriverByID(driverID);
             d.setStatus(2);
 
-            
-//            Trip tripExist=tripDAO.getTripByID(tripID);
-//            if (tripExist == null) {
-                boolean check = tripDAO.addTrip(
-                    new Trip(tripID, tripName, Date.valueOf(startdate), 
-                     policy, r, v, d,v.getVehicleType().getTotalSeat() , 1));
-                if (check) {
-                    List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
-                    boolean checkAddSeat = false;
-                    for (String s : setMap) {
-                        checkAddSeat = seatDAO.addSeat(tripID, s);
-                    }
-                    if (checkAddSeat) {
-                        vehicleDAO.updateVehicle(v);
-                        driverDAO.updateDriver(d);
-                        request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                        request.setAttribute("tripID", tripID);
-                        showTripTable(request, response);
-                    }
+            Trip trip = new Trip(tripID, tripName, Date.valueOf(startdate), Time.valueOf(startTime),
+                    policy, r, v, d, v.getVehicleType().getTotalSeat(), 1);
+
+            boolean check = tripDAO.addTrip(trip);
+
+            if (check) {
+                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
+                boolean checkAddSeat = false;
+                for (String s : setMap) {
+                    checkAddSeat = seatDAO.addSeat(tripID, s);
+                }
+                if (checkAddSeat) {
+                    vehicleDAO.updateVehicle(v);
+                    driverDAO.updateDriver(d);
+                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                    request.setAttribute("tripID", tripID);
                 } else {
                     request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
                     showTripTable(request, response);
                 }
+            } else {
+                request.setAttribute("ID_EXIST", "create-" + tripID);
+                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+            }
 //            }
 //            else{
 //                request.setAttribute("ID_EXIST", "create-"+tripID);
-//                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+//                request.setAttribute("action", "show");
+//                request.getRequestDispatcher("${pageContext.request.contextPath}/admin/route").forward(request, response);
 //            }
             
-
         } catch (Exception e) {
         }
     }
@@ -175,12 +172,20 @@ public class TripController extends HttpServlet {
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
+
+            Trip trip = tripDAO.getTripByID(tripID);
+
             if (tripDAO.checkBookedTicket(tripID)) {
                 request.setAttribute("ERROR", "Cant Delete! This Trip Has Booked Ticket Already!");
                 showTripTable(request, response);
             } else {
                 if (tripDAO.deleteTrip(tripID)) {
-
+                    Vehicle v = trip.getVehicle();
+                    v.setStatus(1);
+                    vehicleDAO.updateVehicle(v);
+                    Driver d = trip.getDriver();
+                    d.setStatus(1);
+                    driverDAO.updateDriver(d);
                     request.setAttribute("SUCCESS", "DELETE TRIP SUCCESSFULLY");
                     showTripTable(request, response);
                 } else {
@@ -189,6 +194,7 @@ public class TripController extends HttpServlet {
                 }
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -198,6 +204,7 @@ public class TripController extends HttpServlet {
             String tripID = request.getParameter("tripID").trim();
             String tripName = request.getParameter("tripName").trim();
             String startdate = request.getParameter("startdate").trim();
+            String startTime = request.getParameter("startTime")+":00";
             String policy = request.getParameter("policy").trim();
             String routeID = request.getParameter("routeID").trim();
             String vehicleID = request.getParameter("vehicleID").trim();
@@ -213,9 +220,8 @@ public class TripController extends HttpServlet {
             d.setStatus(2);
 
             boolean check = tripDAO.updateTrip(
-                    new Trip(tripID, tripName, Date.valueOf(startdate),
+                    new Trip(tripID, tripName, Date.valueOf(startdate), Time.valueOf(startTime),
                             policy, r, v, d, Integer.parseInt(seatRemain), Integer.parseInt(status)));
-
             if (check) {
                 request.setAttribute("SUCCESS", "UPDATE TRIP SUCCESSFULLY");
                 if (!oldTrip.getVehicle().getVehicleID().equals(v.getVehicleID())) {
@@ -235,9 +241,11 @@ public class TripController extends HttpServlet {
                 request.setAttribute("ERROR", "UPDATE TRIP ERROR");
                 showTripTable(request, response);
             }
-        } catch (Exception e) {
+        } catch(Exception e){
+            
         }
     }
+
 
     private void showTripView(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -247,17 +255,9 @@ public class TripController extends HttpServlet {
             String to = request.getParameter("to");
 
             String startDay = request.getParameter("start");
-
-            
-
             Route route = routeDAO.getRouteByStartLocationAndEndLocation(cityDAO.getCityIDByName(from), cityDAO.getCityIDByName(to));
-
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(route.getRouteID(), startDay);
-
-            
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip); 
-            
-
             request.getRequestDispatcher("./client/route.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println(e.toString());

@@ -78,7 +78,7 @@ public class SeatDAOImpl implements SeatDAO{
                 ptm.setString(1, seatID);
                 ptm.setString(2, tripID);
                 ptm.setInt(3, 150000);  
-                ptm.setBoolean(4, true);
+                ptm.setBoolean(4, false);
                 check = ptm.executeUpdate() > 0;
                 
             }
@@ -114,5 +114,10 @@ public class SeatDAOImpl implements SeatDAO{
             if(ptm!=null) ptm.close();
         }
         return check;
+    }
+
+    public List<Seat> getAllSeat() throws SQLException {
+        List<Seat> list = new ArrayList<>();
+        return list;
     }
 }

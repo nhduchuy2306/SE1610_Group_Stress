@@ -66,19 +66,23 @@
                                                     <div class="modal-body">
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1">Trip ID</label>
-                                                            <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
+                                                            <input type="text" name="tripID" class="add-dob form-control"  placeholder="Enter Trip ID" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1">Trip Name</label>
-                                                            <input type="text" name="tripName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
+                                                            <input type="text" name="tripName" class="add-dob form-control"  placeholder="Enter Trip Name" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1">Start Date Time</label>
-                                                            <input type="date" name="startdate" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                            <input type="date" name="startdate" class="add-dob form-control"  placeholder="Enter Start Date" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="exampleInputEmail1">Start Time</label>
+                                                            <input type="time" name="startTime" class="add-dob form-control"  placeholder="Enter Start Date" required>
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInputEmail1">Policy</label>
-                                                            <textarea style="height: 150px" type="text" name="policy" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Policy" required>   
+                                                            <textarea style="height: 150px" type="text" name="policy" class="add-dob form-control" placeholder="Enter Policy" required>   
                                                             </textarea>
                                                         </div>
                                                         <div class="form-group">
@@ -91,7 +95,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Vehicle Name: </label>
-                                                        <select class="form-control form-select" aria-label="Default select example" name="vehicleID">
+                                                        <select class="form-control form-select" name="vehicleID">
                                                             <c:forEach var="av" items="${requestScope.LIST_ACTIVE_VEHICLE}">
                                                                 <option value="${av.vehicleID}">${av.vehicleName}</option>
                                                             </c:forEach>
@@ -99,7 +103,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="exampleInputEmail1">Driver Name: </label>
-                                                        <select class="form-control form-select" aria-label="Default select example" name="driverID">
+                                                        <select class="form-control form-select" name="driverID">
                                                             <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
                                                                 <option value="${ad.driverID}">${ad.driverName}</option>
                                                             </c:forEach>
@@ -124,6 +128,7 @@
                                                 <th>Trip ID</th>
                                                 <th>Trip Name</th>
                                                 <th>Start Date Time</th>
+                                                <th>Start Time</th>
                                                 <th>Policy</th>
                                                 <th>Route Name</th>
                                                 <th>Vehicle Name</th>
@@ -141,6 +146,7 @@
                                                     <td>${t.tripID}</td>
                                                     <td>${t.tripName}</td>
                                                     <td>${t.startDateTime}</td>
+                                                    <td>${t.startTime}</td>
                                                     <td>${t.policy}</td>
                                                     <td>${t.route.routeName}</td>
                                                     <td>${t.vehicle.vehicleName}</td>
