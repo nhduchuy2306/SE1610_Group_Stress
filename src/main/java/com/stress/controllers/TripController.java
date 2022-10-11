@@ -31,12 +31,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "TripController", urlPatterns = {"/admin/trip"})
 public class TripController extends HttpServlet {
 
-    private TripDAO tripDAO = new TripDAOImpl();
-    private RouteDAO routeDAO = new RouteDAOImpl();
-    private VehicleDAO vehicleDAO = new VehicleDAOImpl();
-    private DriverDAO driverDAO = new DriverDAOImpl();
-    private SeatDAO seatDAO = new SeatDAOImpl();
-    private CityDAO cityDAO = new CityDAOImpl();
+    private final TripDAO tripDAO = new TripDAOImpl();
+    private final RouteDAO routeDAO = new RouteDAOImpl();
+    private final VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    private final DriverDAO driverDAO = new DriverDAOImpl();
+    private final SeatDAO seatDAO = new SeatDAOImpl();
+    private final CityDAO cityDAO = new CityDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -155,15 +155,9 @@ public class TripController extends HttpServlet {
                 }
             } else {
                 request.setAttribute("ID_EXIST", "create-" + tripID);
+                request.setAttribute("action", "show");
                 request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
             }
-//            }
-//            else{
-//                request.setAttribute("ID_EXIST", "create-"+tripID);
-//                request.setAttribute("action", "show");
-//                request.getRequestDispatcher("${pageContext.request.contextPath}/admin/route").forward(request, response);
-//            }
-            
         } catch (Exception e) {
         }
     }
