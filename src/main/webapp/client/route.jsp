@@ -30,6 +30,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
         <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">
     </head>
@@ -38,7 +40,14 @@
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
             </header><!-- #header -->
+            
+            
+            <!--    Login, Register, Forgot Password, Confirm email-->
 
+            <jsp:include page="login.jsp"></jsp:include>
+
+            <!--    END Login, Register, Forgot Password, Confirm email-->
+            
             <!-- start banner Area -->
             <section class="about-banner relative">
                 <div class="overlay overlay-bg"></div>
@@ -499,6 +508,8 @@
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
         <!--<script src="js/chosing-seat.js"></script>-->
 
         <script>

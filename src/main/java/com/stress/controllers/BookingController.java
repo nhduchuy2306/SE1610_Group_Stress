@@ -4,7 +4,6 @@ package com.stress.controllers;
 import com.stress.dao.CityDAO;
 import com.stress.dao.RouteDAO;
 import com.stress.dao.TripDAO;
-import com.stress.dto.Route;
 import com.stress.dto.Trip;
 import com.stress.service.CityDAOImpl;
 import com.stress.service.RouteDAOImpl;
@@ -53,14 +52,18 @@ public class BookingController extends HttpServlet {
             throws ServletException, IOException{
         request.setCharacterEncoding("utf-8");
         try {
-            String routeName = request.getParameter("routeName");
-            String startDay = request.getParameter("start");              
+            int routeID =Integer.parseInt( request.getParameter("routeID"));
+            System.out.println("RouteID"+ routeID);
+            String startDay = request.getParameter("start");
+            System.out.println("startDate"+ startDay);
 //            List<Trip> listTrip = tripDAO.getAllTripByStartEndLocationAndStartDay(from, to, startDay);
-            List<Trip> listTrip = null;
+
+            List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
+            System.out.println("List: "+listTrip);
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip); 
             request.getRequestDispatcher("./client/route.jsp").forward(request, response);
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println("Error at BookingController - showTrip" +e.toString());
         }
     }
 
