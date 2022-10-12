@@ -53,11 +53,10 @@ public class BookingController extends HttpServlet {
             throws ServletException, IOException{
         request.setCharacterEncoding("utf-8");
         try {
-            String from = request.getParameter("from");
-            String to = request.getParameter("to");
-            String startDay = request.getParameter("start");            
-            
-            List<Trip> listTrip = tripDAO.getAllTripByStartEndLocationAndStartDay(from, to, startDay);
+            String routeName = request.getParameter("routeName");
+            String startDay = request.getParameter("start");              
+//            List<Trip> listTrip = tripDAO.getAllTripByStartEndLocationAndStartDay(from, to, startDay);
+            List<Trip> listTrip = null;
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip); 
             request.getRequestDispatcher("./client/route.jsp").forward(request, response);
         } catch (Exception e) {

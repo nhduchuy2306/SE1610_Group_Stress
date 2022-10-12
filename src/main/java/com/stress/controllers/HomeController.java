@@ -4,9 +4,10 @@
  */
 package com.stress.controllers;
 
-import com.stress.dao.CityDAO;
+import com.stress.dao.RouteDAO;
 import com.stress.dto.City;
-import com.stress.service.CityDAOImpl;
+import com.stress.dto.Route;
+import com.stress.service.RouteDAOImpl;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -31,17 +32,16 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            CityDAO dao=new CityDAOImpl();
-            List<City> listCity=dao.getAllCity();
-            if(!listCity.isEmpty()){
-                request.setAttribute("LIST_CITY", listCity);
+            RouteDAO dao=new RouteDAOImpl();
+            List<Route> listRoute=dao.getAllRoute();
+            if(!listRoute.isEmpty()){
+                request.setAttribute("LIST_ROUTE", listRoute);
             }
             
         } catch (Exception e) {
         } finally {
             request.getRequestDispatcher("./client/index.jsp").forward(request, response);
-        }
-        
+        }    
     }
 
 
