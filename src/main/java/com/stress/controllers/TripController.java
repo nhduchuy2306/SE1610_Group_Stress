@@ -68,7 +68,7 @@ public class TripController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "Save":
+                case "add":
                     addTrip(request, response);
                     break;
                 case "delete":
@@ -77,10 +77,9 @@ public class TripController extends HttpServlet {
                 case "update":
                     updateTrip(request, response);
                     break;
-                default:
-                    throw new AssertionError();
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -114,11 +113,12 @@ public class TripController extends HttpServlet {
         } catch (Exception e) {
         }
     }
-
+//    public static int number = 4000;
     private void addTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String tripID = CommonFunction.generateID("tblTrips", "Trip");
+//            String tripID = "T"+number; number++;
             String tripName = request.getParameter("tripName").trim();
             String startdate = request.getParameter("startdate");
             String startTime = request.getParameter("startTime")+":00";
@@ -149,6 +149,7 @@ public class TripController extends HttpServlet {
                     driverDAO.updateDriver(d);
                     request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
                     request.setAttribute("tripID", tripID);
+                    showTripTable(request, response);
                 } else {
                     request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
                     showTripTable(request, response);
@@ -159,6 +160,7 @@ public class TripController extends HttpServlet {
                 request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
