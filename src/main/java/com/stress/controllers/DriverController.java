@@ -42,6 +42,9 @@ public class DriverController extends HttpServlet {
             case "activeDriver":
                 activeDriver(request, response);
                 break;
+            case "showAvailableDriver":
+                showAvailableDriver(request, response);
+                break;
         }
     }
 
@@ -254,6 +257,14 @@ public class DriverController extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void showAvailableDriver(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException{
+        try {
+            
+        } catch (Exception e) {
         }
     }
 }

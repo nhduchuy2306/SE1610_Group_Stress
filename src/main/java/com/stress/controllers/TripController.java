@@ -31,12 +31,12 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "TripController", urlPatterns = {"/admin/trip"})
 public class TripController extends HttpServlet {
 
-    private TripDAO tripDAO = new TripDAOImpl();
-    private RouteDAO routeDAO = new RouteDAOImpl();
-    private VehicleDAO vehicleDAO = new VehicleDAOImpl();
-    private DriverDAO driverDAO = new DriverDAOImpl();
-    private SeatDAO seatDAO = new SeatDAOImpl();
-    private CityDAO cityDAO = new CityDAOImpl();
+    private final TripDAO tripDAO = new TripDAOImpl();
+    private final RouteDAO routeDAO = new RouteDAOImpl();
+    private final VehicleDAO vehicleDAO = new VehicleDAOImpl();
+    private final DriverDAO driverDAO = new DriverDAOImpl();
+    private final SeatDAO seatDAO = new SeatDAOImpl();
+    private final CityDAO cityDAO = new CityDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -68,7 +68,7 @@ public class TripController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "Save":
+                case "add":
                     addTrip(request, response);
                     break;
                 case "delete":
@@ -77,10 +77,9 @@ public class TripController extends HttpServlet {
                 case "update":
                     updateTrip(request, response);
                     break;
-                default:
-                    throw new AssertionError();
             }
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 
@@ -114,11 +113,12 @@ public class TripController extends HttpServlet {
         } catch (Exception e) {
         }
     }
-
+//    public static int number = 4000;
     private void addTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String tripID = CommonFunction.generateID("tblTrips", "Trip");
+//            String tripID = "T"+number; number++;
             String tripName = request.getParameter("tripName").trim();
             String startdate = request.getParameter("startdate");
             String startTime = request.getParameter("startTime")+":00";
@@ -149,22 +149,18 @@ public class TripController extends HttpServlet {
                     driverDAO.updateDriver(d);
                     request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
                     request.setAttribute("tripID", tripID);
+                    showTripTable(request, response);
                 } else {
                     request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
                     showTripTable(request, response);
                 }
             } else {
                 request.setAttribute("ID_EXIST", "create-" + tripID);
+                request.setAttribute("action", "show");
                 request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
             }
-//            }
-//            else{
-//                request.setAttribute("ID_EXIST", "create-"+tripID);
-//                request.setAttribute("action", "show");
-//                request.getRequestDispatcher("${pageContext.request.contextPath}/admin/route").forward(request, response);
-//            }
-            
         } catch (Exception e) {
+            System.out.println(e.toString());
         }
     }
 

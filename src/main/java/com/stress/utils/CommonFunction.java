@@ -41,11 +41,15 @@ public class CommonFunction {
                 }
             }
             String tmp = "";
-            int n = ID.length();
-            for (int i = n - 1; i >= 0; i--) {
-                char c = ID.charAt(i);
-                if (c >= '0' && c <= '9') {
-                    tmp = ID.charAt(i) + tmp;
+            if(ID.equals("")){
+                tmp = "0000";
+            }else{
+                int n = ID.length();
+                for (int i = n - 1; i >= 0; i--) {
+                    char c = ID.charAt(i);
+                    if (c >= '0' && c <= '9') {
+                        tmp = ID.charAt(i) + tmp;
+                    }
                 }
             }
             int number = Integer.parseInt(tmp);
@@ -114,6 +118,6 @@ public class CommonFunction {
     }
 
     public static void main(String[] args) throws SQLException {
-        System.out.println(generateID("tblVehicles", "Vehicle"));
+        System.out.println(generateID("tblTrips", "Trip"));
     }
 }

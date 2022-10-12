@@ -333,12 +333,58 @@ public class TripDAOImpl implements TripDAO {
         }
         return list;
     }
-    public static void main(String[] args) {
-        TripDAOImpl tr = new TripDAOImpl();
+
+
+    @Override
+    public List<Trip> getAllTripByRouteName(String routeName, String startDate) throws SQLException {
+        String sql = "SELECT t.TripID,t.StartDateTime,t.StartTime,t.TripName,t.[Policy],t.RouteID,t.VehicleID,t.DriverID,t.SeatRemain,t.[Status]\n"
+                + "FROM tblTrips t WHERE t.TripName like ? AND t.StartTime=?";
+        List<Trip> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
         try {
-            System.out.println(tr.checkBookedTicket("T0054"));
-        } catch (SQLException ex) {
-            Logger.getLogger(TripDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            conn=DBConnection.getConnection();
+            if(conn!=null){
+                ptm=conn.prepareStatement(sql);
+                ptm.setString(1, "%"+routeName+"%");
+                ptm.setString(2, startDate);
+                rs=ptm.executeQuery();
+                 while (rs.next()) {
+                    list.add(new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error at Trip Controller - GetTripByRouteName:"+ e.toString());
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+    
+        public static void main(String[] args) {
+        
+        try {
+            TripDAOImpl tr = new TripDAOImpl();
+            List<Trip> list=tr.getAllTripByRouteName("con tau dam", "2022-10-18");
+        } catch (Exception ex) {
         }
     }
 }
