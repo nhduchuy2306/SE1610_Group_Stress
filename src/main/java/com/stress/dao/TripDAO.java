@@ -2,6 +2,7 @@
 package com.stress.dao;
 
 import com.stress.dto.Trip;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -13,10 +14,7 @@ public interface TripDAO {
     List<Trip> getAllTrip() throws SQLException;
     boolean updateTrip(Trip trip) throws SQLException;
     List<Trip> getAllTripByRouteAndStartDay(int routeID, String date) throws SQLException;
-    List<Trip> getAllTripByStartEndLocationAndStartDay(String startLocation, String endLocation, String date) throws SQLException;
-    List<Trip> getAllTripByRouteName(String routeName, String date) throws SQLException;
-    
-    
+
     //Check that Trip has any BookedTicket or not
     boolean checkBookedTicket(String tripID) throws SQLException;
 }

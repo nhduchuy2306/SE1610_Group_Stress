@@ -20,7 +20,6 @@
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/linearicons.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/font-awesome.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/bootstrap.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/magnific-popup.css">
@@ -29,9 +28,6 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/animate.min.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">				
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
-       
-        
-        
         <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link
@@ -41,279 +37,19 @@
 <!--        test-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/datalist2.css">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-        <style>
-            datalist {
-                position: absolute;
-                background-color: white;
-                border: 1px solid blue;
-                border-radius: 0 0 5px 5px;
-                border-top: none;
-                font-family: sans-serif;
-                width: 350px;
-                padding: 5px;
-                max-height: 10rem;
-                overflow-y: auto
-            }
-            option {
-                background-color: white;
-                padding: 4px;
-                color: blue;
-                margin-bottom: 1px;
-                font-size: 18px;
-                cursor: pointer;
-            }
-            .modal-button{
-                color: #007bff;
-                background: none;
-                border: none;
-            }
-            .modal-button:hover{
-                color: #007bff;
-                background: none;
-                border: none;
-            }
-            .modal-button:focus{
-                color: #007bff;
-                background: none;
-                border: none;
-                box-shadow: none;
-            }
-        </style>
+
     </head>
     
     <body>
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
         </header>
-<!--        Login Form-->
-        
-        <div class="modal fade col-lg-12" id="loginForm" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title caps"><strong>Welcome Back!</strong></h4>
-                    </div>
-                    <div class="modal-body col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="p-2">
-                                    <form class="registration user" id="registration" action="${pageContext.request.contextPath}/user" method="post" >
-                                    <div class="form-group">
-                                        <input type="text" class="form-control form-control-user"
-                                               id="userID" aria-describedby="emailHelp"autocomplete="off"
-                                               placeholder="Enter Account..." name="userID" oninput="checkUserID()"value="${requestScope.USERID}">
-                                        <p style="color: red;margin: 10px 0 0 20px;" id="error">${requestScope.ERROR_LOGIN1}</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control form-control-user"autocomplete="off"
-                                               id="password" placeholder="Password" name="password" oninput="checkPassword()" >
-                                        <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_LOGIN2}</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck" value="lsRememberMe">
-                                            <label class="custom-control-label" for="customCheck">Remember
-                                                Me</label>
-                                        </div>
-                                    </div>
-                                    <div class="g-recaptcha" data-sitekey="6LcFThUiAAAAAEZk9isOhp_hFXnYQpQPjQtRdU17"></div>
-                                    <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword">${requestScope.ERROR_RECAPTCHA}</p>
-                                    
-                                    <input style="margin-top: 10px" onclick="lsRememberMe()" type="submit" class="btn btn-primary btn-user btn-block" name="action" value="Login">
-                                    <hr>
-                                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
-                                       &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
-                                        <i class="fab fa-google fa-fw"></i> Login with Google
-                                    </a>
-    
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="modal-footer text-center">
-                        <div class="col-lg-12" style="margin-top: -10px;">
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#demo-2" data-dismiss="modal">Forgot Password?</button>
-                        </div>
-                        <div class="col-lg-12" style="margin-top: -10px;">
-                           <button type="button" class="btn btn-default" data-toggle="modal" data-target="#registerForm" data-dismiss="modal">Create an Account!</button>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-        </div>
-<!--        End Login Form-->
+<!--    Login, Register, Forgot Password, Confirm email-->
+
+        <jsp:include page="login.jsp"></jsp:include>
 
 
-        <!--Register Form-->
-        
-        <div class="modal fade" id="registerForm" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title caps"><strong>Create an Account!</strong></h4>
-                    </div>
-                    <div class="modal-body col-lg-12">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="p-15">
-                                    <form class="user" action="${pageContext.request.contextPath}/user" method="post" id="FromRegistration">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="nameInput"
-                                                   placeholder="User Name" name="userName" required="" value="${requestScope.USER_TMP.username}" autocomplete="off">
-                                            <p style="color: red;margin: 10px 0 0 20px;" id="nameError"></p>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <input type="date" class="form-control form-control-user" id="exampleFirstName"
-                                                       placeholder="Birthday" name="birthday" value="${requestScope.USER_TMP.dob}" required="" autocomplete="off">
-                                            </div>
-                                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                                <select class="form-select" style="width: 100%; height:
-                                                        100%;border-radius: 40px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                        name="gender" aria-label="Default select example" required="">
-                                                    <option value="1" ${requestScope.USER_TMP.sex eq true?"selected":""}>Male</option>
-                                                    <option value="0" ${requestScope.USER_TMP.sex eq false?"selected":""}>Female</option>
-                                                </select>
-
-                                            </div>
-                                        </div>                   
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="InputEmail" autocomplete="off"
-                                                   placeholder="Email Address" name="email" required="" value="${requestScope.USER_TMP.email}">
-                                            <p style="color: red;margin: 10px 0 0 20px;" id="emailError"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="InputAddress" autocomplete="off"
-                                                   placeholder="Address" name="address" required="" value="${requestScope.USER_TMP.address}">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="number" class="form-control form-control-user" id="InputPhoneNum" autocomplete="off"
-                                                   placeholder="Phone Number" name="phoneNum" required="" value="${requestScope.USER_TMP.phoneNumber}">
-                                            <p style="color: red;margin: 10px 0 0 20px;" id="phoneError"></p>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="userIDRegister" autocomplete="off"
-                                                   placeholder="Account" value="${requestScope.USER_TMP.userID}" name="userID" required="">
-                                            <p style="color: red;margin: 10px 0 0 20px;" id="userIDError">${requestScope.ERROR_USERID}</p>
-                                        </div>
-                                        <p style="color: red; font-size: 20px;"><c:out value="${ERROR}"></c:out></p>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input type="password" class="form-control form-control-user" autocomplete="off"
-                                                           id="passwordRegister" placeholder="Password" name="password" required="" value="${requestScope.USER_TMP.password}">
-                                                <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword"></p>
-                                            </div>
-
-                                                <div class="col-sm-6">
-                                                    <input type="password" class="form-control form-control-user"
-                                                           id="password_repeat" placeholder="Repeat Password" name="repeatPassword" required=""value="${requestScope.USER_TMP.password}">
-                                                    <p style="color: red;margin: 10px 0 0 20px;" id="errorPassword"></p>
-                                                </div> 
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="submit" class="form-control form-control-user" id=""
-                                                       name="action" value="RegisterAccount" style="background-color: #4e73df; color: white;
-                                                       padding:0;height: 6vh">
-                                            </div>
-                                            <hr>
-                                            <a href="https://accounts.google.com/o/oauth2/auth?scope=email%20profile%20openid&redirect_uri=http://localhost:8080/ETrans/login&response_type=code
-                                               &client_id=199152751272-83nokhduk5llpkp4vkt55hp9qmci27vc.apps.googleusercontent.com&approval_prompt=force" class="btn btn-google btn-user btn-block">
-                                                <i class="fab fa-google fa-fw"></i> Login with Google
-                                            </a>
-                                        </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="col-lg-12"></div>
-                        <button type="button"  style="margin-left: auto;margin-right: auto; background:none; color: gray; border: none; margin-top: -10px;" 
-                                class="btn btn-primary" data-toggle="modal" data-target="#loginForm" data-dismiss="modal">Already have an account? Login!</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!--End Register Form-->
-        
-        <!--Forgot form-->
-        
-        <div class="modal fade" id="demo-2" tabindex="-1" style="">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title caps"><strong>Forgot Your Password?</strong></h4>
-                        </div>
-                        <div class="modal-body col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="p-5">
-                                        <div class="text-center" style="margin-top: -10px;">
-                                                <p class="mb-4">We get it, stuff happens. Just enter your account address below
-                                                and we'll send your new password to email!</p>
-                                        </div>
-                                        <form class="user" action="${pageContext.request.contextPath}/user">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-user"
-                                                       id="exampleInputEmail" aria-describedby="emailHelp" autocomplete="off"
-                                                       placeholder="Enter Your Account ..." name="userID" required="">
-                                            </div>
-                                            <p style="color: #28fe09; font-size: 20px;">${requestScope.SUCCESS}</p>
-                                            <p style="color: red; font-size: 20px;">${requestScope.ERROR_FORGOT}</p>
-                                            <input type="submit" name="action" value="Get Password by Email" class="btn btn-primary btn-user btn-block">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer" style="margin-top: -40px;">
-                            <button style="margin-left: auto;margin-right: auto;"
-                                    type="button" class="modal-button btn btn-info" data-toggle="modal" data-target="#loginForm" data-dismiss="modal">Try to login again!</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        <!--End Forgot form-->
-        <!-- Confirm email-->
-        
-        <div class="modal fade comfirmEmail" id="confirmEmail" tabindex="-1" style="">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title caps"><strong>Confirm Email</strong></h4>
-                        </div>
-                        <div class="modal-body col-lg-12">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="p-5">
-                                        <div class="text-center" style="margin-top: -10px;">
-                                                <p class="mb-4">Please check your email!</p>
-                                        </div>
-                                        <form class="user" action="${pageContext.request.contextPath}/user">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control form-control-user"
-                                                       id="exampleInputEmail" aria-describedby="emailHelp" autocomplete="off"
-                                                       placeholder="Enter Code . . ." name="codeEmail" required="">
-                                            </div>
-                                            <p style="color: red; font-size: 20px;">${requestScope.ERROR_CODE}</p>
-                                            <input type="submit" name="action" value="Confirm" class="btn btn-primary btn-user btn-block">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer" style="margin-top: -40px;">
-                            <button style="margin-left: auto;margin-right: auto;"
-                                    type="button" class="modal-button btn btn-info" data-toggle="modal" data-target="#registerForm" data-dismiss="modal">Back to Register Form!</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        <!--End confirm email-->
+<!--    END Login, Register, Forgot Password, Confirm email-->
         <!-- #header -->
         <!-- start banner Area -->
         <section class="banner-area relative">
@@ -350,10 +86,11 @@
                                                     <div>
                                                         <input type="text" class="select-list-group__search" placeholder="Place . . ." id="data1" autocomplete="off"
                                                                style="font-size: 25px" name="routeName"/>
+                                                        <input type="hidden" name="routeID" value="" id="routeIDInput">
                                                     </div>
                                                     <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
                                                         <c:forEach var="route" items="${requestScope.LIST_ROUTE}">
-                                                            <li class="select-list-group__list-item" data-display="true" data-highlight="false">${route.routeName}</li>
+                                                            <li value="${route.routeID}" class="select-list-group__list-item" id="routeID" data-display="true" data-highlight="false">${route.routeName}</li>
                                                         </c:forEach>
                                                     </ul>
                                                 </div>
@@ -367,7 +104,7 @@
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
                                            style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">
                                     </div>
-                                    
+
                                     <button type="submit" class="primary-btn text-uppercase col-md-2 float-right"
                                             style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="showTrip">Search</button>
                                 </form>
@@ -768,9 +505,7 @@
         <script src="https://smtpjs.com/v3/smtp.js"></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
         
-<!--        test-->
-<!--        <script src="${pageContext.request.contextPath}/client/js/datalist.js"></script>-->
-        <script src="${pageContext.request.contextPath}/client/js/datalist2.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/datalist.js"></script>
     </body>
         <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
             <script>
@@ -800,13 +535,5 @@
             });
             </script>
         </c:if>
-            
-        <script>
-            function changeData(){
-                var tmp=document.getElementById("data1").value;
-                document.getElementById("data1").value=document.getElementById("data2").value;
-                document.getElementById("data2").value=tmp;
-            }
-        </script>
 </html>
 
