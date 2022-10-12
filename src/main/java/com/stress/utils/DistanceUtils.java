@@ -18,9 +18,11 @@ import org.json.JSONObject;
  */
 public class DistanceUtils {
     public static final String API_KEY = "xRKmWEDO-Klnp-dO7uJSfPp6UvyntWZleIa9mNEWE1w";
+    
     public static final OkHttpClient client = new OkHttpClient();
     
-    public Coordinates getCoordinate(String location) throws IOException, InterruptedException{
+    public Coordinates getCoordinate(String location) 
+            throws IOException, InterruptedException{
         Coordinates co = new Coordinates();
         
         String url = "https://geocode.search.hereapi.com/v1/geocode?q="+location+"&apiKey="+API_KEY;
@@ -47,7 +49,8 @@ public class DistanceUtils {
         
     }
     
-    public DistanceAndTime getDistanceAndTime(String originLoc, String destinationLoc) throws IOException, InterruptedException{
+    public DistanceAndTime getDistanceAndTime(String originLoc, String destinationLoc) 
+            throws IOException, InterruptedException{
         DistanceAndTime dat = new DistanceAndTime();
         Coordinates origin = getCoordinate(originLoc);
         Coordinates destination = getCoordinate(destinationLoc);

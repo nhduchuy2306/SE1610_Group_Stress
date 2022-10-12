@@ -343,9 +343,14 @@
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Driver Name: </label>
                                                                                 <select class="form-control form-select" aria-label="Default select example" name="driverID">
-                                                                                    <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
-                                                                                        <option value="${ad.driverID}">${ad.driverName}</option>
-                                                                                    </c:forEach>
+                                                                                    <c:if test="${requestScope.LIST_ACTIVE_DRIVER==null}">
+                                                                                        <option selected value="">No Driver</option>
+                                                                                    </c:if>
+                                                                                    <c:if test="${requestScope.LIST_ACTIVE_DRIVER!=null}">
+                                                                                        <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
+                                                                                            <option value="${ad.driverID}">${ad.driverName}</option>
+                                                                                        </c:forEach>
+                                                                                    </c:if>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
