@@ -42,9 +42,7 @@ public class DriverController extends HttpServlet {
             case "activeDriver":
                 activeDriver(request, response);
                 break;
-            case "showAvailableDriver":
-                showAvailableDriver(request, response);
-                break;
+
         }
     }
 
@@ -61,7 +59,8 @@ public class DriverController extends HttpServlet {
             case "deleteHistory":
                 showDeletedDriverTable(request, response);
                 break;
-            default:
+            case "showAvailableDriver":
+                showAvailableDriver(request, response);
                 break;
         }
     }
@@ -96,38 +95,37 @@ public class DriverController extends HttpServlet {
             String driverPic = request.getParameter("driverPic").trim();
             String phoneNumber = request.getParameter("phoneNumber").trim();
             String status = request.getParameter("status").trim();
-            
+
             DriverDAO dao = new DriverDAOImpl();
             Driver driverTmp = dao.getDriverByID(driverID);
-            
-            boolean driverIDError = false, driverNameError = false,dobError = false, picError = false, phoneError = false;
+
+            boolean driverIDError = false, driverNameError = false, dobError = false, picError = false, phoneError = false;
             DriverError de = new DriverError();
-            if(driverTmp!=null) {
+            if (driverTmp != null) {
                 driverIDError = true;
                 de.setDriverID("ID is existed");
             }
-            if(driverName.length() < 2 || driverName.length() > 100){
+            if (driverName.length() < 2 || driverName.length() > 100) {
                 driverNameError = true;
                 de.setDriverName("Name must >5 & <100");
             }
-            if(LocalDate.parse(dob).compareTo(LocalDate.now())>0){
+            if (LocalDate.parse(dob).compareTo(LocalDate.now()) > 0) {
                 driverIDError = true;
                 de.setDOB("Must be less than today");
             }
-            if(!driverPic.matches("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")){
+            if (!driverPic.matches("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)")) {
                 picError = true;
                 de.setDriverPicture("Not url");
             }
-            if(!phoneNumber.matches("(84|0[3|5|7|8|9])+([0-9]{8})\\b")){
+            if (!phoneNumber.matches("(84|0[3|5|7|8|9])+([0-9]{8})\\b")) {
                 phoneError = true;
                 de.setPhoneNumber("Must have +84 and 9 number");
             }
-            
+
             if (driverIDError || driverIDError || driverNameError || dobError || picError || phoneError) {
                 request.setAttribute("ADD_ERROR", de);
                 showDriverTable(request, response);
-            }
-            else {
+            } else {
                 Driver driver = new Driver(driverID, driverName, Date.valueOf(dob), Boolean.parseBoolean(sex),
                         driverPic, phoneNumber, Integer.parseInt(status));
                 boolean check = dao.addNewDriver(driver);
@@ -138,7 +136,7 @@ public class DriverController extends HttpServlet {
                     showDriverTable(request, response);
                 } else {
                     request.setAttribute("ERROR", "CAN NOT ADD DRIVER");
-                    showDriverTable(request,response);
+                    showDriverTable(request, response);
                 }
             }
         } catch (Exception e) {
@@ -154,11 +152,10 @@ public class DriverController extends HttpServlet {
             String driverID = request.getParameter("driverID").trim();
             DriverDAO dao = new DriverDAOImpl();
             Driver d = dao.getDriverByID(driverID);
-            if(d.getStatus()==2){
+            if (d.getStatus() == 2) {
                 request.setAttribute("ERROR", "DRIVER IS ONGOING");
                 showDriverTable(request, response);
-            }
-            else{
+            } else {
                 boolean check = dao.deleteDriver(driverID);
                 if (check) {
                     request.setAttribute("SUCCESS", "DELETE DRIVER SUCCESSFULLY");
@@ -195,7 +192,7 @@ public class DriverController extends HttpServlet {
                 request.setAttribute("SUCCESS", "UPDATE DRIVER SUCCESSFULLY");
 //                showOneDriver(request,response,driver);
                 request.setAttribute("driverID", driverID);
-                   showDriverTable(request, response);
+                showDriverTable(request, response);
             } else {
                 request.setAttribute("ERROR", "CAN NOT UPDATE DRIVER");
             }
@@ -210,8 +207,8 @@ public class DriverController extends HttpServlet {
         request.getRequestDispatcher("/client/404.jsp").forward(request, response);
     }
 
-    private void showOneDriver(HttpServletRequest request, HttpServletResponse response, Driver driver) 
-        throws ServletException, IOException{
+    private void showOneDriver(HttpServletRequest request, HttpServletResponse response, Driver driver)
+            throws ServletException, IOException {
         try {
             List<Driver> list = new ArrayList<>();
             list.add(driver);
@@ -221,7 +218,7 @@ public class DriverController extends HttpServlet {
         }
     }
 
-    private void showDeletedDriverTable(HttpServletRequest request, HttpServletResponse response) 
+    private void showDeletedDriverTable(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -239,7 +236,7 @@ public class DriverController extends HttpServlet {
         }
     }
 
-    private void activeDriver(HttpServletRequest request, HttpServletResponse response) 
+    private void activeDriver(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
@@ -249,10 +246,9 @@ public class DriverController extends HttpServlet {
             Driver d = dao.getDriverByID(driverID);
             d.setStatus(1);
             boolean check = dao.updateDriver(d);
-            if(check){
+            if (check) {
                 showDriverTable(request, response);
-            }
-            else {
+            } else {
                 showErrorPage(request, response);
             }
         } catch (Exception e) {
@@ -260,9 +256,11 @@ public class DriverController extends HttpServlet {
         }
     }
 
-    private void showAvailableDriver(HttpServletRequest request, HttpServletResponse response) 
-        throws ServletException, IOException{
+    private void showAvailableDriver(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
+            String date = request.getParameter("date");
+            String time = request.getParameter("time");
             
         } catch (Exception e) {
         }
