@@ -1,5 +1,6 @@
 package com.stress.controllers;
 
+import com.stress.dao.CityDAO;
 import com.stress.dao.LocationDAO;
 import com.stress.dao.RouteDAO;
 import com.stress.dto.City;
@@ -12,6 +13,7 @@ import com.stress.service.DriverDAOImpl;
 import com.stress.service.LocationDAOImpl;
 import com.stress.service.RouteDAOImpl;
 import com.stress.service.VehicleDAOImpl;
+import com.stress.utils.CommonFunction;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -61,7 +63,6 @@ public class RouteController extends HttpServlet {
             String action = request.getParameter("action");
             System.out.println("action:" + action);
             switch (action) {
-
                 case "create":
                     addRoute(request, response);
                     break;
@@ -73,6 +74,12 @@ public class RouteController extends HttpServlet {
                     break;
                 case "recover":
                     recoverRoute(request, response);
+                    break;
+                case "add":
+                    addTrip(request, response);
+                    break;
+                case "add_continue":
+                    addTripContinue(request, response);
                     break;
             }
         } catch (Exception e) {
@@ -228,6 +235,54 @@ public class RouteController extends HttpServlet {
             }
         } catch (Exception e) {
             log("Error at RouteController - deleteRoute: " + e.toString());
+        }
+    }
+
+    private void addTrip(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String tripID = CommonFunction.generateID("tblTrips", "Trip");
+            String tripName = request.getParameter("tripName").trim();
+            String startdate = request.getParameter("startdate");
+            String startTime = request.getParameter("startTime")+":00";
+            String policy = request.getParameter("policy").trim();
+            String routeID = request.getParameter("routeID").trim();
+            
+            if(tripID!=null && tripName!=null && startdate!=null && startTime!=null && policy!=null && routeID!=null){
+                request.setAttribute("tripID", tripID);
+                request.setAttribute("tripName", tripName);
+                request.setAttribute("startdate", startdate);
+                request.setAttribute("startTime", startTime);
+                request.setAttribute("policy", policy);
+                request.setAttribute("routeID", routeID);
+                request.setAttribute("ADD_TRIP_CONTINUE", "add_trip_continue");
+                
+                RouteDAO routeDAO = new RouteDAOImpl();
+                LocationDAO locationDAO = new LocationDAOImpl();
+                CityDAO cityDAO = new CityDAOImpl();
+                
+                Route route = routeDAO.getRouteByID(Integer.parseInt(routeID));
+                Location startLoc = route.getStartLocation();
+                Location endLoc = route.getEndLocation();
+                
+                
+                
+                viewRoute(request, response);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+    }
+
+    private void addTripContinue(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String tripID = CommonFunction.generateID("tblTrips", "Trip");
+            String tripName = request.getParameter("tripName").trim();
+            String startdate = request.getParameter("startdate");
+            String startTime = request.getParameter("startTime")+":00";
+            String policy = request.getParameter("policy").trim();
+            String routeID = request.getParameter("routeID").trim();
+            
+        } catch (Exception e) {
         }
     }
 }
