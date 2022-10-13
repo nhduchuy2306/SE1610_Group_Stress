@@ -68,14 +68,14 @@
             <!-- Start destinations Area -->
             <section class="destinations-area section-gap">
                 <div class="container">
-                    <div class="row d-flex justify-content-center">
+<!--                    <div class="row d-flex justify-content-center">
                         <div class="menu-content pb-60 col-lg-9">
                             <div class="title text-center">
                                 <h1 class="mb-10">Tickets</h1>
                             </div>
                         </div>
-                    </div>
-                    <div class="container-fluid pt-5">
+                    </div>-->
+                    <div class="container-fluid">
                         <div class="row px-xl-5 justify-content-between">
                             <!-- Shop Sidebar Start -->
                             <div class="col-lg-3 col-md-12" id="">
@@ -186,13 +186,13 @@
                                                 <div class="price float-sm-right">
                                                     <h3 class="mr-30" style="color: #007bff;">
                                                         <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
-                                                            ${trip.vehicle.vehicleType.PRICE_16} đ
+                                                            ${trip.vehicle.vehicleType.PRICE_16} VNĐ
                                                         </c:if>
                                                         <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
-                                                            ${trip.vehicle.vehicleType.PRICE_29} đ
+                                                            ${trip.vehicle.vehicleType.PRICE_29} VNĐ
                                                         </c:if>
                                                         <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
-                                                            ${trip.vehicle.vehicleType.PRICE_45} đ
+                                                            ${trip.vehicle.vehicleType.PRICE_45} VNĐ
                                                         </c:if>
                                                     </h3>
                                                 </div>
@@ -239,7 +239,7 @@
                                                                             <div class="wrapper-seat">
                                                                                 <div class="container-seat">
                                                                                     <input type="text" style="visibility: hidden; opacity: 0" name="tripID" value="${trip.tripID.trim()}">
-                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="price" value="
+<!--                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="price" value="
                                                                                            <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
                                                                                                ${trip.vehicle.vehicleType.PRICE_16}
                                                                                            </c:if>
@@ -249,12 +249,23 @@
                                                                                            <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
                                                                                                ${trip.vehicle.vehicleType.PRICE_45}
                                                                                            </c:if>
-                                                                                        ">
+                                                                                        ">-->
+                                                                                    
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
+                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_16}">
+                                                                                           </c:if>
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
+                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_29}">
+                                                                                           </c:if>
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
+                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_45}">
+                                                                                           </c:if>
+                                                                                       
                                                                                     <input type="text" style="visibility: hidden; opacity: 0" name="totalSeat" value="${trip.vehicle.vehicleType.totalSeat}">
-                                                                                    <h1 class="text-center">Chosing seats</h1>
+                                                                                    <h1 class="text-center">Choosing seats</h1>
                                                                                     <div class="seat-map-seat">
                                                                                         <div class="text-center front-indicator-seat">
-                                                                                            Chosing</div>
+                                                                                            Choosing</div>
                                                                                     </div>
                                                                                     <div class="booking-details-seat">
                                                                                         <h2>Booking Details</h2>
@@ -281,7 +292,8 @@
                                                                                 <div class="row pt-70">
                                                                                     <div class="col-lg-6 col-md-6 text-center">
                                                                                         <h3>Start Time:</h3>
-                                                                                        <h5>13-Sep-22</h5>
+                                                                                        <h5>${trip.startDateTime}</h5>
+                                                                                        <h5>${trip.startTime}</h5>
                                                                                     </div>
                                                                                     <div class="col-lg-6 col-md-6 text-center">
                                                                                         <h3>End Time:</h3>
@@ -289,14 +301,14 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <button style="position:absolute; bottom:10px; right:20px;" type="button" class="choose-seat btn btn-secondary"
-                                                                                    > Confirm</button>
+                                                                                    <button style="position:absolute; bottom:10px; right:20px;" type="button" class="choose-seat btn btn-secondary"
+                                                                                    name="action" value="addTickets"> Confirm</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="modal-footer">
+<!--                                                                <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                </div>
+                                                                </div>-->
                                                             </form>
                                                         </div>
                                                     </div>
