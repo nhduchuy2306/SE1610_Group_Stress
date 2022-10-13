@@ -9,6 +9,7 @@ import com.stress.service.CityDAOImpl;
 import com.stress.service.RouteDAOImpl;
 import com.stress.service.TripDAOImpl;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,6 +36,9 @@ public class BookingController extends HttpServlet {
             switch (action) {
                 case "showTrip":
                     showTrip(request,response);
+                    break;
+                case "createTrip":
+                    createTrip(request,response);
                     break;
                 default:
                     throw new AssertionError();
@@ -65,6 +69,20 @@ public class BookingController extends HttpServlet {
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" +e.toString());
         }
+    }
+
+    private void createTrip(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException{
+        
+        PrintWriter p = response.getWriter();
+        p.print("<h1>Send request for choosing seat successfully</h1>");
+        
+        String seatID = request.getParameter("seatID");
+        String[] s = seatID.split(",");
+        for (String item : s) {
+            System.out.println(item);
+        }
+        
     }
 
 
