@@ -71,6 +71,9 @@ public class TripController extends HttpServlet {
                 case "add":
                     addTrip(request, response);
                     break;
+                case "add_continue":
+                    addTripContinue(request, response);
+                    break;
                 case "delete":
                     deleteTrip(request, response);
                     break;
@@ -113,51 +116,28 @@ public class TripController extends HttpServlet {
         } catch (Exception e) {
         }
     }
-//    public static int number = 4000;
     private void addTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String tripID = CommonFunction.generateID("tblTrips", "Trip");
-//            String tripID = "T"+number; number++;
             String tripName = request.getParameter("tripName").trim();
             String startdate = request.getParameter("startdate");
             String startTime = request.getParameter("startTime")+":00";
             String policy = request.getParameter("policy").trim();
             String routeID = request.getParameter("routeID").trim();
-            String vehicleID = request.getParameter("vehicleID").trim();
-            String driverID = request.getParameter("driverID").trim();
-
-            Vehicle v = vehicleDAO.getVehicleByID(vehicleID);
-            v.setStatus(2);
-            Route r = routeDAO.getRouteByID(Integer.parseInt(routeID));
-            Driver d = driverDAO.getDriverByID(driverID);
-            d.setStatus(2);
-
-            Trip trip = new Trip(tripID, tripName, Date.valueOf(startdate), Time.valueOf(startTime),
-                    policy, r, v, d, v.getVehicleType().getTotalSeat(), 1);
-
-            boolean check = tripDAO.addTrip(trip);
-
-            if (check) {
-                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
-                boolean checkAddSeat = false;
-                for (String s : setMap) {
-                    checkAddSeat = seatDAO.addSeat(tripID, s);
-                }
-                if (checkAddSeat) {
-                    vehicleDAO.updateVehicle(v);
-                    driverDAO.updateDriver(d);
-                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                    request.setAttribute("tripID", tripID);
-                    showTripTable(request, response);
-                } else {
-                    request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
-                    showTripTable(request, response);
-                }
-            } else {
-                request.setAttribute("ID_EXIST", "create-" + tripID);
-                request.setAttribute("action", "show");
+            
+            if(tripID!=null && tripName!=null && startdate!=null && startTime!=null && policy!=null && routeID!=null){
+                request.setAttribute("tripID", tripID);
+                request.setAttribute("tripName", tripName);
+                request.setAttribute("startdate", startdate);
+                request.setAttribute("startTime", startTime);
+                request.setAttribute("policy", policy);
+                request.setAttribute("routeID", routeID);
+                
+                request.setAttribute("ADD_TRIP_CONTINUE", "add_trip_continue");
+                
                 request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+//                request.getRequestDispatcher("/admin/routeTable.jsp").forward(request, response);
             }
         } catch (Exception e) {
             System.out.println(e.toString());
@@ -259,5 +239,53 @@ public class TripController extends HttpServlet {
             System.out.println(e.toString());
         }
         //trip?from=1&to=3&start=10%2F04%2F2022&action=showTrip
+    }
+
+    private void addTripContinue(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String tripID = CommonFunction.generateID("tblTrips", "Trip");
+            String tripName = request.getParameter("tripName").trim();
+            String startdate = request.getParameter("startdate");
+            String startTime = request.getParameter("startTime")+":00";
+            String policy = request.getParameter("policy").trim();
+            String routeID = request.getParameter("routeID").trim();
+            String vehicleID = request.getParameter("vehicleID").trim();
+            String driverID = request.getParameter("driverID").trim();
+
+            Vehicle v = vehicleDAO.getVehicleByID(vehicleID);
+            v.setStatus(2);
+            Route r = routeDAO.getRouteByID(Integer.parseInt(routeID));
+            Driver d = driverDAO.getDriverByID(driverID);
+            d.setStatus(2);
+
+            Trip trip = new Trip(tripID, tripName, Date.valueOf(startdate), Time.valueOf(startTime),
+                    policy, r, v, d, v.getVehicleType().getTotalSeat(), 1);
+
+            boolean check = tripDAO.addTrip(trip);
+
+            if (check) {
+                List<String> setMap = seatDAO.setMap(v.getVehicleType().getTotalSeat());
+                boolean checkAddSeat = false;
+                for (String s : setMap) {
+                    checkAddSeat = seatDAO.addSeat(tripID, s);
+                }
+                if (checkAddSeat) {
+                    vehicleDAO.updateVehicle(v);
+                    driverDAO.updateDriver(d);
+                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                    request.setAttribute("tripID", tripID);
+                    showTripTable(request, response);
+                } else {
+                    request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
+                    showTripTable(request, response);
+                }
+            } else {
+                request.setAttribute("ID_EXIST", "create-" + tripID);
+                request.setAttribute("action", "show");
+                request.getRequestDispatcher("/admin/route?action=show").forward(request, response);
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 }

@@ -1,30 +1,90 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
     var btn_choose_seat = $('.btn-choose-seat');
-    console.log(btn_choose_seat);
+    var totalSeat = $("input[name=totalSeat]");
+    var button_confirm = $(".choose-seat");
+
+
+
+//    console.log(btn_choose_seat.eq(0).attr("data-target"));
+    console.log(btn_choose_seat.eq(0).data("target"));
+    console.log(btn_choose_seat.eq(0).data("index"));
+    console.log(parseInt(totalSeat.eq(0).val()));
+
     var firstSeatLabel = 1;
     var price = $("input[name=price]").val();
-    $(document).ready(function () { 
-        for(let i = 0; i < btn_choose_seat.length; i++){
-            if(i===0){
-                drawMapSeat(i,['A_1','B_1', 'C_4', 'D_5']);
+
+
+
+    $(document).ready(function () {
+        btn_choose_seat.click(function () {
+            var tripID = $(this).data('index');
+            
+            console.log(tripID);
+            
+            var unavailabeSeat = [];
+            var index = btn_choose_seat.index((this));
+            var totalSeatForSeatMap = parseInt(totalSeat.eq(index).val());
+            var buttonConfirm = button_confirm.eq(index);
+
+            $.ajax({
+                url: "/ETrans/seat",
+                type: 'GET',
+                data: {
+                    tripID: tripID,
+                    action: 'showUnavailable'
+                },
+                success: function (data) {
+                    var string = data;
+                    var array = string.split(",");
+                    array.pop();
+                    for (let item in array) {
+                        unavailabeSeat.push(array[item]);
+                    }
+                    getData(unavailabeSeat);
+                }
+            });
+
+            drawMapSeat(index, [], totalSeatForSeatMap);
+            
+            function getData(sm) {
+                sm.push('A_1');
+                var choice = drawMapSeat(index, sm, totalSeatForSeatMap);
+                
+                buttonConfirm.click(function () {
+                    console.log("click");
+                    url = window.location.href;
+                    position = url.search("ETrans") + 7;
+                    newurl = url.slice(0, position);
+                    window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice.toString() + "&action=createTrip");
+                });
             }
-            else{
-                drawMapSeat(i,[
-                    <c:forTokens items = "H_1,D_1,C_4,D_5" delims = "," var = "seat">
-                        '${seat}',
-                    </c:forTokens>
-                ]);
-            }
-        }
+        });
     });
-    function drawMapSeat(id,seatAreChosen) {
-        var cart = $(".selected-seats").eq(id),
-                counter = $(".counter-seat").eq(id),
-                total = $(".total-seat").eq(id),
-                choice = [],
-                sc = $(".seat-map-seat").eq(id).seatCharts({
-            map: [
+
+    function generateSeatMap(totalSeat) {
+        if (totalSeat === 16) {
+            return [
+                "e__ee",
+                "ee_ee",
+                "ee_ee",
+                "eeeee"
+            ];
+        }
+        if (totalSeat === 29) {
+            return [
+                "e____",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "eeeee"
+            ];
+        }
+        if (totalSeat === 45) {
+            return [
                 "e____",
                 "ee_ee",
                 "ee_ee",
@@ -33,8 +93,22 @@
                 "ee_ee",
                 "ee_ee",
                 "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
                 "eeeee"
-            ],
+            ];
+        }
+    }
+
+    function drawMapSeat(id, seatAreChosen, totalSeat) {
+        var seatMap = generateSeatMap(totalSeat);
+        var cart = $(".selected-seats").eq(id),
+                counter = $(".counter-seat").eq(id),
+                total = $(".total-seat").eq(id),
+                choice = [],
+                sc = $(".seat-map-seat").eq(id).seatCharts({
+            map: seatMap,
             seats: {
                 e: {
                     price: parseInt(price.trim()),
@@ -45,7 +119,7 @@
 
             naming: {
                 top: false,
-                rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
+                rows: ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
                 columns: ['1', '2', '3', '4', '5']
             },
             legend: {
@@ -56,7 +130,7 @@
                 ],
             },
             click: function () {
-                if (this.status() == "available") {
+                if (this.status() === "available") {
                     choice.push(this.settings.id);
                     console.log(choice);
                     //console.log(sc.find('selected').seatIds)
@@ -81,7 +155,7 @@
                     counter.text(sc.find("selected").length + 1);
                     total.text(recalculateTotal(sc) + this.data().price);
                     return "selected";
-                } else if (this.status() == "selected") {
+                } else if (this.status() === "selected") {
                     const index = choice.indexOf(this.settings.id);
                     if (index > -1) {
                         // only splice array when item is found
@@ -96,7 +170,7 @@
                     $("#cart-item-" + this.settings.id).remove();
                     //seat has been vacated
                     return "available";
-                } else if (this.status() == "unavailable") {
+                } else if (this.status() === "unavailable") {
                     //seat has been already booked
                     return "unavailable";
                 } else {
@@ -113,13 +187,7 @@
         //let's pretend some seats have already been booked
         sc.get(seatAreChosen).status("unavailable");
 
-        $(".choose-seat").click(function () {
-            console.log("click");
-            url = window.location.href;
-            position = url.search("ETrans") + 7;
-            newurl = url.slice(0, position);
-            window.location.replace(newurl + 'order?' + "tripID=" + 1 + "&" + "seatID=" + choice.toString());
-        });
+        return choice;
     }
 
     function recalculateTotal(sc) {

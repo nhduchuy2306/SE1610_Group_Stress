@@ -55,8 +55,7 @@ public class TicketDAOImpl implements TicketDAO{
 
     @Override
     public boolean addNewTicket(Ticket ticket) throws SQLException {
-        String sql = "INSERT INTO tblTickets(SeatID,TripID,OrderID) "
-                + "VALLUES(?,?,?)";
+        String sql = "INSERT INTO tblTickets(SeatID,TripID,OrderID) VALUES (?,?,?)";
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;

@@ -7,4 +7,5 @@ import java.sql.SQLException;
 
 public interface OrderDAO {
     Order getOderByID(String orderID) throws SQLException;
+    Order createOrder(Order order) throws SQLException;
 }

@@ -250,7 +250,7 @@
                                                                                     <select name="status" class="form-control">
                                                                                         <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
                                                                                         <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
-                                                                                        
+
 
                                                                                     </select>
                                                                                 </div>
@@ -304,12 +304,9 @@
                                                                             <span aria-hidden="true">&times;</span>
                                                                         </button>
                                                                     </div>
-                                                                    <form action="trip" method="post" id="createTripForm">
+                                                                        <!--createTripForm-->
+                                                                    <form action="route" method="post" id="">
                                                                         <div class="modal-body">
-<!--                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Trip ID</label>
-                                                                                <input type="text" name="tripID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Trip ID" required>
-                                                                            </div>-->
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
                                                                                 <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
@@ -332,32 +329,10 @@
                                                                                 <input type="text" name="routeName" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="${r.routeName}" readonly="">
                                                                                 <input type="hidden" name="routeID" class="add-dob form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="${r.routeID}" readonly="">
                                                                             </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Vehicle Name: </label>
-                                                                                <select class="form-control form-select" aria-label="Default select example" name="vehicleID">
-                                                                                    <c:forEach var="av" items="${requestScope.LIST_ACTIVE_VEHICLE}">
-                                                                                        <option value="${av.vehicleID}">${av.vehicleName}(Total seat: ${av.vehicleType.totalSeat})</option>
-                                                                                    </c:forEach>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Driver Name: </label>
-                                                                                <select class="form-control form-select" aria-label="Default select example" name="driverID">
-                                                                                    <c:if test="${requestScope.LIST_ACTIVE_DRIVER==null}">
-                                                                                        <option selected value="">No Driver</option>
-                                                                                    </c:if>
-                                                                                    <c:if test="${requestScope.LIST_ACTIVE_DRIVER!=null}">
-                                                                                        <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
-                                                                                            <option value="${ad.driverID}">${ad.driverName}</option>
-                                                                                        </c:forEach>
-                                                                                    </c:if>
-                                                                                </select>
-                                                                            </div>
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                             <input type="submit" name="action" value="add" class="btn btn-primary" id="createTrip">
-
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -375,7 +350,54 @@
                     <!-- /.container-fluid -->
                 </div>
                 <!-- End of Main Content -->
-
+                <div class="choose_driver_vehicle modal fade" id="" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Create Trip For ${r.routeName}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                                <!--createTripForm-->
+                            <form action="route" method="post" id="">
+                                <div class="modal-body">
+                                    <input type="hidden" name="tripID" value="${requestScope.tripID}">
+                                    <input type="hidden" name="tripName" value="${requestScope.tripName}">
+                                    <input type="hidden" name="startdate" value="${requestScope.startdate}">
+                                    <input type="hidden" name="startTime" value="${requestScope.startTime}">
+                                    <input type="hidden" name="policy" value="${requestScope.policy}">
+                                    <input type="hidden" name="routeID" value="${requestScope.routeID}">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Vehicle Name: </label>
+                                        <select class="form-control form-select" aria-label="Default select example" name="vehicleID">
+                                            <c:forEach var="av" items="${requestScope.LIST_ACTIVE_VEHICLE}">
+                                                <option value="${av.vehicleID}">${av.vehicleName}(Total seat: ${av.vehicleType.totalSeat})</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Driver Name: </label>
+                                        <select class="form-control form-select" aria-label="Default select example" name="driverID">
+                                            <c:if test="${requestScope.LIST_ACTIVE_DRIVER==null}">
+                                                <option selected value="">No Driver</option>
+                                            </c:if>
+                                            <c:if test="${requestScope.LIST_ACTIVE_DRIVER!=null}">
+                                                <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
+                                                    <option value="${ad.driverID}">${ad.driverName}</option>
+                                                </c:forEach>
+                                            </c:if>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" name="action" value="add_continue" class="btn btn-primary" id="createTrip">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
@@ -512,6 +534,12 @@
 //                        });
 //                    });
 //                </c:if>
+                    <c:if test="${requestScope.ADD_TRIP_CONTINUE!=null}">
+                        $(document).ready(function () {
+                            $('.choose_driver_vehicle').modal('show')    
+                        });
+                    </c:if>
+
 
             </script>
 

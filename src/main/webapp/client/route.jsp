@@ -202,7 +202,7 @@
                                                     View more detail
                                                 </button>
                                                 <button type="button" class="btn-choose-seat btn btn-primary" data-toggle="modal"
-                                                        data-target="#choose-${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
+                                                        data-target="#choose-${trip.tripID.trim()}" data-index="${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
                                                     Choose ticket
                                                 </button>
                                                 <div class="modal fade" id="choose-${trip.tripID.trim()}" tabindex="-1" role="dialog"
