@@ -79,17 +79,18 @@ public class BookingController extends HttpServlet {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
             System.out.println("RouteID" + routeID);
             String startDay = request.getParameter("start");
-            System.out.println("startDate" + startDay);
-//            List<Trip> listTrip = tripDAO.getAllTripByStartEndLocationAndStartDay(from, to, startDay);
 
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
-            System.out.println("List: " + listTrip);
-            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
-            request.getRequestDispatcher("./client/route.jsp").forward(request, response);
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);         
+
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
         }
+        finally{
+            request.getRequestDispatcher("./client/route.jsp").forward(request, response);
+        }
     }
+
 
     private void createTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
