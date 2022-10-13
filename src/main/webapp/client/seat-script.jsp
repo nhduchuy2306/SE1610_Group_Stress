@@ -5,6 +5,7 @@
     var button_confirm = $(".choose-seat");
 
 
+
 //    console.log(btn_choose_seat.eq(0).attr("data-target"));
     console.log(btn_choose_seat.eq(0).data("target"));
     console.log(btn_choose_seat.eq(0).data("index"));
@@ -13,31 +14,53 @@
     var firstSeatLabel = 1;
     var price = $("input[name=price]").val();
 
+
+
     $(document).ready(function () {
         btn_choose_seat.click(function () {
             var tripID = $(this).data('index');
+            
+            console.log(tripID);
+            
+            var unavailabeSeat = [];
             var index = btn_choose_seat.index((this));
             var totalSeatForSeatMap = parseInt(totalSeat.eq(index).val());
             var buttonConfirm = button_confirm.eq(index);
 
-            var choice = drawMapSeat(index, [], totalSeatForSeatMap);
-
-            console.log(tripID);
-            console.log(index);
-            console.log(choice);
-
-            buttonConfirm.click(function () {
-                console.log("click");
-                url = window.location.href;
-                position = url.search("ETrans") + 7;
-                newurl = url.slice(0, position);
-                window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice.toString()+"&action=createTrip");
+            $.ajax({
+                url: "/ETrans/seat",
+                type: 'GET',
+                data: {
+                    tripID: tripID,
+                    action: 'showUnavailable'
+                },
+                success: function (data) {
+                    var string = data;
+                    var array = string.split(",");
+                    array.pop();
+                    for (let item in array) {
+                        unavailabeSeat.push(array[item]);
+                    }
+                    getData(unavailabeSeat);
+                }
             });
 
+            drawMapSeat(index, [], totalSeatForSeatMap);
+            
+            function getData(sm) {
+                sm.push('A_1');
+                var choice = drawMapSeat(index, sm, totalSeatForSeatMap);
+                
+                buttonConfirm.click(function () {
+                    console.log("click");
+                    url = window.location.href;
+                    position = url.search("ETrans") + 7;
+                    newurl = url.slice(0, position);
+                    window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice.toString() + "&action=createTrip");
+                });
+            }
         });
     });
-
-
 
     function generateSeatMap(totalSeat) {
         if (totalSeat === 16) {

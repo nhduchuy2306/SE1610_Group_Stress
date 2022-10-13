@@ -2,11 +2,12 @@
 package com.stress.service;
 
 import com.stress.dao.SeatDAO;
+import com.stress.dao.TripDAO;
 import com.stress.dto.Seat;
-import com.stress.dto.Trip;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -115,9 +116,51 @@ public class SeatDAOImpl implements SeatDAO{
         }
         return check;
     }
-
+    @Override
     public List<Seat> getAllSeat() throws SQLException {
         List<Seat> list = new ArrayList<>();
         return list;
+    }
+
+    @Override
+    public List<Seat> getAllUnAvailbeSeatByTripID(String tripID) throws SQLException {
+        TripDAO tripDAO = new TripDAOImpl();
+        String sql = "SELECT SeatID, Price, [Status], TripID FROM tblSeats WHERE [Status] = 1 AND TripID = ?";
+        List<Seat> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, tripID);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    list.add(new Seat(
+                            rs.getString("SeatID"), 
+                            rs.getInt("Price"), 
+                            rs.getBoolean("Status"), 
+                            tripDAO.getTripByID(rs.getString("TripID"))));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+            if(rs!=null) rs.close();
+        }
+        return list;
+    }
+    
+    public static void main(String[] args) {
+        try {
+            SeatDAOImpl s = new SeatDAOImpl();
+            List<Seat> list = s.getAllUnAvailbeSeatByTripID("T2000");
+            for (Seat seat : list) {
+                System.out.println(seat);
+            }
+        } catch (Exception e) {
+        }
     }
 }
