@@ -81,7 +81,6 @@ public class BookingController extends HttpServlet {
             String startDay = request.getParameter("start");
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);         
-
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
         }
