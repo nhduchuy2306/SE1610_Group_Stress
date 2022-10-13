@@ -152,15 +152,54 @@ public class SeatDAOImpl implements SeatDAO{
         }
         return list;
     }
-    
-    public static void main(String[] args) {
+
+    public Seat getSeatByID(String seatID, String tripID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        String sql = "SELECT [Price],[Status] FROM tblSeats WHERE [SeatID] = ? AND TripID = ?";
+        Seat seat = null;
         try {
-            SeatDAOImpl s = new SeatDAOImpl();
-            List<Seat> list = s.getAllUnAvailbeSeatByTripID("T2000");
-            for (Seat seat : list) {
-                System.out.println(seat);
+            conn = DBConnection.getConnection();
+            ptm = conn.prepareStatement(sql);
+            ptm.setString(1, seatID);
+            ptm.setString(2, tripID);
+            rs = ptm.executeQuery();
+            if(rs.next()) {
+                int price = rs.getInt("Price");
+                int status = rs.getInt("status");
+                Trip trip = new TripDAOImpl().getTripByID(tripID);
+                seat = new Seat(seatID, price, status, trip);
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
         }
+        return seat;
+    }
+
+    @Override
+    public boolean lockSeat(String seatID, String tripID) throws SQLException{
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        String sql = "UPDATE tblSeats SET [Status] = 1 WHERE [SeatID] = ? AND [TripID] = ?";
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, seatID);
+                ptm.setString(2, tripID);
+                check = ptm.executeUpdate() > 0;
+            }
+        } catch (Exception e) {
+        } finally {
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
     }
 }

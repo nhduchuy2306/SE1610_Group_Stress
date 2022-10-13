@@ -13,4 +13,6 @@ public interface SeatDAO {
     List<String> setMap(int number) throws SQLException;
     List<Seat> getAllSeat() throws SQLException;
     List<Seat> getAllUnAvailbeSeatByTripID(String tripID) throws SQLException;
+    Seat getSeatByID(String seatID, String tripID) throws SQLException;
+    public boolean lockSeat(String seatID, String tripID) throws SQLException;
 }

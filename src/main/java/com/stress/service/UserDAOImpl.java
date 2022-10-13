@@ -17,8 +17,8 @@ import java.util.List;
 public class UserDAOImpl implements UserDAO {
     private RoleDAO roleDAO = new RoleDAOImpl(); // DONT REMOVE this is use for get User by ID 
     
-    private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID] "
-            + "  FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
+    private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID],[AccountBalance] "
+            + " FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
 
     @Override
     public List<User> getAllUser() throws SQLException {
@@ -86,11 +86,12 @@ public class UserDAOImpl implements UserDAO {
                 if (rs.next()) {
                     String userID = rs.getString("UserID");
                     String username = rs.getString("Username");
+                    String accountBalance = rs.getString("AccountBalance");
                     String roleID = rs.getString("RoleID");
                     
                     Role role = new RoleDAOImpl().getRoleByID(roleID);
                     if(role != null)
-                    user = new User(userID, username, null, email, null, null, null, true, role, null, User.ACTIVE_GOOGLE);
+                    user = new User(userID, username, null, email, null, null, null, true, role, accountBalance, User.ACTIVE_GOOGLE);
                 }
             }
         } catch (Exception e) {
