@@ -142,6 +142,7 @@
                                     </div>
                                 <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
                                     <input type="hidden" name="tripID" value="${trip.tripID}">
+                                    <input type="hidden" id="${trip.tripID.trim()}" name="seatID" value="">
                                     <div class="col-lg-12 col-md-6 col-sm-12">
                                         <div class="card product-item border-0 mb-4">
                                             <div
