@@ -16,6 +16,6 @@ public class Seat {
     
     private String seatID; 
     private int	price;
-    private boolean status;
+    private int status;
     private Trip trip;
 }

@@ -141,7 +141,7 @@ public class SeatDAOImpl implements SeatDAO{
                     list.add(new Seat(
                             rs.getString("SeatID"), 
                             rs.getInt("Price"), 
-                            rs.getBoolean("Status"), 
+                            rs.getInt("Status"), 
                             tripDAO.getTripByID(rs.getString("TripID"))));
                 }
             }
