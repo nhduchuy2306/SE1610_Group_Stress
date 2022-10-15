@@ -135,7 +135,7 @@ public class BookingController extends HttpServlet {
                         //accountBalance -= price;
                         // update Account Balance again
                         request.setAttribute("SUCCESS", "Check Out Success!");
-                        url = "./client/route.jsp";
+                        url = "./client/order.jsp";
                     }else {
                         request.setAttribute("ERROR", "Account Balance is not Enough!");
                     }
