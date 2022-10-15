@@ -11,8 +11,8 @@ public interface RouteDAO {
     int addRoute(Route route) throws SQLException;
     boolean updateRoute(int RouteID, String RouteName, Location StartLocation, Location EndLocation, String Description, boolean Status) throws SQLException;
     boolean deleteRoute(String routeID) throws SQLException;
-    List<Route> searchServiceByStartLocation(int startLocation) throws SQLException;
-    List<Route> searchServiceByEndLocation(int endLocation) throws SQLException;
+//    List<Route> searchServiceByStartLocation(int startLocation) throws SQLException;
+//    List<Route> searchServiceByEndLocation(int endLocation) throws SQLException;
     Route getRouteByID(int routeID) throws SQLException;
     boolean checkDuplicateByID(int routeID) throws SQLException;
     List<Route> getAllRoute() throws SQLException;

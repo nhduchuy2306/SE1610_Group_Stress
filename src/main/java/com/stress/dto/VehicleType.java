@@ -1,6 +1,7 @@
 
 package com.stress.dto;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class VehicleType {
+public class VehicleType implements Serializable {
     private int PRICE_16 = 300000;
     private int PRICE_29 = 250000;
     private int PRICE_45 = 200000;

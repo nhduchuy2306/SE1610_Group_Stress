@@ -23,7 +23,7 @@ public class LoginGoogleController extends HttpServlet {
     private static final String USER_ROLE = "1";
     private static final String ADMIN_ROLE = "2"; 
     private static final String ADMIN = "admin/index.jsp";
-    private static final String USER = "client/index.jsp";
+    private static final String USER = "home";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
