@@ -30,6 +30,8 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/owl.carousel.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/main.css">
         <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+        <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">
     </head>
@@ -38,7 +40,14 @@
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
             </header><!-- #header -->
+            
+            
+            <!--    Login, Register, Forgot Password, Confirm email-->
 
+            <jsp:include page="login.jsp"></jsp:include>
+
+            <!--    END Login, Register, Forgot Password, Confirm email-->
+            
             <!-- start banner Area -->
             <section class="about-banner relative">
                 <div class="overlay overlay-bg"></div>
@@ -59,14 +68,14 @@
             <!-- Start destinations Area -->
             <section class="destinations-area section-gap">
                 <div class="container">
-                    <div class="row d-flex justify-content-center">
+<!--                    <div class="row d-flex justify-content-center">
                         <div class="menu-content pb-60 col-lg-9">
                             <div class="title text-center">
                                 <h1 class="mb-10">Tickets</h1>
                             </div>
                         </div>
-                    </div>
-                    <div class="container-fluid pt-5">
+                    </div>-->
+                    <div class="container-fluid">
                         <div class="row px-xl-5 justify-content-between">
                             <!-- Shop Sidebar Start -->
                             <div class="col-lg-3 col-md-12" id="">
@@ -177,13 +186,13 @@
                                                 <div class="price float-sm-right">
                                                     <h3 class="mr-30" style="color: #007bff;">
                                                         <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
-                                                            ${trip.vehicle.vehicleType.PRICE_16} đ
+                                                            ${trip.vehicle.vehicleType.PRICE_16} VNĐ
                                                         </c:if>
                                                         <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
-                                                            ${trip.vehicle.vehicleType.PRICE_29} đ
+                                                            ${trip.vehicle.vehicleType.PRICE_29} VNĐ
                                                         </c:if>
                                                         <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
-                                                            ${trip.vehicle.vehicleType.PRICE_45} đ
+                                                            ${trip.vehicle.vehicleType.PRICE_45} VNĐ
                                                         </c:if>
                                                     </h3>
                                                 </div>
@@ -193,7 +202,7 @@
                                                     View more detail
                                                 </button>
                                                 <button type="button" class="btn-choose-seat btn btn-primary" data-toggle="modal"
-                                                        data-target="#choose-${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
+                                                        data-target="#choose-${trip.tripID.trim()}" data-index="${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
                                                     Choose ticket
                                                 </button>
                                                 <div class="modal fade" id="choose-${trip.tripID.trim()}" tabindex="-1" role="dialog"
@@ -230,7 +239,7 @@
                                                                             <div class="wrapper-seat">
                                                                                 <div class="container-seat">
                                                                                     <input type="text" style="visibility: hidden; opacity: 0" name="tripID" value="${trip.tripID.trim()}">
-                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="price" value="
+<!--                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="price" value="
                                                                                            <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
                                                                                                ${trip.vehicle.vehicleType.PRICE_16}
                                                                                            </c:if>
@@ -240,12 +249,23 @@
                                                                                            <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
                                                                                                ${trip.vehicle.vehicleType.PRICE_45}
                                                                                            </c:if>
-                                                                                        ">
+                                                                                        ">-->
+                                                                                    
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
+                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_16}">
+                                                                                           </c:if>
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
+                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_29}">
+                                                                                           </c:if>
+                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
+                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_45}">
+                                                                                           </c:if>
+                                                                                       
                                                                                     <input type="text" style="visibility: hidden; opacity: 0" name="totalSeat" value="${trip.vehicle.vehicleType.totalSeat}">
-                                                                                    <h1 class="text-center">Chosing seats</h1>
+                                                                                    <h1 class="text-center">Choosing seats</h1>
                                                                                     <div class="seat-map-seat">
                                                                                         <div class="text-center front-indicator-seat">
-                                                                                            Chosing</div>
+                                                                                            Choosing</div>
                                                                                     </div>
                                                                                     <div class="booking-details-seat">
                                                                                         <h2>Booking Details</h2>
@@ -272,7 +292,8 @@
                                                                                 <div class="row pt-70">
                                                                                     <div class="col-lg-6 col-md-6 text-center">
                                                                                         <h3>Start Time:</h3>
-                                                                                        <h5>13-Sep-22</h5>
+                                                                                        <h5>${trip.startDateTime}</h5>
+                                                                                        <h5>${trip.startTime}</h5>
                                                                                     </div>
                                                                                     <div class="col-lg-6 col-md-6 text-center">
                                                                                         <h3>End Time:</h3>
@@ -280,14 +301,14 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <button style="position:absolute; bottom:10px; right:20px;" type="button" class="choose-seat btn btn-secondary"
-                                                                                    > Confirm</button>
+                                                                                    <button style="position:absolute; bottom:10px; right:20px;" type="button" class="choose-seat btn btn-secondary"
+                                                                                    name="action" value="addTickets"> Confirm</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="modal-footer">
+<!--                                                                <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                </div>
+                                                                </div>-->
                                                             </form>
                                                         </div>
                                                     </div>
@@ -499,6 +520,8 @@
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
         <!--<script src="js/chosing-seat.js"></script>-->
 
         <script>

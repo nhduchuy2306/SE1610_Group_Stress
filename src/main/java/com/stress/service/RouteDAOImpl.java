@@ -248,86 +248,86 @@ public class RouteDAOImpl implements RouteDAO {
         return check;
     }
 
-    @Override
-    public List<Route> searchServiceByStartLocation(int startLocation) throws SQLException {
-        Location locationByStart = locationDao.getLocationById(startLocation);
-
-        String sql = "SELECT RouteID,RouteName,"
-                + "StartLocation,EndLocation,[Description],[Status] "
-                + "FROM tblRoutes "
-                + "WHERE StartLocation = ?";
-
-        List<Route> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(sql);
-            ptm.setString(1, "%" + startLocation + "%");
-            rs = ptm.executeQuery();
-            while (rs.next()) {
-                Route route = new Route(rs.getInt("RouteID"),
-                        rs.getString("RouteName"),
-                        locationByStart, locationByStart, sql, true);
-                list.add(route);
-            }
-        } catch (Exception e) {
-        } finally {
-            if (conn != null) {
-                conn.close();
-            }
-            if (ptm != null) {
-                ptm.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
-        }
-        return list;
-    }
-
-    @Override
-    public List<Route> searchServiceByEndLocation(int endLocation)
-            throws SQLException {
-        String sql = "select * \n"
-                + "from tblRoutes\n"
-                + "where EndLocation = (\n"
-                + "	select LocationID \n"
-                + "	from tblLocations \n"
-                + "	where LocationName like ?\n"
-                + ")";
-        List<Route> list = new ArrayList<>();
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        ResultSet rs = null;
-        try {
-            conn = DBConnection.getConnection();
-            ptm = conn.prepareStatement(sql);
-            ptm.setString(1, "%" + endLocation + "%");
-            rs = ptm.executeQuery();
-            while (rs.next()) {
-//                list.add(new Route(rs.getInt(1), 
-//                        rs.getString(2), 
-//                        rs.getInt(3), 
-//                        rs.getInt(4), 
-//                        rs.getString(5), 
-//                        rs.getBoolean(6)));
-            }
-        } catch (Exception e) {
-        } finally {
-            if (conn != null) {
-                conn.close();
-            }
-            if (ptm != null) {
-                ptm.close();
-            }
-            if (rs != null) {
-                rs.close();
-            }
-        }
-        return list;
-    }
+//    @Override
+//    public List<Route> searchServiceByStartLocation(int startLocation) throws SQLException {
+//        Location locationByStart = locationDao.getLocationById(startLocation);
+//
+//        String sql = "SELECT RouteID,RouteName,"
+//                + "StartLocation,EndLocation,[Description],[Status] "
+//                + "FROM tblRoutes "
+//                + "WHERE StartLocation = ?";
+//
+//        List<Route> list = new ArrayList<>();
+//        Connection conn = null;
+//        PreparedStatement ptm = null;
+//        ResultSet rs = null;
+//        try {
+//            conn = DBConnection.getConnection();
+//            ptm = conn.prepareStatement(sql);
+//            ptm.setString(1, "%" + startLocation + "%");
+//            rs = ptm.executeQuery();
+//            while (rs.next()) {
+//                Route route = new Route(rs.getInt("RouteID"),
+//                        rs.getString("RouteName"),
+//                        locationByStart, locationByStart, sql, true);
+//                list.add(route);
+//            }
+//        } catch (Exception e) {
+//        } finally {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//            if (ptm != null) {
+//                ptm.close();
+//            }
+//            if (rs != null) {
+//                rs.close();
+//            }
+//        }
+//        return list;
+//    }
+//
+//    @Override
+//    public List<Route> searchServiceByEndLocation(int endLocation)
+//            throws SQLException {
+//        String sql = "select * \n"
+//                + "from tblRoutes\n"
+//                + "where EndLocation = (\n"
+//                + "	select LocationID \n"
+//                + "	from tblLocations \n"
+//                + "	where LocationName like ?\n"
+//                + ")";
+//        List<Route> list = new ArrayList<>();
+//        Connection conn = null;
+//        PreparedStatement ptm = null;
+//        ResultSet rs = null;
+//        try {
+//            conn = DBConnection.getConnection();
+//            ptm = conn.prepareStatement(sql);
+//            ptm.setString(1, "%" + endLocation + "%");
+//            rs = ptm.executeQuery();
+//            while (rs.next()) {
+////                list.add(new Route(rs.getInt(1), 
+////                        rs.getString(2), 
+////                        rs.getInt(3), 
+////                        rs.getInt(4), 
+////                        rs.getString(5), 
+////                        rs.getBoolean(6)));
+//            }
+//        } catch (Exception e) {
+//        } finally {
+//            if (conn != null) {
+//                conn.close();
+//            }
+//            if (ptm != null) {
+//                ptm.close();
+//            }
+//            if (rs != null) {
+//                rs.close();
+//            }
+//        }
+//        return list;
+//    }
 
     @Override
     public Route getRouteByID(int routeID) throws SQLException {
@@ -523,4 +523,5 @@ public class RouteDAOImpl implements RouteDAO {
         }
         return null;
     }
+
 }
