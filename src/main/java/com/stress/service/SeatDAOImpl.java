@@ -154,6 +154,7 @@ public class SeatDAOImpl implements SeatDAO{
         return list;
     }
 
+    @Override
     public Seat getSeatByID(String seatID, String tripID) throws SQLException {
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -168,9 +169,9 @@ public class SeatDAOImpl implements SeatDAO{
             rs = ptm.executeQuery();
             if(rs.next()) {
                 int price = rs.getInt("Price");
-                boolean status = rs.getBoolean("status");
+                int status = rs.getInt("status");
                 Trip trip = new TripDAOImpl().getTripByID(tripID);
-                seat = new Seat(seatID, price,status, trip);
+                seat = new Seat(seatID, price, status, trip);
             }
         } catch (Exception e) {
             e.printStackTrace();

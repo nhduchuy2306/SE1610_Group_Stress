@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
+
     var btn_choose_seat = $('.btn-choose-seat');
     var totalSeat = $("input[name=totalSeat]");
     var button_confirm = $(".choose-seat");
@@ -11,43 +12,42 @@
 
     var firstSeatLabel = 1;
     var price = $("input[name=price]").val();
-    
-    var choice = [];
-
 
     $(document).ready(function () {
         btn_choose_seat.click(function () {
             var tripID = $(this).data('index');
 
-            console.log(tripID);
+            var seatID = document.getElementById("" + tripID);
 
             var unavailabeSeat = [];
+
+            fetch('http://localhost:8080/ETrans/api/seat/' + tripID)
+                    .then(res => res.json())
+                    .then(data => {
+                        var seatInputHidden = document.getElementById("" + tripID);
+                        let string = "" 
+                                
+                        for (var i in data) {
+                            let s = data[i].seatID;
+                            string += s.trim()+",";
+                        }
+                        seatInputHidden.value = string;
+                    });
+
             var index = btn_choose_seat.index((this));
             var totalSeatForSeatMap = parseInt(totalSeat.eq(index).val());
-//            var buttonConfirm = button_confirm.eq(index);
+            var buttonConfirm = button_confirm.eq(index);
 
-            $.ajax({
-                url: "/ETrans/seat",
-                type: 'GET',
-                data: {
-                    tripID: tripID,
-                    action: 'showUnavailable'
-                },
-                success: function (data) {
-                    var string = data;
-                    var array = string.split(",");
-                    array.pop();
-                    for (let item in array) {
-                        unavailabeSeat.push(array[item]);
-                    }
-                    getData(unavailabeSeat);
-                }
+
+            drawMapSeat(index, unavailabeSeat, totalSeatForSeatMap);
+
+            buttonConfirm.click(function () {
+                console.log("click");
+                url = window.location.href;
+                position = url.search("ETrans") + 7;
+                newurl = url.slice(0, position);
+                window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice + "&action=createTrip");
             });
-
-            drawMapSeat(index, [], totalSeatForSeatMap,tripID,choice);
-            function getData(sm) {
-                drawMapSeat(index, sm, totalSeatForSeatMap,tripID,choice);
-            }
         });
     });
 
@@ -90,7 +90,7 @@
         }
     }
 
-    function drawMapSeat(id, seatAreChosen, totalSeat,tripID, seatchoice) {
+    function drawMapSeat(id, seatAreChosen, totalSeat) {
         seatAreChosen.push('A_1');
         var seatMap = generateSeatMap(totalSeat);
         var cart = $(".selected-seats").eq(id),
@@ -121,7 +121,7 @@
             click: function () {
                 if (this.status() === "available") {
                     choice.push(this.settings.id);
-                    console.log("inside chart: "+choice);
+                    console.log("inside chart: " + choice);
                     //console.log(sc.find('selected').seatIds)
                     //let's create a new <li> which we'll add to the cart items
                     //this.data().category +
@@ -161,7 +161,6 @@
                 }
             }
         });
-        console.log("after chart: "+choice)
         //this will handle "[cancel]" link clicks
         $("#selected-seats").on("click", ".cancel-cart-item", function () {
             //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
@@ -170,16 +169,8 @@
 //        seatAreChosen = ['A_1', 'B_1', 'C_4', 'D_5'];
         //let's pretend some seats have already been booked
         sc.get(seatAreChosen).status("unavailable");
-        
-        console.log(choice);
 
-        button_confirm.eq(id).click(function () {
-            console.log("click");
-            url = window.location.href;
-            position = url.search("ETrans") + 7;
-            newurl = url.slice(0, position);
-            window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice + "&action=createTrip");
-        });
+        return choice;
     }
 
     function recalculateTotal(sc) {
@@ -190,4 +181,5 @@
         });
         return total;
     }
+
 </script>
