@@ -77,7 +77,7 @@
 
                         <div class="tab-content" id="myTabContent" style="height: 10vh"> 
                             <div class="tab-pane fade show active row" id="flight" role="tabpanel">
-                                <form class="form-wrap col-md-12" style="display: inline-flex" action="book">
+                                <form class="form-wrap col-md-12" style="display: inline-flex" action="book" id="searchTripForm">
                                     <div id="universe" class="col-md-7 d-flex" style="margin:-39px 0 0 -20px;">
                                         <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 15px;color: #36b9cc"></i>
                                         <ul class="select-list-group" id="listone">
@@ -85,7 +85,7 @@
                                                 <div class="col-md-12">
                                                     <div>
                                                         <input type="text" class="select-list-group__search" placeholder="Place . . ." id="data1" autocomplete="off"
-                                                               style="font-size: 25px" name="routeName"/>
+                                                               style="font-size: 25px" name="routeName" required=""/>
                                                         <input type="hidden" name="routeID" value="" id="routeIDInput">
                                                     </div>
                                                     <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
@@ -100,13 +100,16 @@
                                     
                                     <div class="col-md-3 d-flex" style=" margin-left: 25px">
                                         <i  class="fa-solid fa-calendar-days" style="font-size: 50px; margin: -20px 0 0 0px;padding-left: 0px;color: #36b9cc"></i>
+<!--                                        <input type="date" name="start" class="form-control" id="inputDateSearch" aria-describedby="emailHelp"
+                                               autocomplete="off" placeholder="Enter Start Date" required=""
+                                               style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">-->
                                         <input type="text" class="form-control date-picker "  name="start" placeholder="Start " autocomplete="off"
                                            onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
-                                           style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">
+                                        style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none" id="inputDateSearch" required="">
                                     </div>
 
-                                    <button type="submit" class="primary-btn text-uppercase col-md-2 float-right"
-                                            style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="showTrip">Search</button>
+                                        <input type="submit" class="primary-btn text-uppercase col-md-2 float-right"
+                                               style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="Search" id="findTrip"/>
                                 </form>
                             </div>
                         </div>
@@ -528,6 +531,13 @@
             });
             </script>
         </c:if>
+        <c:if test="${requestScope.ERROR_CODE!=null}">
+            <script>
+            $(window).load(function () {
+                $('#confirmEmail').modal('show');
+            });
+            </script>
+        </c:if>
         <c:if test="${requestScope.CHECK_MAIL!=null}">
             <script>
             $(window).load(function () {
@@ -535,5 +545,31 @@
             });
             </script>
         </c:if>
+	<script>
+            const dayInput=document.getElementById('inputDateSearch');
+
+            function myFunction(){
+                const currentDate=new Date();
+                let dayCheck=new Date(dayInput.value);
+                if(currentDate>dayCheck){
+                    console.log(currentDate>dayCheck);
+                    document.getElementById('inputDateSearch').setCustomValidity('Day Start must higher than current day!');
+                    return false;
+                }else{
+                    document.getElementById('inputDateSearch').setCustomValidity('');
+                    return true;
+                }
+                return true;
+
+            }
+            var inputs = document.querySelectorAll('input:not([type="submit"])');
+
+
+            var submit =  document.getElementById('findTrip');
+            var form = document.getElementById('searchTripForm');
+            
+            submit.addEventListener('click', myFunction);
+            form.addEventListener('submit', myFunction);
+    </script>
 </html>
 

@@ -169,7 +169,8 @@ public class SeatDAOImpl implements SeatDAO{
             rs = ptm.executeQuery();
             if(rs.next()) {
                 int price = rs.getInt("Price");
-                int status = rs.getInt("status");
+                boolean status = rs.getBoolean("Status");
+//                int status = rs.getInt("status");
                 Trip trip = new TripDAOImpl().getTripByID(tripID);
                 seat = new Seat(seatID, price, status, trip);
             }
