@@ -4,6 +4,7 @@ package com.stress.service;
 import com.stress.dao.SeatDAO;
 import com.stress.dao.TripDAO;
 import com.stress.dto.Seat;
+import com.stress.dto.Trip;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -140,7 +141,7 @@ public class SeatDAOImpl implements SeatDAO{
                     list.add(new Seat(
                             rs.getString("SeatID"), 
                             rs.getInt("Price"), 
-                            rs.getBoolean("Status"), 
+                            rs.getInt("Status"), 
                             tripDAO.getTripByID(rs.getString("TripID"))));
                 }
             }
