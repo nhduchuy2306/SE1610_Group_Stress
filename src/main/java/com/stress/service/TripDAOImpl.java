@@ -22,6 +22,92 @@ public class TripDAOImpl implements TripDAO {
     private final CityDAO cityDAO = new CityDAOImpl();
 
     @Override
+    public Trip getOngoingTripByDriver(String driverID) throws SQLException {
+        String sql = "SELECT [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
+                + "[VehicleID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE [DriverID] = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        Trip trip = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, driverID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    trip = new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(driverID),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return trip;
+    }
+
+    @Override
+    public Trip getOnGoingTripByVehicle (String vehicleID) throws SQLException {
+        String sql = "SELECT [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
+                + "[DriverID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE [VehicleID] = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        Trip trip = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, vehicleID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    trip = new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(vehicleID),
+                            driverDAO.getDriverByID(rs.getString("driverID")),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return trip;
+    }
+
+    @Override
     public boolean checkBookedTicket(String tripID) throws SQLException {
         String sql = "SELECT [TripName] AS [TripName] FROM tblTrips t INNER JOIN tblSeats s \n"
                 + " ON t.TripID = s.TripID \n"
@@ -330,6 +416,7 @@ public class TripDAOImpl implements TripDAO {
         }
         return list;
     }
+
     @Override
     public List<Trip> getAllTripByRouteAndSameStartDay(int routeID, String day) throws SQLException {
         String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
@@ -358,7 +445,7 @@ public class TripDAOImpl implements TripDAO {
                             driverDAO.getDriverByID(rs.getString("DriverID")),
                             rs.getInt("SeatRemain"),
                             rs.getInt("Status")));
-                }     
+                }
             }
             list.addAll(getAllTripByRouteAndHigherStartDay(routeID, day));
         } catch (Exception e) {
@@ -376,9 +463,10 @@ public class TripDAOImpl implements TripDAO {
         }
         return list;
     }
+
     public static void main(String[] args) {
         try {
-            TripDAOImpl dao=new TripDAOImpl();
+            TripDAOImpl dao = new TripDAOImpl();
             System.out.println(dao.getAllTripByRouteAndStartDay(1, "2022-10-18"));
         } catch (Exception e) {
         }

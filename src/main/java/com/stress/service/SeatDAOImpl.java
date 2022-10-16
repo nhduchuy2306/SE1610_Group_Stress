@@ -172,7 +172,7 @@ public class SeatDAOImpl implements SeatDAO{
                 boolean status = rs.getBoolean("Status");
 //                int status = rs.getInt("status");
                 Trip trip = new TripDAOImpl().getTripByID(tripID);
-                seat = new Seat(seatID, price, status, trip);
+//                seat = new Seat(seatID, price, status, trip);
             }
         } catch (Exception e) {
             e.printStackTrace();

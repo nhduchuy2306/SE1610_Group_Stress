@@ -62,6 +62,7 @@ public class BookingController extends HttpServlet {
                     throw new AssertionError();
             }
         } catch (Exception e) {
+            System.out.println("Error " + e.toString());
         }
     }
 
