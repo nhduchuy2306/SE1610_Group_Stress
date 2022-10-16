@@ -60,6 +60,9 @@ public class BookingController extends HttpServlet {
                 case "createTrip":
                     createTrip(request, response);
                     break;
+                case "choose-ticket":
+                    ChoosingTicket(request, response);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -79,9 +82,9 @@ public class BookingController extends HttpServlet {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
             System.out.println("RouteID" + routeID);
             String startDay = request.getParameter("start");
-
+            
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
-            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);         
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
 
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
@@ -95,13 +98,6 @@ public class BookingController extends HttpServlet {
     private void createTrip(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "./client/404.jsp";
-//        PrintWriter p = response.getWriter();
-//        p.print("<h1>Send request for choosing seat successfully</h1>");
-//        
-//        String seatID = request.getParameter("seatID");
-//        String[] s = seatID.split(",");
-//        for (String item : s) {
-//            System.out.println(item);
 //        }
         try {
             HttpSession session = request.getSession();
@@ -144,7 +140,7 @@ public class BookingController extends HttpServlet {
                     
                 }
             } else {
-                request.setAttribute("ERROR", "You have to login First");
+                request.setAttribute("ERROR_FOR_LOGIN", "You have to login First");
                 url = "./client/index.jsp";
             }
         } catch (Exception e) {
@@ -153,6 +149,29 @@ public class BookingController extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
 
+    }
+
+    private void ChoosingTicket(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        try {
+            String tripID = request.getParameter("tripID");
+            String totalSeat = request.getParameter("totalSeat");
+            List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
+            List<String> unavailableSeat = new ArrayList<>();
+            for (Seat s : list) {
+                unavailableSeat.add(s.getSeatID().trim());
+            }
+            String seat = "";
+            for (String s : unavailableSeat) {
+                seat+=s+",";
+            }
+            System.out.println(seat);
+            request.setAttribute("totalSeat", totalSeat);
+            request.setAttribute("unavailabelSeat", seat);
+            request.setAttribute("tripID", tripID);
+            request.getRequestDispatcher("/client/ticket-detail.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
     }
 
 }
