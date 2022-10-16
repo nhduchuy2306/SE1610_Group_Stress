@@ -1,12 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
+
     var btn_choose_seat = $('.btn-choose-seat');
     var totalSeat = $("input[name=totalSeat]");
     var button_confirm = $(".choose-seat");
 
-
-
-//    console.log(btn_choose_seat.eq(0).attr("data-target"));
+    console.log(button_confirm.eq(0));
     console.log(btn_choose_seat.eq(0).data("target"));
     console.log(btn_choose_seat.eq(0).data("index"));
     console.log(parseInt(totalSeat.eq(0).val()));
@@ -14,51 +13,41 @@
     var firstSeatLabel = 1;
     var price = $("input[name=price]").val();
 
-
-
     $(document).ready(function () {
         btn_choose_seat.click(function () {
             var tripID = $(this).data('index');
-            
-            console.log(tripID);
-            
+
+            var seatID = document.getElementById("" + tripID);
+
             var unavailabeSeat = [];
+
+            fetch('http://localhost:8080/ETrans/api/seat/' + tripID)
+                    .then(res => res.json())
+                    .then(data => {
+                        var seatInputHidden = document.getElementById("" + tripID);
+                        let string = "" 
+                                
+                        for (var i in data) {
+                            let s = data[i].seatID;
+                            string += s.trim()+",";
+                        }
+                        seatInputHidden.value = string;
+                    });
+
             var index = btn_choose_seat.index((this));
             var totalSeatForSeatMap = parseInt(totalSeat.eq(index).val());
             var buttonConfirm = button_confirm.eq(index);
 
-            $.ajax({
-                url: "/ETrans/seat",
-                type: 'GET',
-                data: {
-                    tripID: tripID,
-                    action: 'showUnavailable'
-                },
-                success: function (data) {
-                    var string = data;
-                    var array = string.split(",");
-                    array.pop();
-                    for (let item in array) {
-                        unavailabeSeat.push(array[item]);
-                    }
-                    getData(unavailabeSeat);
-                }
-            });
 
-            drawMapSeat(index, [], totalSeatForSeatMap);
-            
-            function getData(sm) {
-                sm.push('A_1');
-                var choice = drawMapSeat(index, sm, totalSeatForSeatMap);
-                
-                buttonConfirm.click(function () {
-                    console.log("click");
-                    url = window.location.href;
-                    position = url.search("ETrans") + 7;
-                    newurl = url.slice(0, position);
-                    window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice.toString() + "&action=createTrip");
-                });
-            }
+            drawMapSeat(index, unavailabeSeat, totalSeatForSeatMap);
+
+            buttonConfirm.click(function () {
+                console.log("click");
+                url = window.location.href;
+                position = url.search("ETrans") + 7;
+                newurl = url.slice(0, position);
+                window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice + "&action=createTrip");
+            });
         });
     });
 
@@ -102,11 +91,11 @@
     }
 
     function drawMapSeat(id, seatAreChosen, totalSeat) {
+        seatAreChosen.push('A_1');
         var seatMap = generateSeatMap(totalSeat);
         var cart = $(".selected-seats").eq(id),
                 counter = $(".counter-seat").eq(id),
                 total = $(".total-seat").eq(id),
-                choice = [],
                 sc = $(".seat-map-seat").eq(id).seatCharts({
             map: seatMap,
             seats: {
@@ -127,12 +116,12 @@
                 items: [
                     ["e", "available", "Economy Class"],
                     ["f", "unavailable", "Already Booked"],
-                ],
+                ]
             },
             click: function () {
                 if (this.status() === "available") {
                     choice.push(this.settings.id);
-                    console.log(choice);
+                    console.log("inside chart: " + choice);
                     //console.log(sc.find('selected').seatIds)
                     //let's create a new <li> which we'll add to the cart items
                     //this.data().category +
@@ -146,12 +135,6 @@
                             .attr("id", "cart-item-" + this.settings.id)
                             .data("seatId", this.settings.id)
                             .appendTo(cart);
-                    /*
-                     * Lets update the counter and total
-                     *
-                     * .find function will not find the current seat, because it will change its stauts only after return
-                     * 'selected'. This is why we have to add 1 to the length and the current seat price to the total.
-                     */
                     counter.text(sc.find("selected").length + 1);
                     total.text(recalculateTotal(sc) + this.data().price);
                     return "selected";
@@ -198,4 +181,5 @@
         });
         return total;
     }
+
 </script>

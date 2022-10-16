@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="date" class="form-control form-control-user" id="exampleFirstName"
+                                        <input type="date" class="form-control form-control-user"  min="1950-04-01" id="birthday"
                                                placeholder="Birthday" name="birthday" value="${requestScope.USER_TMP.dob}" required="" autocomplete="off">
                                     </div>
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -152,7 +152,7 @@
                                     </div> 
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" class="form-control form-control-user" id=""
+                                    <input type="submit" class="form-control form-control-user" id="submitRegister"
                                            name="action" value="RegisterAccount" style="background-color: #4e73df; color: white;
                                            padding:0;height: 6vh">
                                 </div>
@@ -253,3 +253,33 @@
 </div>
 
 <!--End confirm email-->
+
+    <script>
+        function myFunction(){  
+            const birthday=document.getElementById('birthday').value;
+            const currentYear = new Date().getFullYear();
+            // alert(currentYear);
+            const dateInput2=birthday.split("-");
+            // alert(dateInput2);
+            const birthYear2=dateInput2[0]; 
+            
+            // alert(birthYear2); 
+            const birthYearCheck= Number(birthYear2); 
+            const age = currentYear - birthYearCheck;
+            // alert(age);
+            if(age<18){    
+                console.log(age);            
+                document.getElementById('birthday').setCustomValidity('You are not 18 years old!');
+                document.getElementById('birthday').reportValidity();
+                document.getElementById('birthday').preventDefault();
+            }
+        }
+        var inputs = document.querySelectorAll('input:not([type="submit"])');
+
+        var submit = document.getElementById('submitRegister');
+        var form = document.getElementById('FromRegistration');
+
+        submit.addEventListener('click', myFunction);
+
+        form.addEventListener('submit', myFunction);
+    </script>

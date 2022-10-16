@@ -95,8 +95,11 @@ public class UserController extends HttpServlet {
             String code=(String) session.getAttribute("CODE");
             
             User userRegister=(User) session.getAttribute("USER_REGISTER");
+            System.out.println("User : "+userRegister);
             UserDAO dao=new UserDAOImpl();
-            if(code.equals(userCode)){
+            boolean check=code.equals(userCode);
+            System.out.println("check : "+ check);
+            if(code.equals(userCode)==true){
                 if (dao.registerNewUSer(userRegister)) {
                     request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                     session.removeAttribute("CODE");
