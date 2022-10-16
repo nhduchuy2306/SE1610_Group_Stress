@@ -3,9 +3,6 @@ package com.stress.utils;
 
 import com.stress.dto.Coordinates;
 import com.stress.dto.DistanceAndTime;
-import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -82,4 +79,5 @@ public class DistanceUtils {
         }
         return dat;
     }
+
 }
