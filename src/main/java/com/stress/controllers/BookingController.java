@@ -142,6 +142,11 @@ public class BookingController extends HttpServlet {
                     if(accountBalance >= price) {
                         //accountBalance -= price;
                         // update Account Balance again
+                        accountBalance -= price;
+                        loginUser.setAccountBalance(String.valueOf(accountBalance));
+                        userDAO.updateUser(loginUser.getUserID(),
+                                loginUser.getAccountBalance());
+                        session.setAttribute("LOGIN_USER", loginUser);
                         request.setAttribute("SUCCESS", "Check Out Success!");
                         url = "./client/order.jsp";
                     }else {

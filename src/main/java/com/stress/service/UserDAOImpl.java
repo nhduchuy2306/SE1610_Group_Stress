@@ -15,15 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+
     private RoleDAO roleDAO = new RoleDAOImpl(); // DONT REMOVE this is use for get User by ID 
-    
+
     private static final String LOGIN_BY_EMAIL = "SELECT [UserID], [Username], [RoleID],[AccountBalance] "
             + " FROM tblUsers WHERE [Email] = ? AND [Status] = ?";
 
     @Override
     public List<User> getAllUser() throws SQLException {
         String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
+                + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 1 OR [Status] = 2";
         List<User> userList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -40,23 +41,26 @@ public class UserDAOImpl implements UserDAO {
                     String password = rs.getString("Password");
                     Date dob = rs.getDate("DOB");
                     String address = rs.getString("Address");
-                    String phoneNumber =rs.getString("PhoneNumber");
+                    String phoneNumber = rs.getString("PhoneNumber");
                     String email = rs.getString("Email");
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
                     int status = rs.getInt("Status");
-                                        
+
                     Role role = new RoleDAOImpl().getRoleByID(roleID);
-                    if(role != null)
-                    userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                    if (role != null) {
+                        userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                    }
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("Error at getAllUser:" +e.toString());
+            System.out.println("Error at getAllUser:" + e.toString());
         } finally {
-            if (rs1 != null) rs.close();
+            if (rs1 != null) {
+                rs.close();
+            }
             if (rs != null) {
                 rs.close();
             }
@@ -88,10 +92,11 @@ public class UserDAOImpl implements UserDAO {
                     String username = rs.getString("Username");
                     String accountBalance = rs.getString("AccountBalance");
                     String roleID = rs.getString("RoleID");
-                    
+
                     Role role = new RoleDAOImpl().getRoleByID(roleID);
-                    if(role != null)
-                    user = new User(userID, username, null, email, null, null, null, true, role, accountBalance, User.ACTIVE_GOOGLE);
+                    if (role != null) {
+                        user = new User(userID, username, null, email, null, null, null, true, role, accountBalance, User.ACTIVE_GOOGLE);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -117,7 +122,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement ptm = null;
         ResultSet rs = null;
         String login = "SELECT [Username], [Email],[DOB], [Address], [PhoneNumber], [Sex], [RoleID], [AccountBalance], [Status] "
-            + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
+                + "FROM tblUsers WHERE [UserID]=? AND [Password]=?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
@@ -166,7 +171,7 @@ public class UserDAOImpl implements UserDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(delete);
                 ptm.setString(1, userID);
-                result = ptm.executeUpdate()> 0 ? true : false;
+                result = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,16 +188,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean registerNewUSer(User user) throws SQLException {
-            String register="INSERT INTO tblUsers(UserID,Username,[Password]"
-                     + ",Email,DOB,[Address],PhoneNumber,Sex,RoleID,AccountBalance,[Status]) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        String register = "INSERT INTO tblUsers(UserID,Username,[Password]"
+                + ",Email,DOB,[Address],PhoneNumber,Sex,RoleID,AccountBalance,[Status]) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
-        boolean check=false;
-        Connection conn=null;
-        PreparedStatement ptm =null;
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
         try {
-            conn=DBConnection.getConnection();
-            if(conn!=null){
-                ptm=conn.prepareStatement(register);
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(register);
                 ptm.setString(1, user.getUserID());
                 ptm.setString(2, user.getUsername());
                 ptm.setString(3, user.getPassword());
@@ -204,91 +209,107 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setString(9, "1");
                 ptm.setDouble(10, 0);
                 ptm.setInt(11, User.ACTIVE_NORMAL);
-                check=ptm.executeUpdate()>0? true:false;         
+                check = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
-            System.out.println("Error at registerNewUSer:"+ e.toString());
-        }finally{
-            if(ptm!=null)ptm.close();
-            if(conn!=null)conn.close();
+            System.out.println("Error at registerNewUSer:" + e.toString());
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
 
     @Override
-    public boolean checkDuplicateByID(String userID,String email) throws SQLException {
-        boolean check=false;
-        Connection conn=null;
-        PreparedStatement ptm =null;
-        ResultSet rs= null;
+    public boolean checkDuplicateByID(String userID, String email) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
         String checkDuplicate = "SELECT userID,username, DOB, address, phoneNumber, sex, roleID, AccountBalance, status FROM tblUsers WHERE userID=? AND Email=?";
 
-        try{
-            conn=DBConnection.getConnection();
-            if(conn!=null){
-                ptm=conn.prepareStatement(checkDuplicate);
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(checkDuplicate);
                 ptm.setString(1, userID);
                 ptm.setString(2, email);
-                rs=ptm.executeQuery();
-                if(rs!=null){
-                    check=true;
+                rs = ptm.executeQuery();
+                if (rs != null) {
+                    check = true;
                 }
             }
-        }catch(Exception e){
-            System.out.println("Error at checkDuplicateByID:"+ e.toString());
-        }finally{
-            if(rs!=null)rs.close();
-            if(ptm!=null)ptm.close();
-            if(conn!=null)conn.close();
+        } catch (Exception e) {
+            System.out.println("Error at checkDuplicateByID:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return check; 
+        return check;
     }
+
     @Override
     public User getUserByID(String userID) throws SQLException {
         String sql = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [UserID] = ?";
-        Connection conn =null;
+                + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [UserID] = ?";
+        Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
-        RoleDAO roleDAO=new RoleDAOImpl();
+        RoleDAO roleDAO = new RoleDAOImpl();
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
             ptm.setString(1, userID);
             rs = ptm.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 return new User(rs.getString("UserID"),
-                                rs.getString("Username"),
-                                rs.getString("Password"),
-                                rs.getString("Email"),
-                                rs.getDate("DOB"),
-                                rs.getString("DOB"),
-                                rs.getString("PhoneNumber"),
-                                rs.getBoolean("Sex"),
-
-                                roleDAO.getRoleByID(userID),
-
-                                rs.getString("AccountBalance"),
-                                rs.getInt("Status")
-                            );
+                        rs.getString("Username"),
+                        rs.getString("Password"),
+                        rs.getString("Email"),
+                        rs.getDate("DOB"),
+                        rs.getString("DOB"),
+                        rs.getString("PhoneNumber"),
+                        rs.getBoolean("Sex"),
+                        roleDAO.getRoleByID(userID),
+                        rs.getString("AccountBalance"),
+                        rs.getInt("Status")
+                );
             }
         } catch (Exception e) {
         } finally {
-            if(conn!=null) conn.close();
-            if(ptm!=null) ptm.close();
-            if(rs!=null) rs.close();
+            if (conn != null) {
+                conn.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
         }
         return null;
-    }   
+    }
+
     @Override
     public boolean registerByEmail(GooglePojo googleUser) throws SQLException {
         boolean check = false;
         Connection conn = null;
         PreparedStatement ptm = null;
-        
+
         try {
             conn = DBConnection.getConnection();
-            if(conn != null) {
+            if (conn != null) {
                 ptm = conn.prepareStatement("INSERT INTO tblUsers([UserID], [Username], [Email], [Status],[RoleID], [Password]) VALUES (?,?,?,?,?,?)");
                 ptm.setString(1, googleUser.getId());
                 ptm.setString(2, googleUser.getName());
@@ -301,24 +322,28 @@ public class UserDAOImpl implements UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(ptm != null) ptm.close();
-            if(conn != null) conn.close();
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
         return check;
     }
-    
+
     @Override
-    public boolean updateUser(String userID,String userName,String email,String DOB,String address,
-        String phoneNumber,String sex,String roleID,String status) throws SQLException {
-        boolean checkUpdate=false;
-        Connection conn =null;
+    public boolean updateUser(String userID, String userName, String email, String DOB, String address,
+            String phoneNumber, String sex, String roleID, String status) throws SQLException {
+        boolean checkUpdate = false;
+        Connection conn = null;
         PreparedStatement ptm = null;
-        String updateUser="UPDATE tblUsers SET UserName=?,Email=?,DOB=?,Address=?,"
+        String updateUser = "UPDATE tblUsers SET UserName=?,Email=?,DOB=?,Address=?,"
                 + "PhoneNumber=?,Sex=?,[RoleID]=?  WHERE UserID=?";
         try {
-            conn=DBConnection.getConnection();
-            if(conn!=null){
-                ptm=conn.prepareStatement(updateUser);
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(updateUser);
                 ptm.setString(1, userName);
                 ptm.setString(2, email);
                 ptm.setString(3, DOB);
@@ -327,20 +352,42 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setString(6, sex);
                 ptm.setString(7, roleID);
                 ptm.setString(8, userID);
-                checkUpdate=ptm.executeUpdate()>0?true:false;
+                checkUpdate = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
-            System.out.println("Eror at UserDAOImpl - updateUser: "+ e.toString());
+            System.out.println("Eror at UserDAOImpl - updateUser: " + e.toString());
         } finally {
             return checkUpdate;
         }
-        
+
+    }
+
+    @Override
+    public boolean updateUser(String userID, String accountBalance) throws SQLException {
+        boolean checkUpdate = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        String updateUser = "UPDATE tblUsers SET AccountBalance = ?  WHERE UserID=?";
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(updateUser);
+                ptm.setString(1, accountBalance);
+                ptm.setString(2, userID);
+                checkUpdate = ptm.executeUpdate() > 0 ? true : false;
+            }
+        } catch (Exception e) {
+            System.out.println("Eror at UserDAOImpl - updateUser: " + e.toString());
+        } finally {
+            return checkUpdate;
+        }
+
     }
 
     @Override
     public List<User> getAllUserDelete() throws SQLException {
         String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 0";
+                + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE [status] = 0";
         List<User> userList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -357,23 +404,26 @@ public class UserDAOImpl implements UserDAO {
                     String password = rs.getString("Password");
                     Date dob = rs.getDate("DOB");
                     String address = rs.getString("Address");
-                    String phoneNumber =rs.getString("PhoneNumber");
+                    String phoneNumber = rs.getString("PhoneNumber");
                     String email = rs.getString("Email");
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
                     int status = rs.getInt("Status");
-                                        
+
                     Role role = new RoleDAOImpl().getRoleByID(roleID);
-                    if(role != null)
-                    userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                    if (role != null) {
+                        userList.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                    }
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("Error at getAllUser:" +e.toString());
+            System.out.println("Error at getAllUser:" + e.toString());
         } finally {
-            if (rs1 != null) rs.close();
+            if (rs1 != null) {
+                rs.close();
+            }
             if (rs != null) {
                 rs.close();
             }
@@ -389,7 +439,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean activeUser(String userID) throws SQLException {
-boolean result = false;
+        boolean result = false;
         Connection conn = null;
         PreparedStatement ptm = null;
         String delete = "UPDATE tblUsers SET [status]=1  WHERE UserID=?";
@@ -398,7 +448,7 @@ boolean result = false;
             if (conn != null) {
                 ptm = conn.prepareStatement(delete);
                 ptm.setString(1, userID);
-                result = ptm.executeUpdate()> 0 ? true : false;
+                result = ptm.executeUpdate() > 0 ? true : false;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -410,12 +460,13 @@ boolean result = false;
                 conn.close();
             }
         }
-        return result;    }
+        return result;
+    }
 
     @Override
     public List<User> searchUser(String search) throws SQLException {
-    String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
-            + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE UserName like ?";
+        String getAllUser = "SELECT [UserID],[UserName],[Password], [Email], [DOB], [Address], [PhoneNumber],"
+                + " [Sex],[RoleID], [AccountBalance], [Status] FROM tblUsers WHERE UserName like ?";
         List<User> user = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -425,7 +476,7 @@ boolean result = false;
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(getAllUser);
-                ptm.setString(1, "%"+search+"%");
+                ptm.setString(1, "%" + search + "%");
                 rs = ptm.executeQuery();
                 while (rs.next()) {
                     String userID = rs.getString("UserID");
@@ -433,23 +484,26 @@ boolean result = false;
                     String password = rs.getString("Password");
                     Date dob = rs.getDate("DOB");
                     String address = rs.getString("Address");
-                    String phoneNumber =rs.getString("PhoneNumber");
+                    String phoneNumber = rs.getString("PhoneNumber");
                     String email = rs.getString("Email");
                     boolean sex = rs.getBoolean("Sex");
                     String roleID = rs.getString("RoleID");
                     String AccountBalance = rs.getString("AccountBalance");
                     int status = rs.getInt("Status");
-                                        
+
                     Role role = new RoleDAOImpl().getRoleByID(roleID);
-                    if(role != null)
-                    user.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                    if (role != null) {
+                        user.add(new User(userID, username, password, email, dob, address, phoneNumber, sex, role, AccountBalance, status));
+                    }
                 }
             }
 
         } catch (Exception e) {
-            System.out.println("Error at getAllUser:" +e.toString());
+            System.out.println("Error at getAllUser:" + e.toString());
         } finally {
-            if (rs1 != null) rs.close();
+            if (rs1 != null) {
+                rs.close();
+            }
             if (rs != null) {
                 rs.close();
             }
@@ -464,29 +518,35 @@ boolean result = false;
     }
 
     @Override
-    public boolean updatePassword(String userID, String password,String email) throws SQLException {
-        boolean check=false;
-        Connection conn=null;
-        PreparedStatement ptm =null;
-        ResultSet rs= null;
+    public boolean updatePassword(String userID, String password, String email) throws SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
         String updatePassword = "UPDATE tblUsers SET [Password]=? WHERE userID=? AND [Email]=?";
 
-        try{
-            conn=DBConnection.getConnection();
-            if(conn!=null){
-                ptm=conn.prepareStatement(updatePassword);
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(updatePassword);
                 ptm.setString(1, password);
                 ptm.setString(2, userID);
                 ptm.setString(3, email);
-                check=ptm.executeUpdate()>0?true:false;
+                check = ptm.executeUpdate() > 0 ? true : false;
             }
-        }catch(Exception e){
-            System.out.println("Error at updatePassword:"+ e.toString());
-        }finally{
-            if(rs!=null)rs.close();
-            if(ptm!=null)ptm.close();
-            if(conn!=null)conn.close();
+        } catch (Exception e) {
+            System.out.println("Error at updatePassword:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
         }
-        return check; 
+        return check;
     }
 }
