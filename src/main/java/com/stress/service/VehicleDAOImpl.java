@@ -247,9 +247,7 @@ public class VehicleDAOImpl implements VehicleDAO {
                     VehicleType vType = new VehicleTypeDAOImpl().getVehicleTypeByID(VehicleTypeID);
                     if (vType != null) {
                         vList.add(new Vehicle(vehicleID, vehicleName, licensePlate, vType, status));
-                    } else {
-                        throw new Exception();
-                    }
+                    } 
 
                 }
             }
@@ -302,14 +300,6 @@ public class VehicleDAOImpl implements VehicleDAO {
         return check;
     }
 
-    public static void main(String[] args) throws SQLException {
-        VehicleDAO vDao = new VehicleDAOImpl();
-        vDao.createVehicle(new Vehicle("VE015", "ABCD", "59S2_6513", new VehicleType(1, "", 0), 1));
-        List<Vehicle> vList = vDao.getAllVehicle();
-        for (Vehicle vehicle : vList) {
-            System.out.println(vehicle);
-        }
-    }
 
     @Override
     public List<Vehicle> getAllActiveVehicle() throws SQLException {
@@ -350,5 +340,13 @@ public class VehicleDAOImpl implements VehicleDAO {
             }
         }
         return list;
+    }
+    
+    public static void main(String[] args) throws SQLException {
+        VehicleDAO vDAO = new VehicleDAOImpl();
+        List<Vehicle> vList = vDAO.getAllVehicle();
+        for (Vehicle vehicle : vList) {
+            System.out.println(vehicle);
+        }
     }
 }

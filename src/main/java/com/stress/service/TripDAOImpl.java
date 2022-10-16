@@ -8,14 +8,11 @@ import com.stress.dao.VehicleDAO;
 import com.stress.dto.Trip;
 import com.stress.utils.DBConnection;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TripDAOImpl implements TripDAO {
 
@@ -23,6 +20,92 @@ public class TripDAOImpl implements TripDAO {
     private final VehicleDAO vehicleDAO = new VehicleDAOImpl();
     private final DriverDAO driverDAO = new DriverDAOImpl();
     private final CityDAO cityDAO = new CityDAOImpl();
+
+    @Override
+    public Trip getOngoingTripByDriver(String driverID) throws SQLException {
+        String sql = "SELECT [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
+                + "[VehicleID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE [DriverID] = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        Trip trip = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, driverID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    trip = new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(driverID),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return trip;
+    }
+
+    @Override
+    public Trip getOnGoingTripByVehicle (String vehicleID) throws SQLException {
+        String sql = "SELECT [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
+                + "[DriverID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE [VehicleID] = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        Trip trip = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, vehicleID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    trip = new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(vehicleID),
+                            driverDAO.getDriverByID(rs.getString("driverID")),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return trip;
+    }
 
     @Override
     public boolean checkBookedTicket(String tripID) throws SQLException {
@@ -241,9 +324,14 @@ public class TripDAOImpl implements TripDAO {
 
     @Override
     public List<Trip> getAllTripByRouteAndStartDay(int routeID, String day) throws SQLException {
-        String sql = "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
+//        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
+//                + "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
+//                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "
+//                + "WHERE RouteID = ? AND StartDateTime >= ? AND StartTime >= @timeFrom";
+        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
+                + "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
                 + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "
-                + "WHERE RouteID = ? AND StartDateTime = ?";
+                + "WHERE RouteID = ? AND StartDateTime >= ?";
         List<Trip> list = new ArrayList<>();
         Connection conn = null;
         PreparedStatement ptm = null;
@@ -282,5 +370,105 @@ public class TripDAOImpl implements TripDAO {
             }
         }
         return list;
+    }
+
+    private List<Trip> getAllTripByRouteAndHigherStartDay(int routeID, String day) throws SQLException {
+        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
+                + "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
+                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE RouteID = ? AND StartDateTime > ?";
+        List<Trip> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, routeID);
+                ptm.setString(2, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public List<Trip> getAllTripByRouteAndSameStartDay(int routeID, String day) throws SQLException {
+        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
+                + "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
+                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "
+                + "WHERE RouteID = ? AND StartDateTime = ? AND StartTime >= @timeFrom";
+        List<Trip> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, routeID);
+                ptm.setString(2, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Trip(rs.getString("TripID"),
+                            rs.getString("TripName"),
+                            rs.getDate("StartDateTime"),
+                            rs.getTime("StartTime"),
+                            rs.getString("Policy"),
+                            routeDAO.getRouteByID(rs.getInt("RouteID")),
+                            vehicleDAO.getVehicleByID(rs.getString("VehicleID")),
+                            driverDAO.getDriverByID(rs.getString("DriverID")),
+                            rs.getInt("SeatRemain"),
+                            rs.getInt("Status")));
+                }
+            }
+            list.addAll(getAllTripByRouteAndHigherStartDay(routeID, day));
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        } finally {
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    public static void main(String[] args) {
+        try {
+            TripDAOImpl dao = new TripDAOImpl();
+            System.out.println(dao.getAllTripByRouteAndStartDay(1, "2022-10-18"));
+        } catch (Exception e) {
+        }
     }
 }

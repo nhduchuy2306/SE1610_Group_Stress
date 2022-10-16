@@ -12,7 +12,6 @@ import com.stress.dto.Seat;
 import com.stress.dto.Ticket;
 import com.stress.dto.Trip;
 import com.stress.dto.User;
-import com.stress.dto.VehicleType;
 import com.stress.service.CityDAOImpl;
 import com.stress.service.OrderDAOImpl;
 import com.stress.service.RouteDAOImpl;
@@ -22,9 +21,8 @@ import com.stress.service.TripDAOImpl;
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.CommonFunction;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.time.Instant;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +52,7 @@ public class BookingController extends HttpServlet {
         try {
             String action = request.getParameter("action");
             switch (action) {
-                case "showTrip":
+                case "Search":
                     showTrip(request, response);
                     break;
                 case "createTrip":
@@ -67,6 +65,7 @@ public class BookingController extends HttpServlet {
                     throw new AssertionError();
             }
         } catch (Exception e) {
+            System.out.println("Error " + e.toString());
         }
     }
 
@@ -80,12 +79,23 @@ public class BookingController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
-            System.out.println("RouteID" + routeID);
-            String startDay = request.getParameter("start");
-            
+            String startDay = request.getParameter("start");          
             List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
-
+            String []a=startDay.split("/");
+            String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
+            SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
+            Date dateInput=formater.parse(checkStartDate);
+            String test= java.time.LocalDate.now().toString();
+            Date currentDate=formater.parse(test);
+            List<Trip> listTrip=null;
+            if (dateInput.compareTo(currentDate)==0) {
+                listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
+            }else{
+                listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
+            }
+            System.out.println("List " + listTrip);
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);         
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
         }
@@ -144,7 +154,7 @@ public class BookingController extends HttpServlet {
                 url = "./client/index.jsp";
             }
         } catch (Exception e) {
-            System.out.println("Error at CheckOut Controller");
+            System.out.println("Error at CheckOut Controller"+e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
