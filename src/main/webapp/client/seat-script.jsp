@@ -1,106 +1,39 @@
+<%@page import="com.stress.dto.Seat"%>
+<%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
+    var checkout = $(".checkout-button-seat");
 
-    var btn_choose_seat = $('.btn-choose-seat');
-    var totalSeat = $("input[name=totalSeat]");
-    var button_confirm = $(".choose-seat");
+    var choice = drawMapSeat();
+    
+    console.log(choice);
 
-    console.log(button_confirm.eq(0));
-    console.log(btn_choose_seat.eq(0).data("target"));
-    console.log(btn_choose_seat.eq(0).data("index"));
-    console.log(parseInt(totalSeat.eq(0).val()));
-
-    var firstSeatLabel = 1;
-    var price = $("input[name=price]").val();
-
-    $(document).ready(function () {
-        btn_choose_seat.click(function () {
-            var tripID = $(this).data('index');
-
-            var seatID = document.getElementById("" + tripID);
-
-            var unavailabeSeat = [];
-
-            fetch('http://localhost:8080/ETrans/api/seat/' + tripID)
-                    .then(res => res.json())
-                    .then(data => {
-                        var seatInputHidden = document.getElementById("" + tripID);
-                        let string = "" 
-                                
-                        for (var i in data) {
-                            let s = data[i].seatID;
-                            string += s.trim()+",";
-                        }
-                        seatInputHidden.value = string;
-                    });
-
-            var index = btn_choose_seat.index((this));
-            var totalSeatForSeatMap = parseInt(totalSeat.eq(index).val());
-            var buttonConfirm = button_confirm.eq(index);
-
-
-            drawMapSeat(index, unavailabeSeat, totalSeatForSeatMap);
-
-            buttonConfirm.click(function () {
-                console.log("click");
-                url = window.location.href;
-                position = url.search("ETrans") + 7;
-                newurl = url.slice(0, position);
-                window.location.replace(newurl + 'book?' + "tripID=" + tripID + "&" + "seatID=" + choice + "&action=createTrip");
-            });
-        });
+    checkout.click(function () {
+        console.log("click");
+        url = window.location.href;
+        position = url.search("ETrans") + 7;
+        newurl = url.slice(0, position);
+        window.location.replace(newurl + 'book?' + "tripID=" + "<%=request.getAttribute("tripID")%>" + "&" + "seatID=" + choice + "&action=createTrip");
     });
 
-    function generateSeatMap(totalSeat) {
-        if (totalSeat === 16) {
-            return [
-                "e__ee",
-                "ee_ee",
-                "ee_ee",
-                "eeeee"
-            ];
-        }
-        if (totalSeat === 29) {
-            return [
-                "e____",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "eeeee"
-            ];
-        }
-        if (totalSeat === 45) {
-            return [
-                "e____",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "ee_ee",
-                "eeeee"
-            ];
-        }
-    }
+    function drawMapSeat() {
+        var seatMap = generateSeatMap(<%=request.getAttribute("totalSeat")%>);
+        var data = "<%=request.getAttribute("unavailabelSeat")%>";
 
-    function drawMapSeat(id, seatAreChosen, totalSeat) {
-        seatAreChosen.push('A_1');
-        var seatMap = generateSeatMap(totalSeat);
-        var cart = $(".selected-seats").eq(id),
-                counter = $(".counter-seat").eq(id),
-                total = $(".total-seat").eq(id),
-                sc = $(".seat-map-seat").eq(id).seatCharts({
+        console.log(data);
+
+        var seatAreChosen = data.split(",");
+        seatAreChosen.pop();
+
+        var cart = $(".selected-seats"),
+                counter = $(".counter-seat"),
+                total = $(".total-seat"),
+                choice = [],
+                sc = $(".seat-map-seat").seatCharts({
             map: seatMap,
             seats: {
                 e: {
-                    price: parseInt(price.trim()),
+                    price: 15000,
                     classes: "economy-class", //your custom CSS class
                     category: "Economy Class"
                 }
@@ -166,11 +99,12 @@
             //let's just trigger Click event on the appropriate seat, so we don't have to repeat the logic here
             sc.get($(this).parents("li:first").data("seatId")).click();
         });
-//        seatAreChosen = ['A_1', 'B_1', 'C_4', 'D_5'];
+//        var seatAreChosen = ['A_1', 'B_1', 'C_4', 'D_5'];
         //let's pretend some seats have already been booked
         sc.get(seatAreChosen).status("unavailable");
 
         return choice;
+
     }
 
     function recalculateTotal(sc) {
@@ -180,6 +114,45 @@
             total += this.data().price;
         });
         return total;
+    }
+    
+    function generateSeatMap(totalSeat) {
+        if (totalSeat === 16) {
+            return [
+                "e__ee",
+                "ee_ee",
+                "ee_ee",
+                "eeeee"
+            ];
+        }
+        if (totalSeat === 29) {
+            return [
+                "e____",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "eeeee"
+            ];
+        }
+        if (totalSeat === 45) {
+            return [
+                "e____",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "ee_ee",
+                "eeeee"
+            ];
+        }
     }
 
 </script>
