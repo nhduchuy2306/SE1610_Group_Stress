@@ -169,10 +169,10 @@ public class SeatDAOImpl implements SeatDAO{
             rs = ptm.executeQuery();
             if(rs.next()) {
                 int price = rs.getInt("Price");
-                boolean status = rs.getBoolean("Status");
-//                int status = rs.getInt("status");
+//                boolean status = rs.getBoolean("Status");
+                int status = rs.getInt("status");
                 Trip trip = new TripDAOImpl().getTripByID(tripID);
-//                seat = new Seat(seatID, price, status, trip);
+                seat = new Seat(seatID, price, status, trip);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,5 +204,10 @@ public class SeatDAOImpl implements SeatDAO{
             if(conn != null) conn.close();
         }
         return check;
+    }
+    
+    public static void main(String[] args) throws SQLException {
+        SeatDAOImpl s = new SeatDAOImpl();
+        System.out.println(s.lockSeat("D_1", "T0001"));
     }
 }
