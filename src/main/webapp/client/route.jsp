@@ -200,7 +200,9 @@
                                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample">
                                                     View more detail
                                                 </button>
+                                                
                                                 <a href="${pageContext.request.contextPath}/book?action=choose-ticket&tripID=${trip.tripID.trim()}&totalSeat=${trip.vehicle.vehicleType.totalSeat}" class="btn-choose-seat btn btn-primary" >Choose ticket</a>
+
                                             </div>
                                             <div class="collapse" id="collapse-${trip.tripID.trim()}">
                                                 <div class="card card-body">
