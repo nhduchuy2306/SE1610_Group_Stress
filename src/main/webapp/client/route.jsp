@@ -40,14 +40,14 @@
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
             </header><!-- #header -->
-            
-            
+
+
             <!--    Login, Register, Forgot Password, Confirm email-->
 
-            <jsp:include page="login.jsp"></jsp:include>
+        <jsp:include page="login.jsp"></jsp:include>
 
             <!--    END Login, Register, Forgot Password, Confirm email-->
-            
+
             <!-- start banner Area -->
             <section class="about-banner relative">
                 <div class="overlay overlay-bg"></div>
@@ -68,13 +68,13 @@
             <!-- Start destinations Area -->
             <section class="destinations-area section-gap">
                 <div class="container">
-<!--                    <div class="row d-flex justify-content-center">
-                        <div class="menu-content pb-60 col-lg-9">
-                            <div class="title text-center">
-                                <h1 class="mb-10">Tickets</h1>
-                            </div>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="row d-flex justify-content-center">
+                                            <div class="menu-content pb-60 col-lg-9">
+                                                <div class="title text-center">
+                                                    <h1 class="mb-10">Tickets</h1>
+                                                </div>
+                                            </div>
+                                        </div>-->
                     <div class="container-fluid">
                         <div class="row px-xl-5 justify-content-between">
                             <!-- Shop Sidebar Start -->
@@ -141,8 +141,6 @@
                                         </div>
                                     </div>
                                 <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
-                                    <input type="hidden" name="tripID" value="${trip.tripID}">
-                                    <input type="hidden" id="${trip.tripID.trim()}" name="seatID" value="">
                                     <div class="col-lg-12 col-md-6 col-sm-12">
                                         <div class="card product-item border-0 mb-4">
                                             <div
@@ -202,118 +200,7 @@
                                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample">
                                                     View more detail
                                                 </button>
-                                                <button type="button" class="btn-choose-seat btn btn-primary" data-toggle="modal"
-                                                        data-target="#choose-${trip.tripID.trim()}" data-index="${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
-                                                    Choose ticket
-                                                </button>
-                                                <div class="modal fade" id="choose-${trip.tripID.trim()}" tabindex="-1" role="dialog"
-                                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <form action="" method="get">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Book car
-                                                                    </h5>
-                                                                    <button type="button" class="close" data-dismiss="modal"
-                                                                            aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <ul class="modal-title nav nav-tabs" id="myTab"
-                                                                        role="tablist">
-                                                                        <li class="nav-item">
-                                                                            <a class="nav-link active" id="flight-tab"
-                                                                               data-toggle="tab" href="#car-${trip.tripID.trim()}" role="tab"
-                                                                               aria-controls="flight"
-                                                                               aria-selected="true">Cars</a>
-                                                                        </li>
-                                                                        <li class="nav-item">
-                                                                            <a class="nav-link" id="hotel-tab" data-toggle="tab"
-                                                                               href="#hotel-${trip.tripID.trim()}" role="tab" aria-controls="hotel"
-                                                                               aria-selected="false">Time</a>
-                                                                        </li>
-                                                                    </ul>
-                                                                    <div class="tab-content" id="myTabContent">
-                                                                        <div class="tab-pane fade show active" id="car-${trip.tripID.trim()}"
-                                                                             role="tabpanel" aria-labelledby="flight-tab">
-                                                                            <div class="wrapper-seat">
-                                                                                <div class="container-seat">
-                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="tripID" value="${trip.tripID.trim()}">
-<!--                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="price" value="
-                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
-                                                                                               ${trip.vehicle.vehicleType.PRICE_16}
-                                                                                           </c:if>
-                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
-                                                                                               ${trip.vehicle.vehicleType.PRICE_29}
-                                                                                           </c:if>
-                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
-                                                                                               ${trip.vehicle.vehicleType.PRICE_45}
-                                                                                           </c:if>
-                                                                                        ">-->
-                                                                                    
-                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
-                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_16}">
-                                                                                           </c:if>
-                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
-                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_29}">
-                                                                                           </c:if>
-                                                                                           <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
-                                                                                               <input type="text" style="visibility: hidden; opacity: 0" name="price" value="${trip.vehicle.vehicleType.PRICE_45}">
-                                                                                           </c:if>
-                                                                                       
-                                                                                    <input type="text" style="visibility: hidden; opacity: 0" name="totalSeat" value="${trip.vehicle.vehicleType.totalSeat}">
-                                                                                    <h1 class="text-center">Choosing seats</h1>
-                                                                                    <div class="seat-map-seat">
-                                                                                        <div class="text-center front-indicator-seat">
-                                                                                            Choosing</div>
-                                                                                    </div>
-                                                                                    <div class="booking-details-seat">
-                                                                                        <h2>Booking Details</h2>
-                                                                                        <h3> Selected Seats (<span
-                                                                                                class="counter-seat">0</span>):
-                                                                                        </h3>
-                                                                                        <ul class="selected-seats"></ul>
-                                                                                        Total: <b><span
-                                                                                                class="total-seat">0</span> vnđ</b>
-                                                                                        <button
-                                                                                            class="btn btn-secondary checkout-button-seat"
-                                                                                            type="button"
-                                                                                            onclick="nextInFlights()">Next
-                                                                                            &raquo;</button>
-                                                                                        <div id="legend-seat"></div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="tab-pane fade" id="hotel-${trip.tripID.trim()}" role="tabpanel"
-                                                                             aria-labelledby="hotel-tab">
-                                                                            <div style="height:300px; width: 100%"
-                                                                                 class="container">
-                                                                                <div class="row pt-70">
-                                                                                    <div class="col-lg-6 col-md-6 text-center">
-                                                                                        <h3>Start Time:</h3>
-                                                                                        <h5>${trip.startDateTime}</h5>
-                                                                                        <h5>${trip.startTime}</h5>
-                                                                                    </div>
-                                                                                    <div class="col-lg-6 col-md-6 text-center">
-                                                                                        <h3>End Time:</h3>
-                                                                                        <h5>16-Sep-22</h5>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                                    <button style="position:absolute; bottom:10px; right:20px;" type="button" class="choose-seat btn btn-secondary"
-                                                                                    name="action" value="addTickets"> Confirm</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-<!--                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                </div>-->
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <a href="${pageContext.request.contextPath}/book?action=choose-ticket&tripID=${trip.tripID.trim()}&totalSeat=${trip.vehicle.vehicleType.totalSeat}" class="btn-choose-seat btn btn-primary" >Choose ticket</a>
                                             </div>
                                             <div class="collapse" id="collapse-${trip.tripID.trim()}">
                                                 <div class="card card-body">
