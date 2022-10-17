@@ -203,7 +203,7 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setBoolean(8, user.isSex());
                 ptm.setString(9, "1");
                 ptm.setDouble(10, 0);
-                ptm.setInt(11, User.ACTIVE_NORMAL);
+                ptm.setInt(11, user.getStatus());
                 check=ptm.executeUpdate()>0? true:false;         
             }
         } catch (Exception e) {
@@ -265,9 +265,7 @@ public class UserDAOImpl implements UserDAO {
                                 rs.getString("DOB"),
                                 rs.getString("PhoneNumber"),
                                 rs.getBoolean("Sex"),
-
-                                roleDAO.getRoleByID(userID),
-
+                                roleDAO.getRoleByID(rs.getString("RoleID")),
                                 rs.getString("AccountBalance"),
                                 rs.getInt("Status")
                             );
@@ -309,7 +307,7 @@ public class UserDAOImpl implements UserDAO {
     
     @Override
     public boolean updateUser(String userID,String userName,String email,String DOB,String address,
-        String phoneNumber,String sex,String roleID,String status) throws SQLException {
+        String phoneNumber,String sex,String roleID,String status,String password) throws SQLException {
         boolean checkUpdate=false;
         Connection conn =null;
         PreparedStatement ptm = null;
@@ -389,14 +387,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public boolean activeUser(String userID) throws SQLException {
-boolean result = false;
+        boolean result = false;
         Connection conn = null;
         PreparedStatement ptm = null;
-        String delete = "UPDATE tblUsers SET [status]=1  WHERE UserID=?";
+        String active = "UPDATE tblUsers SET [status]=1  WHERE UserID=?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(delete);
+                ptm = conn.prepareStatement(active);
                 ptm.setString(1, userID);
                 result = ptm.executeUpdate()> 0 ? true : false;
             }
@@ -410,7 +408,8 @@ boolean result = false;
                 conn.close();
             }
         }
-        return result;    }
+        return result;    
+    }
 
     @Override
     public List<User> searchUser(String search) throws SQLException {

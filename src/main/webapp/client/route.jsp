@@ -202,9 +202,9 @@
                                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample">
                                                     View more detail
                                                 </button>
-                                                <button type="button" class="btn-choose-seat btn btn-primary" data-toggle="modal"
+                                                <button type="button" class="btn-choose-seat btn btn-primary" data-toggle="modal" id="chooseSeat" value="${trip.tripID.trim()}"
                                                         data-target="#choose-${trip.tripID.trim()}" data-index="${trip.tripID.trim()}" onclick="AlwaysFlightClick()">
-                                                    Choose ticket
+                                                    Choose Ticket
                                                 </button>
                                                 <div class="modal fade" id="choose-${trip.tripID.trim()}" tabindex="-1" role="dialog"
                                                      aria-labelledby="exampleModalLabel" aria-hidden="true">
