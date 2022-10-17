@@ -517,6 +517,13 @@
             });
             </script>
         </c:if>
+        <c:if test="${requestScope.ERROR_FOR_LOGIN!=null}">
+            <script>
+            $(window).load(function () {
+                $('#loginForm').modal('show');
+            });
+            </script>
+        </c:if>
         <c:if test="${requestScope.ERROR_USERID!=null}">
             <script>
             $(window).load(function () {
