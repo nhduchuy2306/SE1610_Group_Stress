@@ -22,6 +22,7 @@ import com.stress.service.UserDAOImpl;
 import com.stress.utils.CommonFunction;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -88,7 +89,9 @@ public class BookingController extends HttpServlet {
             Date dateInput=formater.parse(checkStartDate);
             String test= java.time.LocalDate.now().toString();
             Date currentDate=formater.parse(test);
-            List<Trip> listTrip=null;
+            
+//            List<Trip> listTrip=null;
+            
             if (dateInput.compareTo(currentDate)==0) {
                 listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
             }else{
