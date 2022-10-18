@@ -106,18 +106,18 @@ public class BookingController extends HttpServlet {
         try {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
             String startDay = request.getParameter("start");
-            List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
-            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
-            String[] a = startDay.split("/");
-            String checkStartDate = a[2] + "-" + a[1] + "-" + a[0];
-            SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-            Date dateInput = formater.parse(checkStartDate);
-            String test = java.time.LocalDate.now().toString();
-            Date currentDate = formater.parse(test);
-            listTrip = null;
-            if (dateInput.compareTo(currentDate) == 0) {
-                listTrip = tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
-            } else {
+            String []a=startDay.split("/");
+            String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
+            SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
+            Date dateInput=formater.parse(checkStartDate);
+            String test= java.time.LocalDate.now().toString();
+            Date currentDate=formater.parse(test);
+            
+//            List<Trip> listTrip=null;
+            
+            if (dateInput.compareTo(currentDate)==0) {
+                listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
+            }else{
                 listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             }
             System.out.println("List " + listTrip);
@@ -237,6 +237,7 @@ public class BookingController extends HttpServlet {
             String tripID = request.getParameter("tripID");
             String totalSeat = request.getParameter("totalSeat");
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
+            Trip trip = tripDAO.getTripByID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
             Trip trip = tripDAO.getTripByID(tripID);
             for (Seat s : list) {
