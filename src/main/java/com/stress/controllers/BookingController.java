@@ -157,6 +157,7 @@ public class BookingController extends HttpServlet {
             String tripID = request.getParameter("tripID");
             String totalSeat = request.getParameter("totalSeat");
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
+            Trip trip = tripDAO.getTripByID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
             for (Seat s : list) {
                 unavailableSeat.add(s.getSeatID().trim());
@@ -169,6 +170,7 @@ public class BookingController extends HttpServlet {
             request.setAttribute("totalSeat", totalSeat);
             request.setAttribute("unavailabelSeat", seat);
             request.setAttribute("tripID", tripID);
+            request.setAttribute("trip", trip);
             request.getRequestDispatcher("/client/ticket-detail.jsp").forward(request, response);
         } catch (Exception e) {
         }
