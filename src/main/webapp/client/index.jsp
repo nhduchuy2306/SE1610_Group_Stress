@@ -552,6 +552,14 @@
             });
             </script>
         </c:if>
+        <c:if test="${requestScope.ACTIVE_ACCOUNT!=null}">
+            <script>
+                $(window).load(function () {
+                    $('#activeAccount').modal('show');
+                });
+            </script>
+        </c:if>
+         
 	<script>
             const dayInput=document.getElementById('inputDateSearch');
 

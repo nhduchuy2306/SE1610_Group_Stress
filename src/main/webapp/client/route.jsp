@@ -140,6 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                
                                 <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
                                     <div class="col-lg-12 col-md-6 col-sm-12">
                                         <div class="card product-item border-0 mb-4">
@@ -200,7 +201,9 @@
                                                 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample">
                                                     View more detail
                                                 </button>
+
                                                 <a href="${pageContext.request.contextPath}/book?action=choose-ticket&tripID=${trip.tripID.trim()}&totalSeat=${trip.vehicle.vehicleType.totalSeat}" class="btn-choose-seat btn btn-primary" >Choose ticket</a>
+
                                             </div>
                                             <div class="collapse" id="collapse-${trip.tripID.trim()}">
                                                 <div class="card card-body">
@@ -266,7 +269,7 @@
 
 
                                 <!--Phân trang-->
-                                <div class="col-12 pb-1">
+                                <!-- <div class="col-12 pb-1">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination justify-content-center mb-3">
                                             <li class="page-item disabled">
@@ -286,7 +289,7 @@
                                             </li>
                                         </ul>
                                     </nav>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>

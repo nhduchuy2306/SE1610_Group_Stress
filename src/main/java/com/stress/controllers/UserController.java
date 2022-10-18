@@ -51,7 +51,8 @@ public class UserController extends HttpServlet {
             System.out.println("action:" + action);
             switch (action) {
                 case "RegisterAccount":
-                    sendCode(request,response);
+//                    sendCode(request,response);
+                    checkAccount(request, response);
                     break;
                 case "Update":
                     updateUser(request, response);
@@ -90,26 +91,24 @@ public class UserController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String url = "/home";
         try {
-            HttpSession session=request.getSession();
-            String userCode=request.getParameter("codeEmail");
-            String code=(String) session.getAttribute("CODE");
-            
-            User userRegister=(User) session.getAttribute("USER_REGISTER");
-            System.out.println("User : "+userRegister);
-            UserDAO dao=new UserDAOImpl();
-            boolean check=code.equals(userCode);
-            System.out.println("check : "+ check);
-            if(code.equals(userCode)==true){
-                if (dao.registerNewUSer(userRegister)) {
+            HttpSession session = request.getSession();
+            String userCode = request.getParameter("codeEmail");
+            String code = (String) session.getAttribute("CODE");
+            User userRegister = (User) session.getAttribute("USER_REGISTER");
+            System.out.println("User : " + userRegister);
+            UserDAO dao = new UserDAOImpl();
+            boolean check = code.equals(userCode);
+            System.out.println("check : " + check);
+            if (code.equals(userCode) == true) {
+                if (dao.activeUser(userRegister.getUserID())) {
                     request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                     session.removeAttribute("CODE");
                     session.removeAttribute("USER_REGISTER");
                     url = "/home";
                 }
+            } else {
+                request.setAttribute("ERROR_CODE", "Your code is not correct!");
             }
-            else{
-            request.setAttribute("ERROR_CODE", "Your code is not correct!");
-        }
         } catch (Exception e) {
             log("Error at UserController - Register:" + e.toString());
         } finally {
@@ -124,8 +123,8 @@ public class UserController extends HttpServlet {
             UserDAO dao = new UserDAOImpl();
             List<User> list = dao.getAllUser();
             //if (!list.isEmpty()) {
-                request.setAttribute("LIST_USER", list);
-                url = "./admin/userTable.jsp";
+            request.setAttribute("LIST_USER", list);
+            url = "./admin/userTable.jsp";
             //}
         } catch (Exception e) {
             log("Error at UserController - ViewUser: " + e.toString());
@@ -147,8 +146,9 @@ public class UserController extends HttpServlet {
             String phoneNum = request.getParameter("phoneNum");
             String roleID = request.getParameter("roleID");
             String status = request.getParameter("status");
+            String password = request.getParameter("password");
             UserDAO dao = new UserDAOImpl();
-            boolean checkUpdate = dao.updateUser(userID, userName, email, birthday, address, phoneNum, gender, roleID, status);
+            boolean checkUpdate = dao.updateUser(userID, userName, email, birthday, address, phoneNum, gender, roleID, status, password);
             if (checkUpdate) {
                 request.setAttribute("SUCCESS", "UPDATE USER SUCCESSFULLY");
                 request.setAttribute("userID", userID);
@@ -181,16 +181,16 @@ public class UserController extends HttpServlet {
         try {
             String userID = request.getParameter("userID");
             String password = request.getParameter("password");
-            String hashPassword=Hash.hash(password);
+            String hashPassword = Hash.hash(password);
             String gRecaptcha = request.getParameter("g-recaptcha-response");
             UserDAO dao = new UserDAOImpl();
             User loginUser = dao.getUserByIDAndPassword(userID, hashPassword);
-            System.out.println("hash: "+hashPassword);
+            System.out.println("hash: " + hashPassword);
             User userIDCheck = dao.getUserByID(userID);
             boolean verify = VerifyRecaptcha.verify(gRecaptcha);
             System.out.println(verify);
             if (verify) {
-                if (userIDCheck != null) {
+                if (userIDCheck != null && userIDCheck.getStatus() == 1) {
                     if (loginUser != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("LOGIN_USER", loginUser);
@@ -204,16 +204,17 @@ public class UserController extends HttpServlet {
                         request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                         request.setAttribute("ERROR_LOGIN2", "Incorect Password. Please try again!");
                     }
+                } else if (userIDCheck.getStatus() == 0) {
+                    sendCode("?","ACTIVE_ACCOUNT", userIDCheck, userIDCheck, request, response);
                 } else {
                     request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                     request.setAttribute("ERROR_LOGIN1", "Incorrect Account. Please try again!");
                 }
-            }else{
+            } else {
                 request.setAttribute("USERID", userID);
                 request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                 request.setAttribute("ERROR_RECAPTCHA", "You missed the Captcha");
             }
-            
 
         } catch (Exception e) {
             log("Error at UserController - Login: " + e.toString());
@@ -256,56 +257,76 @@ public class UserController extends HttpServlet {
         }
     }
 
-    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    private void searchUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-        String url="./admin/404.jsp";
+        String url = "./admin/404.jsp";
         try {
-            String search=request.getParameter("search");
-            UserDAO userDAO=new UserDAOImpl();
-            List<User> user=userDAO.searchUser(search);
-            if(!user.isEmpty()){
+            String search = request.getParameter("search");
+            UserDAO userDAO = new UserDAOImpl();
+            List<User> user = userDAO.searchUser(search);
+            if (!user.isEmpty()) {
                 request.setAttribute("LIST_USER", user);
                 request.setAttribute("SEARCH", search);
                 url = "./admin/userTable.jsp";
             }
-            
+
         } catch (Exception e) {
             log("Error at UserController - deleteUser: " + e.toString());
-        }
-        finally{
-            request.getRequestDispatcher(url).forward(request, response);
-        }
-    }
-
-    private void updatePassword(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        request.setCharacterEncoding("utf-8");
-        String url = "/home";
-        try {
-            UserDAO dao = new UserDAOImpl();
-            String userID=request.getParameter("userID");
-            String password=ContentIdGenerator.getRandomWord(10);
-            String hashPassword=Hash.hash(password);
-            User user=dao.getUserByID(userID);
-            request.setAttribute("RESET_PASSWORD", "reset");
-            if(user!=null){
-                boolean check=dao.updatePassword(userID, hashPassword, user.getEmail());
-                if(check){
-                    boolean checkSend=Email.sendEmail(user.getEmail(), password,"New password is ","Reset Password");
-                    if(checkSend){
-                        request.setAttribute("SUCCESS", "New password have been sent!");
-                    }
-                }
-            }else{
-                request.setAttribute("ERROR_FORGOT", "Your account dose not exist!");
-            }
-        } catch (Exception e) {
-            log("Error at UserController - updatePassword: "+ e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-    private void sendCode(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    private void updatePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        String url = "/home";
+        try {
+            UserDAO dao = new UserDAOImpl();
+            String userID = request.getParameter("userID");
+            String password = ContentIdGenerator.getRandomWord(10);
+            String hashPassword = Hash.hash(password);
+            User user = dao.getUserByID(userID);
+            request.setAttribute("RESET_PASSWORD", "reset");
+            if (user != null) {
+                boolean check = dao.updatePassword(userID, hashPassword, user.getEmail());
+                if (check) {
+                    boolean checkSend = Email.sendEmail(user.getEmail(), password, "New password is ", "Reset Password");
+                    if (checkSend) {
+                        request.setAttribute("SUCCESS", "New password have been sent!");
+                    }
+                }
+            } else {
+                request.setAttribute("ERROR_FORGOT", "Your account dose not exist!");
+            }
+        } catch (Exception e) {
+            log("Error at UserController - updatePassword: " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+
+    private void sendCode(String content,String check, User userRegister, User userInfor, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        String url = "/home";
+        try {
+            HttpSession session = request.getSession();
+            request.setAttribute("USER_TMP", userInfor);
+            String code = ContentIdGenerator.getRandomWord(7);
+            boolean sendCode = Email.sendEmail(userRegister.getEmail(), code, "Verify code: ", "Verify Email");
+            if (sendCode) {
+                session.setAttribute("USER_REGISTER", userRegister);
+                session.setAttribute("CODE", code);
+                request.setAttribute(check, content);
+                System.out.println("check " + check);
+            }
+        } catch (Exception e) {
+            log("Error at UserController - Register:" + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
+        }
+    }
+
+    private void checkAccount(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String url = "/home";
         try {
@@ -317,33 +338,35 @@ public class UserController extends HttpServlet {
             if (gender.equals("1")) {
                 sex = true;
             }
-            String email=request.getParameter("email");
-            String address=request.getParameter("address");
-            String phoneNum=request.getParameter("phoneNum");
-            String userID=request.getParameter("userID");
-            String password=request.getParameter("password");
-            String hashPassword=Hash.hash(password);
-            Role role=new Role("1", "User");
-            UserDAO dao=new UserDAOImpl();
-            User userRegister=new User(userID, userName, hashPassword, email, date, address, phoneNum, sex, role, "0", 1);
-            User userInfor=new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 1);
-            HttpSession session=request.getSession();
+            String email = request.getParameter("email");
+            String address = request.getParameter("address");
+            String phoneNum = request.getParameter("phoneNum");
+            String userID = request.getParameter("userID");
+            String password = request.getParameter("password");
+            String hashPassword = Hash.hash(password);
+            Role role = new Role("1", "User");
+            User userRegister = new User(userID, userName, hashPassword, email, date, address, phoneNum, sex, role, "0", 0);
+            User userInfor = new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 0);
+            User userTmp = new User();
+            UserDAO dao = new UserDAOImpl();
+            User userIDCheck = dao.getUserByID(userID);
             request.setAttribute("USER_TMP", userInfor);
-            if(dao.getUserByID(userID)==null){
-                    String code=ContentIdGenerator.getRandomWord(7);
-                    boolean sendCode=Email.sendEmail(email, code, "Verify code: ","Vetify Email");
-                    if(sendCode){
-                        session.setAttribute("USER_REGISTER", userRegister);
-                        session.setAttribute("CODE", code);
-                        request.setAttribute("CHECK_MAIL","mail");
-                    }
-           }else{
-            request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
-        }
+            if (userIDCheck == null) {
+                if (dao.registerNewUSer(userRegister)) {
+                    sendCode("?","CHECK_MAIL", userRegister, userInfor, request, response);
+                }
+            } else if (userIDCheck.getStatus() == 0) {
+                if (dao.updateUser(userID, userName, email, birthday, address, phoneNum, gender, "1", "0", hashPassword)) {
+                    sendCode(" with new information?","ACTIVE_ACCOUNT", userIDCheck, userTmp, request, response);
+                }
+            } else {
+                request.setAttribute("ERROR_USERID", "Your account already existed. Try Again!");
+            }
         } catch (Exception e) {
-            log("Error at UserController - Register:" + e.toString());
+            log("Error at UserController - checkAccount:" + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+
     }
 }

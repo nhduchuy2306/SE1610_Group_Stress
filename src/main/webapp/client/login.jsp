@@ -254,32 +254,104 @@
 
 <!--End confirm email-->
 
-    <script>
-        function myFunction(){  
-            const birthday=document.getElementById('birthday').value;
-            const currentYear = new Date().getFullYear();
-            // alert(currentYear);
-            const dateInput2=birthday.split("-");
-            // alert(dateInput2);
-            const birthYear2=dateInput2[0]; 
-            
-            // alert(birthYear2); 
-            const birthYearCheck= Number(birthYear2); 
-            const age = currentYear - birthYearCheck;
-            // alert(age);
-            if(age<18){    
-                console.log(age);            
-                document.getElementById('birthday').setCustomValidity('You are not 18 years old!');
-                document.getElementById('birthday').reportValidity();
-                document.getElementById('birthday').preventDefault();
-            }
+
+<!-- Active Account-->
+
+<div class="modal fade comfirmEmail" id="activeAccount" tabindex="-1" style="">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="activeAcc">
+                <div class="modal-header">
+                    <h4 class="modal-title caps"><strong>Message</strong></h4>
+                </div>
+                <div class="modal-body col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center" style="margin-top: -10px;">
+                                    <h5 class="mb-4">Your account is <strong>INACTIVE</strong>!</h5>
+                                    <h6>Do you want to ACTIVE account${requestScope.ACTIVE_ACCOUNT}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="changtoConfirm" class="modal-button btn btn-info" style="border: 1px solid #D1D3E2">Yes</button>
+                    <button style="border: 1px solid #D1D3E2"
+                            type="button" class="modal-button btn btn-info" data-toggle="modal" data-target="#registerForm" data-dismiss="modal">No</button>
+                </div>
+            </div>
+            <div id="activeAcc2" style="display: none">
+                <div class="modal-header">
+                    <h4 class="modal-title caps"><strong>Confirm Email</strong></h4>
+                </div>
+                <div class="modal-body col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center" style="margin-top: -10px;">
+                                    <p class="mb-4">Please check your email!</p>
+                                </div>
+                                <form class="user" action="${pageContext.request.contextPath}/user">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user"
+                                               id="exampleInputEmail" aria-describedby="emailHelp" autocomplete="off"
+                                               placeholder="Enter Code . . ." name="codeEmail" required="">
+                                    </div>
+                                    <p style="color: red; font-size: 20px;">${requestScope.ERROR_CODE}</p>
+                                    <input type="submit" name="action" value="Confirm" class="btn btn-primary btn-user btn-block">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="margin-top: -40px;">
+                    <button style="margin-left: auto;margin-right: auto;"
+                            type="button" class="modal-button btn btn-info" data-toggle="modal" data-target="#registerForm" data-dismiss="modal">Back to Register Form!</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--End confirm email-->
+
+<script>
+    function myFunction() {
+        const birthday = document.getElementById('birthday').value;
+        const currentYear = new Date().getFullYear();
+        // alert(currentYear);
+        const dateInput2 = birthday.split("-");
+        // alert(dateInput2);
+        const birthYear2 = dateInput2[0];
+
+        // alert(birthYear2); 
+        const birthYearCheck = Number(birthYear2);
+        const age = currentYear - birthYearCheck;
+        if (age < 18) {
+            console.log(age);
+            document.getElementById('birthday').setCustomValidity('You are not 18 years old!');
+            document.getElementById('birthday').reportValidity();
+        } else {
+            document.getElementById('birthday').setCustomValidity('');
         }
-        var inputs = document.querySelectorAll('input:not([type="submit"])');
+    }
+    var inputs = document.querySelectorAll('input:not([type="submit"])');
 
-        var submit = document.getElementById('submitRegister');
-        var form = document.getElementById('FromRegistration');
+    var submit = document.getElementById('submitRegister');
+    var form = document.getElementById('FromRegistration');
 
-        submit.addEventListener('click', myFunction);
-
-        form.addEventListener('submit', myFunction);
-    </script>
+    submit.addEventListener('click', myFunction);
+    form.addEventListener('submit', myFunction);
+</script>
+<script>
+    document.getElementById('changtoConfirm').addEventListener('click',changeToConfirm);
+    function changeToConfirm(){
+        document.getElementById('activeAcc').style.display='none';
+        document.getElementById('activeAcc2').style.display='block';
+    }
+</script>
+    
+   

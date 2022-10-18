@@ -208,8 +208,9 @@ public class UserDAOImpl implements UserDAO {
                 ptm.setBoolean(8, user.isSex());
                 ptm.setString(9, "1");
                 ptm.setDouble(10, 0);
-                ptm.setInt(11, User.ACTIVE_NORMAL);
+                ptm.setInt(11, user.getStatus());
                 check = ptm.executeUpdate() > 0 ? true : false;
+
             }
         } catch (Exception e) {
             System.out.println("Error at registerNewUSer:" + e.toString());
@@ -281,10 +282,11 @@ public class UserDAOImpl implements UserDAO {
                         rs.getString("DOB"),
                         rs.getString("PhoneNumber"),
                         rs.getBoolean("Sex"),
-                        roleDAO.getRoleByID(userID),
+                        roleDAO.getRoleByID(rs.getString("RoleID")),
                         rs.getString("AccountBalance"),
                         rs.getInt("Status")
                 );
+
             }
         } catch (Exception e) {
         } finally {
@@ -333,10 +335,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+
     public boolean updateUser(String userID, String userName, String email, String DOB, String address,
-            String phoneNumber, String sex, String roleID, String status) throws SQLException {
+            String phoneNumber, String sex, String roleID, String status, String password) throws SQLException {
         boolean checkUpdate = false;
         Connection conn = null;
+
         PreparedStatement ptm = null;
         String updateUser = "UPDATE tblUsers SET UserName=?,Email=?,DOB=?,Address=?,"
                 + "PhoneNumber=?,Sex=?,[RoleID]=?  WHERE UserID=?";
@@ -367,7 +371,7 @@ public class UserDAOImpl implements UserDAO {
         boolean checkUpdate = false;
         Connection conn = null;
         PreparedStatement ptm = null;
-        String updateUser = "UPDATE tblUsers SET AccountBalance = ?  WHERE UserID=?";
+        String updateUser = "UPDATE tblUsers SET [AccountBalance] = ?  WHERE [UserID] = ?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
@@ -379,9 +383,10 @@ public class UserDAOImpl implements UserDAO {
         } catch (Exception e) {
             System.out.println("Eror at UserDAOImpl - updateUser: " + e.toString());
         } finally {
-            return checkUpdate;
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
         }
-
+        return checkUpdate;
     }
 
     @Override
@@ -442,11 +447,11 @@ public class UserDAOImpl implements UserDAO {
         boolean result = false;
         Connection conn = null;
         PreparedStatement ptm = null;
-        String delete = "UPDATE tblUsers SET [status]=1  WHERE UserID=?";
+        String active = "UPDATE tblUsers SET [status]=1  WHERE UserID=?";
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
-                ptm = conn.prepareStatement(delete);
+                ptm = conn.prepareStatement(active);
                 ptm.setString(1, userID);
                 result = ptm.executeUpdate() > 0 ? true : false;
             }
@@ -460,7 +465,9 @@ public class UserDAOImpl implements UserDAO {
                 conn.close();
             }
         }
+
         return result;
+
     }
 
     @Override

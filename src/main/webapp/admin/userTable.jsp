@@ -138,42 +138,42 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Name</label>
-                                                                    <input type="text" class="form-control" id="nameInput" name="userName"  value="${user.username}" required="">
+                                                                    <input type="text" class="form-control" id="nameInput" name="userName"  value="${user.username}" readonly="">
                                                                 </div>
 
                                                                 <div class="row" style="display: inline-flex">
                                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                                         <label for="recipient-name" class="col-form-label">Gender</label>
-                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                name="gender" aria-label="Default select example">
+                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #000"
+                                                                                name="gender" aria-label="Default select example" disabled="">
                                                                             <option value="1"${user.sex eq true?"selected":""}>Male</option>
                                                                             <option value="0"${user.sex eq false?"selected":""}>Female</option>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-group col-sm-6 mb-3 mb-sm-0">
                                                                         <label for="recipient-name" class="col-form-label">Birthday</label>
-                                                                        <input type="date" class="form-control" name="birthday"  value="${user.dob}">
+                                                                        <input type="date" class="form-control" name="birthday"  value="${user.dob}" readonly="">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Email</label>
-                                                                    <input type="email" class="form-control" name="email"  value="${user.email}" id="InputEmail" required="">
+                                                                    <input type="email" class="form-control" name="email"  value="${user.email}" id="InputEmail" readonly="">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Phone Number</label> <br/>
-                                                                    <input type="text" class="form-control" name="phoneNum" id="InputPhoneNum"  value="${user.phoneNumber}">
+                                                                    <input type="text" class="form-control" name="phoneNum" id="InputPhoneNum"  value="${user.phoneNumber}" readonly="">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Address</label>
-                                                                    <input type="text" class="form-control" name="address"  value="${user.address}">
+                                                                    <input type="text" class="form-control" name="address"  value="${user.address}" readonly="">
                                                                 </div>
                                                                 <div class="form-group row" style="display: inline-flex">
                                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                                         <label for="recipient-name" class="col-form-label">Role</label><br/> 
 
-                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                name="roleID">
+                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #000"
+                                                                                name="roleID" >
                                                                             <option  value="1" ${user.role.roleID eq "1"?"selected":""}>USER</option>
                                                                             <option  value="2" ${user.role.roleID eq "2"?"selected":""}>STAFF</option>
                                                                         </select>
@@ -181,14 +181,15 @@
 
                                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                                         <label for="recipient-name" class="col-form-label">Status</label>      
-                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #CCCCC9"
-                                                                                name="status" aria-label="Default select example">
-                                                                            <option value="2" ${user.status eq 2?"selected":""}>ACTIVE GOOGLE</option>
-                                                                            <option value="1" ${user.status eq 1?"selected":""}>ACTIVE NORMAL</option>
+                                                                        <select class="form-select" style="width: 100%;height: 38px;border-radius: 5px; padding-left: 10px;border-color: #D1D3E2; color: #000"
+                                                                                name="status" aria-label="Default select example" disabled="">
+                                                                            <option value="2" ${user.status eq 2?"selected":""}>GOOGLE</option>
+                                                                            <option value="1" ${user.status eq 1?"selected":""}>NORMAL</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
+                                                                    <input type="password" name="password" value="${user.password}" style="display: none" />
                                                                     <input style="background-color: #28fe09;border-radius: 5px; padding: 5px 10px; border-color: grey" type="submit" name="action" value="Update" >
                                                                     <button type="button" class="btn btn-info" style="background-color:  #ff253a" data-toggle="modal" data-target="#delete-${user.userID.trim()}" data-dismiss="modal">Delete</button>
                                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

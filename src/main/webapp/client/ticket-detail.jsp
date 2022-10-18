@@ -68,18 +68,18 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-7">
-                            <h4>[Ticket] Hà Nội - Sài Gòn</h4>
+                            <h4>[Ticket] ${trip.route.routeName}</h4>
                             <div class="main-infor mt-10" style="padding: 10px;">
                                 <h5>Main Information</h5>
                                 <table>
                                     <tbody>
                                         <tr>
                                             <td>Time: </td>
-                                            <td style="color:black">23:15</td>
+                                            <td style="color:black">${trip.startTime}</td>
                                         </tr>
                                         <tr>
                                             <td>Date: </td>
-                                            <td style="color:black">12/10/2022</td>
+                                            <td style="color:black">${trip.startDateTime}</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <h1>fhsdkjghds</h1>
+                            <!--<h1>fhsdkjghds</h1>-->
                         </div>
                     </div>
                 </div>

@@ -20,6 +20,7 @@ import com.stress.service.TicketDAOImpl;
 import com.stress.service.TripDAOImpl;
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.CommonFunction;
+import com.stress.utils.Email;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -155,8 +156,14 @@ public class BookingController extends HttpServlet {
                 session.setAttribute("LOGIN_USER", loginUser);
                 request.setAttribute("SUCCESS", "Check Out Success!");
                 order.setStatus(true);
+                request.setAttribute("PRICE", price);
+                request.setAttribute("ORDER", order);
+                if(Email.sendEmail(loginUser.getEmail(), "" ,"Dear " + loginUser.getUsername() + "\n" + 
+                        "You have Boook Ticket successfully\n" + "Total Price: " + price * 0.1, "Booked Ticket Successfully")) {
                 orderDAO.updateOrder(order);
-                url = "./client/order.jsp";
+                url = "./client/index.jsp";
+                }
+                
             } else {
                 request.setAttribute("ERROR", "Account Balance is not Enough!");
             }
@@ -231,6 +238,7 @@ public class BookingController extends HttpServlet {
             String totalSeat = request.getParameter("totalSeat");
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
+            Trip trip = tripDAO.getTripByID(tripID);
             for (Seat s : list) {
                 unavailableSeat.add(s.getSeatID().trim());
             }
@@ -242,6 +250,7 @@ public class BookingController extends HttpServlet {
             request.setAttribute("totalSeat", totalSeat);
             request.setAttribute("unavailabelSeat", seat);
             request.setAttribute("tripID", tripID);
+            request.setAttribute("trip", trip);
             request.getRequestDispatcher("/client/ticket-detail.jsp").forward(request, response);
         } catch (Exception e) {
         }
