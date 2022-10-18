@@ -26,4 +26,5 @@ public interface UserDAO {
     boolean activeUser(String userID) throws SQLException;
     List<User> searchUser(String search)throws SQLException;
     boolean updatePassword(String userID,String password,String email) throws SQLException;
+    boolean updateUser(String userID, String accountBalance) throws SQLException;
 }
