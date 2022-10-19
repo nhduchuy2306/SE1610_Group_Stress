@@ -22,6 +22,7 @@ import com.stress.service.UserDAOImpl;
 import com.stress.utils.CommonFunction;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -80,8 +81,6 @@ public class BookingController extends HttpServlet {
         try {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
             String startDay = request.getParameter("start");          
-            List<Trip> listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
-            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
             String []a=startDay.split("/");
             String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
             SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
