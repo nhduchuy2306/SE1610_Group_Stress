@@ -113,7 +113,7 @@ public class BookingController extends HttpServlet {
             String test= java.time.LocalDate.now().toString();
             Date currentDate=formater.parse(test);
             
-//            List<Trip> listTrip=null;
+            List<Trip> listTrip=null;
             
             if (dateInput.compareTo(currentDate)==0) {
                 listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);

@@ -66,23 +66,16 @@
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-            <section class="destinations-area section-gap">
-                <div class="container">
-                    <!--                    <div class="row d-flex justify-content-center">
-                                            <div class="menu-content pb-60 col-lg-9">
-                                                <div class="title text-center">
-                                                    <h1 class="mb-10">Tickets</h1>
-                                                </div>
-                                            </div>
-                                        </div>-->
-                    <div class="container-fluid">
-                        <div class="row px-xl-5 justify-content-between">
+            <section class="destinations-area section-gap" style="margin-top: -50px">
+<!--                <div class="container">-->
+                    <div class="container w-75 align-items-center">
+                        <div class="row ">
                             <!-- Shop Sidebar Start -->
-                            <div class="col-lg-3 col-md-12" id="">
+                            <div class="col-md-3" id="">
                                 <!-- Price Start -->
                                 <div class="mb-4 pb-4">
                                     <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                                    <form action="" c>
+                                    <form action="">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
                                             <input type="text" name="lowPrice" style="width: 90px" placeholder="Low Price">
                                             <span class="mr-10 ml-10"> - </span>
@@ -114,7 +107,7 @@
                             </div>
                             <!-- Shop Sidebar End -->
                             <!-- Shop Product Start -->
-                            <div class="col-lg-9 col-md-12">
+                            <div class="col-md-9">
                                 <div class="row pb-3">
                                     <div class="col-12 pb-1">
                                         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -296,7 +289,7 @@
                         <!-- Shop Product End -->
                     </div>
                 </div>
-            </div>
+<!--            </div>-->
         </section>
         <!-- End destinations Area -->
 

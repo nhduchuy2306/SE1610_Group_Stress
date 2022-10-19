@@ -317,7 +317,10 @@
 </div>
 
 <!--End confirm email-->
+<!--toast-->
 
+
+<!--End toast-->
 <script>
     function myFunction() {
         const birthday = document.getElementById('birthday').value;
