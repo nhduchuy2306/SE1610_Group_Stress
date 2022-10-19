@@ -25,6 +25,7 @@
         var seatAreChosen = data.split(",");
         seatAreChosen.pop();
 
+        seatAreChosen.push('A_1');
         var cart = $(".selected-seats"),
                 counter = $(".counter-seat"),
                 total = $(".total-seat"),

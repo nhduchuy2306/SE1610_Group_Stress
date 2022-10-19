@@ -79,7 +79,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="exampleInputEmail1">Start Location</label>
+                                                        <label for="exampleInputEmail1">End Location</label>
                                                         <select name="endLocation" class="form-control" data-live-search="true">
 
                                                             <c:forEach var="end" items="${requestScope.LOCATION_LIST}">

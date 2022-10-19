@@ -312,7 +312,7 @@ public class UserController extends HttpServlet {
             HttpSession session = request.getSession();
             request.setAttribute("USER_TMP", userInfor);
             String code = ContentIdGenerator.getRandomWord(7);
-            boolean sendCode = Email.sendEmail(userRegister.getEmail(), code, "Verify code: ", "Vetify Email");
+            boolean sendCode = Email.sendEmail(userRegister.getEmail(), code, "Verify code: ", "Verify Email");
             if (sendCode) {
                 session.setAttribute("USER_REGISTER", userRegister);
                 session.setAttribute("CODE", code);
