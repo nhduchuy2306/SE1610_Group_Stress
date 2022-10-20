@@ -28,15 +28,17 @@
                     <ul class="nav-menu d-flex align-items-center justify-content-center">
                         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
                         <li><a href="${pageContext.request.contextPath}/order?action=showHistory">Booking History</a></li>
-                        <li class="text-light" style="font-size: 12px"><i class="fa fa-wallet text-light"></i> :180000 VNĐ</li>
-                        <li><a href="${pageContext.request.contextPath}/">Booking History</a></li>
-                        <li class="text-light" style="font-size: 12px"><i class="fa fa-wallet text-light"></i> ${sessionScope.LOGIN_USER.accountBalance} VND</li>
+                        
+                       
+                        
                         <c:if test="${sessionScope.LOGIN_USER==null}">
+                            
                             <li>
                                 <button type="button" class="login text-light" data-toggle="modal" data-target="#loginForm">LOGIN</button>
                             </li>
                         </c:if>
                         <c:if test="${sessionScope.LOGIN_USER!=null}">
+                            <li class="text-light" style="font-size: 12px"><i class="fa fa-wallet text-light"></i> ${sessionScope.LOGIN_USER.accountBalance} VND</li>
                             <li><a href="${pageContext.request.contextPath}/Logout">Logout</a></li>
                         </c:if>
                     </ul>

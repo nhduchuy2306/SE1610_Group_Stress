@@ -186,7 +186,7 @@
                                         </div>
                                         <ul class="list-unstyled mb-1-9">
                                             <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> ${sessionScope.LOGIN_USER.email}</li>
-                                            <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> ${sessionScope.LOGIN_USER.dob}</li>
+                                            <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Date Of Birth:</span> ${sessionScope.LOGIN_USER.dob}</li>
                                             <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span>${sessionScope.LOGIN_USER.phoneNumber}</li>
                                         </ul>
                                     </div>
@@ -207,6 +207,7 @@
                                         <th>Create Date</th>
                                         <th>Payment Mode</th>
                                         <th>Status</th>
+                                        <th>View Detail<th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -217,7 +218,7 @@
                                             <td>${o.paymentMode}</td>
                                             <td>${o.status}</td>
                                             <td>
-                                                <a href="${pageContext.request.pageContext}/order?action=detail&orderID=${o.orderID}">View Detail</a>
+                                                <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

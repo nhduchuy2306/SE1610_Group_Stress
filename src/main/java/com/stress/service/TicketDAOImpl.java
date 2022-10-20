@@ -103,11 +103,12 @@ public class TicketDAOImpl implements TicketDAO{
     }
 
     @Override
-    public Ticket getTicketByOrderID(String orderID) throws SQLException {
+    public List<Ticket> getTicketByOrderID(String orderID) throws SQLException {
         String sql = "SELECT TicketID,SeatID,TripID,OrderID FROM tblTickets WHERE OrderID = ?";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
+        List<Ticket> ticketList = new ArrayList<>();
         try {
             conn = DBConnection.getConnection();
             if(conn!=null){
@@ -115,18 +116,26 @@ public class TicketDAOImpl implements TicketDAO{
                 ptm.setString(1, orderID);
                 rs = ptm.executeQuery();
                 while(rs.next()){
-                    return new Ticket(rs.getInt("TicketID"), 
-                            seatDAO.getSeatByID(rs.getString("SeatID")), 
+                    ticketList.add(new Ticket(rs.getInt("TicketID"), 
+                            seatDAO.getSeatByID(rs.getString("SeatID"), rs.getString("TripID")), 
                             tripDAO.getTripByID(rs.getString("TripID")), 
-                            orderDAO.getOderByID("OrderID"));
+                            orderDAO.getOderByID(rs.getString("OrderID"))));
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if(conn!=null) conn.close();
             if(ptm!=null) ptm.close();
             if(rs!=null) rs.close();
         }
-        return null;
+        return ticketList;
+    }
+    public static void main(String[] args) throws SQLException {
+        TicketDAO tDAO = new TicketDAOImpl();
+        List<Ticket> tList = tDAO.getTicketByOrderID("O0004");
+        for (Ticket ticket : tList) {
+            System.out.println(ticket);
+        }
     }
 }
