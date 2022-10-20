@@ -161,6 +161,8 @@
                                                 <button style="width: 200px; margin-bottom: 10px; border-radius: 10px; padding: 5px; background-color: white" type="submit" name="action" value="payingAccount">
                                                     <i class="fas fa-wallet"></i> AccountBalance
                                                 </button>
+                                                <input type="hidden" value="${requestScope.SEAT_LIST}" name="seatID">
+                                                <input type="hidden" value="${requestScope.TRIP.tripID}" name="tripID">
                                                 <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
                                                 <input type="hidden" value="${requestScope.PRICE + (requestScope.PRICE * 0.1)}" name="totalPrice">
                                             </form>
