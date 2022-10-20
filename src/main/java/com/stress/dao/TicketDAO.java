@@ -10,4 +10,5 @@ public interface TicketDAO {
     List<Ticket> getAllTicket() throws SQLException;
     boolean addNewTicket(Ticket ticket) throws SQLException;
     boolean updateTicket(Ticket ticket) throws SQLException;
+    Ticket getTicketByOrderID(String orderID) throws SQLException;
 }
