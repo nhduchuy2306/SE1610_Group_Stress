@@ -65,60 +65,7 @@
 
             <!-- Start destinations Area -->
             <section class="destinations-area section-gap">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-7">
-                            <h4>[Ticket] Hà Nội - Sài Gòn</h4>
-                            <div class="main-infor mt-10" style="padding: 10px;">
-                                <h5>Main Information</h5>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Time: </td>
-                                            <td style="color:black">23:15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Date: </td>
-                                            <td style="color:black">12/10/2022</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="choose-ticket">
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id=""
-                                             role="tabpanel" aria-labelledby="flight-tab">
-                                            <div class="wrapper-seat">
-                                                <div class="container-seat">
-                                                    <h4 class="text-center">Choosing seats</h1>
-                                                        <div class="seat-map-seat">
-                                                            <div class="text-center front-indicator-seat">
-                                                                Choosing</div>
-                                                        </div>
-                                                        <div class="booking-details-seat">
-                                                            <h2>Booking Details</h2>
-                                                            <h3> Selected Seats (<span
-                                                                    class="counter-seat">0</span>):
-                                                            </h3>
-                                                            <ul class="selected-seats"></ul>
-                                                            Total: <b><span
-                                                                    class="total-seat">0</span> vnđ</b>
-                                                            <button
-                                                                class="btn btn-secondary checkout-button-seat"
-                                                                type="button">Checkout</button>
-                                                            <div id="legend-seat"></div>
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <!--z<h1>fhsdkjghds</h1>-->
-                        </div>
-                    </div>
-                </div>
+                <h1 class="text-center">Booking Successfully</h1>
                 <!-- Shop Product End -->
             </section>
             <!-- End destinations Area -->

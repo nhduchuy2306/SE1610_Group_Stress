@@ -101,12 +101,32 @@ public class TicketDAOImpl implements TicketDAO{
         }
         return check;
     }
-    
-    public static void main(String[] args) {
-        SeatDAO seatDAO = new SeatDAOImpl();
-        TripDAO tripDAO = new TripDAOImpl();
-        OrderDAO orderDAO = new OrderDAOImpl();
-        TicketDAO dao = new TicketDAOImpl();
-//        boolean c = dao.addNewTicket(ticket);
+
+    @Override
+    public Ticket getTicketByOrderID(String orderID) throws SQLException {
+        String sql = "SELECT TicketID,SeatID,TripID,OrderID FROM tblTickets WHERE OrderID = ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if(conn!=null){
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, orderID);
+                rs = ptm.executeQuery();
+                while(rs.next()){
+                    return new Ticket(rs.getInt("TicketID"), 
+                            seatDAO.getSeatByID(rs.getString("SeatID")), 
+                            tripDAO.getTripByID(rs.getString("TripID")), 
+                            orderDAO.getOderByID("OrderID"));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(conn!=null) conn.close();
+            if(ptm!=null) ptm.close();
+            if(rs!=null) rs.close();
+        }
+        return null;
     }
 }
