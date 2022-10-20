@@ -517,6 +517,13 @@
             });
             </script>
         </c:if>
+        <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
+            <script>
+            $(window).load(function () {
+                $('.toast').modal('show');
+            });
+            </script>
+        </c:if>
         <c:if test="${requestScope.ERROR_FOR_LOGIN!=null}">
             <script>
             $(window).load(function () {
@@ -562,13 +569,20 @@
          
 	<script>
             const dayInput=document.getElementById('inputDateSearch');
+            
+            function getPreviousDay(date = new Date()) {
+                const previous = new Date(date.getTime());
+                previous.setDate(date.getDate() - 1);
 
+                return previous;
+              }
             function myFunction(){
                 const currentDate=new Date();
+                const previousDate=getPreviousDay(currentDate);
                 let dayCheck=new Date(dayInput.value);
-                if(currentDate>dayCheck){
-                    console.log(currentDate>dayCheck);
-                    document.getElementById('inputDateSearch').setCustomValidity('Day Start must higher than current day!');
+                if(previousDate>dayCheck){
+                    console.log(previousDate);
+                    document.getElementById('inputDateSearch').setCustomValidity('Day Start must higher or equal current day!');
                     return false;
                 }else{
                     document.getElementById('inputDateSearch').setCustomValidity('');

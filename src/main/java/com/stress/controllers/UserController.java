@@ -204,7 +204,7 @@ public class UserController extends HttpServlet {
                         request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
                         request.setAttribute("ERROR_LOGIN2", "Incorect Password. Please try again!");
                     }
-                } else if (userIDCheck.getStatus() == 0) {
+                } else if (userIDCheck.getStatus() == 4) {
                     sendCode("?","ACTIVE_ACCOUNT", userIDCheck, userIDCheck, request, response);
                 } else {
                     request.setAttribute("ACTIVE_LOGINFORM", "demo-1");
@@ -312,7 +312,7 @@ public class UserController extends HttpServlet {
             HttpSession session = request.getSession();
             request.setAttribute("USER_TMP", userInfor);
             String code = ContentIdGenerator.getRandomWord(7);
-            boolean sendCode = Email.sendEmail(userRegister.getEmail(), code, "Verify code: ", "Vetify Email");
+            boolean sendCode = Email.sendEmail(userRegister.getEmail(), code, "Verify code: ", "Verify Email");
             if (sendCode) {
                 session.setAttribute("USER_REGISTER", userRegister);
                 session.setAttribute("CODE", code);
@@ -345,8 +345,8 @@ public class UserController extends HttpServlet {
             String password = request.getParameter("password");
             String hashPassword = Hash.hash(password);
             Role role = new Role("1", "User");
-            User userRegister = new User(userID, userName, hashPassword, email, date, address, phoneNum, sex, role, "0", 0);
-            User userInfor = new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 0);
+            User userRegister = new User(userID, userName, hashPassword, email, date, address, phoneNum, sex, role, "0", 4);
+            User userInfor = new User(userID, userName, password, email, date, address, phoneNum, sex, role, "0", 4);
             User userTmp = new User();
             UserDAO dao = new UserDAOImpl();
             User userIDCheck = dao.getUserByID(userID);
@@ -355,7 +355,7 @@ public class UserController extends HttpServlet {
                 if (dao.registerNewUSer(userRegister)) {
                     sendCode("?","CHECK_MAIL", userRegister, userInfor, request, response);
                 }
-            } else if (userIDCheck.getStatus() == 0) {
+            } else if (userIDCheck.getStatus() == 4) {
                 if (dao.updateUser(userID, userName, email, birthday, address, phoneNum, gender, "1", "0", hashPassword)) {
                     sendCode(" with new information?","ACTIVE_ACCOUNT", userIDCheck, userTmp, request, response);
                 }
