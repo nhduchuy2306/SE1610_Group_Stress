@@ -106,18 +106,18 @@ public class BookingController extends HttpServlet {
         try {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
             String startDay = request.getParameter("start");
-            String []a=startDay.split("/");
-            String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
-            SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
-            Date dateInput=formater.parse(checkStartDate);
-            String test= java.time.LocalDate.now().toString();
-            Date currentDate=formater.parse(test);
-            
-            List<Trip> listTrip=null;
-            
-            if (dateInput.compareTo(currentDate)==0) {
-                listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
-            }else{
+            String[] a = startDay.split("/");
+            String checkStartDate = a[2] + "-" + a[1] + "-" + a[0];
+            SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+            Date dateInput = formater.parse(checkStartDate);
+            String test = java.time.LocalDate.now().toString();
+            Date currentDate = formater.parse(test);
+
+            List<Trip> listTrip = null;
+
+            if (dateInput.compareTo(currentDate) == 0) {
+                listTrip = tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
+            } else {
                 listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             }
             System.out.println("List " + listTrip);
@@ -142,7 +142,7 @@ public class BookingController extends HttpServlet {
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             double price = Double.parseDouble(request.getParameter("totalPrice")); // totalPrice
             double accountBalance = 0; // Account balance of Active Customer
-            
+
             User loginUser = (User) session.getAttribute("LOGIN_USER");
 
             // Starting checkout
@@ -152,16 +152,17 @@ public class BookingController extends HttpServlet {
             if (accountBalance >= price) {
                 Trip choosingTrip = tripDAO.getTripByID(tripID);
                 for (int i = 0; i < quantity; i++) {
-                        Seat seat = seatDAO.getSeatByID(seatID[i], tripID);
-                        
+                    Seat seat = seatDAO.getSeatByID(seatID[i], tripID);
 
-                        if (seatDAO.lockSeat(seat.getSeatID(), tripID)) {
-                            Ticket ticket = new Ticket(0, seat, choosingTrip, order);
-                            ticketDAO.addNewTicket(ticket);
-                            
-                        }
+                    if (seatDAO.lockSeat(seat.getSeatID(), tripID)) {
+                        Ticket ticket = new Ticket(0, seat, choosingTrip, order);
+                        ticketDAO.addNewTicket(ticket);
 
                     }
+
+                }
+                choosingTrip.setSeatRemain(choosingTrip.getSeatRemain() - quantity);
+                tripDAO.updateTrip(choosingTrip);
                 //accountBalance -= price;
                 // update Account Balance again
                 accountBalance -= price;
@@ -173,12 +174,15 @@ public class BookingController extends HttpServlet {
                 order.setStatus(true);
                 request.setAttribute("PRICE", price);
                 request.setAttribute("ORDER", order);
-                if(Email.sendEmail(loginUser.getEmail(), "" ,"Dear " + loginUser.getUsername() + "\n" + 
-                        "You have Boook Ticket successfully\n" + "Total Price: " + price * 0.1, "Booked Ticket Successfully")) {
-                orderDAO.updateOrder(order);
-                url = "./client/index.jsp";
+                if (Email.sendEmail(loginUser.getEmail(), "", "Dear " + loginUser.getUsername() + "\n"
+                        + "\tYou have Boook Ticket successfully\n"
+                        + "\tTotal Price: " + price * 0.1 + "\n\t Trip Going: " + choosingTrip.getRoute().getRouteName()
+                        + "\n\t Going Date: " + choosingTrip.getStartDateTime() + ", Time: " + choosingTrip.getStartTime()
+                        + "\n\t If you have any question, please contact 079_854_6742", "Booking Ticket Confirmation")) {
+                    orderDAO.updateOrder(order);
+                    url = "home";
                 }
-                
+
             } else {
                 request.setAttribute("ERROR", "Account Balance is not Enough!");
             }
@@ -212,10 +216,10 @@ public class BookingController extends HttpServlet {
                     String orderID = CommonFunction.generateID("tblOrders", "Order");
                     Order order = new Order(orderID, null, "", loginUser, false);
                     order = orderDAO.createOrder(order);
-                    
+
                     for (int i = 0; i < quantity; i++) {
                         Seat seat = seatDAO.getSeatByID(seatID[i], tripID);
-                            price += seat.getPrice();
+                        price += seat.getPrice();
 
                     }
                     request.setAttribute("QUANTITY", quantity);
@@ -223,7 +227,7 @@ public class BookingController extends HttpServlet {
                     request.setAttribute("SEAT_LIST", seatIDs);
                     request.setAttribute("ORDER", order);
                     request.setAttribute("TRIP", choosingTrip);
-                    
+
                     url = "./client/order.jsp";
                 } else {
                     request.setAttribute("ERROR", "You not Book any Seat!");
@@ -246,10 +250,23 @@ public class BookingController extends HttpServlet {
         try {
             String tripID = request.getParameter("tripID");
             String totalSeat = request.getParameter("totalSeat");
+            // QuangTM Modify
+            HttpSession session = request.getSession();
+            if (session != null) {
+                User loginUser = (User) session.getAttribute("LOGIN_USER");
+                if (loginUser == null) {
+                    request.setAttribute("ERROR_FOR_LOGIN", "You have to login First");
+                    session.setAttribute("TRIP_ID", tripID);
+                    session.setAttribute("TOTAL_SEAT", totalSeat);
+                    request.getRequestDispatcher("./client/index.jsp").forward(request, response);
+                }
+
+            }
+
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
             Trip trip = tripDAO.getTripByID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
-           
+
             for (Seat s : list) {
                 unavailableSeat.add(s.getSeatID().trim());
             }

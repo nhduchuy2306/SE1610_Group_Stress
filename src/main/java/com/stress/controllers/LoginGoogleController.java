@@ -1,9 +1,7 @@
-
 package com.stress.controllers;
 
 import com.stress.dao.UserDAO;
 import com.stress.dto.GooglePojo;
-
 
 import com.stress.utils.GoogleUtils;
 import java.io.IOException;
@@ -21,10 +19,10 @@ public class LoginGoogleController extends HttpServlet {
 
     private static final String ERROR = "client/login.jsp";
     private static final String USER_ROLE = "1";
-    private static final String ADMIN_ROLE = "2"; 
+    private static final String ADMIN_ROLE = "2";
     private static final String ADMIN = "admin/index.jsp";
     private static final String USER = "home";
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -40,20 +38,28 @@ public class LoginGoogleController extends HttpServlet {
                     User loginUser = userDao.getUserByEmail(googlePojo.getEmail());
                     if (loginUser != null) {
                         session.setAttribute("LOGIN_USER", loginUser);
-                        if(loginUser.getRole().getRoleID().trim().equals(ADMIN_ROLE)) {
-                            url = ADMIN;
-                        }
-                        if (loginUser.getRole().getRoleID().trim().equals(USER_ROLE)){
-                            url = USER;
+                        String tripID = (String) session.getAttribute("TRIP_ID");
+                        String totalSeat = (String) session.getAttribute("TOTAL_SEAT");
+                        if (tripID != null && totalSeat != null) {
+                            session.removeAttribute("TRIP_ID");
+                            session.removeAttribute("TOTAL_SEAT");
+
+                            url = "/book?action=choose-ticket&tripID=" + tripID + "&totalSeat=" + totalSeat;
+                        } else {
+                            if (loginUser.getRole().getRoleID().trim().equals(ADMIN_ROLE)) {
+                                url = ADMIN;
+                            }
+                            if (loginUser.getRole().getRoleID().trim().equals(USER_ROLE)) {
+                                url = USER;
+                            }
                         }
                     } else {
-                        if(userDao.registerByEmail(googlePojo)){
-                            User user=userDao.getUserByID(googlePojo.getId());
+                        if (userDao.registerByEmail(googlePojo)) {
+                            User user = userDao.getUserByID(googlePojo.getId());
                             session.setAttribute("LOGIN_USER", user);
                             url = USER;
                         }
                     }
-
 
                 }
             }
@@ -62,6 +68,7 @@ public class LoginGoogleController extends HttpServlet {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
