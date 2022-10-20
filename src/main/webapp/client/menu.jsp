@@ -27,7 +27,7 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu d-flex align-items-center justify-content-center">
                         <li><a href="${pageContext.request.contextPath}/">Home</a></li>
-                        <li><a href="${pageContext.request.contextPath}/">Booking History</a></li>
+                        <li><a href="${pageContext.request.contextPath}/order?action=showHistory">Booking History</a></li>
                         <li class="text-light" style="font-size: 12px"><i class="fa fa-wallet text-light"></i> :180000 VNĐ</li>
                         <c:if test="${sessionScope.LOGIN_USER==null}">
                             <li>

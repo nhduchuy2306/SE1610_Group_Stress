@@ -10,7 +10,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -79,5 +81,36 @@ public class OrderDAOImpl implements OrderDAO{
     }
     public static void main(String[] args) {
         System.out.println(new Date(Calendar.getInstance().getTimeInMillis()));
+    }
+
+    @Override
+    public List<Order> getAllOrderByUserID(String userID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        List<Order> list = new ArrayList<>();
+        String sql = "SELECT [OrderID], [createDate], [PaymentMode],[UserID],[Status] FROM tblOrders WHERE [UserID] = ?";
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, userID);
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    Date createDate = rs.getDate("CreateDate");
+                    String paymentMode = rs.getString("PaymentMode");
+                    String orderID = rs.getString("OrderID");
+                    boolean status = rs.getBoolean("Status");
+                    User user = new UserDAOImpl().getUserByID(userID);
+                    list.add(new Order(orderID, createDate, paymentMode, user, status));
+                }
+            }
+        } catch (Exception e) {
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return list;
     }
 }
