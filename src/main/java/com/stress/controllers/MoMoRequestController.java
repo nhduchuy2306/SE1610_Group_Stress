@@ -41,6 +41,8 @@ public class MoMoRequestController extends HttpServlet {
                     payMoMo(request,response);
                 case "recharge":
                     showRechargePage(request,response);
+                case "payMoMo":
+                    payMoMoV2(request,response);
             }
         } catch (Exception e) {
         }
@@ -124,6 +126,35 @@ public class MoMoRequestController extends HttpServlet {
         throws ServletException, IOException{
         try {
             request.getRequestDispatcher("/client/recharge.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
+    }
+
+    private void payMoMoV2(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        try {
+            // Get amount of booking car
+            String amount = request.getParameter("amount");
+            
+            String requestRawData = new StringBuilder()
+                .append("accessKey").append("=").append(ACCESS_KEY).append("&")
+                .append("amount").append("=").append(amount).append("&")
+                .append("extraData").append("=").append(EXTRA_DATA).append("&")
+                .append("ipnUrl").append("=").append(NOTIFY_URL).append("&")
+                .append("orderId").append("=").append(ORDER_ID).append("&")
+                .append("orderInfo").append("=").append(ORDER_INFOR).append("&")
+                .append("partnerCode").append("=").append(PARTNER_CODE).append("&")
+                .append("redirectUrl").append("=").append(RETURN_URL).append("&")
+                .append("requestId").append("=").append(REQUEST_ID).append("&")
+                .append("requestType").append("=").append(REQUEST_TYPE)
+                .toString();
+
+            String signRequest = signHmacSHA256(requestRawData, SECRET_KEY);
+            HttpResponse<String> res = sendPost(PARTNER_CODE, "Car Booking", "MoMoStore", REQUEST_ID, amount, ORDER_ID, 
+                    ORDER_INFOR, RETURN_URL, NOTIFY_URL, EXTRA_DATA, REQUEST_TYPE, signRequest);
+            
+            JSONObject jj = new JSONObject(res.body());
+            response.sendRedirect(jj.get("payUrl").toString());
         } catch (Exception e) {
         }
     }
