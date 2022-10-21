@@ -30,9 +30,23 @@ import org.json.JSONObject;
 
 @WebServlet(name = "MoMoRequestController", urlPatterns = {"/MoMoRequest"})
 public class MoMoRequestController extends HttpServlet {
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String action = request.getParameter("action");
+            switch(action){
+                case "sendMoMo":
+                    payMoMo(request,response);
+                case "recharge":
+                    showRechargePage(request,response);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    private void payMoMo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         try {
@@ -104,6 +118,14 @@ public class MoMoRequestController extends HttpServlet {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         return response;
+    }
+
+    private void showRechargePage(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException{
+        try {
+            request.getRequestDispatcher("/client/recharge.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
     }
 }
 
