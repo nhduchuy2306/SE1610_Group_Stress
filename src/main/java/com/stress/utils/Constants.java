@@ -22,7 +22,7 @@ public class Constants {
     public static String ACCESS_KEY = "yzp3lsHbJJifAkNU";
     public static String SECRET_KEY = "CJLOBZMb1CpjqpDl9bhA9zqnCTv2ThSY";
     public static String END_POINT = "https://test-payment.momo.vn/v2/gateway/api/create";
-    public static String RETURN_URL = "http://localhost:8080/demo/MoMoResponse"; // Gửi đến trang checkout thành công
+    public static String RETURN_URL = "http://localhost:8080/Etrans/MoMoResponse"; // Gửi đến trang checkout thành công
     public static String NOTIFY_URL = "http://localhost:8080/demo/MoMoNotify";
     public static String ORDER_ID = UUID.randomUUID().toString();
 //    public static String AMOUNT = "30000";
