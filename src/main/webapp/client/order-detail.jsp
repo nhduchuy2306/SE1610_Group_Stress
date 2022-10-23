@@ -207,12 +207,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>${TICKET.ticketID}</td>
-                                        <td>${TICKET.seat.seatID}</td>
-                                        <td>${TICKET.trip.tripID}</td>
-                                        <td>${TICKET.order.orderID}</td>
-                                    </tr>
+                                    <c:forEach items="${requestScope.TICKET}" var="t"> 
+                                        <tr>
+
+                                            <td>${t.ticketID}</td>
+                                            <td>${t.seat.seatID}</td>
+                                            <td>${t.trip.tripID}</td>
+                                            <td>${t.order.orderID}</td>
+
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>

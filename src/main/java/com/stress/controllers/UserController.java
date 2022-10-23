@@ -194,7 +194,14 @@ public class UserController extends HttpServlet {
                     if (loginUser != null) {
                         HttpSession session = request.getSession();
                         session.setAttribute("LOGIN_USER", loginUser);
-                        if (loginUser.getRole().getRoleID().equals("1")) {
+                        String tripID = (String) session.getAttribute("TRIP_ID");
+                        String totalSeat = (String) session.getAttribute("TOTAL_SEAT");
+                        if(tripID != null && totalSeat != null) {
+                            session.removeAttribute("TRIP_ID");
+                            session.removeAttribute("TRIP_ID");
+                            url = "/book?action=choose-ticket&tripID=" + tripID + "&totalSeat=" + totalSeat;
+                        }
+                        else if (loginUser.getRole().getRoleID().equals("1")) {
                             url = "/home";
                         } else {
                             url = "./admin/index.jsp";

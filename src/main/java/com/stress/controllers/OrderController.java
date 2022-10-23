@@ -55,16 +55,16 @@ public class OrderController extends HttpServlet {
                 List<Order> list = orderDAO.getAllOrderByUserID(user.getUserID());
                 if(list!=null){
                     request.setAttribute("ORDER_LIST", list);
-                    request.getRequestDispatcher("/client/profile.jsp").forward(request, response);
+                    request.getRequestDispatcher("./client/profile.jsp").forward(request, response);
                 }
                 else{
                     request.setAttribute("NO_INFORMATION", "NO INFORMATION");
-                    request.getRequestDispatcher("/client/profile.jsp").forward(request, response);
+                    request.getRequestDispatcher("./client/profile.jsp").forward(request, response);
                 }
             }
             else{
                 request.setAttribute("NO_INFORMATION", "NO INFORMATION");
-                request.getRequestDispatcher("/client/profile.jsp").forward(request, response);
+                request.getRequestDispatcher("./client/profile.jsp").forward(request, response);
             }
         } catch (Exception e) {
         }
@@ -75,7 +75,7 @@ public class OrderController extends HttpServlet {
         try {
             String orderID = request.getParameter("orderID");
             TicketDAO ticketDAO = new TicketDAOImpl();
-            Ticket ticket = ticketDAO.getTicketByOrderID(orderID);
+            List<Ticket> ticket = ticketDAO.getTicketByOrderID(orderID);
             request.setAttribute("TICKET", ticket);
             request.getRequestDispatcher("/client/order-detail.jsp").forward(request, response);
         } catch (Exception e) {
