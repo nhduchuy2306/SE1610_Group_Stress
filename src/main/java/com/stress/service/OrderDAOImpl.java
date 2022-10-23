@@ -135,7 +135,7 @@ public class OrderDAOImpl implements OrderDAO {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, userID);
                 rs = ptm.executeQuery();
-                if(rs.next()) {
+                while(rs.next()) {
                     Date createDate = rs.getDate("CreateDate");
                     String paymentMode = rs.getString("PaymentMode");
                     String orderID = rs.getString("OrderID");

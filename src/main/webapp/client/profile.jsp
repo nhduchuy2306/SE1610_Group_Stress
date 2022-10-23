@@ -216,7 +216,7 @@
                                             <td>${o.orderID}</td>
                                             <td>${o.createDate}</td>
                                             <td>${o.paymentMode}</td>
-                                            <td>${o.status}</td>
+                                            <td>${o.status == true ? "Complete":"Pending"}</td>
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
                                             </td>

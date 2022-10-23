@@ -280,7 +280,7 @@ public class BookingController extends HttpServlet {
             request.setAttribute("totalSeat", totalSeat);
             request.setAttribute("unavailabelSeat", seat);
             request.setAttribute("tripID", tripID);
-            request.setAttribute("trip", trip);
+            
             request.getRequestDispatcher("/client/ticket-detail.jsp").forward(request, response);
         } catch (Exception e) {
         }
