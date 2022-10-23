@@ -488,7 +488,18 @@
             </div>
         </footer>
         <!-- End footer Area -->
-        
+        <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.CHECK_OUT_SUCCESS}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -563,6 +574,13 @@
             <script>
                 $(window).load(function () {
                     $('#activeAccount').modal('show');
+                });
+            </script>
+        </c:if>
+        <c:if test="${requestScope.CHECK_OUT_SUCCESS!=null}">
+            <script>
+                $(window).load(function () {
+                    $('#showsuccess').modal('show');
                 });
             </script>
         </c:if>
