@@ -33,7 +33,8 @@
         <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">
+<!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/trip.css">
     </head>
 
     <body>
@@ -66,31 +67,32 @@
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-            <section class="destinations-area section-gap" style="margin-top: -50px">
+        <section class="destinations-area section-gap col-md-12">
 <!--                <div class="container">-->
-                    <div class="container w-75 align-items-center">
-                        <div class="row ">
+                    <div class="align-items-center " style="margin-top: -45px">
+                        <div class="row trip">
                             <!-- Shop Sidebar Start -->
-                            <div class="col-md-3" id="">
+                            <div class="col-md-2 shop-sidebar" style="margin-top: -8px">
                                 <!-- Price Start -->
-                                <div class="mb-4 pb-4">
+                                <div class="mb-4 pb-4 filter-by-price">
                                     <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
                                     <form action="">
                                         <div class="d-flex align-items-center justify-content-between mb-3">
                                             <input type="text" name="lowPrice" style="width: 90px" placeholder="Low Price">
                                             <span class="mr-10 ml-10"> - </span>
                                             <input type="text" name="highPrice" style="width: 90px" placeholder="High Price">
+                                            <button type="submit" class="btn btn-primary float-right">Go</button>
                                         </div>
-                                        <button type="submit" class="btn btn-primary float-right">Go</button>
+                                        
                                     </form>
                                 </div>
                                 <!-- Price End -->
 
                                 <!-- Time Start -->
-                                <div class="mb-4 pb-4">
+                                <div class="mb-4 pb-4 filter-by-time">
                                     <h5 class="font-weight-semi-bold mb-4">Filter by time</h5>
                                     <form action="">
-                                        <div class="d-flex align-items-center justify-content-between">
+                                        <div class="d-flex align-items-center justify-content-between text-center">
                                             <div>
                                                 <button style="width: 100px;" class="btn btn-primary mb-3" type="button">Sáng sớm<br>(0h-6h)</button>
                                                 <button style="width: 100px;" class="btn btn-primary" type="button">Buổi sáng<br>(6h-12h)</button>
@@ -102,101 +104,117 @@
                                         </div>
                                     </form>
                                 </div>
+                                <div class="mb-4 pb-4 filter-by-seat">
+                                    <h5 class="font-weight-semi-bold mb-4 text-center">Filter by Seat</h5>
+                                    <h4 id="filter-by-seat">Select<i class="fa fa-chevron-down" aria-hidden="true" style="margin-left: 170px"></i></h4>
+                                    <div class="chon-loai-xe" id="chon-loai-xe">
+                                        <a href="index.jsp">Limousin(16)</a>
+                                        <a href="index.jsp">Limousin(45)</a>
+                                        <a href="index.jsp">Hyundai County(16)</a>
+                                        <a href="index.jsp">Hyundai Universe(45)</a>
+                                        <a href="index.jsp">Hyundai Aero Hi-class(45)</a>
+                                    </div>    
+                                </div>
                                 <!-- Time end -->
 
                             </div>
                             <!-- Shop Sidebar End -->
                             <!-- Shop Product Start -->
-                            <div class="col-md-9">
+                            <div class="col-md-6 shop-product" style="">
                                 <div class="row pb-3">
                                     <div class="col-12 pb-1">
                                         <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <form action="">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" placeholder="Search by name">
-                                                    <div class="input-group-append">
-                                                        <span class="input-group-text bg-transparent text-primary">
-                                                            <i class="fa fa-search"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            <div class="dropdown ml-4">
-                                                <button class="btn border dropdown-toggle" type="button" id="triggerId"
-                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    Sort by
-                                                </button>
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                                    <a class="dropdown-item" href="#">Low to High</a>
-                                                    <a class="dropdown-item" href="#">Time</a>
-                                                </div>
-                                            </div>
+                                            <h4>Sort By:</h4>
+                                            <a href="">Ascending by Time</a>
+                                            <a href="">Descending by Time</a>
+                                            <a href="" >Ascending by Price</a>
+                                            <a href="">Descending by Price</a>
                                         </div>
                                     </div>
                                 
                                 <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
-                                    <div class="col-lg-12 col-md-6 col-sm-12">
-                                        <div class="card product-item border-0 mb-4">
-                                            <div
-                                                class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                                <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                                            </div>
-                                            <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                                        
+                                    <div class="col-lg-12 col-md-6 col-sm-12 ">
+                                        
+                                        <div class="card product-item mb-4 trip-detail">
+                                            <div class="card-body border-left border-righ p-0 pt-4">
                                                 <div class="row">
-                                                    <div class="ticket-car-name col-md-4">
-                                                        <div class="bus-icon">
-                                                            <i class="fa fa-bus" style="font-size: 40px; color: #007bff;" aria-hidden="true"></i>
-                                                            <h4 class="mt-10">${trip.tripName}</h4>
+                                                    <div class="collapse noidungthongbao" id="notify-${trip.tripID.trim()}" style="">
+                                                        <div class="card card-body">
+                                                            <div class="tab-content ">
+                                                                    Please be at the pick up point 30 minutes in advance and present the ticket number before boarding, otherwise the ticket will be canceled and the operator will not support
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="ticket-row-name col-md-4 ">
-                                                        <div class="ticket-from-to text-center">
-                                                            <div class="ticket-from d-flex justify-content-center align-items-center">
-                                                                <div class="mr-15">
-                                                                    <i class="fa fa-circle" style="font-size: 25px; color:greenyellow;" aria-hidden="true"></i>
+                                                    <div class="col-md-12 thongbao">
+                                                        <button class="view-notification-button" type="button" data-toggle="collapse" data-target="#notify-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample" >
+                                                             <i class="fa fa-bullhorn" aria-hidden="true"></i> Notification
+                                                        </button>
+                                                    </div>
+                                                    
+                                                    <div class="vehicle-image col-md-3" >
+                                                        <img src="https://image.shutterstock.com/image-photo/bus-traveling-on-asphalt-road-260nw-1345741577.jpg" style="width: 100%; height: 200px;border: 1px solid black"/>
+                                                    </div>
+                                                    <div class="chuyen-xe col-md-5" style="">
+                                                        <h3 class="font-weight-bold" style="color:black;">${trip.vehicle.vehicleName}</h3>
+                                                        <p>Total seat: <stronng>${trip.vehicle.vehicleType.totalSeat}</stronng></p>
+                                                        <div class="thoigian-diadiem" style="">
+                                                            <div class="d-flex ">
+                                                                <div class="">
+                                                                    <i class="fa fa-circle" style="font-size: 25px; color:greenyellow; margin-right: 10px" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div>
-                                                                    <h6 class="text-center">23:15</h6>
-                                                                    <span class="text-center">${trip.route.startLocation.locationName}</span>
+                                                                    <span class="">${trip.route.startLocation.locationName}</span>
                                                                 </div>
                                                             </div>
-                                                            <div class="ticket-from mt-10 d-flex justify-content-center align-items-center">
-                                                                <div class="mr-15">
-                                                                    <i class="fa fa-map-marker" style="font-size: 25px; color: red;" aria-hidden="true"></i>
+                                                                <h6 class="">23:15</h6>
+                                                            <div class="d-flex " style="margin-top: -3px">
+                                                                <div class="">
+                                                                    <i class="fa fa-map-marker" style="font-size: 25px; color: red;margin-right: 10px" aria-hidden="true"></i>
                                                                 </div>
                                                                 <div>
-                                                                    <h6></h6>
                                                                     <span>${trip.route.endLocation.locationName}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="ticket-car-description col-md-4">
-                                                        <p class="font-weight-bold" style="color:black;">${trip.vehicle.vehicleName}</p>
-                                                        <p class="seat-remain font-weight-bold" style="color:black;">${trip.seatRemain} seat remain</p>
+                                                    <div class="chuyenxe-giathanh col-md-3" style="">
+                                                        <div class="">
+                                                            <h3 class="" style="color: #007bff;">
+                                                                <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
+                                                                    ${trip.vehicle.vehicleType.PRICE_16} VNĐ
+                                                                </c:if>
+                                                                <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
+                                                                    ${trip.vehicle.vehicleType.PRICE_29} VNĐ
+                                                                </c:if>
+                                                                <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
+                                                                    ${trip.vehicle.vehicleType.PRICE_45} VNĐ
+                                                                </c:if>
+                                                            </h3>
+                                                        </div>
+                                                        <p class="font-weight-bold" style="color:black;">${trip.seatRemain} seat remain</p>
                                                     </div>
                                                 </div>
-                                                <div class="price float-sm-right">
-                                                    <h3 class="mr-30" style="color: #007bff;">
-                                                        <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
-                                                            ${trip.vehicle.vehicleType.PRICE_16} VNĐ
-                                                        </c:if>
-                                                        <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
-                                                            ${trip.vehicle.vehicleType.PRICE_29} VNĐ
-                                                        </c:if>
-                                                        <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
-                                                            ${trip.vehicle.vehicleType.PRICE_45} VNĐ
-                                                        </c:if>
-                                                    </h3>
-                                                </div>
+                                                
                                             </div>
                                             <div class="card-footer bg-light border d-flex justify-content-between align-items-center">
-                                                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample">
-                                                    View more detail
-                                                </button>
+                                                <h4 class="ten-route" >${trip.tripName}</h4>
+                                                <div class="nut-chon-ghe">
+                                                    <div class="choose-seat-item">
+                                                        <button class="view-more-detail-button" type="button" data-toggle="collapse" data-target="#collapse-${trip.tripID.trim()}" aria-expanded="false" aria-controls="collapseExample" >
+                                                            View more detail <i class="fa fa-sort-desc" id="icon" aria-hidden="true" style="font-size: 25px; color: blue"></i>
+                                                        </button>
+                                                    </div>
 
-                                                <a href="${pageContext.request.contextPath}/book?action=choose-ticket&tripID=${trip.tripID.trim()}&totalSeat=${trip.vehicle.vehicleType.totalSeat}" class="btn-choose-seat btn btn-primary" >Choose ticket</a>
-
+                                                    <c:if test="${trip.seatRemain>0}">  
+                                                        <div class="chon-ghe">
+                                                            <a href="${pageContext.request.contextPath}/book?action=choose-ticket&tripID=${trip.tripID.trim()}&totalSeat=${trip.vehicle.vehicleType.totalSeat}" class="btn-choose-seat btn btn-primary" >Choose ticket</a>
+                                                        </div>
+                                                    </c:if> 
+                                                    <c:if test="${trip.seatRemain==0}">       
+                                                        <p class="no-seat" >No Seat Available</p>
+                                                    </c:if> 
+                                                </div>
                                             </div>
                                             <div class="collapse" id="collapse-${trip.tripID.trim()}">
                                                 <div class="card card-body">
@@ -412,7 +430,7 @@
                             var flight_tab = document.querySelector("#flight-tab");
                             var hotel_tab = document.querySelector("#hotel-tab");
                             var holiday_tab = document.querySelector("#holiday-tab");
-
+                            
                             function AlwaysFlightClick() {
                                 flight_tab.click();
                             }
@@ -424,8 +442,29 @@
                             function nextInHotels() {
                                 holiday_tab.click();
                             }
+                            
+                            document.getElementById("filter-by-seat").addEventListener("click",showList);
+                            var check=false;
+                            function showList(){
+                                if(check==false){
+                                    document.getElementById("chon-loai-xe").style.display="block";
+                                    document.getElementById("filter-by-seat").style.backgroundColor="#0083ff";
+                                    check=true;
+                                }else{
+                                    document.getElementById("chon-loai-xe").style.display="none";
+                                    document.getElementById("filter-by-seat").style.backgroundColor="white";
+                                    check=false; 
+                                }
+                            }
+                            
+                            document.getElementById("chon-loai-xe").addEventListener("mouseleave",showOff);
+                            function showOff(){
+                                document.getElementById("chon-loai-xe").style.display="none";
+                                document.getElementById("filter-by-seat").style.backgroundColor="white";
+                            }
+                          
         </script>
-        <jsp:include page="/client/seat-script.jsp"></jsp:include>
+        
     </body>
 
 </html>

@@ -120,7 +120,9 @@ public class BookingController extends HttpServlet {
             }else{
                 listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             }
-            System.out.println("List " + listTrip);
+            for (Trip trip : listTrip) {
+                System.out.println(trip);
+            }
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
@@ -247,7 +249,7 @@ public class BookingController extends HttpServlet {
             String tripID = request.getParameter("tripID");
             String totalSeat = request.getParameter("totalSeat");
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
-            Trip trip = tripDAO.getTripByID(tripID);
+ //           Trip trip = tripDAO.getTripByID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
            
             for (Seat s : list) {
