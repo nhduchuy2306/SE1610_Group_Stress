@@ -219,13 +219,43 @@
                                     </c:forEach>
                                 </tbody>
                             </table>
+                            <br>
+                            <form action="order" method="POST"> 
+                                <input type="hidden" name="orderID" value="${requestScope.ORDER_ID}">
+                                <input type="submit" value="return" name="action">
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
         <!-- End destinations Area -->
-
+        <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.RETURN_ORDER_SUCCESS}</h4>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.ERROR}</h4>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- start footer Area -->
         <footer class="footer-area section-gap">
             <div class="container">
@@ -357,6 +387,17 @@
                             function nextInHotels() {
                                 holiday_tab.click();
                             }
+
+            <c:if test="${requestScope.RETURN_ORDER_SUCCESS!=null}">
+                            $(document).ready(function () {
+                                $('#showsuccess').modal('show')
+                            });
+            </c:if>
+            <c:if test="${requestScope.ERROR!=null}">
+                            $(document).ready(function () {
+                                $('#showsuccess').modal('show')
+                            });
+            </c:if>
         </script>
         <jsp:include page="/client/seat-script.jsp"></jsp:include>
     </body>
