@@ -28,6 +28,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -286,8 +287,10 @@ public class RouteController extends HttpServlet {
                 // quangtm Modify
                 List<Vehicle> vList = vehicleDAO.getAllVehicle();
                 List<Driver> dList = driverDAO.getAllDriver();
-                for(int i = 0; i < vList.size(); i++){
-                    Vehicle vehicle = vList.get(i);
+                List<Vehicle> rVList = new ArrayList<>();
+                List<Driver> rDList = new ArrayList<>();
+                for (Vehicle vehicle : vList) {
+
                     if (vehicle.getStatus() == 2) {
                         Trip onGoingTrip = tripDAO.getOnGoingTripByVehicle(vehicle.getVehicleID());
                         // Get the Time when Trip is finish
@@ -297,16 +300,19 @@ public class RouteController extends HttpServlet {
                         // double the Time going to make sure Vehicle return
                         long realTimeGoing = (long) tripTime.getTime() * 2;
                         LocalDateTime finishTrip = onGoingTrip.getStartDateTime().toLocalDate().
-                                atStartOfDay().plusHours(realTimeGoing);
-                        if (finishTrip.isBefore(newTripTime)) {
-                            vList.remove(vehicle);
+                                atTime(onGoingTrip.getStartTime().toLocalTime()).plusHours(realTimeGoing);
+                        finishTrip.plusHours((long) onGoingTrip.getStartTime().toLocalTime().getHour());
+                        
+                        if (finishTrip.isAfter(newTripTime)) {
+                            rVList.add(vehicle);
                         }
 
                     }
+
                 }
 
-                for(int i = 0; i < dList.size(); i++) {
-                    Driver driver = dList.get(i);
+                for (Driver driver : dList) {
+
                     if (driver.getStatus() == Driver.ONGOING) {
                         Trip onGoingTrip = tripDAO.getOngoingTripByDriver(driver.getDriverID());
 
@@ -315,14 +321,20 @@ public class RouteController extends HttpServlet {
                                 onGoingTrip.getRoute().getEndLocation().getCity().getCityName());
                         // double the Time going to make sure Vehicle return
                         long realTimeGoing = (long) tripTime.getTime() * 2;
-                        LocalDateTime finishTrip = onGoingTrip.getStartDateTime().toLocalDate().
-                                atStartOfDay().plusHours(realTimeGoing);
-                        if (finishTrip.isBefore(newTripTime)) {
-                            dList.remove(driver);
+                        
+                        LocalTime StartTime = onGoingTrip.getStartTime().toLocalTime();
+                        LocalDateTime finishTrip = onGoingTrip.getStartDateTime().toLocalDate().atTime(StartTime).plusHours(realTimeGoing);
+                                
+                        
+                        if (finishTrip.isAfter(newTripTime)) {
+                            rDList.add(driver);
                         }
 
                     }
+
                 }
+                vList.removeAll(rVList);
+                dList.removeAll(rDList);
                 request.setAttribute("LIST_ACTIVE_VEHICLE", vList);
                 request.setAttribute("LIST_ACTIVE_DRIVER", dList);
                 viewRoute(request, response);

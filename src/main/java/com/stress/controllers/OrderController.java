@@ -157,7 +157,7 @@ public class OrderController extends HttpServlet {
             List<Ticket> ticketList = new TicketDAOImpl().getTicketByOrderID(orderID);
             Date goingDate = ticketList.get(0).getSeat().getTrip().getStartDateTime();
             if(Date.valueOf(LocalDate.now()).compareTo(goingDate) <= 0) {
-                request.setAttribute("ERROR", "Cant not Return this Order!");
+                request.setAttribute("ERROR", "Cant not Return this Order! This Trip is already Going");
             } else {
             Email.sendEmail("quangtmse161987@fpt.edu.vn", "", "A customer want to Return an Order\n" + "Please "
                     + "click at the link below\n"

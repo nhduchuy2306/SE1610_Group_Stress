@@ -23,9 +23,9 @@ public class TripDAOImpl implements TripDAO {
 
     @Override
     public Trip getOngoingTripByDriver(String driverID) throws SQLException {
-        String sql = "SELECT [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
+        String sql = "SELECT TOP(1) [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
                 + "[VehicleID], [SeatRemain], [Status] FROM tblTrips "
-                + "WHERE [DriverID] = ?";
+                + "WHERE [DriverID] = ?  ORDER BY TripID DESC";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -66,9 +66,9 @@ public class TripDAOImpl implements TripDAO {
 
     @Override
     public Trip getOnGoingTripByVehicle (String vehicleID) throws SQLException {
-        String sql = "SELECT [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
+        String sql = "SELECT TOP(1) [TripID],[TripName], [StartDateTime], [StartTime], [Policy], [RouteID], "
                 + "[DriverID], [SeatRemain], [Status] FROM tblTrips "
-                + "WHERE [VehicleID] = ?";
+                + "WHERE [VehicleID] = ?  ORDER BY TripID DESC";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
