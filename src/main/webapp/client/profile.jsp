@@ -195,36 +195,44 @@
                         </div>
                     </div>
                     <div class="col-lg-12 mb-4 mb-sm-5">
-                        <div>
-                            <span class="section-title text-primary mb-3 mb-sm-4">Ticket History</span>
-                            <c:if test="${requestScope.NO_INFORMATION!=null}">
-                                <h1>No Information</h1>
-                            </c:if>
-                            <table border="1">
-                                <thead>
-                                    <tr>
-                                        <th>Order ID</th>
-                                        <th>Create Date</th>
-                                        <th>Payment Mode</th>
-                                        <th>Status</th>
-                                        <th>View Detail<th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="o" items="${requestScope.ORDER_LIST}">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Ticket History</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                <c:if test="${requestScope.NO_INFORMATION!=null}">
+                                    <h1>No Information</h1>
+                                </c:if>
+
+                                <table border="1" class="table table-bordered" id="dataTable" width="100%" cellspacing="0"">
+                                    <thead>
                                         <tr>
-                                            <td>${o.orderID}</td>
-                                            <td>${o.createDate}</td>
-                                            <td>${o.paymentMode}</td>
-                                            <td>${o.status == true ? "Complete":"Pending"}</td>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
-                                            </td>
+                                            <th>Order ID</th>
+                                            <th>Create Date</th>
+                                            <th>Payment Mode</th>
+                                            <th>Status</th>
+                                            <th>View Detail<th>
                                         </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="o" items="${requestScope.ORDER_LIST}">
+                                            <tr>
+                                                <td>${o.orderID}</td>
+                                                <td>${o.createDate}</td>
+                                                <td>${o.paymentMode}</td>
+                                                <td>${o.status == true ? "Complete":"Pending"}</td>
+                                                <td>
+                                                    <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
