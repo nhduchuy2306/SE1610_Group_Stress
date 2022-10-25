@@ -162,10 +162,10 @@
                             <h1 class="text-white">
                                 Profile
                             </h1>
-                            <p class="text-white link-nav"><a href="/">Home </a> <span
-                                    </div>
+                            <p class="text-white link-nav"><a href="/">Home </a> </p>
                         </div>
                     </div>
+                </div>
             </section>
             <!-- End banner Area -->
 
@@ -200,178 +200,180 @@
                                 <h6 class="m-0 font-weight-bold text-primary">Ticket History</h6>
                             </div>
                             <div class="card-body">
-                                <div class="table-responsive">
-                                <c:if test="${requestScope.NO_INFORMATION!=null}">
-                                    <h1>No Information</h1>
-                                </c:if>
+                                <div class="">
+                                    <c:if test="${requestScope.NO_INFORMATION!=null}">
+                                        <h1>No Information</h1>
+                                    </c:if>
 
-                                <table border="1" class="table table-bordered" id="dataTable" width="100%" cellspacing="0"">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Create Date</th>
-                                            <th>Payment Mode</th>
-                                            <th>Status</th>
-                                            <th>View Detail<th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="o" items="${requestScope.ORDER_LIST}">
+                                    <table class="table table-bordered table-striped table-hover" id="dataTable">
+                                        <thead>
                                             <tr>
-                                                <td>${o.orderID}</td>
-                                                <td>${o.createDate}</td>
-                                                <td>${o.paymentMode}</td>
-                                                <td>${o.status == true ? "Complete":"Pending"}</td>
-                                                <td>
-                                                    <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
-                                                </td>
+                                                <th>Order ID</th>
+                                                <th>Create Date</th>
+                                                <th>Payment Mode</th>
+                                                <th>Status</th>
+                                                <th>View Detail</th>
                                             </tr>
-                                        </c:forEach>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="o" items="${requestScope.ORDER_LIST}">
+                                                <tr>
+                                                    <td>${o.orderID}</td>
+                                                    <td>${o.createDate}</td>
+                                                    <td>${o.paymentMode}</td>
+                                                    <td>${o.status == true ? "Complete":"Pending"}</td>
+                                                    <td>
+                                                        <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- End destinations Area -->
+        </div>
+    </section>
+    <!-- End destinations Area -->
 
-        <!-- start footer Area -->
-        <footer class="footer-area section-gap">
-            <div class="container">
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
+        <div class="container">
 
-                <div class="row">
-                    <div class="col-lg-3  col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>About Agency</h6>
-                            <p>
-                                The world has become so fast paced that people don’t want to stand by reading a page of
-                                information, they would much rather look at a presentation and understand the message. It
-                                has come to a point
-                            </p>
-                        </div>
+            <div class="row">
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>About Agency</h6>
+                        <p>
+                            The world has become so fast paced that people don’t want to stand by reading a page of
+                            information, they would much rather look at a presentation and understand the message. It
+                            has come to a point
+                        </p>
                     </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>Navigation Links</h6>
-                            <div class="row">
-                                <div class="col">
-                                    <ul>
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">Feature</a></li>
-                                        <li><a href="#">Services</a></li>
-                                        <li><a href="#">Portfolio</a></li>
-                                    </ul>
-                                </div>
-                                <div class="col">
-                                    <ul>
-                                        <li><a href="#">Team</a></li>
-                                        <li><a href="#">Pricing</a></li>
-                                        <li><a href="#">Blog</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                    </ul>
-                                </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Navigation Links</h6>
+                        <div class="row">
+                            <div class="col">
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">Feature</a></li>
+                                    <li><a href="#">Services</a></li>
+                                    <li><a href="#">Portfolio</a></li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3  col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>Newsletter</h6>
-                            <p>
-                                For business professionals caught between high OEM price and mediocre print and graphic
-                                output.
-                            </p>
-                            <div id="mc_embed_signup">
-                                <form target="_blank"
-                                      action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                      method="get" class="subscription relative">
-                                    <div class="input-group d-flex flex-row">
-                                        <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
-                                               onblur="this.placeholder = 'Email Address '" required="" type="email">
-                                        <button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
-                                    </div>
-                                    <div class="mt-10 info"></div>
-                                </form>
+                            <div class="col">
+                                <ul>
+                                    <li><a href="#">Team</a></li>
+                                    <li><a href="#">Pricing</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3  col-md-6 col-sm-6">
-                        <div class="single-footer-widget mail-chimp">
-                            <h6 class="mb-20">InstaFeed</h6>
-                            <ul class="instafeed d-flex flex-wrap">
-                                <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i2.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i3.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i4.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i5.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i6.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i7.jpg" alt=""></li>
-                                <li><img src="${pageContext.request.contextPath}/client/img/i8.jpg" alt=""></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
-
-                <div class="row footer-bottom d-flex justify-content-between align-items-center">
-                    <p class="col-lg-8 col-sm-12 footer-text m-0">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;
-                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
-                        made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                                                                                         target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </p>
-                    <div class="col-lg-4 col-sm-12 footer-social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-dribbble"></i></a>
-                        <a href="#"><i class="fa fa-behance"></i></a>
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h6>Newsletter</h6>
+                        <p>
+                            For business professionals caught between high OEM price and mediocre print and graphic
+                            output.
+                        </p>
+                        <div id="mc_embed_signup">
+                            <form target="_blank"
+                                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                  method="get" class="subscription relative">
+                                <div class="input-group d-flex flex-row">
+                                    <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
+                                           onblur="this.placeholder = 'Email Address '" required="" type="email">
+                                    <button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
+                                </div>
+                                <div class="mt-10 info"></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget mail-chimp">
+                        <h6 class="mb-20">InstaFeed</h6>
+                        <ul class="instafeed d-flex flex-wrap">
+                            <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i2.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i3.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i4.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i5.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i6.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i7.jpg" alt=""></li>
+                            <li><img src="${pageContext.request.contextPath}/client/img/i8.jpg" alt=""></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- End footer Area -->
 
-        <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
-        <!--<script src="js/chosing-seat.js"></script>-->
+            <div class="row footer-bottom d-flex justify-content-between align-items-center">
+                <p class="col-lg-8 col-sm-12 footer-text m-0">
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    Copyright &copy;
+                    <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
+                    made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                                                     target="_blank">Colorlib</a>
+                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                </p>
+                <div class="col-lg-4 col-sm-12 footer-social">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="#"><i class="fa fa-dribbble"></i></a>
+                    <a href="#"><i class="fa fa-behance"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer Area -->
 
-        <script>
-                            var flight_tab = document.querySelector("#flight-tab");
-                            var hotel_tab = document.querySelector("#hotel-tab");
-                            var holiday_tab = document.querySelector("#holiday-tab");
+    <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
 
-                            function AlwaysFlightClick() {
-                                flight_tab.click();
-                            }
+    <script>
+                        var flight_tab = document.querySelector("#flight-tab");
+                        var hotel_tab = document.querySelector("#hotel-tab");
+                        var holiday_tab = document.querySelector("#holiday-tab");
 
-                            function nextInFlights() {
-                                hotel_tab.click();
-                            }
+                        function AlwaysFlightClick() {
+                            flight_tab.click();
+                        }
 
-                            function nextInHotels() {
-                                holiday_tab.click();
-                            }
-        </script>
-        <jsp:include page="/client/seat-script.jsp"></jsp:include>
-    </body>
+                        function nextInFlights() {
+                            hotel_tab.click();
+                        }
+
+                        function nextInHotels() {
+                            holiday_tab.click();
+                        }
+    </script>
+    <jsp:include page="/client/seat-script.jsp"></jsp:include>
+</body>
 
 </html>
