@@ -252,9 +252,9 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="text-center">
-                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                            <i class="fa fa-exclamation" style="font-size:70px; color: red" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.ERROR}</h4>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px; color:red">${requestScope.ERROR}</h4>
                         <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -401,7 +401,7 @@
             </c:if>
             <c:if test="${requestScope.ERROR!=null}">
                             $(document).ready(function () {
-                                $('#showsuccess').modal('show')
+                                $('#showerror').modal('show')
                             });
             </c:if>
         </script>
