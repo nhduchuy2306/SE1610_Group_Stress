@@ -241,15 +241,17 @@
 
                                                                                 </div>       
                                                                                 <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">VehicleType</label>
-                                                                                    <input type="text" name="description" class="form-control" value="${r.description}" id="exampleInputEmail1" placeholder="Enter Description">
+                                                                                    <label for="exampleInputEmail1" >Description</label>
+                                                                                    <textarea name="description"class="form-control" value="${r.description}"></textarea>
+                                                                                    
+                                                                                    
                                                                                 </div>
 
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">Status</label>
                                                                                     <select name="status" class="form-control">
-                                                                                        <option value="1" ${d.status eq 1?"selected":""}>ACTIVE</option>
-                                                                                        <option value="0" ${d.status eq 0?"selected":""}>INACTIVE</option>
+                                                                                        <option value="1">ACTIVE</option>
+                                                                                        <option value="0"}>INACTIVE</option>
 
 
                                                                                     </select>

@@ -471,4 +471,31 @@ public class TripDAOImpl implements TripDAO {
         } catch (Exception e) {
         }
     }
+
+    @Override
+    public boolean hasTripByRoute(int routeID) throws SQLException {
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        boolean check = false;
+        String sql = "SELECT [TripID] FROM tblTrips WHERE [RouteID] = ?"; 
+        try {
+            conn = DBConnection.getConnection();
+            if(conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, routeID);
+                rs = ptm.executeQuery();
+                if(rs.next()) {
+                    check =true;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(rs != null) rs.close();
+            if(ptm != null) ptm.close();
+            if(conn != null) conn.close();
+        }
+        return check;
+    }
 }
