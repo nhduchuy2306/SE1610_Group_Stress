@@ -162,10 +162,10 @@
                             <h1 class="text-white">
                                 Profile
                             </h1>
-                            <p class="text-white link-nav"><a href="/">Home </a> <span
-                                    </div>
+                            <p class="text-white link-nav"><a href="/">Home </a> </p>
                         </div>
                     </div>
+                </div>
             </section>
             <!-- End banner Area -->
 
@@ -195,35 +195,39 @@
                         </div>
                     </div>
                     <div class="col-lg-12 mb-4 mb-sm-5">
-                        <div>
-                            <span class="section-title text-primary mb-3 mb-sm-4">Ticket Detail</span>
-                            <table border="1">
-                                <thead>
-                                    <tr>
-                                        <th>Ticket ID</th>
-                                        <th>Seat ID</th>
-                                        <th>Trip ID</th>
-                                        <th>Order ID</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${requestScope.TICKET}" var="t"> 
-                                        <tr>
-
-                                            <td>${t.ticketID}</td>
-                                            <td>${t.seat.seatID}</td>
-                                            <td>${t.trip.tripID}</td>
-                                            <td>${t.order.orderID}</td>
-
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </table>
-                            <br>
-                            <form action="order" method="POST"> 
-                                <input type="hidden" name="orderID" value="${requestScope.ORDER_ID}">
-                                <input type="submit" value="return" name="action">
-                            </form>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Ticket Detail</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="">
+                                    <table class="table table-bordered table-striped table-hover" id="dataTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Ticket ID</th>
+                                                <th>Seat ID</th>
+                                                <th>Trip ID</th>
+                                                <th>Order ID</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach items="${requestScope.TICKET}" var="t"> 
+                                                <tr>
+                                                    <td>${t.ticketID}</td>
+                                                    <td>${t.seat.seatID}</td>
+                                                    <td>${t.trip.tripID}</td>
+                                                    <td>${t.order.orderID}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </tbody>
+                                    </table>
+                                    <br>
+                                    <form action="order" method="POST"> 
+                                        <input type="hidden" name="orderID" value="${requestScope.ORDER_ID}">
+                                        <input type="submit" class="btn btn-secondary float-right" value="return" name="action">
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -369,7 +373,9 @@
         <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
-        <!--<script src="js/chosing-seat.js"></script>-->
+        <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
 
         <script>
                             var flight_tab = document.querySelector("#flight-tab");
