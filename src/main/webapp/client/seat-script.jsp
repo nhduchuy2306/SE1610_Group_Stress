@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
     var checkout = $(".checkout-button-seat");
-
+    console.log(checkout);
     var choice = drawMapSeat();
     
     console.log(choice);

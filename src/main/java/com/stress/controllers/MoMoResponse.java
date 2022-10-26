@@ -4,6 +4,9 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.UserDAO;
+import com.stress.dto.User;
+import com.stress.service.UserDAOImpl;
 import static com.stress.utils.Constants.ACCESS_KEY;
 import static com.stress.utils.Constants.SECRET_KEY;
 import static com.stress.utils.DigitalSignature.signHmacSHA256;
@@ -13,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -61,7 +65,6 @@ public class MoMoResponse extends HttpServlet {
             
             if (!signRequest.equals(signature)) {
                 request.setAttribute("WRONG", "Thông tin không hợp lệ");
-                
                 request.getRequestDispatcher("success.jsp").forward(request, response);
             }
             if (!resultCode.equals("0")) {
@@ -69,10 +72,15 @@ public class MoMoResponse extends HttpServlet {
                 request.getRequestDispatcher("success.jsp").forward(request, response);
             } else {
                 request.setAttribute("SUCCESS", "Thanh toán thành công");
-                request.getRequestDispatcher("success.jsp").forward(request, response);
+                HttpSession session = request.getSession();
+                User user = (User) session.getAttribute("LOGIN_USER");
+                UserDAO userDAO = new UserDAOImpl();
+                boolean check = userDAO.updateUser(user.getUserID(), amount);
+                if(check)
+                    request.getRequestDispatcher("/client/recharge.jsp").forward(request, response);
             }
         }catch(Exception e){
-            
+            System.out.println(e.toString());
         }
     }
     @Override

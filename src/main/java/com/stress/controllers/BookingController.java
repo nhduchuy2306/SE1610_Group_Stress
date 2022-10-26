@@ -199,13 +199,16 @@ public class BookingController extends HttpServlet {
 
     private void createTicket(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String url = "./client/404.jsp";
-//        }
+        String url = "./client/error.jsp";
         try {
             HttpSession session = request.getSession();
             String tripID = request.getParameter("tripID");
             String seatIDs = request.getParameter("seatID");
+            System.out.println(seatIDs);
             String[] seatID = seatIDs.split(",");
+            for (String s : seatID) {
+                System.out.println(s);
+            }
             int quantity = seatID.length; // quantity of Seat that Customer choose 
             double price = 0; // totalPrice
 
@@ -230,17 +233,17 @@ public class BookingController extends HttpServlet {
                     request.setAttribute("ORDER", order);
                     request.setAttribute("TRIP", choosingTrip);
 
-                    url = "./client/order.jsp";
+                    url = "/client/order.jsp";
                 } else {
                     request.setAttribute("ERROR", "You not Book any Seat!");
-
+                    url = "/client/order.jsp";
                 }
             } else {
                 request.setAttribute("ERROR_FOR_LOGIN", "You have to login First");
-                url = "./client/index.jsp";
+                url = "/client/index.jsp";
             }
         } catch (Exception e) {
-            System.out.println("Error at Show Ticket Detail Controller" + e.toString());
+            System.out.println("Error at Show Ticket Detail Controller " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
