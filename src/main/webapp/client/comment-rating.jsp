@@ -138,6 +138,124 @@
             .rounded {
                 border-radius: 0.25rem!important;
             }
+
+            /*Comment and rating*/
+            .container-comment{
+                position: relative;
+                width: 400px;
+                background: #111;
+                padding: 20px 30px;
+                border: 1px solid #444;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            .container-comment .text-comment{
+                font-size: 25px;
+                color: #666;
+                font-weight: 500;
+            }
+            .container-comment .edit-comment{
+                position: absolute;
+                right: 10px;
+                top: 5px;
+                font-size: 16px;
+                color: #666;
+                font-weight: 500;
+                cursor: pointer;
+            }
+            .container-comment .edit-comment:hover{
+                text-decoration: underline;
+            }
+            .container-comment .star-widget-comment input{
+                display: none;
+            }
+            .star-widget-comment label{
+                font-size: 40px;
+                color: #444;
+                padding: 10px;
+                float: right;
+                transition: all 0.2s ease;
+            }
+            .star-widget-comment input:not(:checked) ~ label:hover,
+            .star-widget-comment input:not(:checked) ~ label:hover ~ label{
+                color: #fd4;
+            }
+            .star-widget-comment input:checked ~ label{
+                color: #fd4;
+            }
+            .star-widget-comment input#rate-5-comment:checked ~ label{
+                color: #fe7;
+                text-shadow: 0 0 20px #952;
+            }
+            .star-widget-comment #rate-1-comment:checked ~ form header:before{
+                content: "I just hate it ";
+            }
+            .star-widget-comment #rate-2-comment:checked ~ form header:before{
+                content: "I don't like it ";
+            }
+            .star-widget-comment #rate-3-comment:checked ~ form header:before{
+                content: "It is awesome ";
+            }
+            .star-widget-comment #rate-4-comment:checked ~ form header:before{
+                content: "I just like it ";
+            }
+            .star-widget-comment #rate-5-comment:checked ~ form header:before{
+                content: "I just love it ";
+            }
+            .star-widget-comment input:checked ~ form{
+                display: block;
+            }
+            form header{
+                width: 100%;
+                font-size: 25px;
+                color: #fe7;
+                font-weight: 500;
+                margin: 5px 0 20px 0;
+                text-align: center;
+                transition: all 0.2s ease;
+            }
+            form .textarea-comment{
+                height: 100px;
+                width: 100%;
+            }
+            form .textarea-comment textarea{
+                height: 100%;
+                width: 100%;
+                outline: none;
+                color: #eee;
+                border: 1px solid #333;
+                background: #222;
+                padding: 10px;
+                font-size: 17px;
+                resize: none;
+            }
+            .textarea-comment textarea:focus{
+                border-color: #444;
+            }
+            form .btn-comment{
+                height: 45px;
+                width: 100%;
+                margin: 15px 0;
+            }
+            form .btn-comment button{
+                height: 100%;
+                width: 100%;
+                border: 1px solid #444;
+                outline: none;
+                background: #222;
+                color: #999;
+                font-size: 17px;
+                font-weight: 500;
+                text-transform: uppercase;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+            form .btn-comment button:hover{
+                background: #1b1b1b;
+            }
         </style>
     </head>
 
@@ -195,47 +313,31 @@
                         </div>
                     </div>
                     <div class="col-lg-12 mb-4 mb-sm-5">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Ticket History</h6>
+                        <div class="container-comment">
+                            <div class="post-comment">
+                                <div class="text-comment">Thanks for rating us!</div>
+                                <div class="edit-comment">EDIT</div>
                             </div>
-                            <div class="card-body">
-                                <div class="">
-                                    <c:if test="${requestScope.NO_INFORMATION!=null}">
-                                        <h1>No Information</h1>
-                                    </c:if>
-
-                                    <table class="table table-bordered table-striped table-hover" id="dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th>Order ID</th>
-                                                <th>Create Date</th>
-                                                <th>Payment Mode</th>
-                                                <th>Status</th>
-                                                <th>View Detail</th>
-                                                <th>Comment And Rating</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="o" items="${requestScope.ORDER_LIST}">
-                                                <tr>
-                                                    <td class="text-center">${o.orderID}</td>
-                                                    <td class="text-center">${o.createDate}</td>
-                                                    <td class="text-center">${o.paymentMode}</td>
-                                                    <td class="text-center">${o.status == true ? "Complete":"Pending"}</td>
-                                                    <td class="text-center">
-                                                        <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <a class="text-center" href="${pageContext.request.contextPath}/client/comment-rating.jsp">
-                                                            <i class="text-center far fa-comment-dots me-2"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </c:forEach>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="star-widget-comment">
+                                <input type="radio" name="rate" id="rate-5">
+                                <label for="rate-5-comment" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-4">
+                                <label for="rate-4-comment" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-3">
+                                <label for="rate-3-comment" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-2">
+                                <label for="rate-2-comment" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-1">
+                                <label for="rate-1-comment" class="fas fa-star"></label>
+                                <form>
+                                    <header>fsdfsdf</header>
+                                    <div class="textarea-comment">
+                                        <textarea cols="30" placeholder="Describe your experience.."></textarea>
+                                    </div>
+                                    <div class="btn-comment">
+                                        <button type="submit">Post</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -362,24 +464,6 @@
     <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
 
-    <script>
-                        var flight_tab = document.querySelector("#flight-tab");
-                        var hotel_tab = document.querySelector("#hotel-tab");
-                        var holiday_tab = document.querySelector("#holiday-tab");
-
-                        function AlwaysFlightClick() {
-                            flight_tab.click();
-                        }
-
-                        function nextInFlights() {
-                            hotel_tab.click();
-                        }
-
-                        function nextInHotels() {
-                            holiday_tab.click();
-                        }
-    </script>
-    <jsp:include page="/client/seat-script.jsp"></jsp:include>
 </body>
 
 </html>
