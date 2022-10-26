@@ -365,6 +365,39 @@ public class UserDAOImpl implements UserDAO {
         }
 
     }
+    
+    private String getAccountBalanceByUserID(String userID) throws SQLException {
+        String sql = "SELECT AccountBalance FROM tblUsers WHERE UserID = ?";
+        String accountBalance = "";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, userID);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    accountBalance = rs.getString("AccountBalance");
+                }
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error at getAccountBalanceByUserID:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return accountBalance;
+    }
 
     @Override
     public boolean updateUser(String userID, String accountBalance) throws SQLException {
@@ -376,9 +409,9 @@ public class UserDAOImpl implements UserDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(updateUser);
-                ptm.setString(1, accountBalance);
+                ptm.setString(1, String.valueOf(Integer.parseInt(accountBalance)+Integer.parseInt(getAccountBalanceByUserID(userID))));
                 ptm.setString(2, userID);
-                checkUpdate = ptm.executeUpdate() > 0 ? true : false;
+                checkUpdate = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             System.out.println("Eror at UserDAOImpl - updateUser: " + e.toString());
