@@ -229,12 +229,13 @@ public class RouteDAOImpl implements RouteDAO {
         try {
             conn = DBConnection.getConnection();
             ptm = conn.prepareStatement(sql);
-            ptm.setInt(6, RouteID);
+            
             ptm.setString(1, RouteName);
             ptm.setInt(2, StartLocation.getLocationID());
             ptm.setInt(3, EndLocation.getLocationID());
             ptm.setString(4, Description);
             ptm.setString(5, Boolean.toString(Status));
+            ptm.setInt(6, RouteID);
             check = ptm.executeUpdate() > 0;
         } catch (Exception e) {
         } finally {

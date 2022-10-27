@@ -1,16 +1,21 @@
 package com.stress.controllers;
 
+import com.stress.dao.FeedbackDAO;
 import com.stress.dao.OrderDAO;
 import com.stress.dao.SeatDAO;
 import com.stress.dao.TicketDAO;
 import com.stress.dao.UserDAO;
+import com.stress.dto.Feedback;
 import com.stress.dto.Order;
 import com.stress.dto.Seat;
 import com.stress.dto.Ticket;
+import com.stress.dto.Trip;
 import com.stress.dto.User;
+import com.stress.service.FeedbackDAOImpl;
 import com.stress.service.OrderDAOImpl;
 import com.stress.service.SeatDAOImpl;
 import com.stress.service.TicketDAOImpl;
+import com.stress.service.TripDAOImpl;
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.Email;
 import java.io.IOException;
@@ -41,6 +46,9 @@ public class OrderController extends HttpServlet {
                     break;
                 case "Return":
                     showReturnTicket(request, response);
+                    break;
+                case "Feedback":
+                    showFeedBack(request, response);
                     break;
                 default:
                     throw new AssertionError();
@@ -73,11 +81,63 @@ public class OrderController extends HttpServlet {
                     break;
                 case "Reject":
                     break;
+                case "Feedback":
+                    sendFeedback(request, response);
+                    break;
+
                 default:
                     throw new AssertionError();
             }
         } catch (Exception e) {
             System.out.println("Error at Post " + e.toString());
+        }
+    }
+    private void sendFeedback(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        String url = "./client/404.jsp";
+        try {
+            String orderID = request.getParameter("orderID");
+            String tripID = request.getParameter("tripID");
+            String comment = request.getParameter("comment");
+            Trip trip = new TripDAOImpl().getTripByID(tripID);
+            Order order = new OrderDAOImpl().getOderByID(orderID);
+            int rating = Integer.parseInt(request.getParameter("rating"));
+            Feedback fb = new Feedback(0, rating, comment, order, trip);
+            
+            FeedbackDAO fbDAO = new FeedbackDAOImpl();
+            if(fbDAO.sendFeedback(fb)) 
+            request.setAttribute("SUCCESS", "Thank you for your feedback!");
+            else request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
+            
+            showDetailView(request, response);
+            
+        } catch (Exception e) {
+            System.out.println("Error at Send Feedback " + e.toString());
+        } 
+        
+    }
+    private void showFeedBack(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String url = "./client/404.jsp";
+        try {
+            String orderID = request.getParameter("orderID");
+            OrderDAO oDAO = new OrderDAOImpl();
+
+            List<Ticket> tList = new TicketDAOImpl().getTicketByOrderID(orderID);
+            if (tList.size() <= 0) {
+                request.setAttribute("ERROR", "You are not booking any ticket in this order!");
+                showOrderView(request, response);
+            }
+            else {
+                Ticket t = tList.get(0);
+                request.setAttribute("TICKET", t);
+                url = "./client/comment-rating.jsp";
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error at show Feed back " + e.toString());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
@@ -95,22 +155,21 @@ public class OrderController extends HttpServlet {
                 List<Ticket> ticketList = tDAO.getTicketByOrderID(orderID);
                 // Get Total Money to return for User
                 double returnMoney = 0;
-                if(ticketList.size() > 0) {
+                if (ticketList.size() > 0) {
                     for (Ticket ticket : ticketList) {
                         returnMoney += ticket.getSeat().getPrice();
                         sDAO.updateSeat(ticket.getTrip().getTripID(), ticket.getSeat().getSeatID());
                     }
                 }
-                
+
                 double accountBalance = Double.parseDouble(od.getUser().getAccountBalance());
                 accountBalance += returnMoney;
-                
-                
+
                 new UserDAOImpl().updateUser(od.getUser().getUserID(), String.valueOf(accountBalance));
-                
+
                 Email.sendEmail(od.getUser().getEmail(), "", "The Return Ticket Request Has been Approved!\nPlease Check Again Information:\nOrder: "
                         + od.getOrderID() + "\n" + "Create Date: " + od.getCreateDate() + "\n\tWe have recover money into Your AccountBalance! For further information"
-                                + ", Please Contact: 079_809_1101\n\t\t\tGROUP STRESS" , "Return Ticket Successfully");
+                        + ", Please Contact: 079_809_1101\n\t\t\tGROUP STRESS", "Return Ticket Successfully");
                 request.setAttribute("ORDER", od);
                 request.setAttribute("RETURN_SUCCESS", "Approve Return Success!");
                 url = "./admin/orderTable.jsp";
@@ -156,14 +215,15 @@ public class OrderController extends HttpServlet {
             Order od = oDAO.getOderByID(orderID);
             List<Ticket> ticketList = new TicketDAOImpl().getTicketByOrderID(orderID);
             Date goingDate = ticketList.get(0).getSeat().getTrip().getStartDateTime();
-            if(Date.valueOf(LocalDate.now()).compareTo(goingDate) <= 0) {
+            if (Date.valueOf(LocalDate.now()).after(goingDate)) {
                 request.setAttribute("ERROR", "Cant not Return this Order! This Trip is already Going");
+                showDetailView(request, response);
             } else {
-            Email.sendEmail("quangtmse161987@fpt.edu.vn", "", "A customer want to Return an Order\n" + "Please "
-                    + "click at the link below\n"
-                    + "http://localhost:8080/ETrans/order?action=Return&orderID=" + orderID, "Return Order Request");
-            request.setAttribute("RETURN_ORDER_SUCCESS", "An Email has send to Staff. You Request will be processed in a shortest Time");
-            showDetailView(request, response);
+                Email.sendEmail("quangtmse161987@fpt.edu.vn", "", "A customer want to Return an Order\n" + "Please "
+                        + "click at the link below\n"
+                        + "http://localhost:8080/ETrans/order?action=Return&orderID=" + orderID, "Return Order Request");
+                request.setAttribute("RETURN_ORDER_SUCCESS", "An Email has send to Staff. You Request will be processed in a shortest Time");
+                showDetailView(request, response);
             }
 
         } catch (Exception e) {

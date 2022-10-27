@@ -215,12 +215,12 @@ public class RouteController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
         try {
-            String tmpRouteID = request.getParameter("RouteID");
+            String tmpRouteID = request.getParameter("routeID");
 
-            String startLocID = request.getParameter("StartLocation");
-            String endLocID = request.getParameter("EndLocation");
-            String Description = request.getParameter("Description");
-            String tmpStatus = request.getParameter("Status");
+            String startLocID = request.getParameter("startLocation");
+            String endLocID = request.getParameter("endLocation");
+            String Description = request.getParameter("description");
+            String tmpStatus = request.getParameter("status");
             //==================Conversion process======================//
             int RouteID = Integer.parseInt(tmpRouteID);
             int sLID = Integer.parseInt(startLocID);
@@ -229,13 +229,23 @@ public class RouteController extends HttpServlet {
             Location StartLocation = LDAO.getLocationById(sLID);
             Location EndLocation = LDAO.getLocationById(eLID);
             String RouteName = StartLocation.getLocationName() + "_" + EndLocation.getLocationName();
-            boolean Status = Boolean.parseBoolean(tmpStatus);
+            boolean Status;
+            if(tmpStatus.equals("1")) Status = true;
+            else Status = false;
             //===========================================================//
             RouteDAO dao = new RouteDAOImpl();
-            boolean checkUpdate = dao.updateRoute(RouteID, RouteName, StartLocation, EndLocation, Description, Status);
-            if (checkUpdate) {
+            Route route = dao.getRouteByID(RouteID);
+            if(new TripDAOImpl().hasTripByRoute(RouteID)) {
+                request.setAttribute("ERROR", "Cant not Modify This Route, Trip For this Route is already created!");
                 request.setAttribute("ROUTE_ID", RouteName);
                 viewRoute(request, response);
+            } else {
+            boolean checkUpdate = dao.updateRoute(RouteID, RouteName, StartLocation, EndLocation, Description, Status);
+            if (checkUpdate) {
+                request.setAttribute("SUCCESS", "Update Route " + RouteID + " Successfully!" );
+                request.setAttribute("ROUTE_ID", RouteName);
+                viewRoute(request, response);
+            }
             }
         } catch (Exception e) {
             log("Error at RouteController - updateRoute: " + e.toString());

@@ -22,4 +22,5 @@ public interface TripDAO {
     // getTrip On Going
     Trip getOngoingTripByDriver (String driverID) throws SQLException;
     Trip getOnGoingTripByVehicle (String vehicleID) throws SQLException;
+    boolean hasTripByRoute(int routeID) throws SQLException;
 }

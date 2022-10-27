@@ -280,7 +280,7 @@
                             <h1 class="text-white">
                                 Profile
                             </h1>
-                            <p class="text-white link-nav"><a href="/">Home </a> </p>
+                            <p class="text-white link-nav"><a href="">Home </a> </p>
                         </div>
                     </div>
                 </div>
@@ -312,13 +312,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div class="col-lg-6 mb-4 mb-sm-5">
                         <div class="container-comment">
                             <div class="post-comment">
                                 <div class="text-comment">Thanks for rating us!</div>
                                 <div class="edit-comment">EDIT</div>
                             </div>
                             <div class="star-widget-comment">
+
                                 <input type="radio" name="rate" id="rate-5">
                                 <label for="rate-5-comment" class="fas fa-star"></label>
                                 <input type="radio" name="rate" id="rate-4">
@@ -329,16 +330,31 @@
                                 <label for="rate-2-comment" class="fas fa-star"></label>
                                 <input type="radio" name="rate" id="rate-1">
                                 <label for="rate-1-comment" class="fas fa-star"></label>
-                                <form>
-                                    <header>fsdfsdf</header>
+                                <form action="order" method="POST">
+                                    <header>Opinion</header>
+                                    Rating
+                                   <div class="textarea-comment">
+                                        <textarea name="rating" cols="30" placeholder="Rating"></textarea>
+                                    </div>
                                     <div class="textarea-comment">
-                                        <textarea cols="30" placeholder="Describe your experience.."></textarea>
+                                        <textarea name="comment" cols="30" placeholder="Describe your experience.."></textarea>
                                     </div>
                                     <div class="btn-comment">
-                                        <button type="submit">Post</button>
+                                        <input type="hidden" name="tripID" value="${requestScope.TICKET.trip.tripID}">
+                                        <input type="hidden" name="orderID" value="${requestScope.TICKET.order.orderID}">
+                                        <button type="submit" name="action" value="Feedback">Post</button>
                                     </div>
                                 </form>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4 mb-sm-5"> 
+                        <div> 
+                            <h1>Thank You for choosing us</h1>
+                            <h3>Order ID: ${requestScope.TICKET.order.orderID}</h3>
+                            <p>Trip: ${requestScope.TICKET.trip.tripName} | ${requestScope.TICKET.trip.route.routeName}</p>
+                            <p>Driver: ${requestScope.TICKET.trip.driver.driverName}</p>
+                            <p>Vehicle: ${requestScope.TICKET.trip.vehicle.vehicleName} | ${requestScope.TICKET.trip.vehicle.licensePlate}</p>
                         </div>
                     </div>
                 </div>
