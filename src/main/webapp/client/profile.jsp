@@ -227,7 +227,7 @@
                                                         <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
                                                     </td>
                                                     <td class="text-center">
-                                                        <a class="text-center" href="${pageContext.request.contextPath}/client/comment-rating.jsp">
+                                                        <a class="text-center" href="${pageContext.request.contextPath}/order?action=Feedback&orderID=${o.orderID}">
                                                             <i class="text-center far fa-comment-dots me-2"></i>
                                                         </a>
                                                     </td>

@@ -241,7 +241,8 @@
                         <div class="text-center">
                             <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.RETURN_ORDER_SUCCESS}</h4>
+                        <c:if test="${requestScope.RETURN_ORDER_SUCCESS != null}"> <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.RETURN_ORDER_SUCCESS}</h4> </c:if>
+                        <c:if test="${requestScope.SUCCESS != null}"> <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.SUCCESS}</h4> </c:if>
                         <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -394,7 +395,13 @@
                                 holiday_tab.click();
                             }
 
+
             <c:if test="${requestScope.RETURN_ORDER_SUCCESS!=null}">
+                            $(document).ready(function () {
+                                $('#showsuccess').modal('show')
+                            });
+            </c:if>
+            <c:if test="${requestScope.SUCCESS!=null}">
                             $(document).ready(function () {
                                 $('#showsuccess').modal('show')
                             });
