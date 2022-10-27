@@ -519,7 +519,7 @@
         <script src="https://smtpjs.com/v3/smtp.js"></script>
         <script src="https://www.google.com/recaptcha/api.js"></script>
         
-        <script src="${pageContext.request.contextPath}/client/js/datalist.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/datalist2.js"></script>
     </body>
         <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
             <script>

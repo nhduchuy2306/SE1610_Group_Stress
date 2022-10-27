@@ -33,7 +33,7 @@
         <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar3.css">
     </head>
 
     <body>
@@ -49,13 +49,13 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-            <section class="about-banner relative">
+            <section class="about-banner relative" style="height: 30vh">
                 <div class="overlay overlay-bg"></div>
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
                         <div class="about-content col-lg-12">
                             <h1 class="text-white">
-                                Tickets Detail
+                                [Ticket]${requestScope.trip.route.routeName}
                             </h1>
                         </div>
                     </div>
@@ -64,62 +64,59 @@
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-            <section class="destinations-area section-gap">
+            <section class="destinations-area section-gap" style="margin-top: -80px;">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-7">
-                            <h4>[Ticket] Hà Nội - Sài Gòn</h4>
+                        <div class="col-md-12" >
+<!--                            <h2 style="text-align: center; color: #FC3B1F"></h2>-->
                             <div class="main-infor mt-10" style="padding: 10px;">
-                                <h5>Main Information</h5>
-                                <table>
-                                    <tbody>
-                                        <tr>
-                                            <td>Time: </td>
-                                            <td style="color:black">23:15</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Date: </td>
-                                            <td style="color:black">12/10/2022</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="choose-ticket">
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id=""
-                                             role="tabpanel" aria-labelledby="flight-tab">
-                                            <div class="wrapper-seat">
-                                                <div class="container-seat">
-                                                    <h4 class="text-center">Choosing seats</h1>
-                                                        <div class="seat-map-seat">
-                                                            <div class="text-center front-indicator-seat">
-                                                                Choosing</div>
-                                                        </div>
-                                                        <div class="booking-details-seat">
-                                                            <h2>Booking Details</h2>
-                                                            <h3> Selected Seats (<span
-                                                                    class="counter-seat">0</span>):
-                                                            </h3>
-                                                            <ul class="selected-seats"></ul>
-                                                            Total: <b><span
-                                                                    class="total-seat">0</span> vnđ</b>
-                                                            <button
-                                                                class="btn btn-secondary checkout-button-seat"
-                                                                type="button">Checkout</button>
-                                                            <div id="legend-seat"></div>
-                                                        </div>
-                                                </div>
-                                            </div>
+                                <div class="information col-md-12">
+                                    <div class="driver col-md-6">
+                                        <img class="col-md-6" src="${requestScope.trip.driver.driverPicture}">
+                                        <div class="driver-information col-md-6">
+                                            <h5 style="color: #c69500">Driver:</h5>
+                                            <h4 style="text-align: center;">${requestScope.trip.driver.driverName}</h4>
+                                            <p>Sex: <span style="color: #F89029">${requestScope.trip.driver.sex eq false ? "Female":"Male"}</span>  </p> 
+                                            <p>Birthday: <span style="color: #F89029">${requestScope.trip.driver.DOB}</span> </p>
                                         </div>
                                     </div>
+                                        <div class="trip-information col-md-5"  >
+                                        <p>Vehicle Type: <span style="color: #F89029">${requestScope.trip.vehicle.vehicleName}</span> </p>
+                                        <p>Date: <span style="color: #F89029">${requestScope.trip.startDateTime}</span> </p>
+                                        <p>Start time: <span style="color: #F89029">${requestScope.trip.startTime}</span> </p>
+                                    </div>
+                                </div>
+                                <div class="choose-ticket col-md-12" style="border: 1px solid #258391; margin-top: -6px">
+                                        <div class="container-seat col-md-12"  >
+<!--                                            <h4 class="text-center col-md-12" style="font-size: 40px" >Choosing seats</h1>-->
+                                                <div class="seat-map-seat col-md-6" style="border:none">
+                                                    <div class="text-center front-indicator-seat">
+                                                        Choosing
+                                                    </div>
+                                                </div>
+                                                <div class="booking-details-seat col-md-6" style="border-left: 2px dashed #656776">
+                                                    <h2 style="font-size: 30px;font-weight: bold; margin-top: 3px">Booking Details</h2>
+                                                    <h3 style="font-size: 20px"> Selected Seats (<span
+                                                            class="counter-seat">0</span>):
+                                                    </h3>
+                                                    <ul class="selected-seats"></ul>
+                                                    <div class="check-out">
+                                                        <p class="total-content">
+                                                            Total: 
+                                                            <span class="total-seat" style="color: red">0</span> VNĐ
+                                                        </p>
+                                                        <button
+                                                            class=" checkout-button-seat"
+                                                            type="button">Checkout</button>
+                                                    </div>
+                                                   
+                                                </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5">
-                            <!--z<h1>fhsdkjghds</h1>-->
-                        </div>
                     </div>
                 </div>
-                <!-- Shop Product End -->
             </section>
             <!-- End destinations Area -->
 

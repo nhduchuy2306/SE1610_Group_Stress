@@ -467,7 +467,16 @@ public class TripDAOImpl implements TripDAO {
     public static void main(String[] args) {
         try {
             TripDAOImpl dao = new TripDAOImpl();
-            System.out.println(dao.getAllTripByRouteAndStartDay(1, "2022-10-18"));
+            List<Trip> trip = dao.getAllTripByRouteAndStartDay(4, "2022-10-18");
+            for (Trip trip1 : trip) {
+                System.out.println("Trip : " + trip1.getVehicle().getVehicleType());
+            }
+            System.out.println("*************************************************************");
+            int count2=0;
+            for (Trip trip1 : trip) {
+                System.out.println("1-Trip "+count2+ " :"+ trip1.getStartDateTime()+" , "+trip1.getStartTime()+" , "+ trip1.getVehicle().getVehicleType().getTotalSeat());
+                count2++;
+            }
         } catch (Exception e) {
         }
     }
