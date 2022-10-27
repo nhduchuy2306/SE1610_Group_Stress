@@ -24,6 +24,7 @@ import com.stress.utils.Email;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -40,13 +41,13 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "BookingController", urlPatterns = {"/book"})
 public class BookingController extends HttpServlet {
 
-    private TripDAO tripDAO = new TripDAOImpl();
-    private RouteDAO routeDAO = new RouteDAOImpl();
-    private CityDAO cityDAO = new CityDAOImpl();
-    private SeatDAO seatDAO = new SeatDAOImpl();
-    private UserDAO userDAO = new UserDAOImpl();
-    private TicketDAO ticketDAO = new TicketDAOImpl();
-    private OrderDAO orderDAO = new OrderDAOImpl();
+    private final TripDAO tripDAO = new TripDAOImpl();
+    private final RouteDAO routeDAO = new RouteDAOImpl();
+    private final CityDAO cityDAO = new CityDAOImpl();
+    private final SeatDAO seatDAO = new SeatDAOImpl();
+    private final UserDAO userDAO = new UserDAOImpl();
+    private final TicketDAO ticketDAO = new TicketDAOImpl();
+    private final OrderDAO orderDAO = new OrderDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +63,16 @@ public class BookingController extends HttpServlet {
                     break;
 
                 case "choose-ticket":
-                    ChoosingTicket(request, response);
+                    choosingTicket(request, response);
+                    break; 
+                case "Sort":
+                    sortTrip(request, response);
+                    break;
+                case "chooseCar":
+                    chooseCar(request, response);
+                    break;
+                case "SortByTime":
+                    sortByTime(request, response);
                     break;
                 default:
                     throw new AssertionError();
@@ -89,7 +99,7 @@ public class BookingController extends HttpServlet {
                     break;
 
                 case "choose-ticket":
-                    ChoosingTicket(request, response);
+                    choosingTicket(request, response);
                     break;
                 default:
                     throw new AssertionError();
@@ -120,10 +130,9 @@ public class BookingController extends HttpServlet {
             } else {
                 listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             }
-            for (Trip trip : listTrip) {
-                System.out.println(trip);
-            }
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+            request.setAttribute("ROUTEID", routeID);
+            request.setAttribute("STARTDAY",startDay );
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
         } finally {
@@ -250,7 +259,7 @@ public class BookingController extends HttpServlet {
 
     }
 
-    private void ChoosingTicket(HttpServletRequest request, HttpServletResponse response)
+    private void choosingTicket(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
             String tripID = request.getParameter("tripID");
@@ -269,7 +278,7 @@ public class BookingController extends HttpServlet {
             }
 
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
- //           Trip trip = tripDAO.getTripByID(tripID);
+            Trip trip = tripDAO.getTripByID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
 
             for (Seat s : list) {
@@ -289,4 +298,134 @@ public class BookingController extends HttpServlet {
         }
     }
 
+    private void sortTrip(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        try {
+            int routeID = Integer.parseInt(request.getParameter("routeID"));
+            String startDay = request.getParameter("start");
+            String []a=startDay.split("/");
+            String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
+            SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
+            Date dateInput=formater.parse(checkStartDate);
+            String test= java.time.LocalDate.now().toString();
+            Date currentDate=formater.parse(test);  
+            List<Trip> listTrip=null;
+            
+            if (dateInput.compareTo(currentDate)==0) {
+                listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
+            }else{
+                listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
+            }
+            String sort=request.getParameter("sort");
+            switch (sort) {
+                case "ascendingbyDate":
+                    Collections.sort(listTrip);
+                    request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+                    break;
+                case "descendingbyDate":
+                    Collections.sort(listTrip,Collections.reverseOrder());
+                    request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+                    break;
+                case "ascendingbyPrice":
+                    Collections.sort(listTrip,new Trip().reversed());
+                    request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+                    break;
+                case "descendingbyPrice":
+                    Collections.sort(listTrip,new Trip());
+                    request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
+                    break;
+                default:
+                    throw new AssertionError();
+            } 
+            request.setAttribute("ROUTEID", routeID);
+            request.setAttribute("STARTDAY",startDay );
+        } catch (Exception e) {
+            System.out.println("Error at BookingController - sortTrip" + e.toString());
+        } finally {
+            request.getRequestDispatcher("./client/route.jsp").forward(request, response);
+        }
+        
+    }
+
+    private void chooseCar(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
+        try {
+            int routeID = Integer.parseInt(request.getParameter("routeID"));
+            String startDay = request.getParameter("start");
+            String []a=startDay.split("/");
+            String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
+            SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
+            Date dateInput=formater.parse(checkStartDate);
+            String test= java.time.LocalDate.now().toString();
+            Date currentDate=formater.parse(test);  
+            List<Trip> listTrip=null;
+            
+            if (dateInput.compareTo(currentDate)==0) {
+                listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
+            }else{
+                listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
+            }
+            System.out.println(listTrip);
+            String carName=request.getParameter("carName");
+            int seat=Integer.parseInt(request.getParameter("seat"));
+            List<Trip> listTripCar=getTripByVehicleTypes(listTrip, carName, seat);
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTripCar);
+            request.setAttribute("ROUTEID", routeID);
+            request.setAttribute("STARTDAY",startDay );
+        } catch (Exception e) {
+            System.out.println("Error at BookingController - chooseCar" + e.toString());
+        } finally {
+            request.getRequestDispatcher("./client/route.jsp").forward(request, response);
+        }  
+    }
+    
+    private List<Trip> getTripByVehicleTypes(List<Trip> list,String carName,int seat){
+        List<Trip> listTrip=new ArrayList<>();
+        for (Trip trip : list) {
+            if(trip.getVehicle().getVehicleName().equalsIgnoreCase(carName)&&trip.getVehicle().getVehicleType().getTotalSeat()==seat){
+                listTrip.add(trip);
+            }
+        }
+        return listTrip;
+    }
+
+    private void sortByTime(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        try {
+            int routeID = Integer.parseInt(request.getParameter("routeID"));
+            String startDay = request.getParameter("start");
+            String []a=startDay.split("/");
+            String checkStartDate=a[2]+"-"+a[1]+"-"+a[0];
+            SimpleDateFormat formater=new SimpleDateFormat("yyyy-MM-dd");
+            Date dateInput=formater.parse(checkStartDate);
+            String test= java.time.LocalDate.now().toString();
+            Date currentDate=formater.parse(test);  
+            List<Trip> listTrip=null;
+            
+            if (dateInput.compareTo(currentDate)==0) {
+                listTrip=tripDAO.getAllTripByRouteAndSameStartDay(routeID, startDay);
+            }else{
+                listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
+            }
+            int from=Integer.parseInt(request.getParameter("from"));
+            int to=Integer.parseInt(request.getParameter("to"));
+            List<Trip> listTripCar=getTripByTime(listTrip, from, to);
+            System.out.println("From:"+from+"-To:"+to);
+            System.out.println(listTripCar);
+            request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTripCar);
+            request.setAttribute("ROUTEID", routeID);
+            request.setAttribute("STARTDAY",startDay );
+        } catch (Exception e) {
+            System.out.println("Error at BookingController - sortByTime" + e.toString());
+        } finally {
+            request.getRequestDispatcher("./client/route.jsp").forward(request, response);
+        }
+    }
+    private List<Trip> getTripByTime(List<Trip> list,int from,int to){
+        List<Trip> listTrip=new ArrayList<>();
+        for (Trip trip : list) {
+            if(trip.getStartTime().getHours()>=from &&trip.getStartTime().getHours()<=to){
+                listTrip.add(trip);
+            }
+        }
+        return listTrip;
+    }
 }
