@@ -47,6 +47,25 @@ public class MoMoRequestController extends HttpServlet {
         } catch (Exception e) {
         }
     }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String action = request.getParameter("action");
+            switch(action){
+                case "sendMoMo":
+                    payMoMo(request,response);
+                case "recharge":
+                    showRechargePage(request,response);
+                case "payMoMo":
+                    payMoMoV2(request,response);
+            }
+        } catch (Exception e) {
+        }
+    }
+    
+    
 
     private void payMoMo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -76,12 +95,6 @@ public class MoMoRequestController extends HttpServlet {
             response.sendRedirect(jj.get("payUrl").toString());
         } catch (Exception e) {
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
     }
     
     public HttpResponse<String> sendPost(final String partnerCode, final String partnerName, final String storeId,
