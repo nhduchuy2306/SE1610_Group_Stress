@@ -11,6 +11,7 @@ import static com.stress.utils.Constants.ACCESS_KEY;
 import static com.stress.utils.Constants.SECRET_KEY;
 import static com.stress.utils.DigitalSignature.signHmacSHA256;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,7 +25,6 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "MoMoResponse", urlPatterns = {"/MoMoResponse"})
 public class MoMoResponse extends HttpServlet {
-
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,15 +61,18 @@ public class MoMoResponse extends HttpServlet {
                     .toString();
 
             String signRequest = signHmacSHA256(requestRawData, SECRET_KEY);
-
+            
+            PrintWriter o = response.getWriter();
             
             if (!signRequest.equals(signature)) {
                 request.setAttribute("WRONG", "Thông tin không hợp lệ");
-                request.getRequestDispatcher("success.jsp").forward(request, response);
+//                request.getRequestDispatcher("success.jsp").forward(request, response);
+                o.println("Thanh toán thất bại");
             }
             if (!resultCode.equals("0")) {
                 request.setAttribute("FAIL", "Thanh toán thất bại");
-                request.getRequestDispatcher("success.jsp").forward(request, response);
+//                request.getRequestDispatcher("success.jsp").forward(request, response);
+                o.println("Thanh toán thất bại");
             } else {
                 request.setAttribute("SUCCESS", "Thanh toán thành công");
                 HttpSession session = request.getSession();
@@ -77,7 +80,8 @@ public class MoMoResponse extends HttpServlet {
                 UserDAO userDAO = new UserDAOImpl();
                 boolean check = userDAO.updateUser(user.getUserID(), amount);
                 if(check)
-                    request.getRequestDispatcher("/client/recharge.jsp").forward(request, response);
+//                    request.getRequestDispatcher("/client/recharge.jsp").forward(request, response);
+                    o.println("Thanh toán thành công");
             }
         }catch(Exception e){
             System.out.println(e.toString());
