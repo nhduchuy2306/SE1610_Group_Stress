@@ -316,6 +316,7 @@
                         <div class="container-comment">
                             <div class="post-comment">
                                 <div class="text-comment">Thanks for rating us!</div>
+
                                 <!--<div class="edit-comment">EDIT</div>-->
                             </div>
                             <div class="star-widget-comment">
@@ -333,10 +334,8 @@
                                     <label for="rate-1-comment" class="fas fa-star"></label>
                                     
                                     <header>Comment</header>
-<!--                                    Rating
-                                    <div class="textarea-comment">
-                                        <textarea name="rating" cols="30" placeholder="Rating"></textarea>
-                                    </div>-->
+
+                                       
                                     <div class="textarea-comment">
                                         <textarea name="comment" cols="30" placeholder="Describe your experience.."></textarea>
                                     </div>

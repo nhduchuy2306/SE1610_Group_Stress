@@ -18,5 +18,6 @@ public class Order {
     private Date createDate;
     private String paymentMode;
     private User user;
+    private float totalPrice;
     private boolean status;
 }

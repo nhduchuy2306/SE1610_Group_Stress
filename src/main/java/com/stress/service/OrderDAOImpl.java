@@ -25,7 +25,7 @@ public class OrderDAOImpl implements OrderDAO {
         PreparedStatement ptm = null;
         ResultSet rs = null;
         Order order = null;
-        String sql = "SELECT [createDate], [PaymentMode],[userID],[Status] FROM tblOrders WHERE [OrderID] = ?";
+        String sql = "SELECT [createDate], [PaymentMode],[userID],[TotalPrice],[Status] FROM tblOrders WHERE [OrderID] = ?";
 
         try {
             conn = DBConnection.getConnection();
@@ -39,8 +39,9 @@ public class OrderDAOImpl implements OrderDAO {
                     String paymentMode = rs.getString("PaymentMode");
                     String userID = rs.getString("userID");
                     boolean status = rs.getBoolean("Status");
+                    float totalPrice = rs.getFloat("totalPrice");
                     User user = new UserDAOImpl().getUserByID(userID);
-                    order = new Order(orderID, createDate, paymentMode, user, status);
+                    order = new Order(orderID, createDate, paymentMode, user,totalPrice, status);
                 }
             }
         } catch (Exception e) {
@@ -94,15 +95,16 @@ public class OrderDAOImpl implements OrderDAO {
     public boolean updateOrder(Order order) throws SQLException {
         Connection conn = null;
         PreparedStatement ptm = null;
-        String sql = "UPDATE tblOrders SET [PaymentMode] = ?, [Status] = ? WHERE [OrderID] = ?";
+        String sql = "UPDATE tblOrders SET [PaymentMode] = ?,[TotalPrice] = ?, [Status] = ? WHERE [OrderID] = ?";
         boolean check = false;
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, order.getPaymentMode());
-                ptm.setBoolean(2, order.isStatus());
-                ptm.setString(3, order.getOrderID());
+                ptm.setFloat(2, order.getTotalPrice());
+                ptm.setBoolean(3, order.isStatus());
+                ptm.setString(4, order.getOrderID());
                 check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
@@ -128,7 +130,7 @@ public class OrderDAOImpl implements OrderDAO {
         PreparedStatement ptm = null;
         ResultSet rs = null;
         List<Order> list = new ArrayList<>();
-        String sql = "SELECT [OrderID], [createDate], [PaymentMode],[UserID],[Status] FROM tblOrders WHERE [UserID] = ?";
+        String sql = "SELECT [OrderID], [createDate], [PaymentMode],[UserID],[TotalPrice],[Status] FROM tblOrders WHERE [UserID] = ?";
         try {
             conn = DBConnection.getConnection();
             if(conn != null) {
@@ -140,8 +142,9 @@ public class OrderDAOImpl implements OrderDAO {
                     String paymentMode = rs.getString("PaymentMode");
                     String orderID = rs.getString("OrderID");
                     boolean status = rs.getBoolean("Status");
+                    float totalPrice = rs.getFloat("totalPrice");
                     User user = new UserDAOImpl().getUserByID(userID);
-                    list.add(new Order(orderID, createDate, paymentMode, user, status));
+                    list.add(new Order(orderID, createDate, paymentMode, user,totalPrice, status));
                 }
             }
         } catch (Exception e) {
