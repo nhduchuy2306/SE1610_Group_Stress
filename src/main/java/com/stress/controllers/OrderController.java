@@ -81,7 +81,7 @@ public class OrderController extends HttpServlet {
                     break;
                 case "Reject":
                     break;
-                case "Feedback":
+                case "sendFeedback":
                     sendFeedback(request, response);
                     break;
 
@@ -99,6 +99,7 @@ public class OrderController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             String tripID = request.getParameter("tripID");
             String comment = request.getParameter("comment");
+            
             Trip trip = new TripDAOImpl().getTripByID(tripID);
             Order order = new OrderDAOImpl().getOderByID(orderID);
             int rating = Integer.parseInt(request.getParameter("rating"));
@@ -106,7 +107,7 @@ public class OrderController extends HttpServlet {
             
             FeedbackDAO fbDAO = new FeedbackDAOImpl();
             if(fbDAO.sendFeedback(fb)) 
-            request.setAttribute("SUCCESS", "Thank you for your feedback!");
+                request.setAttribute("SUCCESS", "Thank you for your feedback!");
             else request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
             
             showDetailView(request, response);
