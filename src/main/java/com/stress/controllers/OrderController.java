@@ -156,7 +156,9 @@ public class OrderController extends HttpServlet {
                 List<Ticket> ticketList = tDAO.getTicketByOrderID(orderID);
                 // Get Total Money to return for User
                 double returnMoney = od.getTotalPrice();
-                
+                for (Ticket ticket : ticketList) {
+                    sDAO.updateSeat(ticket.getTrip().getTripID(), ticket.getSeat().getSeatID());
+                }
 
                 double accountBalance = Double.parseDouble(od.getUser().getAccountBalance());
                 accountBalance += returnMoney;

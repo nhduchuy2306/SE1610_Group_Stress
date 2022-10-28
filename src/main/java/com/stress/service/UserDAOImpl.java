@@ -409,7 +409,7 @@ public class UserDAOImpl implements UserDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(updateUser);
-                ptm.setString(1, String.valueOf(Integer.parseInt(accountBalance)+Integer.parseInt(getAccountBalanceByUserID(userID))));
+                ptm.setString(1, accountBalance);
                 ptm.setString(2, userID);
                 checkUpdate = ptm.executeUpdate() > 0;
             }

@@ -242,7 +242,8 @@ public class BookingController extends HttpServlet {
                     order.setTotalPrice(totalPrice);
                     orderDAO.updateOrder(order);
                     request.setAttribute("QUANTITY", quantity);
-                    request.setAttribute("PRICE", price);
+                    request.setAttribute("PRICE", totalPrice);
+                    request.setAttribute("TAX", price);
                     request.setAttribute("SEAT_LIST", seatIDs);
                     request.setAttribute("ORDER", order);
                     request.setAttribute("TRIP", choosingTrip);

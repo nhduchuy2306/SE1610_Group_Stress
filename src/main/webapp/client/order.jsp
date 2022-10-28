@@ -167,6 +167,7 @@
                                                     type="submit" name="action" value="payingAccount">
                                                     AccountBalance
                                                 </button><br>
+
                                                 <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${requestScope.PRICE + (requestScope.PRICE * 0.1)}" style="width: 260px; margin-bottom: 10px; background-color: #dc008a;
                                                         color: white; padding: 12px; border-radius:10px;">
                                                     <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
