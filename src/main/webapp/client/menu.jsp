@@ -9,13 +9,6 @@
                             <li><a href="tel:123-456-7890">Contact: 123-456-7890</a></li>
                         </ul>
                     </div>
-                    <div class="col-lg-6 col-sm-6 col-6 header-top-right">
-                        <div class="header-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -39,6 +32,10 @@
                         </c:if>
                         <c:if test="${sessionScope.LOGIN_USER!=null}">
                             <li class="text-light" style="font-size: 12px"><i class="fa fa-wallet text-light"></i> ${sessionScope.LOGIN_USER.accountBalance} VND</li>
+                            <a href="${pageContext.request.contextPath}/MoMoRequest?action=recharge">
+                                <span>Recharge</span>
+                                <i class="fa fa-credit-card" aria-hidden="true"></i>
+                            </a>
                             <li><a href="${pageContext.request.contextPath}/Logout">Logout</a></li>
                         </c:if>
                     </ul>

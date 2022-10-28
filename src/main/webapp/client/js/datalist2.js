@@ -3,6 +3,8 @@ var group = document.getElementById('listone');
 var list_group = group.querySelector('li ul');
 var list_array = group.querySelectorAll('li ul li');
 var search = group.getElementsByTagName('input')[0];
+var routeID = document.getElementById('routeIDInput');
+
 
 search.addEventListener('input', function (e) {
     for (var i = 0; i < list_array.length; i++) {
@@ -52,6 +54,7 @@ function init_item(item) {
 
 function copy_paste() {
     search.value = this.innerHTML;
+    routeID.value = this.value;
     // todo : check match of list text and input value for .current 
     init_list();
     hide_list(list_group);
