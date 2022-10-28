@@ -269,6 +269,7 @@ public class BookingController extends HttpServlet {
         try {
             String tripID = request.getParameter("tripID");
             String totalSeat = request.getParameter("totalSeat");
+            Trip trip = tripDAO.getTripByID(tripID);
             // QuangTM Modify
             HttpSession session = request.getSession();
             if (session != null) {
@@ -277,13 +278,14 @@ public class BookingController extends HttpServlet {
                     request.setAttribute("ERROR_FOR_LOGIN", "You have to login First");
                     session.setAttribute("TRIP_ID", tripID);
                     session.setAttribute("TOTAL_SEAT", totalSeat);
-                    request.getRequestDispatcher("./client/index.jsp").forward(request, response);
+                    session.setAttribute("trip", trip);
+                    request.getRequestDispatcher("/home").forward(request, response);
                 }
 
             }
 
             List<Seat> list = seatDAO.getAllUnAvailbeSeatByTripID(tripID);
-            Trip trip = tripDAO.getTripByID(tripID);
+//            Trip trip = tripDAO.getTripByID(tripID);
             List<String> unavailableSeat = new ArrayList<>();
 
             for (Seat s : list) {
@@ -297,7 +299,7 @@ public class BookingController extends HttpServlet {
             request.setAttribute("totalSeat", totalSeat);
             request.setAttribute("unavailabelSeat", seat);
             request.setAttribute("tripID", tripID);
-            
+            request.setAttribute("trip", trip);
             request.getRequestDispatcher("/client/ticket-detail.jsp").forward(request, response);
         } catch (Exception e) {
         }
