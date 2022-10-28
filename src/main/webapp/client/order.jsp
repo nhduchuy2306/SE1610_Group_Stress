@@ -151,6 +151,7 @@
                                     
                                 </div>    
 
+
                                 <div class="d-flex align-items-center justify-content-between card-footer border-0 px-4 py-5">
                                     <div class="d-flex flex-column align-items-start">
 <!--                                        //
@@ -181,11 +182,13 @@
                                     </div>
                                     <h5 class="text-uppercase mb-0">Total
                                         paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE + (requestScope.PRICE * 0.1)} VNĐ</span></h5>
+
                                 </div>
                             </div>
 <!--                            <div class="card-footer border-0 px-4 py-5"
                                  style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                                 <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
+
                                     paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE + (requestScope.PRICE * 0.1)} VND</span></h5>
                             </div>-->
 
