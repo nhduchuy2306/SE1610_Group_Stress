@@ -174,6 +174,8 @@ public class BookingController extends HttpServlet {
                 session.setAttribute("LOGIN_USER", loginUser);
                 request.setAttribute("SUCCESS", "Check Out Success!");
                 order.setStatus(true);
+                order.setPaymentMode("ABL");
+                orderDAO.updateOrder(order);
                 request.setAttribute("PRICE", price);
                 request.setAttribute("ORDER", order);
                 if (Email.sendEmail(loginUser.getEmail(), "", "Dear " + loginUser.getUsername() + "\n"
@@ -219,7 +221,7 @@ public class BookingController extends HttpServlet {
 
                     Trip choosingTrip = tripDAO.getTripByID(tripID);
                     String orderID = CommonFunction.generateID("tblOrders", "Order");
-                    Order order = new Order(orderID, null, "", loginUser, false);
+                    Order order = new Order(orderID, null, "", loginUser, 0 , false);
                     order = orderDAO.createOrder(order);
 
                     for (int i = 0; i < quantity; i++) {
@@ -227,6 +229,9 @@ public class BookingController extends HttpServlet {
                         price += seat.getPrice();
 
                     }
+                    float totalPrice = (float) (price + (price * 0.1));
+                    order.setTotalPrice(totalPrice);
+                    orderDAO.updateOrder(order);
                     request.setAttribute("QUANTITY", quantity);
                     request.setAttribute("PRICE", price);
                     request.setAttribute("SEAT_LIST", seatIDs);

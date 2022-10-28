@@ -129,7 +129,7 @@
                                 -->
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted mb-0">Price Before Tax</p>
-                                    <p class="text-muted mb-0"><span class="fw-bold me-4">${requestScope.PRICE}</span></p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">${requestScope.PRICE - requestScope.TAX}</span></p>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted mb-0">Invoice Date</p>
@@ -141,7 +141,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <p class="text-muted mb-0">Taxes </p>
-                                    <p class="text-muted mb-0"><span class="fw-bold me-4">${requestScope.PRICE * 0.1}</span></p>
+                                    <p class="text-muted mb-0"><span class="fw-bold me-4">${requestScope.TAX}</span></p>
                                 </div>
 
                                 <div class="d-flex align-items-center justify-content-between card-footer border-0 px-4 py-5">
@@ -166,18 +166,18 @@
                                                 <input type="hidden" value="${requestScope.TRIP.tripID}" name="tripID">
                                                 <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
                                                 <input type="hidden" value="${requestScope.QUANTITY}" name="quantity">
-                                                <input type="hidden" value="${requestScope.PRICE + (requestScope.PRICE * 0.1)}" name="totalPrice">
+                                                <input type="hidden" value="${requestScope.PRICE}" name="totalPrice">
                                             </form>
                                         </c:if>
                                     </div>
                                     <h5 class="text-uppercase mb-0">Total
-                                        paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE + (requestScope.PRICE * 0.1)} VND</span></h5>
+                                        paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE} VND</span></h5>
                                 </div>
                             </div>
                             <div class="card-footer border-0 px-4 py-5"
                                  style="background-color: #a8729a; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
                                 <h5 class="d-flex align-items-center justify-content-end text-white text-uppercase mb-0">Total
-                                    paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE + (requestScope.PRICE * 0.1)} VND</span></h5>
+                                    paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE} VND</span></h5>
                             </div>
                         </div>
                     </div>
