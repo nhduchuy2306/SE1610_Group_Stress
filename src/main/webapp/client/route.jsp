@@ -69,7 +69,7 @@
             <!-- Start destinations Area -->
         <section class="destinations-area section-gap col-md-12">
 <!--                <div class="container">-->
-                    <div class="align-items-center " style="margin-top: -45px">
+                    <div class="align-items-center " style="margin-top: -35px">
                         <div class="row trip">
                             <!-- Shop Sidebar Start -->
                             <div class="col-md-2 shop-sidebar" style="margin-top: -8px">
