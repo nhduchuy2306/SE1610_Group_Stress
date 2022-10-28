@@ -157,18 +157,19 @@
                                                 <button style="width: 200px; margin-bottom: 10px; border-radius: 10px; padding: 5px; background-color: white" type="submit" name="action" value="payingAccount">
                                                     <i class="fas fa-wallet"></i> AccountBalance
                                                 </button><br>
-                                                <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${requestScope.PRICE + (requestScope.PRICE * 0.1)}" style="width: 200px; margin-bottom: 10px; background-color: #dc008a;
-                                                        color: white; padding: 12px; border-radius:10px;">
-                                                    <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
-                                                    Pay via MoMo
-                                                </a>
-                                                <input type="hidden" value="${requestScope.SEAT_LIST}" name="seatID">
-                                                <input type="hidden" value="${requestScope.TRIP.tripID}" name="tripID">
-                                                <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
-                                                <input type="hidden" value="${requestScope.QUANTITY}" name="quantity">
-                                                <input type="hidden" value="${requestScope.PRICE}" name="totalPrice">
-                                            </form>
-                                        </c:if>
+                                            </c:if>
+                                            <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${requestScope.PRICE + (requestScope.PRICE * 0.1)}" style="width: 200px; margin-bottom: 10px; background-color: #dc008a;
+                                               color: white; padding: 12px; border-radius:10px;">
+                                                <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
+                                                Pay via MoMo
+                                            </a>
+                                            <input type="hidden" value="${requestScope.SEAT_LIST}" name="seatID">
+                                            <input type="hidden" value="${requestScope.TRIP.tripID}" name="tripID">
+                                            <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
+                                            <input type="hidden" value="${requestScope.QUANTITY}" name="quantity">
+                                            <input type="hidden" value="${requestScope.PRICE}" name="totalPrice">
+                                        </form>
+
                                     </div>
                                     <h5 class="text-uppercase mb-0">Total
                                         paid: <span class="h2 mb-0 ms-2">${requestScope.PRICE} VND</span></h5>
