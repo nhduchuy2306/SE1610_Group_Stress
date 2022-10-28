@@ -49,131 +49,146 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-            <section class="about-banner relative">
-                <div class="overlay overlay-bg"></div>
-                <div class="container">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="about-content col-lg-12">
-                            <h1 class="text-white">
-                                Tickets Detail
-                            </h1>
-                        </div>
+        <section class="about-banner relative">
+            <div class="overlay overlay-bg"></div>
+            <div class="container">
+                <div class="row d-flex align-items-center justify-content-center">
+                    <div class="about-content col-lg-12">
+                        <h1 class="text-white">
+                            Tickets Detail
+                        </h1>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-            <section class="destinations-area section-gap">
-                <h1 class="text-center">Recharge with Paypal or MoMo</h1>
-                <div class="container">
-                    <div id="accordion">
-                        <div class="card">
+        <section class="destinations-area section-gap">
+            <h1 class="text-center">Recharge with Paypal or MoMo</h1>
+            <div class="container">
+                <div id="accordion">
+                    <div class="card">
+                        <button class="btn" data-toggle="collapse" data-target="#momo" aria-expanded="true" aria-controls="collapseOne">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" data-toggle="collapse" data-target="#momo" aria-expanded="true" aria-controls="collapseOne">
-                                        MoMo 
-                                    </button>
+                                    MoMo 
                                 </h5>
                             </div>
-
-                            <div id="momo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="card-body">
-                                    <form action="${pageContext.request.contextPath}/MoMoRequest">
-                                        <input type="text" name="amount" value="" placeholder="Enter your money">
-                                        <input type="submit" value="sendMoMo" name="action">
-                                    </form>                                    
-                                </div>
+                        </button>
+                        <div id="momo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form action="${pageContext.request.contextPath}/MoMoRequest" method="post">
+                                    <input type="text" name="amount" value="" placeholder="Enter your money">
+                                    <input type="submit" value="sendMoMo" name="action">
+                                </form>                                    
                             </div>
                         </div>
-                        
-                        <div class="card">
-                            <div class="card-header" id="headingTwo">
+                    </div>
+                    <div class="card">
+                        <button class="btn" data-toggle="collapse" data-target="#zalo" aria-expanded="true" aria-controls="collapseOne">
+                            <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#paypal" aria-expanded="false" aria-controls="collapseTwo">
-                                        PayPal
-                                    </button>
+                                    ZaloPay 
                                 </h5>
                             </div>
-                            <div id="paypal" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="card-body">
-                                    <form action="/">
-                                        <input type="text" name="total" value="Number of money">
-                                        <input type="submit" value="Send">
-                                    </form>  
-                                </div>
+                        </button>
+                        <div id="zalo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form action="${pageContext.request.contextPath}/ZaloRequest" method="post">
+                                    <input type="text" name="amount" value="" placeholder="Enter your money">
+                                    <input type="submit" value="sendZalo" name="action">
+                                </form>                                    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <button class="btn" data-toggle="collapse" data-target="#paypal" aria-expanded="true" aria-controls="collapseOne">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    Paypal 
+                                </h5>
+                            </div>
+                        </button>
+                        <div id="paypal" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form action="${pageContext.request.contextPath}/PayPalRequest" method="post">
+                                    <input type="text" name="amount" value="" placeholder="Enter your money">
+                                    <input type="submit" value="sendPaypal" name="action">
+                                </form>                               
                             </div>
                         </div>
                     </div>
                 </div>
-                <!-- Shop Product End -->
-            </section>
-            <!-- End destinations Area -->
+            </div>
+            <!-- Shop Product End -->
+        </section>
+        <!-- End destinations Area -->
 
-            <!-- start footer Area -->
-            <footer class="footer-area section-gap">
-                <div class="container">
+        <!-- start footer Area -->
+        <footer class="footer-area section-gap">
+            <div class="container">
 
-                    <div class="row">
-                        <div class="col-lg-3  col-md-6 col-sm-6">
-                            <div class="single-footer-widget">
-                                <h6>About Agency</h6>
-                                <p>
-                                    The world has become so fast paced that people don’t want to stand by reading a page of
-                                    information, they would much rather look at a presentation and understand the message. It
-                                    has come to a point
-                                </p>
-                            </div>
+                <div class="row">
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h6>About Agency</h6>
+                            <p>
+                                The world has become so fast paced that people don’t want to stand by reading a page of
+                                information, they would much rather look at a presentation and understand the message. It
+                                has come to a point
+                            </p>
                         </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <div class="single-footer-widget">
-                                <h6>Navigation Links</h6>
-                                <div class="row">
-                                    <div class="col">
-                                        <ul>
-                                            <li><a href="#">Home</a></li>
-                                            <li><a href="#">Feature</a></li>
-                                            <li><a href="#">Services</a></li>
-                                            <li><a href="#">Portfolio</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col">
-                                        <ul>
-                                            <li><a href="#">Team</a></li>
-                                            <li><a href="#">Pricing</a></li>
-                                            <li><a href="#">Blog</a></li>
-                                            <li><a href="#">Contact</a></li>
-                                        </ul>
-                                    </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h6>Navigation Links</h6>
+                            <div class="row">
+                                <div class="col">
+                                    <ul>
+                                        <li><a href="#">Home</a></li>
+                                        <li><a href="#">Feature</a></li>
+                                        <li><a href="#">Services</a></li>
+                                        <li><a href="#">Portfolio</a></li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <ul>
+                                        <li><a href="#">Team</a></li>
+                                        <li><a href="#">Pricing</a></li>
+                                        <li><a href="#">Blog</a></li>
+                                        <li><a href="#">Contact</a></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3  col-md-6 col-sm-6">
-                            <div class="single-footer-widget">
-                                <h6>Newsletter</h6>
-                                <p>
-                                    For business professionals caught between high OEM price and mediocre print and graphic
-                                    output.
-                                </p>
-                                <div id="mc_embed_signup">
-                                    <form target="_blank"
-                                          action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-                                          method="get" class="subscription relative">
-                                        <div class="input-group d-flex flex-row">
-                                            <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'Email Address '" required="" type="email">
-                                            <button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
-                                        </div>
-                                        <div class="mt-10 info"></div>
-                                    </form>
-                                </div>
+                    </div>
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget">
+                            <h6>Newsletter</h6>
+                            <p>
+                                For business professionals caught between high OEM price and mediocre print and graphic
+                                output.
+                            </p>
+                            <div id="mc_embed_signup">
+                                <form target="_blank"
+                                      action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                      method="get" class="subscription relative">
+                                    <div class="input-group d-flex flex-row">
+                                        <input name="EMAIL" placeholder="Email Address" onfocus="this.placeholder = ''"
+                                               onblur="this.placeholder = 'Email Address '" required="" type="email">
+                                        <button class="btn bb-btn"><span class="lnr lnr-location"></span></button>
+                                    </div>
+                                    <div class="mt-10 info"></div>
+                                </form>
                             </div>
                         </div>
-                        <div class="col-lg-3  col-md-6 col-sm-6">
-                            <div class="single-footer-widget mail-chimp">
-                                <h6 class="mb-20">InstaFeed</h6>
-                                <ul class="instafeed d-flex flex-wrap">
-                                    <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
+                    </div>
+                    <div class="col-lg-3  col-md-6 col-sm-6">
+                        <div class="single-footer-widget mail-chimp">
+                            <h6 class="mb-20">InstaFeed</h6>
+                            <ul class="instafeed d-flex flex-wrap">
+                                <li><img src="${pageContext.request.contextPath}/client/img/i1.jpg" alt=""></li>
                                 <li><img src="${pageContext.request.contextPath}/client/img/i2.jpg" alt=""></li>
                                 <li><img src="${pageContext.request.contextPath}/client/img/i3.jpg" alt=""></li>
                                 <li><img src="${pageContext.request.contextPath}/client/img/i4.jpg" alt=""></li>

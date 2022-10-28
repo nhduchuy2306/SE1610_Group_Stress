@@ -316,33 +316,33 @@
                         <div class="container-comment">
                             <div class="post-comment">
                                 <div class="text-comment">Thanks for rating us!</div>
-                                <div class="edit-comment">EDIT</div>
+
+                                <!--<div class="edit-comment">EDIT</div>-->
                             </div>
                             <div class="star-widget-comment">
-
-                                <input type="radio" name="rate" id="rate-5">
-                                <label for="rate-5-comment" class="fas fa-star"></label>
-                                <input type="radio" name="rate" id="rate-4">
-                                <label for="rate-4-comment" class="fas fa-star"></label>
-                                <input type="radio" name="rate" id="rate-3">
-                                <label for="rate-3-comment" class="fas fa-star"></label>
-                                <input type="radio" name="rate" id="rate-2">
-                                <label for="rate-2-comment" class="fas fa-star"></label>
-                                <input type="radio" name="rate" id="rate-1">
-                                <label for="rate-1-comment" class="fas fa-star"></label>
                                 <form action="order" method="POST">
-                                    <header>Opinion</header>
-                                    Rating
-                                   <div class="textarea-comment">
-                                        <textarea name="rating" cols="30" placeholder="Rating"></textarea>
-                                    </div>
+                                    
+                                    <input type="radio" name="rating" value="5" id="rate-5-comment">
+                                    <label for="rate-5-comment" class="fas fa-star"></label>
+                                    <input type="radio" name="rating" value="4" id="rate-4-comment">
+                                    <label for="rate-4-comment" class="fas fa-star"></label>
+                                    <input type="radio" name="rating" value="3" id="rate-3-comment">
+                                    <label for="rate-3-comment" class="fas fa-star"></label>
+                                    <input type="radio" name="rating" value="2" id="rate-2-comment">
+                                    <label for="rate-2-comment" class="fas fa-star"></label>
+                                    <input type="radio" name="rating" value="1" id="rate-1-comment">
+                                    <label for="rate-1-comment" class="fas fa-star"></label>
+                                    
+                                    <header>Comment</header>
+
+                                       
                                     <div class="textarea-comment">
                                         <textarea name="comment" cols="30" placeholder="Describe your experience.."></textarea>
                                     </div>
                                     <div class="btn-comment">
                                         <input type="hidden" name="tripID" value="${requestScope.TICKET.trip.tripID}">
                                         <input type="hidden" name="orderID" value="${requestScope.TICKET.order.orderID}">
-                                        <button type="submit" name="action" value="Feedback">Post</button>
+                                        <button type="submit" name="action" value="sendFeedback">Post</button>
                                     </div>
                                 </form>
                             </div>
