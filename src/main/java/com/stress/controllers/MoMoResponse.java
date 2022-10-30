@@ -30,6 +30,8 @@ public class MoMoResponse extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            HttpSession session = request.getSession();
+            
             String partnerCode = request.getParameter("partnerCode");
             String orderId = request.getParameter("orderId");
             String requestId = request.getParameter("requestId");
@@ -62,26 +64,24 @@ public class MoMoResponse extends HttpServlet {
 
             String signRequest = signHmacSHA256(requestRawData, SECRET_KEY);
             
-            PrintWriter o = response.getWriter();
-            
             if (!signRequest.equals(signature)) {
-                request.setAttribute("WRONG", "Thông tin không hợp lệ");
-//                request.getRequestDispatcher("success.jsp").forward(request, response);
-                o.println("Thanh toán thất bại");
+                request.setAttribute("MONEY_RECHARGE_FAIL", "INFORMATION IS VALID");
+                request.getRequestDispatcher("/recharge?action=recharge").forward(request, response);
             }
             if (!resultCode.equals("0")) {
-                request.setAttribute("FAIL", "Thanh toán thất bại");
-//                request.getRequestDispatcher("success.jsp").forward(request, response);
-                o.println("Thanh toán thất bại");
+                request.setAttribute("MONEY_RECHARGE_FAIL", "RECHARGE MOMNEY VIA PAYPAL FAIL");
+                request.getRequestDispatcher("/recharge?action=recharge").forward(request, response);
             } else {
-                request.setAttribute("SUCCESS", "Thanh toán thành công");
-                HttpSession session = request.getSession();
-                User user = (User) session.getAttribute("LOGIN_USER");
+                request.setAttribute("MONEY_RECHARGE_SUCCESS", "RECHARGE MOMNEY VIA PAYPAL SUCCESSFULLY");
                 UserDAO userDAO = new UserDAOImpl();
-                boolean check = userDAO.updateUser(user.getUserID(), amount);
-                if(check)
-//                    request.getRequestDispatcher("/client/recharge.jsp").forward(request, response);
-                    o.println("Thanh toán thành công");
+                User user = (User) session.getAttribute("LOGIN_USER");
+                String total = String.valueOf(Double.parseDouble(user.getAccountBalance())+Double.parseDouble(amount));
+                user.setAccountBalance(total);
+                
+                boolean check = userDAO.updateUser(user.getUserID(), total);
+                if(check){
+                    request.getRequestDispatcher("/recharge?action=recharge").forward(request, response);
+                }
             }
         }catch(Exception e){
             System.out.println(e.toString());
