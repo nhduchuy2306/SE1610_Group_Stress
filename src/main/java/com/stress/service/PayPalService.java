@@ -65,8 +65,8 @@ public class PayPalService {
      
     private RedirectUrls getRedirectURLs() {
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8080/Etrans/PayPalResponse");
-        redirectUrls.setReturnUrl("http://localhost:8080/Etrans/PayPalResponse");
+        redirectUrls.setCancelUrl("http://localhost:8080/ETrans/PayPalResponse");
+        redirectUrls.setReturnUrl("http://localhost:8080/ETrans/PayPalResponse");
         return redirectUrls;
     }
      

@@ -23,9 +23,6 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "PayPalRequestController", urlPatterns = {"/PayPalRequest"})
 public class PayPalRequestController extends HttpServlet {
 
-    public static final String PAYPAL_SUCCESS = "recharge?action=recharge";
-    public static final String PAYPAL_CANCEL = "recharge?action=recharge";
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -34,12 +31,6 @@ public class PayPalRequestController extends HttpServlet {
             switch (action) {
                 case "sendPayPal":
                     pay(request, response);
-                    break;
-                case "cancel":
-                    results(request, response);
-                    break;
-                case "success":
-                    results(request, response);
                     break;
                 default:
                     throw new AssertionError();
@@ -70,32 +61,18 @@ public class PayPalRequestController extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("LOGIN_USER");
-            String price = request.getParameter("amount");
+            String priceInString = request.getParameter("amount");
+            Double price = Math.round((Double.parseDouble(priceInString)/23000.0)*100.0)/100.0;
             
             PayPalService paypalService = new PayPalService();
-            String approvalLink = paypalService.authorizePayment(price, user);
+            String approvalLink = paypalService.authorizePayment(String.valueOf(price), user);
+            session.setAttribute("Paypal_recharge", priceInString);
             response.sendRedirect(approvalLink);
             
         } catch (PayPalRESTException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             request.getRequestDispatcher("/client/error.jsp").forward(request, response);
-        }
-    }
-    
-    public void results(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
-        try {
-            String action = request.getParameter("action");
-            PrintWriter out = response.getWriter();
-            
-            if(action.equals("success")){
-                out.println("Thanh toan thanh cong");
-            }
-            else{
-                out.println("Thanh toan that bai");
-            }
-        } catch (Exception e) {
         }
     }
 }
