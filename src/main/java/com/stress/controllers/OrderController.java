@@ -125,9 +125,16 @@ public class OrderController extends HttpServlet {
             OrderDAO oDAO = new OrderDAOImpl();
 
             List<Ticket> tList = new TicketDAOImpl().getTicketByOrderID(orderID);
+            Feedback fb = new FeedbackDAOImpl().getFeedbackByOrderID(orderID);
             if (tList.size() <= 0) {
                 request.setAttribute("ERROR", "You are not booking any ticket in this order!");
                 showOrderView(request, response);
+            }else if(fb != null) {
+                Ticket t = tList.get(0);
+                request.setAttribute("TICKET", t);
+                request.setAttribute("FEEDBACK", fb);
+                request.setAttribute("FB_ALREADY", "You have Feedback this Order Already!");
+                 url = "./client/comment-rating.jsp";
             }
             else {
                 Ticket t = tList.get(0);

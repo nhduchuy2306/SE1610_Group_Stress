@@ -320,31 +320,52 @@
                                 <!--<div class="edit-comment">EDIT</div>-->
                             </div>
                             <div class="star-widget-comment">
-                                <form action="order" method="POST">
-                                    
-                                    <input type="radio" name="rating" value="5" id="rate-5-comment">
-                                    <label for="rate-5-comment" class="fas fa-star"></label>
-                                    <input type="radio" name="rating" value="4" id="rate-4-comment">
-                                    <label for="rate-4-comment" class="fas fa-star"></label>
-                                    <input type="radio" name="rating" value="3" id="rate-3-comment">
-                                    <label for="rate-3-comment" class="fas fa-star"></label>
-                                    <input type="radio" name="rating" value="2" id="rate-2-comment">
-                                    <label for="rate-2-comment" class="fas fa-star"></label>
-                                    <input type="radio" name="rating" value="1" id="rate-1-comment">
-                                    <label for="rate-1-comment" class="fas fa-star"></label>
-                                    
-                                    <header>Comment</header>
+                                <c:if test="${requestScope.FB_ALREADY == null}"> 
+                                    <form action="order" method="POST">
 
-                                       
-                                    <div class="textarea-comment">
-                                        <textarea name="comment" cols="30" placeholder="Describe your experience.."></textarea>
-                                    </div>
-                                    <div class="btn-comment">
-                                        <input type="hidden" name="tripID" value="${requestScope.TICKET.trip.tripID}">
-                                        <input type="hidden" name="orderID" value="${requestScope.TICKET.order.orderID}">
-                                        <button type="submit" name="action" value="sendFeedback">Post</button>
-                                    </div>
-                                </form>
+                                        <input type="radio" name="rating" value="5" id="rate-5-comment">
+                                        <label for="rate-5-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="4" id="rate-4-comment">
+                                        <label for="rate-4-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="3" id="rate-3-comment">
+                                        <label for="rate-3-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="2" id="rate-2-comment">
+                                        <label for="rate-2-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="1" id="rate-1-comment">
+                                        <label for="rate-1-comment" class="fas fa-star"></label>
+
+                                        <header>Comment</header>
+
+
+                                        <div class="textarea-comment">
+                                            <textarea name="comment" cols="30" placeholder="Describe your experience.."></textarea>
+                                        </div>
+                                        <div class="btn-comment">
+                                            <input type="hidden" name="tripID" value="${requestScope.TICKET.trip.tripID}">
+                                            <input type="hidden" name="orderID" value="${requestScope.TICKET.order.orderID}">
+                                            <button type="submit" name="action" value="sendFeedback">Post</button>
+                                        </div>
+                                    </form>
+                                </c:if>
+                                <c:if test="${requestScope.FEEDBACK != null}"> 
+                                    <input type="radio" name="rating" value="5" id="rate-5-comment" <c:if test="${requestScope.FEEDBACK.rating == 5}">checked</c:if>>
+                                        <label for="rate-5-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="4" id="rate-4-comment" <c:if test="${requestScope.FEEDBACK.rating == 4}">checked</c:if>>
+                                        <label for="rate-4-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="3" id="rate-3-comment"<c:if test="${requestScope.FEEDBACK.rating == 3}">checked</c:if>>
+                                        <label for="rate-3-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="2" id="rate-2-comment" <c:if test="${requestScope.FEEDBACK.rating == 2}">checked</c:if>>
+                                        <label for="rate-2-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="1" id="rate-1-comment" <c:if test="${requestScope.FEEDBACK.rating == 1}">checked</c:if>>
+                                        <label for="rate-1-comment" class="fas fa-star"></label> >
+
+                                        <header>Comment</header>
+
+
+                                        <div class="textarea-comment">
+                                            <textarea name="comment" cols="30" placeholder="Describe your experience.." value="${requestScope.FEEDBACK.comment}"></textarea>
+                                        </div>
+                                </c:if>
                             </div>
                         </div>
                     </div>

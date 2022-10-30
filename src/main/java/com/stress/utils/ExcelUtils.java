@@ -69,6 +69,41 @@ public class ExcelUtils {
         return excelFilePath;
     }
 
+    public String exportFeedBack(String table, ServletOutputStream fos, String fileName) throws ClassNotFoundException {
+
+        String excelFilePath = fileName;
+
+        try ( Connection connection = DBConnection.getConnection()) {
+            String sql = "SELECT tr.TripID,tr.TripName, AVG(fb.Rating) AS [Average Rating]  FROM tblTrips tr INNER JOIN tblFeedbacks fb \n"
+                    + " ON tr.TripID = fb.TripID \n"
+                    + " GROUP BY tr.TripID, tr.TripName ";
+
+            Statement statement = connection.createStatement();
+
+            ResultSet result = statement.executeQuery(sql);
+
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet(table);
+
+            writeHeaderLine(result, sheet);
+
+            writeDataLines(result, workbook, sheet);
+
+            workbook.write(fos);
+            workbook.close();
+
+            statement.close();
+
+        } catch (SQLException e) {
+            System.out.println("Datababse error:");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("File IO error:");
+            e.printStackTrace();
+        }
+        return excelFilePath;
+    }
+
     private void writeHeaderLine(ResultSet result, XSSFSheet sheet) throws SQLException {
         // write header line containing column names
         ResultSetMetaData metaData = result.getMetaData();
