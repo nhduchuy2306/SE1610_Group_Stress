@@ -47,9 +47,10 @@ public class PayPalResponse extends HttpServlet {
             if (state.equals("approved")) {
                 double curMoney = Double.parseDouble(user.getAccountBalance());
                 double moreMoney = Double.parseDouble(money);
-                double total = Math.floor(curMoney+moreMoney);
+                String total = String.valueOf(curMoney+moreMoney);
+                total = total.substring(0, total.length()-2);
 
-                user.setAccountBalance(String.valueOf(total));
+                user.setAccountBalance(total);
                 
                 try {
                     userDAO.updateUser(user.getUserID(), user.getAccountBalance());
