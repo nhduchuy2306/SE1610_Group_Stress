@@ -31,5 +31,8 @@ public class Constants {
     public static String REQUEST_TYPE = "captureWallet";
     public static String EXTRA_DATA = "";
     
-    
+    //PayPal
+    public static String PAYPAL_CLIENT_ID = "AQBB6ylukBPaV0koVm2BrYx8MADG-msoOEVCpzMGizRj8g8BJ9hVcaYkLRIOTGeQ9z3D4smmPQxhzcrN";
+    public static String PAYPAL_SECRET = "EGjXQFG47g2ExiKpX-rRG0MspaMSNSF3o7qgLJVmBUBPyDFvr9NQ5EnMrga-o0Z7AFfAD0UiXf5uuPZN";  
+    public static String PAYPAL_MODE = "sandbox";
 }

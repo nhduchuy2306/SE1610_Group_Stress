@@ -51,17 +51,17 @@
                                         <button type="button" class="ml-10 btn btn-primary float-right" data-toggle="modal" data-target="#add">
                                             Add Driver 
                                         </button>
-                                        <%
-                                            String action = request.getParameter("action");
-                                            if(!action.equals("deleteHistory")){
-                                        %>
-                                        <a href="${pageContext.request.contextPath}/driver?action=deleteHistory" style="margin-right: 10px;" class="btn btn-primary float-right">Delete History</a>
-                                        <%}%>
-                                        <%
-                                            if(action.equals("deleteHistory")){
-                                        %>
-                                        <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px;" class="btn btn-primary float-right">Show All</a>
-                                        <%}%>
+                                    <%
+                                        String action = request.getParameter("action");
+                                        if (!action.equals("deleteHistory")) {
+                                    %>
+                                    <a href="${pageContext.request.contextPath}/driver?action=deleteHistory" style="margin-right: 10px;" class="btn btn-primary float-right">Delete History</a>
+                                    <%}%>
+                                    <%
+                                        if (action.equals("deleteHistory")) {
+                                    %>
+                                    <a href="${pageContext.request.contextPath}/driver?action=show" style="margin-right: 10px;" class="btn btn-primary float-right">Show All</a>
+                                    <%}%>
                                 </div>
 
                                 <div class="add-modal modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,11 +138,11 @@
                                                 <th>Phone Number</th>
                                                 <th>Status</th>
                                                 <th>Modify</th>
-                                                <%
-                                                    if(!action.equals("deleteHistory")){
-                                                %>
+                                                    <%
+                                                        if (!action.equals("deleteHistory")) {
+                                                    %>
                                                 <th>Delete</th>
-                                                <%}%>
+                                                    <%}%>
                                             </tr>
                                         </thead>
                                         <tbody id="content-data-update">
@@ -168,7 +168,7 @@
                                                             </c:when>
                                                         </c:choose>
                                                     </td>
-                                                    <%if(action.equals("deleteHistory")){%>
+                                                    <%if (action.equals("deleteHistory")) {%>
                                                     <td>
                                                         <form action="driver" method="post">
                                                             <input type="hidden" name="driverID" value="${d.driverID.trim()}">
@@ -178,7 +178,7 @@
                                                         </form>
                                                     </td>
                                                     <%}%>
-                                                    <%if(!action.equals("deleteHistory")){%>
+                                                    <%if (!action.equals("deleteHistory")) {%>
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${d.driverID.trim()}">
                                                             <i class="fa fa-pen"></i>
@@ -241,7 +241,7 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    
+
                                                     <td>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#delete-${d.driverID.trim()}">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -346,25 +346,25 @@
 
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS != null}">
-                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-                    var idField = parseInt($('input[type="search"]').val(), 10);
-                    var id = parseFloat(data[1]) || 1; // use data for the age column
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                var idField = parseInt($('input[type="search"]').val(), 10);
+                var id = parseFloat(data[1]) || 1; // use data for the age column
 
-                    if ((isNaN(idField)) || (isNaN(idField)) ||
-                            (idField <= id) || (idField <= id) ) {
-                        return true;
-                    }
-                    return false;
+                if ((isNaN(idField)) || (isNaN(idField)) ||
+                        (idField <= id) || (idField <= id)) {
+                    return true;
+                }
+                return false;
+            });
+            $(document).ready(function (e) {
+                $("#showsuccess").modal('show');
+                var table = $('#example').DataTable();
+                // Event listener to the two range filtering inputs to redraw on input
+                $('input[type="search"]').keyup(function () {
+                    table.draw();
                 });
-                $(document).ready(function (e) {
-                    $("#showsuccess").modal('show');
-                    var table = $('#example').DataTable();
-                    // Event listener to the two range filtering inputs to redraw on input
-                    $('input[type="search"]').keyup(function () {
-                        table.draw();
-                    });
-                    $('input[type="search"]').val('${driverID}').keyup();
-                });
+                $('input[type="search"]').val('${driverID}').keyup();
+            });
             </c:if>
 
             var driverID = document.querySelector("input[name=driverID]");
@@ -384,21 +384,21 @@
             });
 
             <c:if test="${requestScope.ADD_ERROR != null}">
-                $(document).ready(function (e) {
-                    $(".add-modal").modal('show');
-                });
+            $(document).ready(function (e) {
+                $(".add-modal").modal('show');
+            });
 
-                driverID.value = sessionStorage.getItem("driverID");
-                driverName.value = sessionStorage.getItem("driverName");
-                DOB.value = sessionStorage.getItem("DOB");
-                sex.value = sessionStorage.getItem("sex");
-                driverPic.value = sessionStorage.getItem("driverPic");
-                phoneNumber.value = sessionStorage.getItem("phoneNumber");
+            driverID.value = sessionStorage.getItem("driverID");
+            driverName.value = sessionStorage.getItem("driverName");
+            DOB.value = sessionStorage.getItem("DOB");
+            sex.value = sessionStorage.getItem("sex");
+            driverPic.value = sessionStorage.getItem("driverPic");
+            phoneNumber.value = sessionStorage.getItem("phoneNumber");
             </c:if>
             <c:if test="${requestScope.ERROR!=null}">
-                $(document).ready(function (e) {
-                    $("#showerror").modal('show');
-                });
+            $(document).ready(function (e) {
+                $("#showerror").modal('show');
+            });
             </c:if>
         </script>
     </body>
