@@ -20,6 +20,7 @@ import com.paypal.base.rest.PayPalRESTException;
 import com.stress.dto.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -31,10 +32,10 @@ public class PayPalService {
     private static String CLIENT_SECRET = "EGUnZ4y9ifj7l9f7eypOidfhhdKMRcic63dr258BbJlCvCCHmRONmBsNQfKqZpj-yvWrb70a6Ij177ia";  
     private static String MODE = "sandbox";
     
-    public String authorizePayment(String total, User user) throws PayPalRESTException {       
+    public String authorizePayment(String total, User user, HttpServletRequest request) throws PayPalRESTException {       
  
         Payer payer = getPayerInformation(user);
-        RedirectUrls redirectUrls = getRedirectURLs();
+        RedirectUrls redirectUrls = getRedirectURLs(request);
         List<Transaction> listTransaction = getTransactionInformation(total);
          
         Payment requestPayment = new Payment();
@@ -63,10 +64,10 @@ public class PayPalService {
         return payer;
     }
      
-    private RedirectUrls getRedirectURLs() {
+    private RedirectUrls getRedirectURLs(HttpServletRequest request) {
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://localhost:8080/ETrans/PayPalResponse");
-        redirectUrls.setReturnUrl("http://localhost:8080/ETrans/PayPalResponse");
+        redirectUrls.setCancelUrl(getBaseURL(request)+"/PayPalResponse");
+        redirectUrls.setReturnUrl(getBaseURL(request)+"/PayPalResponse");
         return redirectUrls;
     }
      
@@ -134,5 +135,22 @@ public class PayPalService {
         APIContext apiContext = new APIContext(CLIENT_ID, CLIENT_SECRET, MODE);
 
         return payment.execute(apiContext, paymentExecution);
+    }
+    
+    public static String getBaseURL(HttpServletRequest request){
+        String scheme = request.getScheme();
+        String serverName = request.getServerName();
+        int serverPort = request.getServerPort();
+        String contextPath = request.getContextPath();
+        StringBuilder url = new StringBuilder();
+        url.append(scheme).append("://").append(serverName);
+        if((serverPort!=80) && (serverPort!=433)){
+            url.append(":").append(serverPort);
+        }
+        url.append(contextPath);
+        if(url.toString().endsWith("/")){
+            url.append("/");
+        }
+        return url.toString();
     }
 }
