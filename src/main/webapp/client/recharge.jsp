@@ -227,6 +227,19 @@
             </div>
         </footer>
         <!-- End footer Area -->
+        <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.paypal_success}</h4>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
@@ -246,42 +259,12 @@
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
         <script src="https://www.paypal.com/sdk/js?client-id=AX4UhpEHB2X515a9jh0AddikEHLWVWa9Kcf768IagpsshpnxgJjEmJU_nmNWHN2EMmRRhNsqkp4Xp0mm&disable-funding=credit,card" data-namespace="paypal_sdk"></script>
-    <script>
-        function myFunc(){
-            
-        }
-        
-        $(window).on("load",function (){
-           var divTag = $(".paypal-button-container");
-            divTag.on("click",function (){
-                alert("you click me");  
-            })
-        });
-        
-        paypal_sdk.Buttons({
-            style: {
-                color: 'blue'
-            },
-            createOrder: function (data, actions) {
-                return actions.order.create({
-                    intent: 'CAPTURE',
-                    purchase_units: [{
-                            amount: {
-                                value: '20'
-                            }
-                        }]
+        <script>
+            <c:if test="${requestScope.paypal_success!=null}">
+                $(document).ready(function (e) {
+                    $("#showsuccess").modal('show');
                 });
-            },
-            onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) {
-                    console.log(details)
-                    window.location.replace("http://localhost:8080/ETrans/MoMoRequest?action=recharge");
-                })
-            },
-            onCancel: function (data) {
-                window.location.replace("http://localhost:8080/ETrans/MoMoRequest?action=recharge");
-            }
-        }).render('#paypal-payment-button');
-    </script>
+            </c:if>
+        </script>
     </body>
 </html>

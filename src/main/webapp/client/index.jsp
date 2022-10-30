@@ -293,7 +293,7 @@
                             <div class="mr-20">
                                 <i style="font-size:60px; color: blue;" class="fa fa-bus" aria-hidden="true"></i>
                             </div>
-                            <div class="p-100" href="#">
+                            <div class="p-100" href="#"zz>
                                 <h4>2000+ nhà xe chất lượng cao</h4>
                                 <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
                             </div>
