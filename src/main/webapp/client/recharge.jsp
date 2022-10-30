@@ -34,6 +34,12 @@
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">
+        <style>
+            #paypal-payment-button{
+                margin-top: 10px;
+                width: 98px;
+            }
+        </style>
     </head>
 
     <body>
@@ -112,9 +118,10 @@
                         </button>
                         <div id="paypal" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
-                                <form action="${pageContext.request.contextPath}/PayPalRequest" method="post">
-                                    <input type="text" name="amount" value="" placeholder="Enter your money">
-                                    <input type="submit" value="sendPaypal" name="action">
+                                <form action="PayPalRequest" method="post">
+                                    <input type="text" name="amount" value="" placeholder="Enter your money" oninput="myFunc()">
+<!--                                    <div id="paypal-payment-button" role="button"></div>-->
+                                    <input type="submit" name="action" value="sendPayPal">
                                 </form>                               
                             </div>
                         </div>
@@ -238,6 +245,43 @@
         <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
-        <jsp:include page="/client/seat-script.jsp"></jsp:include>
+        <script src="https://www.paypal.com/sdk/js?client-id=AX4UhpEHB2X515a9jh0AddikEHLWVWa9Kcf768IagpsshpnxgJjEmJU_nmNWHN2EMmRRhNsqkp4Xp0mm&disable-funding=credit,card" data-namespace="paypal_sdk"></script>
+    <script>
+        function myFunc(){
+            
+        }
+        
+        $(window).on("load",function (){
+           var divTag = $(".paypal-button-container");
+            divTag.on("click",function (){
+                alert("you click me");  
+            })
+        });
+        
+        paypal_sdk.Buttons({
+            style: {
+                color: 'blue'
+            },
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    intent: 'CAPTURE',
+                    purchase_units: [{
+                            amount: {
+                                value: '20'
+                            }
+                        }]
+                });
+            },
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (details) {
+                    console.log(details)
+                    window.location.replace("http://localhost:8080/ETrans/MoMoRequest?action=recharge");
+                })
+            },
+            onCancel: function (data) {
+                window.location.replace("http://localhost:8080/ETrans/MoMoRequest?action=recharge");
+            }
+        }).render('#paypal-payment-button');
+    </script>
     </body>
 </html>
