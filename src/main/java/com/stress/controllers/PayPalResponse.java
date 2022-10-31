@@ -12,6 +12,7 @@ import com.stress.dto.Trip;
 import com.stress.dto.User;
 import com.stress.service.PayPalService;
 import com.stress.service.UserDAOImpl;
+import com.stress.utils.PayPalConfig;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.ServletException;
@@ -36,12 +37,11 @@ public class PayPalResponse extends HttpServlet {
         HttpSession session = request.getSession();
         String paymentId = request.getParameter("paymentId");
         String payerId = request.getParameter("PayerID");
-        
-        if(paymentId==null && payerId ==null){
-            request.setAttribute("MONEY_RECHARGE_FAIL", "RECHARGE MOMNEY VIA PAYPAL FAIL");
+
+        if (paymentId == null && payerId == null) {
+            request.setAttribute("MONEY_RECHARGE_FAIL", "RECHARGE MOMNEY FAIL");
             request.getRequestDispatcher("/recharge?action=recharge").forward(request, response);
-        }
-        else{
+        } else {
             try {
                 String money = (String) session.getAttribute("Paypal_recharge");
                 User user = (User) session.getAttribute("LOGIN_USER");
@@ -51,40 +51,27 @@ public class PayPalResponse extends HttpServlet {
                 String state = payment.getState();
 
                 if (state.equals("approved")) {
+                    Order order = (Order) session.getAttribute("ORDER");
+                    if (order != null) {
+                        url = "./client/order.jsp";
+                    } else {
+                        url = PayPalService.getBaseURL(request)+"/";
+                    }
                     double curMoney = Double.parseDouble(user.getAccountBalance());
                     double moreMoney = Double.parseDouble(money);
-                    String total = String.valueOf(curMoney+moreMoney);
-                    total = total.substring(0, total.length()-2);
-
+                    String total = String.valueOf(curMoney + moreMoney);
+                    total = total.substring(0, total.length() - 2);
+                    
                     user.setAccountBalance(total);
+                    userDAO.updateUser(user.getUserID(), total);
 
-
-            if (state.equals("approved")) {
-                Order order = (Order) session.getAttribute("ORDER");
-                if(order!=null){
-//                    session.setAttribute("QUANTITY", quantity);
-//                    session.setAttribute("PRICE", totalPrice);
-//                    session.setAttribute("TAX", price);
-//                    session.setAttribute("SEAT_LIST", seatIDs);
-//                    session.setAttribute("ORDER", order);
-//                    session.setAttribute("TRIP", choosingTrip);
-                    
-                    
-
-                    url = "./client/order.jsp";
+                    request.setAttribute("MONEY_RECHARGE_SUCCESS", "RECHARGE MOMNEY SUCCESSFULLY");
+                    if(url.equals(PayPalService.getBaseURL(request)+"/")) 
+                        response.sendRedirect(url);
+                    request.getRequestDispatcher(url).forward(request, response);
                 }
-                double curMoney = Double.parseDouble(user.getAccountBalance());
-                double moreMoney = Double.parseDouble(money);
-                String total = String.valueOf(curMoney+moreMoney);
-                total = total.substring(0, total.length()-2);
-
-
-                }
-
-                request.setAttribute("paypal_success", "RECHARGE MOMNEY VIA PAYPAL SUCCESSFULLY");
-                request.getRequestDispatcher(url).forward(request, response);
-                
-
+            } catch (Exception e) {
+                System.out.println("Error at: " + e.getMessage());
             }
         }
     }

@@ -85,7 +85,7 @@
                             <div id="momo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
                                     <form action="${pageContext.request.contextPath}/MoMoRequest" method="post">
-                                    <input type="text" name="amount" value="" placeholder="Enter your money">
+                                    <input type="text" name="amount" value="${sessionScope.ORDER.totalPrice}" placeholder="Enter your money">
                                     <input type="submit" value="sendMoMo" name="action">
                                 </form>                                    
                             </div>
@@ -107,6 +107,23 @@
 <!--                                    <div id="paypal-payment-button" role="button"></div>-->
 
                                     <input type="submit" name="action" value="sendPayPal">
+                                </form>                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <button class="btn" data-toggle="collapse" data-target="#vnpay" aria-expanded="true" aria-controls="collapseOne">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    Vnpay 
+                                </h5>
+                            </div>
+                        </button>
+                        <div id="vnpay" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                <form action="VnpayRequest" method="post">
+                                    <input type="text" name="amount" value="${sessionScope.ORDER.totalPrice}" placeholder="Enter your money">
+                                    <input type="submit" name="action" value="sendVnpay">
                                 </form>                               
                             </div>
                         </div>
