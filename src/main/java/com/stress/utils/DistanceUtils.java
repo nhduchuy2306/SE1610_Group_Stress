@@ -1,12 +1,12 @@
 
 package com.stress.utils;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import com.stress.dto.Coordinates;
 import com.stress.dto.DistanceAndTime;
 import java.io.IOException;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 /**
@@ -27,7 +27,8 @@ public class DistanceUtils {
                 .url(url)
                 .build();
 
-        try ( Response response = client.newCall(request).execute()) {
+        try  {
+            Response response = client.newCall(request).execute();
             String res = response.body().string();
             JSONObject jsonItem = new JSONObject(res);
         
@@ -42,8 +43,10 @@ public class DistanceUtils {
             co.setLongitude(Double.parseDouble(lng));
 
             return co;
+        }catch(Exception e){
+            
         }
-        
+        return null;
     }
     
     public DistanceAndTime getDistanceAndTime(String originLoc, String destinationLoc) 
@@ -60,7 +63,8 @@ public class DistanceUtils {
                 .url(url)
                 .build();
 
-        try ( Response response = client.newCall(request).execute()) {
+        try{
+            Response response = client.newCall(request).execute();
             String res = response.body().string();
             
             JSONObject jsonItem = new JSONObject(res);
@@ -75,6 +79,8 @@ public class DistanceUtils {
             
             dat.setDistance(distance);
             dat.setTime(time);
+            
+        }catch(Exception e){
             
         }
         return dat;

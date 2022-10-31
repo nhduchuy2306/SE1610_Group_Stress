@@ -204,7 +204,10 @@
                                     <c:if test="${requestScope.NO_INFORMATION!=null}">
                                         <h1>No Information</h1>
                                     </c:if>
-
+                                    <c:if test="${sessionScopeScope.ORDER!=null}">
+                                        <a class="mt-20 float-right btn btn-primary" href="/ETrans/order?action=pendingOrder">Pay Pending Order</a>
+                                    </c:if>
+                                    
                                     <table class="table table-bordered table-striped table-hover" id="dataTable">
                                         <thead>
                                             <tr>

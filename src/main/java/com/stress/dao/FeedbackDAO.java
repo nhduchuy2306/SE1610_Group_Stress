@@ -15,4 +15,5 @@ import java.util.List;
 public interface FeedbackDAO {
     boolean sendFeedback(Feedback feedback) throws SQLException;
     List<Feedback> getFeedbackByTripID(String tripID) throws SQLException;
+    Feedback getFeedbackByOrderID (String orderID) throws SQLException;
 }

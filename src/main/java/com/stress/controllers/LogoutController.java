@@ -5,6 +5,7 @@
  */
 package com.stress.controllers;
 
+import com.stress.utils.PayPalConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -21,11 +22,13 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LogoutController", urlPatterns = {"/Logout"})
 public class LogoutController extends HttpServlet {
 
-    static final String ERROR="./client/error.jsp";
-    static final String SUCCESS="./home";
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String ERROR="./client/error.jsp";
+        String SUCCESS=PayPalConfig.getBaseURL(request);
+        
         String url=ERROR;
         try {
             HttpSession session=request.getSession(false);
