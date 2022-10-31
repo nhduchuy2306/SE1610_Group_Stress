@@ -163,7 +163,7 @@
                                         <c:if test="${sessionScope.LOGIN_USER.accountBalance >= requestScope.PRICE}"> 
                                             <form action="${pageContext.request.contextPath}/book" method="POST">
                                                 <button style="width: 150px; margin-bottom: 10px; background-color: #007bff;
-                                                        color: white; padding: 12px; border-radius:10px;font-size: 14px"
+                                                        color: white; padding: 12px; border-radius:10px;font-size: 14px;cursor: pointer"
                                                     type="submit" name="action" value="payingAccount">
                                                     AccountBalance
                                                 </button><br>

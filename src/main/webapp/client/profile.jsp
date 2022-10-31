@@ -54,7 +54,7 @@
             }
 
             section {
-                padding: 120px 0;
+/*                padding: 120px 0;*/
                 overflow: hidden;
                 background: #fff;
             }
@@ -154,11 +154,11 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-            <section class="about-banner relative">
+            <section class="about-banner relative" style="height: 30vh" >
                 <div class="overlay overlay-bg"></div>
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
-                        <div class="about-content col-lg-12">
+                        <div class="about-content col-lg-12" >
                             <h1 class="text-white">
                                 Profile
                             </h1>
@@ -194,7 +194,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12 mb-4 mb-sm-5">
+                    <div class="col-lg-12 mb-4 mb-sm-5" style="margin-top: -20px">
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
                                 <h6 class="m-0 font-weight-bold text-primary">Ticket History</h6>
