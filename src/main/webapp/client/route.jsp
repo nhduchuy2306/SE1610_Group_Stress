@@ -35,6 +35,7 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
 <!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/trip3.css">
+        
     </head>
 
     <body>
@@ -50,22 +51,19 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-            <section class="about-banner relative">
+            <section class="about-banner relative" style="height: 27vh">
                 <div class="overlay overlay-bg"></div>
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
-                        <div class="about-content col-lg-12">
-                            <h1 class="text-white">
-                                Tickets
+                        <div class="about-content col-lg-12" >
+                            <h1 class="text-white"style="margin-top: -15px;">
+                                Trips
                             </h1>
-                            <p class="text-white link-nav"><a href="index.html">Home </a> <span
-                                    class="lnr lnr-arrow-right"></span> <a href="hotels.html"> Hotels</a></p>
                         </div>
                     </div>
                 </div>
             </section>
             <!-- End banner Area -->
-
             <!-- Start destinations Area -->
         <section class="destinations-area section-gap col-md-12">
 <!--                <div class="container">-->
@@ -122,11 +120,12 @@
                                     <h5 class="font-weight-semi-bold mb-4 text-center">Filter by Seat</h5>
                                     <h4 id="filter-by-seat">Select<i class="fa fa-chevron-down" aria-hidden="true" style="margin-left: 170px"></i></h4>
                                     <div class="chon-loai-xe" id="chon-loai-xe">
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Limousin&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Limousin(16)</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Limousin&seat=45&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Limousin(45)</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Hyundai County&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Hyundai County(16)</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Hyundai Universe&seat=45&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Hyundai Universe(45)</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Hyundai Aero Hi-class&seat=45&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Hyundai Aero Hi-class(45)</a>
+                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Ford Transit&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Ford Transit</a>
+                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Toyota Hiace&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Toyota Hiace</a>
+                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Huyndai County&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Huyndai County</a>
+                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Daewo Aero Class&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Daewo Aero Class</a>
+                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Mercedes Supersport&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Mercedes Supersport</a>
+                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Huyndai Universe&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Huyndai Universe 2010</a>
                                     </div>    
                                 </div>
                                 <!-- Time end -->

@@ -140,11 +140,13 @@ public class BookingController extends HttpServlet {
         try {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
             String startDay = request.getParameter("start");
+            System.out.println(startDay);
             String[] a = startDay.split("/");
             String checkStartDate = a[2] + "-" + a[1] + "-" + a[0];
             SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
             Date dateInput = formater.parse(checkStartDate);
             String test = java.time.LocalDate.now().toString();
+            System.out.println("test:" + test);
             Date currentDate = formater.parse(test);
 
             List<Trip> listTrip = null;
@@ -263,13 +265,15 @@ public class BookingController extends HttpServlet {
                     String orderID = CommonFunction.generateID("tblOrders", "Order");
                     Order order = new Order(orderID, null, "", loginUser, 0, false);
                     order = orderDAO.createOrder(order);
-
+                    
                     for (int i = 0; i < quantity; i++) {
                         Seat seat = seatDAO.getSeatByID(seatID[i], tripID);
                         price += seat.getPrice();
-
+                        System.out.println("Seat"+i+ ":" + seat);
                     }
+                    
                     float totalPrice = (float) (price + (price * 0.1));
+                    System.out.println("Price:"+totalPrice);
                     order.setTotalPrice(totalPrice);
                     orderDAO.updateOrder(order);
                     session.setAttribute("QUANTITY", quantity);
@@ -421,7 +425,8 @@ public class BookingController extends HttpServlet {
     private List<Trip> getTripByVehicleTypes(List<Trip> list, String carName, int seat) {
         List<Trip> listTrip = new ArrayList<>();
         for (Trip trip : list) {
-            if (trip.getVehicle().getVehicleName().equalsIgnoreCase(carName) && trip.getVehicle().getVehicleType().getTotalSeat() == seat) {
+            if(trip.getVehicle().getVehicleName().contains(carName)){
+
                 listTrip.add(trip);
             }
         }

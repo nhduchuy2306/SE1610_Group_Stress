@@ -36,6 +36,7 @@
         
 <!--        test-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/datalist2.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/coupon.css">
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     </head>
@@ -208,73 +209,54 @@
         <!-- End popular-destination Area -->
 
         <!-- Start other-issue Area -->
-        <section class="other-issue-area">
-            <div class="container">
-                <div class="row d-flex justify-content-center">
-                    <div class="menu-content pb-70 col-lg-9">
-                        <div class="title text-center">
-                            <h1 class="mb-10">Other issues we can help you with</h1>
-                            <p>We all live in an age that belongs to the young at heart. Life that is.</p>
+        
+            <section class="recent-blog-area">
+                <div class="container">
+                    <div class="row d-flex justify-content-center align-items-center">
+                        <div class="menu-content pb-60 col-lg-9">
+                            <div class="title text-center">
+                                <h1 class="mb-10 mt-30">Coupon</h1>
+                            </div>
                         </div>
+                    </div>
+                    <div class="row" style="margin: auto">
+                        
+                            <div class="active-recent-blog-carusel"> 
+                            <c:forEach var="coupon" items="${requestScope.LIST_COUPON}">
+                                <div class="">
+                                    <div class="single-other-issue">
+                                        
+                                        <div class="coupon">
+                                            <h3 style="padding-top: 10px">Discount Coupon</h3>
+                                            <h2>${coupon.percent}%</h2>
+                                            <h5>Off All Trips</h5>
+                                            <h5>Number of Coupon: (${coupon.count})</h5>
+                                            <p>Valid to: ${coupon.expiryDate} at ${coupon.expiryTime.getHours()}h${coupon.expiryTime.getMinutes()}m</p>
+                                        </div>
+                                        
+                                        <div class="get-coupon">
+                                            <c:if test="${sessionScope.LOGIN_USER==null}">
+                                                <button type="button" class="login text-light" data-toggle="modal" data-target="#loginForm"
+                                                    style="width: 100%;height: 50px;font-size: 30px" >
+                                                Get Now!
+                                            </button>
+                                            </c:if>
+                                            <c:if test="${sessionScope.LOGIN_USER!=null}">
+                                            <a href="${pageContext.request.contextPath}/Coupon?action=getCoupon&couponID=${coupon.couponID}&numOfCoupon=${coupon.count}">Get Now!</a>
+                                            </c:if>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                           </c:forEach>
+                        </div>
+                        
+                        
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o1.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4>Rent a Car</h4>
-                            </a>
-                            <p>
-                                The preservation of human life is the ultimate value, a pillar of ethics and the foundation.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o2.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4>Cruise Booking</h4>
-                            </a>
-                            <p>
-                                I was always somebody who felt quite sorry for myself, what I had not got compared.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o3.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4>To Do List</h4>
-                            </a>
-                            <p>
-                                The following article covers a topic that has recently moved to center stage–at least it
-                                seems.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="${pageContext.request.contextPath}/client/img/o4.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4>Food Features</h4>
-                            </a>
-                            <p>
-                                There are many kinds of narratives and organizing principles. Science is driven by evidence.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        
+        
         <!-- End other-issue Area -->
 
         <!-- Start Platform and connect -->
@@ -500,6 +482,20 @@
                 </div>
             </div>
         </div>
+                 
+<!--        Show fail-->
+        <div class="modal fade" id="showfail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-window-close" style="font-size:70px; color: red" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.FAIL}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
         <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -581,6 +577,13 @@
             <script>
                 $(window).load(function () {
                     $('#showsuccess').modal('show');
+                });
+            </script>
+        </c:if>
+        <c:if test="${requestScope.FAIL!=null}">
+            <script>
+                $(window).load(function () {
+                    $('#showfail').modal('show');
                 });
             </script>
         </c:if>

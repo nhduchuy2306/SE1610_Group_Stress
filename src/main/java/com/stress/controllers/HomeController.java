@@ -4,9 +4,12 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.CouponDAO;
 import com.stress.dao.RouteDAO;
 import com.stress.dto.City;
+import com.stress.dto.Coupon;
 import com.stress.dto.Route;
+import com.stress.service.CouponDaoImpl;
 import com.stress.service.RouteDAOImpl;
 import java.io.IOException;
 import java.util.List;
@@ -34,8 +37,12 @@ public class HomeController extends HttpServlet {
         try {
             RouteDAO dao=new RouteDAOImpl();
             List<Route> listRoute=dao.getAllRoute();
+            CouponDAO couponDAO=new CouponDaoImpl();
+            List<Coupon> listCoupon=couponDAO.getAllCoupon(java.time.LocalDate.now().toString());
+            System.out.println(listCoupon);
             if(!listRoute.isEmpty()){
                 request.setAttribute("LIST_ROUTE", listRoute);
+                request.setAttribute("LIST_COUPON", listCoupon);
             }
             
         } catch (Exception e) {

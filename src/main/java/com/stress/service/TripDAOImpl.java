@@ -327,7 +327,7 @@ public class TripDAOImpl implements TripDAO {
 //        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
 //                + "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
 //                + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "
-//                + "WHERE RouteID = ? AND StartDateTime >= ? AND StartTime >= @timeFrom";
+//                + "WHERE RouteID = ? AND StartDateTime = ? AND StartTime >= @timeFrom";
         String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
                 + "SELECT [TripID],[TripName], [StartDateTime],[StartTime],[Policy], [RouteID], "
                 + "[VehicleID], [DriverID], [SeatRemain], [Status] FROM tblTrips "

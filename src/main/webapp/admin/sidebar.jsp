@@ -32,11 +32,11 @@
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Route</span></a>
     </li>
-    <!--    <li class="nav-item">
-            <a class="nav-link" href="roleTable.jsp">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Role</span></a>
-        </li>-->
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/Coupon?action=show">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Coupon</span></a>
+    </li>
     <!--    <li class="nav-item">
             <a class="nav-link" href="orderTable.jsp">
                 <i class="fas fa-fw fa-chart-area"></i>
