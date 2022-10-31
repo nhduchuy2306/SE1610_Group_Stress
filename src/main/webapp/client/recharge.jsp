@@ -55,55 +55,38 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-        <section class="about-banner relative">
-            <div class="overlay overlay-bg"></div>
-            <div class="container">
-                <div class="row d-flex align-items-center justify-content-center">
-                    <div class="about-content col-lg-12">
-                        <h1 class="text-white">
-                            Tickets Detail
-                        </h1>
+            <section class="about-banner relative">
+                <div class="overlay overlay-bg"></div>
+                <div class="container">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="about-content col-lg-12">
+                            <h1 class="text-white">
+                                Recharge Money
+                            </h1>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-        <section class="destinations-area section-gap">
-            <h1 class="text-center">Recharge with Paypal or MoMo</h1>
-            <div class="container">
-                <div id="accordion">
-                    <div class="card">
-                        <button class="btn" data-toggle="collapse" data-target="#momo" aria-expanded="true" aria-controls="collapseOne">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    MoMo 
-                                </h5>
-                            </div>
-                        </button>
-                        <div id="momo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <form action="${pageContext.request.contextPath}/MoMoRequest" method="post">
+            <section class="destinations-area section-gap">
+                <h1 class="text-center">Recharge with Paypal or MoMo</h1>
+                <div class="container">
+                    <div id="accordion">
+                        <div class="card">
+                            <button class="btn" data-toggle="collapse" data-target="#momo" aria-expanded="true" aria-controls="collapseOne">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        MoMo 
+                                    </h5>
+                                </div>
+                            </button>
+                            <div id="momo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <form action="${pageContext.request.contextPath}/MoMoRequest" method="post">
                                     <input type="text" name="amount" value="" placeholder="Enter your money">
                                     <input type="submit" value="sendMoMo" name="action">
-                                </form>                                    
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <button class="btn" data-toggle="collapse" data-target="#zalo" aria-expanded="true" aria-controls="collapseOne">
-                            <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                    ZaloPay 
-                                </h5>
-                            </div>
-                        </button>
-                        <div id="zalo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <form action="${pageContext.request.contextPath}/ZaloRequest" method="post">
-                                    <input type="text" name="amount" value="" placeholder="Enter your money">
-                                    <input type="submit" value="sendZalo" name="action">
                                 </form>                                    
                             </div>
                         </div>
@@ -119,8 +102,10 @@
                         <div id="paypal" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
                                 <form action="PayPalRequest" method="post">
+
                                     <input type="text" name="amount" value="${sessionScope.ORDER.totalPrice}" placeholder="Enter your money" oninput="myFunc()">
 <!--                                    <div id="paypal-payment-button" role="button"></div>-->
+
                                     <input type="submit" name="action" value="sendPayPal">
                                 </form>                               
                             </div>
@@ -234,7 +219,21 @@
                         <div class="text-center">
                             <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.paypal_success}</h4>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.MONEY_RECHARGE_SUCCESS}</h4>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-ban" style="font-size:70px; color: red" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.MONEY_RECHARGE_FAIL}</h4>
                         <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -260,9 +259,14 @@
         <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
         <script src="https://www.paypal.com/sdk/js?client-id=AX4UhpEHB2X515a9jh0AddikEHLWVWa9Kcf768IagpsshpnxgJjEmJU_nmNWHN2EMmRRhNsqkp4Xp0mm&disable-funding=credit,card" data-namespace="paypal_sdk"></script>
         <script>
-            <c:if test="${requestScope.paypal_success!=null}">
+            <c:if test="${requestScope.MONEY_RECHARGE_SUCCESS!=null}">
                 $(document).ready(function (e) {
                     $("#showsuccess").modal('show');
+                });
+            </c:if>
+            <c:if test="${requestScope.MONEY_RECHARGE_FAIL!=null}">
+                $(document).ready(function (e) {
+                    $("#showerror").modal('show');
                 });
             </c:if>
         </script>

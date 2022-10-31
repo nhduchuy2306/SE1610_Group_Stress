@@ -65,7 +65,7 @@ public class PayPalRequestController extends HttpServlet {
             Double price = Math.round((Double.parseDouble(priceInString)/23000.0)*100.0)/100.0;
             
             PayPalService paypalService = new PayPalService();
-            String approvalLink = paypalService.authorizePayment(String.valueOf(price), user);
+            String approvalLink = paypalService.authorizePayment(String.valueOf(price), user, request);
             session.setAttribute("Paypal_recharge", priceInString);
             response.sendRedirect(approvalLink);
             

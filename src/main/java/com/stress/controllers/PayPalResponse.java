@@ -36,14 +36,28 @@ public class PayPalResponse extends HttpServlet {
         HttpSession session = request.getSession();
         String paymentId = request.getParameter("paymentId");
         String payerId = request.getParameter("PayerID");
+        
+        if(paymentId==null && payerId ==null){
+            request.setAttribute("MONEY_RECHARGE_FAIL", "RECHARGE MOMNEY VIA PAYPAL FAIL");
+            request.getRequestDispatcher("/recharge?action=recharge").forward(request, response);
+        }
+        else{
+            try {
+                String money = (String) session.getAttribute("Paypal_recharge");
+                User user = (User) session.getAttribute("LOGIN_USER");
 
-        try {
-            String money = (String) session.getAttribute("Paypal_recharge");
-            User user = (User) session.getAttribute("LOGIN_USER");
+                PayPalService paypalService = new PayPalService();
+                Payment payment = paypalService.executePayment(paymentId, payerId);
+                String state = payment.getState();
 
-            PayPalService paypalService = new PayPalService();
-            Payment payment = paypalService.executePayment(paymentId, payerId);
-            String state = payment.getState();
+                if (state.equals("approved")) {
+                    double curMoney = Double.parseDouble(user.getAccountBalance());
+                    double moreMoney = Double.parseDouble(money);
+                    String total = String.valueOf(curMoney+moreMoney);
+                    total = total.substring(0, total.length()-2);
+
+                    user.setAccountBalance(total);
+
 
             if (state.equals("approved")) {
                 Order order = (Order) session.getAttribute("ORDER");
@@ -64,21 +78,14 @@ public class PayPalResponse extends HttpServlet {
                 String total = String.valueOf(curMoney+moreMoney);
                 total = total.substring(0, total.length()-2);
 
-                user.setAccountBalance(total);
-                
-                try {
-                    userDAO.updateUser(user.getUserID(), user.getAccountBalance());
-                } catch (SQLException ex) {
-                    System.out.println(ex.getMessage());
+
                 }
+
                 request.setAttribute("paypal_success", "RECHARGE MOMNEY VIA PAYPAL SUCCESSFULLY");
                 request.getRequestDispatcher(url).forward(request, response);
                 
+
             }
-        } catch (PayPalRESTException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            request.getRequestDispatcher("/client/error.jsp").forward(request, response);
         }
     }
 
