@@ -7,13 +7,13 @@ package com.stress.controllers;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import com.stress.dao.UserDAO;
+import com.stress.dto.Order;
+import com.stress.dto.Trip;
 import com.stress.dto.User;
 import com.stress.service.PayPalService;
 import com.stress.service.UserDAOImpl;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -31,6 +31,7 @@ public class PayPalResponse extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String url = "/client/error.jsp";
         UserDAO userDAO = new UserDAOImpl();
         HttpSession session = request.getSession();
         String paymentId = request.getParameter("paymentId");
@@ -45,6 +46,19 @@ public class PayPalResponse extends HttpServlet {
             String state = payment.getState();
 
             if (state.equals("approved")) {
+                Order order = (Order) session.getAttribute("ORDER");
+                if(order!=null){
+//                    session.setAttribute("QUANTITY", quantity);
+//                    session.setAttribute("PRICE", totalPrice);
+//                    session.setAttribute("TAX", price);
+//                    session.setAttribute("SEAT_LIST", seatIDs);
+//                    session.setAttribute("ORDER", order);
+//                    session.setAttribute("TRIP", choosingTrip);
+                    
+                    
+
+                    url = "./client/order.jsp";
+                }
                 double curMoney = Double.parseDouble(user.getAccountBalance());
                 double moreMoney = Double.parseDouble(money);
                 String total = String.valueOf(curMoney+moreMoney);
@@ -58,7 +72,7 @@ public class PayPalResponse extends HttpServlet {
                     System.out.println(ex.getMessage());
                 }
                 request.setAttribute("paypal_success", "RECHARGE MOMNEY VIA PAYPAL SUCCESSFULLY");
-                request.getRequestDispatcher("/recharge?action=recharge").forward(request, response);
+                request.getRequestDispatcher(url).forward(request, response);
                 
             }
         } catch (PayPalRESTException ex) {

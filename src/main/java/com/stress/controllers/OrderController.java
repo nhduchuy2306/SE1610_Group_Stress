@@ -50,6 +50,9 @@ public class OrderController extends HttpServlet {
                 case "Feedback":
                     showFeedBack(request, response);
                     break;
+                case "pendingOrder":
+                    pendingOrder(request, response);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -271,6 +274,14 @@ public class OrderController extends HttpServlet {
             request.setAttribute("ORDER_ID", orderID);
             request.setAttribute("TICKET", ticket);
             request.getRequestDispatcher("/client/order-detail.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
+    }
+
+    private void pendingOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+        try {
+            request.getRequestDispatcher("/client/order.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }
