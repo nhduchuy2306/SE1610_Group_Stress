@@ -50,6 +50,9 @@ public class OrderController extends HttpServlet {
                 case "Feedback":
                     showFeedBack(request, response);
                     break;
+                case "pendingOrder":
+                    pendingOrder(request, response);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -125,9 +128,16 @@ public class OrderController extends HttpServlet {
             OrderDAO oDAO = new OrderDAOImpl();
 
             List<Ticket> tList = new TicketDAOImpl().getTicketByOrderID(orderID);
+            Feedback fb = new FeedbackDAOImpl().getFeedbackByOrderID(orderID);
             if (tList.size() <= 0) {
                 request.setAttribute("ERROR", "You are not booking any ticket in this order!");
                 showOrderView(request, response);
+            }else if(fb != null) {
+                Ticket t = tList.get(0);
+                request.setAttribute("TICKET", t);
+                request.setAttribute("FEEDBACK", fb);
+                request.setAttribute("FB_ALREADY", "You have Feedback this Order Already!");
+                 url = "./client/comment-rating.jsp";
             }
             else {
                 Ticket t = tList.get(0);
@@ -264,6 +274,14 @@ public class OrderController extends HttpServlet {
             request.setAttribute("ORDER_ID", orderID);
             request.setAttribute("TICKET", ticket);
             request.getRequestDispatcher("/client/order-detail.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
+    }
+
+    private void pendingOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+        try {
+            request.getRequestDispatcher("/client/order.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

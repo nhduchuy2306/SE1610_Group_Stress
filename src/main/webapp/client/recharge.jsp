@@ -102,8 +102,10 @@
                         <div id="paypal" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                             <div class="card-body">
                                 <form action="PayPalRequest" method="post">
-                                    <input type="text" name="amount" value="" placeholder="Enter your money" oninput="myFunc()">
-                                    <!--                                    <div id="paypal-payment-button" role="button"></div>-->
+
+                                    <input type="text" name="amount" value="${sessionScope.ORDER.totalPrice}" placeholder="Enter your money" oninput="myFunc()">
+<!--                                    <div id="paypal-payment-button" role="button"></div>-->
+
                                     <input type="submit" name="action" value="sendPayPal">
                                 </form>                               
                             </div>

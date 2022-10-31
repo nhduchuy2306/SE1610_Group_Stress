@@ -204,7 +204,7 @@
                                     <c:if test="${requestScope.NO_INFORMATION!=null}">
                                         <h1>No Information</h1>
                                     </c:if>
-
+                                    <a class="float-right btn btn-primary" href="/ETrans/order?action=pendingOrder">Pay Pending Order</a>
                                     <table class="table table-bordered table-striped table-hover" id="dataTable">
                                         <thead>
                                             <tr>
