@@ -50,6 +50,9 @@ public class OrderController extends HttpServlet {
                 case "Feedback":
                     showFeedBack(request, response);
                     break;
+                case "pendingOrder":
+                    pendingOrder(request, response);
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -125,9 +128,16 @@ public class OrderController extends HttpServlet {
             OrderDAO oDAO = new OrderDAOImpl();
 
             List<Ticket> tList = new TicketDAOImpl().getTicketByOrderID(orderID);
+            Feedback fb = new FeedbackDAOImpl().getFeedbackByOrderID(orderID);
             if (tList.size() <= 0) {
                 request.setAttribute("ERROR", "You are not booking any ticket in this order!");
                 showOrderView(request, response);
+            }else if(fb != null) {
+                Ticket t = tList.get(0);
+                request.setAttribute("TICKET", t);
+                request.setAttribute("FEEDBACK", fb);
+                request.setAttribute("FB_ALREADY", "You have Feedback this Order Already!");
+                 url = "./client/comment-rating.jsp";
             }
             else {
                 Ticket t = tList.get(0);
@@ -156,7 +166,9 @@ public class OrderController extends HttpServlet {
                 List<Ticket> ticketList = tDAO.getTicketByOrderID(orderID);
                 // Get Total Money to return for User
                 double returnMoney = od.getTotalPrice();
-                
+                for (Ticket ticket : ticketList) {
+                    sDAO.updateSeat(ticket.getTrip().getTripID(), ticket.getSeat().getSeatID());
+                }
 
                 double accountBalance = Double.parseDouble(od.getUser().getAccountBalance());
                 accountBalance += returnMoney;
@@ -215,7 +227,7 @@ public class OrderController extends HttpServlet {
                 request.setAttribute("ERROR", "Cant not Return this Order! This Trip is already Going");
                 showDetailView(request, response);
             } else {
-                Email.sendEmail("quangtmse161987@fpt.edu.vn", "", "A customer want to Return an Order\n" + "Please "
+                Email.sendEmail("carbookingstress@gmail.com", "", "A customer want to Return an Order\n" + "Please "
                         + "click at the link below\n"
                         + "http://localhost:8080/ETrans/order?action=Return&orderID=" + orderID, "Return Order Request");
                 request.setAttribute("RETURN_ORDER_SUCCESS", "An Email has send to Staff. You Request will be processed in a shortest Time");
@@ -262,6 +274,14 @@ public class OrderController extends HttpServlet {
             request.setAttribute("ORDER_ID", orderID);
             request.setAttribute("TICKET", ticket);
             request.getRequestDispatcher("/client/order-detail.jsp").forward(request, response);
+        } catch (Exception e) {
+        }
+    }
+
+    private void pendingOrder(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException{
+        try {
+            request.getRequestDispatcher("/client/order.jsp").forward(request, response);
         } catch (Exception e) {
         }
     }

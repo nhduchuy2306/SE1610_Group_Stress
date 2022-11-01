@@ -94,7 +94,7 @@ public class TripController extends HttpServlet {
         try {
             String fileName = reporter.getFileName("tblTrips".concat("_Export"));
             response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
-            reporter.export("tblTrips", response.getOutputStream(), fileName);
+            reporter.exportFeedBack("tblTrips", response.getOutputStream(), fileName);
         } catch (Exception ex) {
             System.out.println("Error at Reporter Controller");
         }

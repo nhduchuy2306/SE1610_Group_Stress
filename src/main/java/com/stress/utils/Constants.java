@@ -22,8 +22,8 @@ public class Constants {
     public static String ACCESS_KEY = "yzp3lsHbJJifAkNU";
     public static String SECRET_KEY = "CJLOBZMb1CpjqpDl9bhA9zqnCTv2ThSY";
     public static String END_POINT = "https://test-payment.momo.vn/v2/gateway/api/create";
-    public static String RETURN_URL = "http://localhost:8080/Etrans/MoMoResponse"; // Gửi đến trang checkout thành công
-    public static String NOTIFY_URL = "http://localhost:8080/Etrans/MoMoNotify";
+    public static String RETURN_URL = "http://localhost:8080/ETrans/MoMoResponse"; // Gửi đến trang checkout thành công
+    public static String NOTIFY_URL = "http://localhost:8080/ETrans/MoMoNotify";
     public static String ORDER_ID = UUID.randomUUID().toString();
 //    public static String AMOUNT = "30000";
     public static String ORDER_INFOR = "PAY WITH MOMO";
@@ -31,5 +31,8 @@ public class Constants {
     public static String REQUEST_TYPE = "captureWallet";
     public static String EXTRA_DATA = "";
     
-    
+    //PayPal
+    public static String PAYPAL_CLIENT_ID = "AQBB6ylukBPaV0koVm2BrYx8MADG-msoOEVCpzMGizRj8g8BJ9hVcaYkLRIOTGeQ9z3D4smmPQxhzcrN";
+    public static String PAYPAL_SECRET = "EGjXQFG47g2ExiKpX-rRG0MspaMSNSF3o7qgLJVmBUBPyDFvr9NQ5EnMrga-o0Z7AFfAD0UiXf5uuPZN";  
+    public static String PAYPAL_MODE = "sandbox";
 }

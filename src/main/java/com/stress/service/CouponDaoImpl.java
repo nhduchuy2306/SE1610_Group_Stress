@@ -201,7 +201,7 @@ public class CouponDaoImpl implements CouponDAO {
         try {
             CouponDaoImpl dao = new CouponDaoImpl();
 //            boolean check=dao.addCoupon(new Coupon(0, 20, 20, Date.valueOf("10/30/2022"), Time.valueOf(java.time.LocalDate.now().toString())));
-            System.out.println("Check: " + dao.getAllCouponOfUser("2022-11-01"));
+            System.out.println("Check: " + dao.getCouponUserNot("2022-11-01"));
         } catch (Exception e) {
         }
     }
