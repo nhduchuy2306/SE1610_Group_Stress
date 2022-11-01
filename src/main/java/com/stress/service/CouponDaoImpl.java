@@ -99,34 +99,6 @@ public class CouponDaoImpl implements CouponDAO {
     }
 
     @Override
-    public boolean deleteCoupon(String couponID) throws SQLException {
-        boolean check = false;
-        String sql = "UPDATE  [tblCoupon]\n"
-                + "SET [Count]=0\n"
-                + "WHERE [CouponID]=?";
-        Connection conn = null;
-        PreparedStatement ptm = null;
-        try {
-            conn = DBConnection.getConnection();
-            if (conn != null) {
-                ptm = conn.prepareStatement(sql);
-                ptm.setString(1, couponID);
-                check = ptm.executeUpdate() > 0 ? true : false;
-            }
-        } catch (Exception e) {
-            System.out.println("Error at deleteCoupon:" + e.toString());
-        } finally {
-            if (ptm != null) {
-                ptm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return check;
-    }
-
-    @Override
     public boolean updateCoupon(Coupon coupon) throws SQLException {
         boolean check = false;
         String sql = "UPDATE  [tblCoupon]\n"
@@ -229,7 +201,7 @@ public class CouponDaoImpl implements CouponDAO {
         try {
             CouponDaoImpl dao = new CouponDaoImpl();
 //            boolean check=dao.addCoupon(new Coupon(0, 20, 20, Date.valueOf("10/30/2022"), Time.valueOf(java.time.LocalDate.now().toString())));
-            System.out.println("Check: " + dao.setStatusUserCoupon("117836198961260519719","66",0));
+            System.out.println("Check: " + dao.getCouponUserNot("2022-11-01"));
         } catch (Exception e) {
         }
     }
@@ -349,8 +321,8 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, userID);
                 ptm.setString(2, couponID);
                 rs = ptm.executeQuery();
-                System.out.println("Rs: "+ rs);
-                if(rs.next()){
+                System.out.println("Rs: " + rs);
+                if (rs.next()) {
                     userCoupon = new UserCoupon(userDAO.getUserByID(userID), getCouponByID(Integer.parseInt(couponID)), rs.getInt("Status"));
                 }
             }
@@ -413,18 +385,18 @@ public class CouponDaoImpl implements CouponDAO {
 
     @Override
     public boolean setStatusUserCoupon(String userID, String couponID, int status) throws SQLException {
-        boolean check=false;
-        String sql="UPDATE [tblUser_Coupon] SET [Status]=? WHERE [UserID]=? AND [CouponID]=?";
+        boolean check = false;
+        String sql = "UPDATE [tblUser_Coupon] SET [Status]=? WHERE [UserID]=? AND [CouponID]=?";
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
-            if(conn!=null){
-                 ptm = conn.prepareStatement(sql);
-                 ptm.setInt(1, status);
-                 ptm.setString(2, userID);
-                 ptm.setString(3, couponID);
-                 check=ptm.executeUpdate()>0;
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setInt(1, status);
+                ptm.setString(2, userID);
+                ptm.setString(3, couponID);
+                check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             System.out.println("Error at setStatusUserCoupon:" + e.toString());
@@ -437,5 +409,167 @@ public class CouponDaoImpl implements CouponDAO {
             }
         }
         return check;
+    }
+
+    @Override
+    public List<Coupon> getCouponUserNot(String day) throws SQLException {
+        List<Coupon> list = new ArrayList<>();
+        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108)\n"
+                + "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
+                + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]!=[tblUser_Coupon].[CouponID] \n"
+                + "WHERE C.[expiryDate] = ? AND C.[expiryTime] >= @timeFrom";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                            rs.getInt("Percents"),
+                            rs.getInt("Counts"),
+                            rs.getDate("expiryDates"),
+                            rs.getTime("expiryTimes")));
+                }
+            }
+            list.addAll(getCouponUserNotAtHigerDate(day));
+        } catch (Exception e) {
+            System.out.println("Error at getCouponUserNot:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        return list;
+    }
+
+    private List<Coupon> getCouponUserNotAtHigerDate(String day) throws SQLException {
+        List<Coupon> list = new ArrayList<>();
+        String sql = "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
+                + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]!=[tblUser_Coupon].[CouponID] \n"
+                + "WHERE C.[expiryDate] > ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                            rs.getInt("Percents"),
+                            rs.getInt("Counts"),
+                            rs.getDate("expiryDates"),
+                            rs.getTime("expiryTimes")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error at getCouponUserNotAtHigerDate:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        return list;
+    }
+
+    @Override
+    public List<Coupon> getAllCouponOfUser(String day) throws SQLException {
+       List<Coupon> list = new ArrayList<>();
+        String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108)\n"
+                + "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
+                + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]=[tblUser_Coupon].[CouponID] \n"
+                + "WHERE C.[expiryDate] = ? AND C.[expiryTime] >= @timeFrom";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                            rs.getInt("Percents"),
+                            rs.getInt("Counts"),
+                            rs.getDate("expiryDates"),
+                            rs.getTime("expiryTimes")));
+                }
+            }
+            list.addAll(getAllCouponOfUserAtHigerDate(day));
+        } catch (Exception e) {
+            System.out.println("Error at getCouponUserNot:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        return list; 
+    }
+    
+    private List<Coupon> getAllCouponOfUserAtHigerDate(String day) throws SQLException {
+        List<Coupon> list = new ArrayList<>();
+        String sql = "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
+                + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]=[tblUser_Coupon].[CouponID] \n"
+                + "WHERE C.[expiryDate] > ?";
+        Connection conn = null;
+        PreparedStatement ptm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+            if (conn != null) {
+                ptm = conn.prepareStatement(sql);
+                ptm.setString(1, day);
+                rs = ptm.executeQuery();
+                while (rs.next()) {
+                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                            rs.getInt("Percents"),
+                            rs.getInt("Counts"),
+                            rs.getDate("expiryDates"),
+                            rs.getTime("expiryTimes")));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error at getCouponUserNotAtHigerDate:" + e.toString());
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ptm != null) {
+                ptm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+        }
+        return list;
     }
 }

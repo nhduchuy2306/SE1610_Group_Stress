@@ -88,7 +88,7 @@ public class CouponController extends HttpServlet {
     private void deleteCoupon(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
         try {
             String couponID=request.getParameter("couponID");
-            if(couponDAO.deleteCoupon(couponID)){
+            if(couponDAO.setNumOfCoupon(couponID,0)){
                 request.setAttribute("SUCCESS", "Delete Successfully!");
                 request.setAttribute("COUPONID", couponID);
                 showCoupon(request, response);

@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,32 +30,40 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     }
-    
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            RouteDAO dao=new RouteDAOImpl();
-            List<Route> listRoute=dao.getAllRoute();
-            CouponDAO couponDAO=new CouponDaoImpl();
-            List<Coupon> listCoupon=couponDAO.getAllCoupon(java.time.LocalDate.now().toString());
-            System.out.println(listCoupon);
-            if(!listRoute.isEmpty()){
-                request.setAttribute("LIST_ROUTE", listRoute);
-                request.setAttribute("LIST_COUPON", listCoupon);
+            RouteDAO dao = new RouteDAOImpl();
+            List<Route> listRoute = dao.getAllRoute();
+            request.setAttribute("LIST_ROUTE", listRoute);
+            CouponDAO couponDAO = new CouponDaoImpl();
+            HttpSession session = request.getSession();
+            if (session.getAttribute("LOGIN_USER") == null) {
+                List<Coupon> listCoupon = couponDAO.getAllCoupon(java.time.LocalDate.now().toString());
+                System.out.println(listCoupon);
+                if (!listRoute.isEmpty()) {
+                    request.setAttribute("LIST_COUPON", listCoupon);
+                }
+            }else{
+                List<Coupon> listCoupon = couponDAO.getCouponUserNot(java.time.LocalDate.now().toString());
+                System.out.println(listCoupon);
+                if (!listRoute.isEmpty()) {
+                    session.setAttribute("LIST_COUPON_USER", couponDAO.getAllCouponOfUser(java.time.LocalDate.now().toString()));
+                    request.setAttribute("LIST_COUPON", listCoupon);
+                }
             }
-            
+
         } catch (Exception e) {
         } finally {
             request.getRequestDispatcher("./client/index.jsp").forward(request, response);
-        }    
+        }
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
-    }
+            doGet(request, response);
+        }
 }

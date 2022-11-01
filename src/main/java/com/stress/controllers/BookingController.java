@@ -169,7 +169,6 @@ public class BookingController extends HttpServlet {
     private void bookingTicketAccountBalance(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "404.jsp";
-//        }
         try {
             HttpSession session = request.getSession();
            
@@ -177,7 +176,8 @@ public class BookingController extends HttpServlet {
             String[] seatID = seatIDs.split(",");
            
             int quantity = (int) session.getAttribute("QUANTITY");
-            double price = (double) session.getAttribute("PRICE"); // totalPrice
+            double price = Double.parseDouble(request.getParameter("totalPrice")); // totalPrice
+            System.out.println("totalPrice" + price);
             double accountBalance = 0; // Account balance of Active Customer
 
             User loginUser = (User) session.getAttribute("LOGIN_USER");
@@ -190,7 +190,7 @@ public class BookingController extends HttpServlet {
                 Trip choosingTrip = (Trip)session.getAttribute("TRIP");
                 for (int i = 0; i < quantity; i++) {
                     Seat seat = seatDAO.getSeatByID(seatID[i], choosingTrip.getTripID());
-
+                    if(seat.getStatus() == 1) throw new Exception();
                     if (seatDAO.lockSeat(seat.getSeatID(), choosingTrip.getTripID())) {
                         Ticket ticket = new Ticket(0, seat, choosingTrip, order);
                         ticketDAO.addNewTicket(ticket);
@@ -216,6 +216,7 @@ public class BookingController extends HttpServlet {
                 session.setAttribute("LOGIN_USER", loginUser);
                 request.setAttribute("SUCCESS", "Check Out Success!");
                 order.setStatus(true);
+                order.setTotalPrice((float)price);
                 order.setPaymentMode("ABL");
                 orderDAO.updateOrder(order);
                 request.setAttribute("PRICE", price);
@@ -271,14 +272,14 @@ public class BookingController extends HttpServlet {
                         price += seat.getPrice();
                         System.out.println("Seat"+i+ ":" + seat);
                     }
-                    
+                    session.setAttribute("BEFORE_TAX", price);
                     float totalPrice = (float) (price + (price * 0.1));
                     System.out.println("Price:"+totalPrice);
                     order.setTotalPrice(totalPrice);
                     orderDAO.updateOrder(order);
                     session.setAttribute("QUANTITY", quantity);
                     session.setAttribute("PRICE", (double)totalPrice);
-                    session.setAttribute("TAX", price);
+//                    session.setAttribute("TAX", price);
                     session.setAttribute("SEAT_LIST", seatIDs);
                     session.setAttribute("ORDER", order);
                     session.setAttribute("TRIP", choosingTrip);

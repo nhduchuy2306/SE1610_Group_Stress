@@ -134,7 +134,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Discount</label>
-                                                                    <input type="number" class="form-control" id="percentInput" name="percent"  value="${coupon.percent}" required="" >
+                                                                    <input type="number" class="form-control" id="percentInput" name="percent"  value="${coupon.percent}" required="" readonly="" >
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Expiration Date</label>

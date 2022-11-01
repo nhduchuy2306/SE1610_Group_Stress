@@ -32,9 +32,9 @@ public class Email {
         boolean test = false;
 
         String toEmail = email;
-        final String fromEmail = "minhhieutb321@gmail.com";
-        final String password = "mhezhvupjnessnss";
-
+        final String fromEmail = "carbookingstress@gmail.com";
+        final String password = "wrlwvsuuhklrkaip";
+        
         try {
             // your host email smtp server details
             Properties pr = new Properties();
