@@ -1,4 +1,5 @@
 // Tài khoản thanh toán ngân hàng NCB
+
 Ngân hàng	NCB
 Số thẻ          9704198526191432198
 Tên chủ thẻ	NGUYEN VAN A
@@ -12,3 +13,9 @@ huynguyen123456@personal.example.com
 
 // Tài khoản đăng nhập normal
 
+
+
+// Tài khoản mail doanh nghiệp
+
+carbookingstress@gmail.com
+Stress123456789
