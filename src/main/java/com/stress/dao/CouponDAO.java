@@ -10,7 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 public interface CouponDAO {
     List<Coupon> getAllCoupon(String day)throws SQLException;
-    boolean deleteCoupon(String couponID)throws SQLException;
+    List<Coupon> getAllCouponOfUser(String day)throws SQLException;
+    List<Coupon> getCouponUserNot(String day)throws SQLException;
     boolean updateCoupon(Coupon coupon)throws SQLException;
     boolean addCoupon(int count,int percent,String exDate,String exTime)throws SQLException;
     Coupon getNewCoupon()throws SQLException;
