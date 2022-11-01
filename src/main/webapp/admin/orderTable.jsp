@@ -40,57 +40,75 @@
 
                         <!-- Topbar -->
                     <jsp:include page="topbar.jsp"></jsp:include>
-                        <!-- Return Ticket Information -->
-                        <h1>The Order is Belong to ${requestScope.ORDER.user.username}</h1>
-                        <h1> Order ID: ${requestScope.ORDER.orderID}</h1>
-                        
-                        
-                        <!-- Begin Page Content -->
-                        <form action="order" method="POST">
-                            <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
-                            <input type="submit" value="Approve" name="action">
-                            <input type="submit" value="Reject" name="action">
-                        </form>
-                        <!-- /.container-fluid -->
-                    </div>
-                    <!-- End of Main Content -->
-
-                    <!-- Footer -->
-                    <footer class="sticky-footer bg-white">
-                        <div class="container my-auto">
-                            <div class="copyright text-center my-auto">
-                                <span>E-Transportation Website</span>
-                            </div>
+                    <c:if test="${requestScope.RETURN_SUCCESS!=null}">
+                        <div class="mt-10 alert alert-success" role="alert">
+                            <h1 class="alert-heading text-center">Well done!</h1>
+                            <h4 class="text-center mb-0">Return ticket successfully !!!</h4>
                         </div>
-                    </footer>
-                    <!-- End of Footer -->
-
+                    </c:if>
+                    <!-- Return Ticket Information -->
+                    <c:if test="${requestScope.RETURN_SUCCESS==null}">
+                        <h2 class="text-center">The Order is Belong to ${requestScope.ORDER.user.username}</h2>
+                        <table class="m-auto">
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: 20px">Order ID</td>
+                                    <td style="font-size: 20px">: ${requestScope.ORDER.orderID}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 20px">Total Price</td>
+                                    <td style="font-size: 20px">: ${requestScope.ORDER.totalPrice}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Begin Page Content -->
+                        <form class="text-center" action="order" method="POST">
+                            <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
+                            <input type="submit" style="margin-top: 10px" class="btn btn-primary" value="Approve" name="action">
+                            <input type="submit" style="margin-top: 10px"class="btn btn-danger" value="Reject" name="action">
+                        </form>
+                    </c:if>
+                    <!-- /.container-fluid -->
                 </div>
-                <!-- End of Content Wrapper -->
+                <!-- End of Main Content -->
+                <!--Success alert-->
+
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>E-Transportation Website</span>
+                        </div>
+                    </div>
+                </footer>
+                <!-- End of Footer -->
 
             </div>
-            <!-- End of Page Wrapper -->
+            <!-- End of Content Wrapper -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
+        </div>
+        <!-- End of Page Wrapper -->
 
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/Logout">Logout</a>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" href="${pageContext.request.contextPath}/Logout">Logout</a>
                     </div>
                 </div>
             </div>
