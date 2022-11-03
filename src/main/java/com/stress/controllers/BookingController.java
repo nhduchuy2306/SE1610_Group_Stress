@@ -91,14 +91,14 @@ public class BookingController extends HttpServlet {
         try {
             String orderID = request.getParameter("orderID");
             Order order = new OrderDAOImpl().getOderByID(orderID);
-            if(order != null ) {
+            if (order != null) {
                 HttpSession session = request.getSession();
-                if(session != null) {
-                    
+                if (session != null) {
+
                     url = "/recharge?action=recharge";
                 }
             }
-            
+
         } catch (Exception e) {
             System.out.println("Error at RedirectPaypal " + e.toString());
         } finally {
@@ -171,10 +171,10 @@ public class BookingController extends HttpServlet {
         String url = "404.jsp";
         try {
             HttpSession session = request.getSession();
-           
-           String seatIDs = (String) session.getAttribute("SEAT_LIST");
+
+            String seatIDs = (String) session.getAttribute("SEAT_LIST");
             String[] seatID = seatIDs.split(",");
-           
+
             int quantity = (int) session.getAttribute("QUANTITY");
             double price = Double.parseDouble(request.getParameter("totalPrice")); // totalPrice
             System.out.println("totalPrice" + price);
@@ -183,53 +183,64 @@ public class BookingController extends HttpServlet {
             User loginUser = (User) session.getAttribute("LOGIN_USER");
 
             // Starting checkout
-            Order order = (Order)session.getAttribute("ORDER"); // getOrderByID
+            Order order = (Order) session.getAttribute("ORDER"); // getOrderByID
 
             accountBalance = Double.parseDouble(loginUser.getAccountBalance());
             if (accountBalance >= price) {
-                Trip choosingTrip = (Trip)session.getAttribute("TRIP");
+                Trip choosingTrip = (Trip) session.getAttribute("TRIP");
                 for (int i = 0; i < quantity; i++) {
                     Seat seat = seatDAO.getSeatByID(seatID[i], choosingTrip.getTripID());
-                    if(seat.getStatus() == 1) throw new Exception();
-                    if (seatDAO.lockSeat(seat.getSeatID(), choosingTrip.getTripID())) {
-                        Ticket ticket = new Ticket(0, seat, choosingTrip, order);
-                        ticketDAO.addNewTicket(ticket);
+                    if (seat.getStatus() == 1) {
+                        order.setStatus(2);
+                        url = "home";
+                        request.setAttribute("ERROR", "The Seat is not available! Please Choose Another Seat!");
 
+                    } else {
+                        order.setStatus(1);
+
+                        if (seatDAO.lockSeat(seat.getSeatID(), choosingTrip.getTripID())) {
+                            Ticket ticket = new Ticket(0, seat, choosingTrip, order);
+                            ticketDAO.addNewTicket(ticket);
+
+                        }
                     }
 
                 }
-                choosingTrip.setSeatRemain(choosingTrip.getSeatRemain() - quantity);
-                tripDAO.updateTrip(choosingTrip);
-                //accountBalance -= price;
-                // update Account Balance again
                 session.removeAttribute("QUANTITY");
                 session.removeAttribute("SEAT_LIST");
                 session.removeAttribute("PRICE");
                 session.removeAttribute("ORDER");
                 session.removeAttribute("TAX");
                 session.removeAttribute("TRIP");
-                                
-                accountBalance -= price;
-                loginUser.setAccountBalance(String.valueOf(accountBalance));
-                userDAO.updateUser(loginUser.getUserID(),
-                        loginUser.getAccountBalance());
-                session.setAttribute("LOGIN_USER", loginUser);
-                request.setAttribute("SUCCESS", "Check Out Success!");
-                order.setStatus(true);
-                order.setTotalPrice((float)price);
-                order.setPaymentMode("ABL");
-                orderDAO.updateOrder(order);
-                request.setAttribute("PRICE", price);
-                request.setAttribute("ORDER", order);
-                if (Email.sendEmail(loginUser.getEmail(), "", "Dear " + loginUser.getUsername() + "\n"
-                        + "\tYou have Boook Ticket successfully\n"
-                        + "\tTotal Price: " + price * 0.1 + "\n\t Trip Going: " + choosingTrip.getRoute().getRouteName()
-                        + "\n\t Going Date: " + choosingTrip.getStartDateTime() + ", Time: " + choosingTrip.getStartTime()
-                        + "\n\t If you have any question, please contact 079_854_6742", "Booking Ticket Confirmation")) {
-                    orderDAO.updateOrder(order);
-                    url = "home";
-                }
+                if (order.getStatus() == 1) {
+                    choosingTrip.setSeatRemain(choosingTrip.getSeatRemain() - quantity);
+                    tripDAO.updateTrip(choosingTrip);
+                    //accountBalance -= price;
+                    // update Account Balance again
 
+                    accountBalance -= price;
+                    loginUser.setAccountBalance(String.valueOf(accountBalance));
+                    userDAO.updateUser(loginUser.getUserID(),
+                            loginUser.getAccountBalance());
+                    session.setAttribute("LOGIN_USER", loginUser);
+                    request.setAttribute("SUCCESS", "Check Out Success!");
+                    
+                    order.setTotalPrice((float) price);
+                    order.setPaymentMode("ABL");
+                    orderDAO.updateOrder(order);
+                    request.setAttribute("PRICE", price);
+                    request.setAttribute("ORDER", order);
+                    if (Email.sendEmail(loginUser.getEmail(), "", "Dear " + loginUser.getUsername() + "\n"
+                            + "\tYou have Boook Ticket successfully\n"
+                            + "\tTotal Price: " + price * 0.1 + "\n\t Trip Going: " + choosingTrip.getRoute().getRouteName()
+                            + "\n\t Going Date: " + choosingTrip.getStartDateTime() + ", Time: " + choosingTrip.getStartTime()
+                            + "\n\t If you have any question, please contact 079_854_6742", "Booking Ticket Confirmation")) {
+                        orderDAO.updateOrder(order);
+                        url = "home";
+                    }
+                } else {
+                    
+                }
             } else {
                 request.setAttribute("ERROR", "Account Balance is not Enough!");
             }
@@ -264,26 +275,25 @@ public class BookingController extends HttpServlet {
 
                     Trip choosingTrip = tripDAO.getTripByID(tripID);
                     String orderID = CommonFunction.generateID("tblOrders", "Order");
-                    Order order = new Order(orderID, null, "", loginUser, 0, false);
+                    Order order = new Order(orderID, null, "", loginUser, 0, 0);
                     order = orderDAO.createOrder(order);
-                    
+
                     for (int i = 0; i < quantity; i++) {
                         Seat seat = seatDAO.getSeatByID(seatID[i], tripID);
                         price += seat.getPrice();
-                        System.out.println("Seat"+i+ ":" + seat);
+                        System.out.println("Seat" + i + ":" + seat);
                     }
                     session.setAttribute("BEFORE_TAX", price);
                     float totalPrice = (float) (price + (price * 0.1));
-                    System.out.println("Price:"+totalPrice);
+                    System.out.println("Price:" + totalPrice);
                     order.setTotalPrice(totalPrice);
                     orderDAO.updateOrder(order);
                     session.setAttribute("QUANTITY", quantity);
-                    session.setAttribute("PRICE", (double)totalPrice);
+                    session.setAttribute("PRICE", (double) totalPrice);
 //                    session.setAttribute("TAX", price);
                     session.setAttribute("SEAT_LIST", seatIDs);
                     session.setAttribute("ORDER", order);
                     session.setAttribute("TRIP", choosingTrip);
-                    
 
                     url = "/client/order.jsp";
                 } else {
@@ -340,6 +350,7 @@ public class BookingController extends HttpServlet {
             request.setAttribute("trip", trip);
             request.getRequestDispatcher("/client/ticket-detail.jsp").forward(request, response);
         } catch (Exception e) {
+
         }
     }
 
@@ -426,7 +437,7 @@ public class BookingController extends HttpServlet {
     private List<Trip> getTripByVehicleTypes(List<Trip> list, String carName, int seat) {
         List<Trip> listTrip = new ArrayList<>();
         for (Trip trip : list) {
-            if(trip.getVehicle().getVehicleName().contains(carName)){
+            if (trip.getVehicle().getVehicleName().contains(carName)) {
 
                 listTrip.add(trip);
             }

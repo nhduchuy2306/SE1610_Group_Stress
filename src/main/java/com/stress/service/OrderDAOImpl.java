@@ -38,7 +38,7 @@ public class OrderDAOImpl implements OrderDAO {
                     Date createDate = rs.getDate("CreateDate");
                     String paymentMode = rs.getString("PaymentMode");
                     String userID = rs.getString("userID");
-                    boolean status = rs.getBoolean("Status");
+                    int status = rs.getInt("Status");
                     float totalPrice = rs.getFloat("totalPrice");
                     User user = new UserDAOImpl().getUserByID(userID);
                     order = new Order(orderID, createDate, paymentMode, user,totalPrice, status);
@@ -74,7 +74,7 @@ public class OrderDAOImpl implements OrderDAO {
                 ptm.setDate(2, new Date(Calendar.getInstance().getTimeInMillis()));
                 ptm.setString(3, order.getPaymentMode());
                 ptm.setString(4, order.getUser().getUserID());
-                ptm.setBoolean(5, order.isStatus());
+                ptm.setInt(5, order.getStatus());
                 if (ptm.executeUpdate() > 0) {
                     order = getOderByID(order.getOrderID());
                 }
@@ -103,7 +103,7 @@ public class OrderDAOImpl implements OrderDAO {
                 ptm = conn.prepareStatement(sql);
                 ptm.setString(1, order.getPaymentMode());
                 ptm.setFloat(2, order.getTotalPrice());
-                ptm.setBoolean(3, order.isStatus());
+                ptm.setInt(3, order.getStatus());
                 ptm.setString(4, order.getOrderID());
                 check = ptm.executeUpdate() > 0;
             }
@@ -141,7 +141,7 @@ public class OrderDAOImpl implements OrderDAO {
                     Date createDate = rs.getDate("CreateDate");
                     String paymentMode = rs.getString("PaymentMode");
                     String orderID = rs.getString("OrderID");
-                    boolean status = rs.getBoolean("Status");
+                    int status = rs.getInt("Status");
                     float totalPrice = rs.getFloat("totalPrice");
                     User user = new UserDAOImpl().getUserByID(userID);
                     list.add(new Order(orderID, createDate, paymentMode, user,totalPrice, status));

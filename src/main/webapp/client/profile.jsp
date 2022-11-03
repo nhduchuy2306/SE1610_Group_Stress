@@ -225,7 +225,7 @@
                                                     <td class="text-center">${o.orderID}</td>
                                                     <td class="text-center">${o.createDate}</td>
                                                     <td class="text-center">${o.paymentMode}</td>
-                                                    <td class="text-center">${o.status == true ? "Complete":"Pending"}</td>
+                                                    <td class="text-center">${o.getStringStatus()}</td>
                                                     <td class="text-center">
                                                         <a href="${pageContext.request.contextPath}/order?action=detail&orderID=${o.orderID}">View Detail</a>
                                                     </td>

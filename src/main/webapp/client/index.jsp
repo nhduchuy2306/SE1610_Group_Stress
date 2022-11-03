@@ -33,84 +33,84 @@
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-        
-<!--        test-->
+
+        <!--        test-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/datalist2.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/coupon.css">
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     </head>
-    
+
     <body>
         <header id="header">
             <jsp:include page="menu.jsp"></jsp:include>
-        </header>
-<!--    Login, Register, Forgot Password, Confirm email-->
+            </header>
+            <!--    Login, Register, Forgot Password, Confirm email-->
 
         <jsp:include page="login.jsp"></jsp:include>
 
 
-<!--    END Login, Register, Forgot Password, Confirm email-->
-        <!-- #header -->
-        <!-- start banner Area -->
-        <section class="banner-area relative">
-            <div class="overlay overlay-bg"></div>
-            <div class="container">
-                <div class="row fullscreen align-items-center justify-content-between">
-                    <div class="col-lg-12 col-md-12 mt-60 pt-60">
-<!--                        <h6 class="text-white">Away from monotonous life</h6>-->
-                        <h1 class="text-white" style="font-size: 500%">Magical Travel</h1>
-                        <p class="text-white" style="font-size: 120%">
-                            If you are looking at blank cassettes on the web, you may be very confused at the difference in
-                            price. You may see some for as low as $.17 each.
-                        </p>
-<!--                        <a href="#" class="primary-btn text-uppercase">Get Started</a>-->
-                    </div>
-                    <div class="col-lg-12 col-md-12 banner-right" style="margin-top: -40px; height: 300px;">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <h3 class="nav-link bg-white" style="cursor: pointer; color: #00b3ee">
-                                    <i class="fa fa-bus" aria-hidden="true" style="padding-right: 10px">    Booking</i></h3>
-                                <!-- <a class="nav-link active" id="flight-tab" data-toggle="tab" href="#flight" role="tab"
-                                        aria-controls="flight" aria-selected="true">Book A Car</a> -->
-                            </li>
-                        </ul>
+            <!--    END Login, Register, Forgot Password, Confirm email-->
+            <!-- #header -->
+            <!-- start banner Area -->
+            <section class="banner-area relative">
+                <div class="overlay overlay-bg"></div>
+                <div class="container">
+                    <div class="row fullscreen align-items-center justify-content-between">
+                        <div class="col-lg-12 col-md-12 mt-60 pt-60">
+                            <!--                        <h6 class="text-white">Away from monotonous life</h6>-->
+                            <h1 class="text-white" style="font-size: 500%">Magical Travel</h1>
+                            <p class="text-white" style="font-size: 120%">
+                                If you are looking at blank cassettes on the web, you may be very confused at the difference in
+                                price. You may see some for as low as $.17 each.
+                            </p>
+                            <!--                        <a href="#" class="primary-btn text-uppercase">Get Started</a>-->
+                        </div>
+                        <div class="col-lg-12 col-md-12 banner-right" style="margin-top: -40px; height: 300px;">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <h3 class="nav-link bg-white" style="cursor: pointer; color: #00b3ee">
+                                        <i class="fa fa-bus" aria-hidden="true" style="padding-right: 10px">    Booking</i></h3>
+                                    <!-- <a class="nav-link active" id="flight-tab" data-toggle="tab" href="#flight" role="tab"
+                                            aria-controls="flight" aria-selected="true">Book A Car</a> -->
+                                </li>
+                            </ul>
 
-                        <div class="tab-content" id="myTabContent" style="height: 10vh"> 
-                            <div class="tab-pane fade show active row" id="flight" role="tabpanel">
-                                <form class="form-wrap col-md-12" style="display: inline-flex" action="book" id="searchTripForm">
-                                    <div id="universe" class="col-md-7 d-flex" style="margin:-39px 0 0 -20px;">
-                                        <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 15px;color: #36b9cc"></i>
-                                        <ul class="select-list-group" id="listone">
-                                            <li>
-                                                <div class="col-md-12">
-                                                    <div>
-                                                        <input type="text" class="select-list-group__search" placeholder="Place . . ." id="data1" autocomplete="off"
-                                                               style="font-size: 25px" name="routeName" required=""/>
-                                                        <input type="hidden" name="routeID" value="" id="routeIDInput">
-                                                    </div>
-                                                    <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
+                            <div class="tab-content" id="myTabContent" style="height: 10vh"> 
+                                <div class="tab-pane fade show active row" id="flight" role="tabpanel">
+                                    <form class="form-wrap col-md-12" style="display: inline-flex" action="book" id="searchTripForm">
+                                        <div id="universe" class="col-md-7 d-flex" style="margin:-39px 0 0 -20px;">
+                                            <i class="fa-sharp fa-solid fa-location-dot" style="font-size: 50px;margin-top: 15px;color: #36b9cc"></i>
+                                            <ul class="select-list-group" id="listone">
+                                                <li>
+                                                    <div class="col-md-12">
+                                                        <div>
+                                                            <input type="text" class="select-list-group__search" placeholder="Place . . ." id="data1" autocomplete="off"
+                                                                   style="font-size: 25px" name="routeName" required=""/>
+                                                            <input type="hidden" name="routeID" value="" id="routeIDInput">
+                                                        </div>
+                                                        <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">
                                                         <c:forEach var="route" items="${requestScope.LIST_ROUTE}">
                                                             <li value="${route.routeID}" class="select-list-group__list-item" id="routeID" data-display="true" data-highlight="false">${route.routeName}</li>
-                                                        </c:forEach>
+                                                            </c:forEach>
                                                     </ul>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
-                                    
+
                                     <div class="col-md-3 d-flex" style=" margin-left: 25px">
                                         <i  class="fa-solid fa-calendar-days" style="font-size: 50px; margin: -20px 0 0 0px;padding-left: 0px;color: #36b9cc"></i>
-<!--                                        <input type="date" name="start" class="form-control" id="inputDateSearch" aria-describedby="emailHelp"
-                                               autocomplete="off" placeholder="Enter Start Date" required=""
-                                               style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">-->
+                                        <!--                                        <input type="date" name="start" class="form-control" id="inputDateSearch" aria-describedby="emailHelp"
+                                                                                       autocomplete="off" placeholder="Enter Start Date" required=""
+                                                                                       style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none">-->
                                         <input type="text" class="form-control date-picker "  name="start" placeholder="Start " autocomplete="off"
-                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
-                                        style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none" id="inputDateSearch" required="">
+                                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Start'"value="${java.time.LocalDate.now()}"
+                                               style="margin: -35px 0 0 0; height: 9vh;font-size: 25px; border: none" id="inputDateSearch" required="">
                                     </div>
 
-                                        <input type="submit" class="primary-btn text-uppercase col-md-2 float-right"
-                                               style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="Search" id="findTrip"/>
+                                    <input type="submit" class="primary-btn text-uppercase col-md-2 float-right"
+                                           style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="Search" id="findTrip"/>
                                 </form>
                             </div>
                         </div>
@@ -209,211 +209,224 @@
         <!-- End popular-destination Area -->
 
         <!-- Start other-issue Area -->
-        
-            <section class="recent-blog-area">
-                <div class="container">
-                    <div class="row d-flex justify-content-center align-items-center">
-                        <div class="menu-content pb-60 col-lg-9">
-                            <div class="title text-center">
-                                <h1 class="mb-10 mt-30">Coupon</h1>
-                            </div>
+
+        <section class="recent-blog-area">
+            <div class="container">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="menu-content pb-60 col-lg-9">
+                        <div class="title text-center">
+                            <h1 class="mb-10 mt-30">Coupon</h1>
                         </div>
                     </div>
-                    <div class="row" style="margin: auto">
-                        
-                            <div class="active-recent-blog-carusel"> 
-                            <c:forEach var="coupon" items="${requestScope.LIST_COUPON}">
-                                <div class="">
-                                    <div class="single-other-issue">
-                                        
-                                        <div class="coupon">
-                                            <h3 style="padding-top: 10px">Discount Coupon</h3>
-                                            <h2>${coupon.percent}%</h2>
-                                            <h5>Off All Trips</h5>
-                                            <h5>Number of Coupon: (${coupon.count})</h5>
-                                            <p>Valid to: ${coupon.expiryDate} at ${coupon.expiryTime.getHours()}h${coupon.expiryTime.getMinutes()}m</p>
-                                        </div>
-                                        
-                                        <div class="get-coupon">
-                                            <c:if test="${sessionScope.LOGIN_USER==null}">
-                                                <button type="button" class="login text-light" data-toggle="modal" data-target="#loginForm"
+                </div>
+                <div class="row" style="margin: auto">
+
+                    <div class="active-recent-blog-carusel"> 
+                        <c:forEach var="coupon" items="${requestScope.LIST_COUPON}">
+                            <div class="">
+                                <div class="single-other-issue">
+
+                                    <div class="coupon">
+                                        <h3 style="padding-top: 10px">Discount Coupon</h3>
+                                        <h2>${coupon.percent}%</h2>
+                                        <h5>Off All Trips</h5>
+                                        <h5>Number of Coupon: (${coupon.count})</h5>
+                                        <p>Valid to: ${coupon.expiryDate} at ${coupon.expiryTime.getHours()}h${coupon.expiryTime.getMinutes()}m</p>
+                                    </div>
+
+                                    <div class="get-coupon">
+                                        <c:if test="${sessionScope.LOGIN_USER==null}">
+                                            <button type="button" class="login text-light" data-toggle="modal" data-target="#loginForm"
                                                     style="width: 100%;height: 50px;font-size: 30px" >
                                                 Get Now!
                                             </button>
-                                            </c:if>
-                                            <c:if test="${sessionScope.LOGIN_USER!=null}">
+                                        </c:if>
+                                        <c:if test="${sessionScope.LOGIN_USER!=null}">
                                             <a href="${pageContext.request.contextPath}/Coupon?action=getCoupon&couponID=${coupon.couponID}&numOfCoupon=${coupon.count}">Get Now!</a>
-                                            </c:if>
-                                        </div>
-                                        
+                                        </c:if>
                                     </div>
+
                                 </div>
-                           </c:forEach>
+                            </div>
+                        </c:forEach>
+                    </div>
+
+
+                </div>
+            </div>
+        </section>
+
+
+        <!-- End other-issue Area -->
+        <div class="col-lg-3  col-md-6 col-sm-6">
+            <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="text-center">
+                                <i class="fa fa-exclamation" style="font-size:70px; color: red" aria-hidden="true"></i>
+                            </div>
+                            <h4 class="text-center font-weight-bold" style="margin-top: 20px; color:red">${requestScope.ERROR}</h4>
+                            <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
                         </div>
-                        
-                        
+                    </div>
+                </div>
+            </div>
+            <!-- Start Platform and connect -->
+            <section class="other-issue-area">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="menu-content pb-70 col-lg-9">
+                            <div class="title text-center">
+                                <h1 class="mb-10">Platform and networks</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
+                                <div class="mr-20">
+                                    <i style="font-size:60px; color: blue;" class="fa fa-bus" aria-hidden="true"></i>
+                                </div>
+                                <div class="p-100" href="#"zz>
+                                    <h4>2000+ nhà xe chất lượng cao</h4>
+                                    <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
+                                <div class="mr-20">
+                                    <i style="font-size:60px; color: yellow;" class="fa fa-ticket" aria-hidden="true"></i>
+                                </div>
+                                <div class="p-100" href="#">
+                                    <h4>Đặt vé dễ dàng</h4>
+                                    <p>Đặt vé chỉ với 60s. Chọn xe yêu thích cực nhanh và thuận tiện.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
+                                <div class="mr-20">
+                                    <i style="font-size:60px; color: green;" class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                </div>
+                                <div class="p-100" href="#">
+                                    <h4>2000+ nhà xe chất lượng cao</h4>
+                                    <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
+                                <div class="mr-20">
+                                    <i style="font-size:60px; color: red;" class="fa fa-tags" aria-hidden="true"></i>
+                                </div>
+                                <div class="p-100" href="#">
+                                    <h4>2000+ nhà xe chất lượng cao</h4>
+                                    <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
-        
-        
-        <!-- End other-issue Area -->
+            <!-- End Platform and connect -->
 
-        <!-- Start Platform and connect -->
-        <section class="other-issue-area">
-            <div class="container">
-                <div class="row d-flex justify-content-center">
-                    <div class="menu-content pb-70 col-lg-9">
-                        <div class="title text-center">
-                            <h1 class="mb-10">Platform and networks</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
-                            <div class="mr-20">
-                                <i style="font-size:60px; color: blue;" class="fa fa-bus" aria-hidden="true"></i>
-                            </div>
-                            <div class="p-100" href="#"zz>
-                                <h4>2000+ nhà xe chất lượng cao</h4>
-                                <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
+            <!-- Start Gas station -->
+            <section class="other-issue-area">
+                <div class="container">
+                    <div class="row d-flex justify-content-center">
+                        <div class="menu-content pb-70 col-lg-9">
+                            <div class="title text-center">
+                                <h1 class="mb-10">Gas Station</h1>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
-                            <div class="mr-20">
-                                <i style="font-size:60px; color: yellow;" class="fa fa-ticket" aria-hidden="true"></i>
-                            </div>
-                            <div class="p-100" href="#">
-                                <h4>Đặt vé dễ dàng</h4>
-                                <p>Đặt vé chỉ với 60s. Chọn xe yêu thích cực nhanh và thuận tiện.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
-                            <div class="mr-20">
-                                <i style="font-size:60px; color: green;" class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            </div>
-                            <div class="p-100" href="#">
-                                <h4>2000+ nhà xe chất lượng cao</h4>
-                                <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue d-flex flex-col justify-content-centerc align-items-center">
-                            <div class="mr-20">
-                                <i style="font-size:60px; color: red;" class="fa fa-tags" aria-hidden="true"></i>
-                            </div>
-                            <div class="p-100" href="#">
-                                <h4>2000+ nhà xe chất lượng cao</h4>
-                                <p>5000+ tuyến đường trên toàn quốc, chủ động và đa dạng lựa chọn.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- End Platform and connect -->
-
-        <!-- Start Gas station -->
-        <section class="other-issue-area">
-            <div class="container">
-                <div class="row d-flex justify-content-center">
-                    <div class="menu-content pb-70 col-lg-9">
-                        <div class="title text-center">
-                            <h1 class="mb-10">Gas Station</h1>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-mien-dong.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4 class="text-center">Bến Xe Miền Đông</h4>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-nuoc-ngam.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4 class="text-center">Bến Xe Miền Tây</h4>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-gia-lam.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4 class="text-center">Bến Xe An Sương</h4>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <div class="single-other-issue">
-                            <div class="thumb">
-                                <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-my-dinh.jpg" alt="">
-                            </div>
-                            <a href="#">
-                                <h4 class="text-center">Bến Xe Gia Lâm</h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- End Gas station -->
-
-        <!-- start footer Area -->
-        <footer class="footer-area">
-            <div class="container">
-
-                <div class="row">
-                    <div class="col-lg-3  col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>About Agency</h6>
-                            <p>
-                                The world has become so fast paced that people don’t want to stand by reading a page of
-                                information, they would much rather look at a presentation and understand the message. It
-                                has come to a point
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 col-sm-6">
-                        <div class="single-footer-widget">
-                            <h6>Navigation Links</h6>
-                            <div class="row">
-                                <div class="col">
-                                    <ul>
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">Feature</a></li>
-                                        <li><a href="#">Services</a></li>
-                                        <li><a href="#">Portfolio</a></li>
-                                    </ul>
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue">
+                                <div class="thumb">
+                                    <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-mien-dong.jpg" alt="">
                                 </div>
-                                <div class="col">
-                                    <ul>
-                                        <li><a href="#">Team</a></li>
-                                        <li><a href="#">Pricing</a></li>
-                                        <li><a href="#">Blog</a></li>
-                                        <li><a href="#">Contact</a></li>
-                                    </ul>
+                                <a href="#">
+                                    <h4 class="text-center">Bến Xe Miền Đông</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue">
+                                <div class="thumb">
+                                    <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-nuoc-ngam.jpg" alt="">
+                                </div>
+                                <a href="#">
+                                    <h4 class="text-center">Bến Xe Miền Tây</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue">
+                                <div class="thumb">
+                                    <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-gia-lam.jpg" alt="">
+                                </div>
+                                <a href="#">
+                                    <h4 class="text-center">Bến Xe An Sương</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <div class="single-other-issue">
+                                <div class="thumb">
+                                    <img class="img-fluid" src="https://storage.googleapis.com/fe-production/images/bx-my-dinh.jpg" alt="">
+                                </div>
+                                <a href="#">
+                                    <h4 class="text-center">Bến Xe Gia Lâm</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- End Gas station -->
+
+            <!-- start footer Area -->
+            <footer class="footer-area">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col-lg-3  col-md-6 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h6>About Agency</h6>
+                                <p>
+                                    The world has become so fast paced that people don’t want to stand by reading a page of
+                                    information, they would much rather look at a presentation and understand the message. It
+                                    has come to a point
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="single-footer-widget">
+                                <h6>Navigation Links</h6>
+                                <div class="row">
+                                    <div class="col">
+                                        <ul>
+                                            <li><a href="#">Home</a></li>
+                                            <li><a href="#">Feature</a></li>
+                                            <li><a href="#">Services</a></li>
+                                            <li><a href="#">Portfolio</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <ul>
+                                            <li><a href="#">Team</a></li>
+                                            <li><a href="#">Pricing</a></li>
+                                            <li><a href="#">Blog</a></li>
+                                            <li><a href="#">Contact</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-3  col-md-6 col-sm-6">
+
                         <div class="single-footer-widget">
                             <h6>Newsletter</h6>
                             <p>
@@ -467,159 +480,166 @@
                         <a href="#"><i class="fa fa-behance"></i></a>
                     </div>
                 </div>
-            </div>
-        </footer>
-        <!-- End footer Area -->
-        <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
-                        </div>
-                        <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.CHECK_OUT_SUCCESS}</h4>
+        </div>
+    </footer>
+    <!-- End footer Area -->
+    <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
                     </div>
+                    <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.CHECK_OUT_SUCCESS}</h4>
                 </div>
             </div>
         </div>
-                 
-<!--        Show fail-->
-        <div class="modal fade" id="showfail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="text-center">
-                            <i class="fa fa-window-close" style="font-size:70px; color: red" aria-hidden="true"></i>
-                        </div>
-                        <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.FAIL}</h4>
+    </div>
+
+    <!--        Show fail-->
+    <div class="modal fade" id="showfail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-window-close" style="font-size:70px; color: red" aria-hidden="true"></i>
                     </div>
+                    <h4 class="text-center font-weight-bold" style="margin:30px 0 40px 0;">${requestScope.FAIL}</h4>
                 </div>
             </div>
         </div>
-        <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
-        <script src="https://smtpjs.com/v3/smtp.js"></script>
-        <script src="https://www.google.com/recaptcha/api.js"></script>
-        
-        <script src="${pageContext.request.contextPath}/client/js/datalist2.js"></script>
-    </body>
-        <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
-            <script>
-            $(window).load(function () {
-                $('#loginForm').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
-            <script>
-            $(window).load(function () {
-                $('.toast').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.ERROR_FOR_LOGIN!=null}">
-            <script>
-            $(window).load(function () {
-                $('#loginForm').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.ERROR_USERID!=null}">
-            <script>
-            $(window).load(function () {
-                $('#registerForm').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.RESET_PASSWORD!=null}">
-            <script>
-            $(window).load(function () {
-                $('#demo-2').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.ERROR_CODE!=null}">
-            <script>
-            $(window).load(function () {
-                $('#confirmEmail').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.CHECK_MAIL!=null}">
-            <script>
-            $(window).load(function () {
-                $('#confirmEmail').modal('show');
-            });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.ACTIVE_ACCOUNT!=null}">
-            <script>
-                $(window).load(function () {
-                    $('#activeAccount').modal('show');
-                });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.CHECK_OUT_SUCCESS!=null}">
-            <script>
-                $(window).load(function () {
-                    $('#showsuccess').modal('show');
-                });
-            </script>
-        </c:if>
-        <c:if test="${requestScope.FAIL!=null}">
-            <script>
-                $(window).load(function () {
-                    $('#showfail').modal('show');
-                });
-            </script>
-        </c:if>
-         
-	<script>
-            const dayInput=document.getElementById('inputDateSearch');
-            
-            function getPreviousDay(date = new Date()) {
-                const previous = new Date(date.getTime());
-                previous.setDate(date.getDate() - 1);
+    </div>
+    <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhOdIF3Y9382fqJYt5I_sswSrEw5eihAA"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery-ui.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/hoverIntent.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/superfish.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.ajaxchimp.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.magnific-popup.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/jquery.nice-select.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/validation.js"></script>
+    <script src="${pageContext.request.contextPath}/client/js/validationSignUp.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
 
-                return previous;
-              }
-            function myFunction(){
-                const currentDate=new Date();
-                const previousDate=getPreviousDay(currentDate);
-                let dayCheck=new Date(dayInput.value);
-                if(previousDate>dayCheck){
-                    console.log(previousDate);
-                    document.getElementById('inputDateSearch').setCustomValidity('Day Start must higher or equal current day!');
-                    return false;
-                }else{
-                    document.getElementById('inputDateSearch').setCustomValidity('');
-                    return true;
-                }
-                return true;
-
-            }
-            var inputs = document.querySelectorAll('input:not([type="submit"])');
-
-
-            var submit =  document.getElementById('findTrip');
-            var form = document.getElementById('searchTripForm');
-            
-            submit.addEventListener('click', myFunction);
-            form.addEventListener('submit', myFunction);
+    <script src="${pageContext.request.contextPath}/client/js/datalist2.js"></script>
+</body>
+<c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
+    <script>
+                        $(window).load(function () {
+                            $('#loginForm').modal('show');
+                        });
     </script>
+</c:if>
+<c:if test="${requestScope.ACTIVE_LOGINFORM!=null}">
+    <script>
+        $(window).load(function () {
+            $('.toast').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.ERROR_FOR_LOGIN!=null}">
+    <script>
+        $(window).load(function () {
+            $('#loginForm').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.ERROR_USERID!=null}">
+    <script>
+        $(window).load(function () {
+            $('#registerForm').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.RESET_PASSWORD!=null}">
+    <script>
+        $(window).load(function () {
+            $('#demo-2').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.ERROR_CODE!=null}">
+    <script>
+        $(window).load(function () {
+            $('#confirmEmail').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.CHECK_MAIL!=null}">
+    <script>
+        $(window).load(function () {
+            $('#confirmEmail').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.ACTIVE_ACCOUNT!=null}">
+    <script>
+        $(window).load(function () {
+            $('#activeAccount').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.CHECK_OUT_SUCCESS!=null}">
+    <script>
+        $(window).load(function () {
+            $('#showsuccess').modal('show');
+        });
+    </script>
+</c:if>
+<c:if test="${requestScope.FAIL!=null}">
+    <script>
+        $(window).load(function () {
+            $('#showfail').modal('show');
+        });
+    </script>
+</c:if>
+
+<script>
+    const dayInput = document.getElementById('inputDateSearch');
+
+    function getPreviousDay(date = new Date()) {
+        const previous = new Date(date.getTime());
+        previous.setDate(date.getDate() - 1);
+
+        return previous;
+    }
+    function myFunction() {
+        const currentDate = new Date();
+        const previousDate = getPreviousDay(currentDate);
+        let dayCheck = new Date(dayInput.value);
+        if (previousDate > dayCheck) {
+            console.log(previousDate);
+            document.getElementById('inputDateSearch').setCustomValidity('Day Start must higher or equal current day!');
+            return false;
+        } else {
+            document.getElementById('inputDateSearch').setCustomValidity('');
+            return true;
+        }
+        return true;
+
+    }
+    var inputs = document.querySelectorAll('input:not([type="submit"])');
+
+
+    var submit = document.getElementById('findTrip');
+    var form = document.getElementById('searchTripForm');
+
+    submit.addEventListener('click', myFunction);
+    form.addEventListener('submit', myFunction);
+
+
+    <c:if test="${requestScope.ERROR!=null}">
+    $(document).ready(function () {
+        $('#showerror').modal('show')
+    });
+    </c:if>
+</script>
 </html>
 

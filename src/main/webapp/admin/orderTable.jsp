@@ -64,7 +64,9 @@
                         <!-- Begin Page Content -->
                         <form class="text-center" action="order" method="POST">
                             <input type="hidden" value="${requestScope.ORDER.orderID}" name="orderID">
+                            <c:if test="${requestScope.ORDER.status == 3}"> 
                             <input type="submit" style="margin-top: 10px" class="btn btn-primary" value="Approve" name="action">
+                            </c:if>
                             <input type="submit" style="margin-top: 10px"class="btn btn-danger" value="Reject" name="action">
                         </form>
                     </c:if>

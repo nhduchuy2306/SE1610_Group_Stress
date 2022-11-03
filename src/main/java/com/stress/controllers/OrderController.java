@@ -161,6 +161,8 @@ public class OrderController extends HttpServlet {
             // should set status for order to INT
             Order od = orderDAO.getOderByID(orderID);
             if (od != null) {
+                od.setStatus(Order.RETURN);
+                new OrderDAOImpl().updateOrder(od);
                 SeatDAO sDAO = new SeatDAOImpl();
                 TicketDAO tDAO = new TicketDAOImpl();
                 List<Ticket> ticketList = tDAO.getTicketByOrderID(orderID);
@@ -198,13 +200,15 @@ public class OrderController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             OrderDAO orderDAO = new OrderDAOImpl();
             Order od = orderDAO.getOderByID(orderID);
-            if (od != null) {
+            if (od != null && od.getStatus() != Order.FAILED && od.getStatus() != Order.PENDING ) {
+                if(od.getStatus() == Order.RETURN) request.setAttribute("ERROR", "Return it Already!");
                 request.setAttribute("ORDER", od);
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN_USER", new UserDAOImpl().getUserByEmail("quangtmse161987@fpt.edu.vn"));
                 url = "./admin/orderTable.jsp";
             } else {
-                throw new Exception();
+                url = "./client/404.jsp";
+                request.setAttribute("ERROR", "User havent pay for this Order! Can Return!");
             }
         } catch (Exception e) {
             System.out.println("Error at Return Ticket Controller " + e.toString());
@@ -217,10 +221,22 @@ public class OrderController extends HttpServlet {
             throws ServletException, IOException {
         String url = "./client/404.jsp";
         try {
-
+            
+            
+            
             String orderID = request.getParameter("orderID");
             OrderDAO oDAO = new OrderDAOImpl();
             Order od = oDAO.getOderByID(orderID);
+            if(od.getStatus() == Order.FAILED && od.getStatus() == Order.PENDING) {
+                request.setAttribute("ERROR", "Cant not Return this Order! You haven't payed yet");
+                showDetailView(request, response);
+            }else if(od.getStatus() == Order.RETURN) {
+                request.setAttribute("ERROR", "Cant not Return this Order! You had returned it already!");
+                showDetailView(request, response);
+            }else {
+            
+            od.setStatus(Order.RETURN_REQUEST);
+            new OrderDAOImpl().updateOrder(od);
             List<Ticket> ticketList = new TicketDAOImpl().getTicketByOrderID(orderID);
             Date goingDate = ticketList.get(0).getSeat().getTrip().getStartDateTime();
             if (Date.valueOf(LocalDate.now()).after(goingDate)) {
@@ -233,12 +249,10 @@ public class OrderController extends HttpServlet {
                 request.setAttribute("RETURN_ORDER_SUCCESS", "An Email has send to Staff. You Request will be processed in a shortest Time");
                 showDetailView(request, response);
             }
-
+            }
         } catch (Exception e) {
             System.out.println("Error at Return Ticket Controller " + e.toString());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
-        }
+        } 
 
     }
 
