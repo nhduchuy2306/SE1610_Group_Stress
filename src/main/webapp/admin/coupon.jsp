@@ -92,7 +92,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Count ID</th>
+                                                <th>Coupon ID</th>
                                                 <th>Discount</th>
                                                 <th>Expiration Date</th>
                                                 <th>Expiration Time</th>
@@ -130,7 +130,7 @@
                                                             <form action="${pageContext.request.contextPath}/Coupon" method="POST" id="formUpdate">
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Coupon ID</label>
-                                                                    <input type="number" class="form-control" name="couponID" readonly=""  value="${coupon.couponID}">
+                                                                    <input type="text" class="form-control" name="couponID" readonly="" value="${coupon.couponID}">
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label for="recipient-name" class="col-form-label">Discount</label>
