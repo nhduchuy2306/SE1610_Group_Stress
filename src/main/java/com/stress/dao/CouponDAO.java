@@ -13,10 +13,10 @@ public interface CouponDAO {
     List<Coupon> getAllCouponOfUser(String day)throws SQLException;
     List<Coupon> getCouponUserNot(String day)throws SQLException;
     boolean updateCoupon(Coupon coupon)throws SQLException;
-    boolean addCoupon(int count,int percent,String exDate,String exTime)throws SQLException;
+    boolean addCoupon(String couponID,int count,int percent,String exDate,String exTime)throws SQLException;
     Coupon getNewCoupon()throws SQLException;
-    Coupon getCouponByPercent(int percent) throws SQLException;
-    Coupon getCouponByID(int couponID) throws SQLException;
+    Coupon getCouponByPercentOrID(int percent,String couponID) throws SQLException;
+    Coupon getCouponByID(String couponID) throws SQLException;
     boolean insertUserCoupon(String userID,String couponID)throws SQLException;
     boolean setNumOfCoupon(String couponID,int count)throws SQLException;
     UserCoupon getUserCoupon(String userID,String couponID)throws SQLException;
