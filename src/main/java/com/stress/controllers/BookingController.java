@@ -1,6 +1,7 @@
 package com.stress.controllers;
 
 import com.stress.dao.CityDAO;
+import com.stress.dao.CouponDAO;
 import com.stress.dao.OrderDAO;
 import com.stress.dao.RouteDAO;
 import com.stress.dao.SeatDAO;
@@ -13,6 +14,7 @@ import com.stress.dto.Ticket;
 import com.stress.dto.Trip;
 import com.stress.dto.User;
 import com.stress.service.CityDAOImpl;
+import com.stress.service.CouponDaoImpl;
 import com.stress.service.OrderDAOImpl;
 import com.stress.service.RouteDAOImpl;
 import com.stress.service.SeatDAOImpl;
@@ -48,6 +50,8 @@ public class BookingController extends HttpServlet {
     private final UserDAO userDAO = new UserDAOImpl();
     private final TicketDAO ticketDAO = new TicketDAOImpl();
     private final OrderDAO orderDAO = new OrderDAOImpl();
+    private final CouponDAO couponDAO = new CouponDaoImpl();
+    
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -179,12 +183,14 @@ public class BookingController extends HttpServlet {
             double price = Double.parseDouble(request.getParameter("totalPrice")); // totalPrice
             System.out.println("totalPrice" + price);
             double accountBalance = 0; // Account balance of Active Customer
-
+            String couponID=request.getParameter("couponID");
             User loginUser = (User) session.getAttribute("LOGIN_USER");
 
             // Starting checkout
             Order order = (Order) session.getAttribute("ORDER"); // getOrderByID
-
+            if(couponID!=null){
+                couponDAO.setStatusUserCoupon(loginUser.getUserID(), couponID, 0);
+            }
             accountBalance = Double.parseDouble(loginUser.getAccountBalance());
             if (accountBalance >= price) {
                 Trip choosingTrip = (Trip) session.getAttribute("TRIP");
