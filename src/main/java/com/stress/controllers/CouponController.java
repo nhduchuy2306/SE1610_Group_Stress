@@ -10,6 +10,7 @@ import com.stress.dto.User;
 import com.stress.dto.UserCoupon;
 import com.stress.service.CouponDaoImpl;
 import com.stress.utils.ContentIdGenerator;
+import com.stress.utils.Email;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
@@ -150,18 +151,32 @@ public class CouponController extends HttpServlet {
             User loginUser=(User)session.getAttribute("LOGIN_USER");
             int count=Integer.parseInt(request.getParameter("numOfCoupon"));
             UserCoupon userCoupon=couponDAO.getUserCoupon(loginUser.getUserID(), couponID);
-            System.out.println("UserCoupon: "+userCoupon);
+            Coupon coupon=couponDAO.getCouponByID(couponID);
             if (userCoupon == null) {
                 if (couponDAO.insertUserCoupon(loginUser.getUserID(), couponID)) {
                     if (couponDAO.setNumOfCoupon(couponID, count-1)) {
-                        request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                        boolean sendCode = Email.sendEmail(loginUser.getEmail(),"" , "Your coupon code:"
+                        + couponID + "\n" + "Validate to: " + coupon.getExpiryDate()+" at"+coupon.getExpiryTime() + "\n\tDon't forget to use! For further information"
+                        + ", Please Contact: 079_809_1101\n\t\t\tGROUP STRESS", "Coupon for you");
+                        if(sendCode){
+                            request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                        }
                     } else {
                         request.setAttribute("FAIL", "The number of coupons is sold out!");
                     }
                 }
             }else if(userCoupon.getStatus()==0){
                 if(couponDAO.setStatusUserCoupon(loginUser.getUserID(), couponID, 1)){
-                    request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                    if (couponDAO.setNumOfCoupon(couponID, count-1)) {
+                        boolean sendCode = Email.sendEmail(loginUser.getEmail(),"" , "Your coupon code:"
+                        + couponID + "\n" + "Validate to: " + coupon.getExpiryDate()+" at "+coupon.getExpiryTime() + "\n\tDon't forget to use! For further information"
+                        + ", Please Contact: 079_809_1101\n\t\t\tGROUP STRESS", "Coupon for you");
+                        if(sendCode){
+                            request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                        }
+                    } else {
+                        request.setAttribute("FAIL", "The number of coupons is sold out!");
+                    }
                 }
             }              
             else{

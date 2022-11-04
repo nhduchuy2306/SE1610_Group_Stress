@@ -12,6 +12,7 @@ import com.stress.dto.Route;
 import com.stress.service.CouponDaoImpl;
 import com.stress.service.RouteDAOImpl;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,21 +41,24 @@ public class HomeController extends HttpServlet {
             request.setAttribute("LIST_ROUTE", listRoute);
             CouponDAO couponDAO = new CouponDaoImpl();
             HttpSession session = request.getSession();
+            List<Coupon> listCoupon=couponDAO.getAllCoupon(java.time.LocalDate.now().toString());
             if (session.getAttribute("LOGIN_USER") == null) {
-                List<Coupon> listCoupon = couponDAO.getAllCoupon(java.time.LocalDate.now().toString());
-                System.out.println(listCoupon);
-                if (!listRoute.isEmpty()) {
+                //System.out.println("All: \n" +listCoupon);
+                if (!listCoupon.isEmpty()) {
                     request.setAttribute("LIST_COUPON", listCoupon);
                 }
             }else{
-                List<Coupon> listCoupon = couponDAO.getCouponUserNot(java.time.LocalDate.now().toString());
-                System.out.println(listCoupon);
-                if (!listRoute.isEmpty()) {
-                    session.setAttribute("LIST_COUPON_USER", couponDAO.getAllCouponOfUser(java.time.LocalDate.now().toString()));
+                List<Coupon> userCoupon = couponDAO.getAllCouponOfUser(java.time.LocalDate.now().toString());
+                List<Coupon> listTmp=getCouponUserNot(userCoupon, listCoupon);
+                if (!listTmp.isEmpty()) {
+                    request.setAttribute("LIST_COUPON", listTmp);
+                }
+                else{
                     request.setAttribute("LIST_COUPON", listCoupon);
                 }
+                System.out.println("User coupon:"+couponDAO.getAllCouponOfUser(java.time.LocalDate.now().toString()));
+                session.setAttribute("LIST_COUPON_USER", userCoupon);
             }
-
         } catch (Exception e) {
         } finally {
             request.getRequestDispatcher("./client/index.jsp").forward(request, response);
@@ -66,4 +70,16 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
             doGet(request, response);
         }
+    
+    private List<Coupon> getCouponUserNot(List<Coupon> userCoupon,List<Coupon> listCoupon){
+         List<Coupon> listTmp=new ArrayList<>();
+         for (Coupon coupon : listCoupon) {
+             for (Coupon coupUser : userCoupon) {
+                 if(!coupon.getCouponID().equals(coupUser.getCouponID())){
+                     listTmp.add(coupon);
+                 }
+             }
+        }
+         return listTmp;
+    }
 }
