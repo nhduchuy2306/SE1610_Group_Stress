@@ -25,7 +25,7 @@
         var seatAreChosen = data.split(",");
         seatAreChosen.pop();
 
-        seatAreChosen.push('A_1');
+//        seatAreChosen.push('A_1');
         var cart = $(".selected-seats"),
                 counter = $(".counter-seat"),
                 total = $(".total-seat"),
@@ -48,8 +48,8 @@
             legend: {
                 node: $("#legend"),
                 items: [
-                    ["e", "available", "Economy Class"],
-                    ["f", "unavailable", "Already Booked"],
+                    ["e", "available", "Available Seat"],
+                    ["f", "unavailable", "Unavailable Seat"]
                 ]
             },
             click: function () {
@@ -103,7 +103,18 @@
 //        var seatAreChosen = ['A_1', 'B_1', 'C_4', 'D_5'];
         //let's pretend some seats have already been booked
         sc.get(seatAreChosen).status("unavailable");
-
+        
+        var seat = $(".seatCharts-row:eq(0) > div:nth-child(2)");
+        seat.html("<img width='30' height='30' src='http://cdn.onlinewebfonts.com/svg/img_251807.png'>");
+        
+        var seatIcon = $(".seatCharts-legendList");
+	seatIcon.append("<li class='seatCharts-legendItem'>\n\
+                            <span style='margin-left: -78px;'>\n\
+                                <img width='30' height='30' src='http://cdn.onlinewebfonts.com/svg/img_251807.png'>\n\
+                            </span>\n\
+                            <span style='margin-left:25px;'>Driver</span>\n\
+                        </li>");		
+        
         return choice;
 
     }
@@ -120,7 +131,7 @@
     function generateSeatMap(totalSeat) {
         if (totalSeat === 16) {
             return [
-                "e___",
+                "____",
                 "ee_e",
                 "ee__",     
                 "ee_e",
@@ -130,7 +141,7 @@
         }
         if (totalSeat === 29) {
             return [
-                "e____",
+                "_____",
                 "ee_ee",
                 "ee_ee",
                 "ee_ee",
@@ -142,7 +153,7 @@
         }
         if (totalSeat === 45) {
             return [
-                "e____",
+                "_____",
                 "ee_ee",
                 "ee_ee",
                 "ee_ee",

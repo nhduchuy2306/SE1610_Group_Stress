@@ -35,7 +35,7 @@
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
 <!--        <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar.css">-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/trip3.css">
-        
+
     </head>
 
     <body>
@@ -65,85 +65,85 @@
             </section>
             <!-- End banner Area -->
             <!-- Start destinations Area -->
-        <section class="destinations-area section-gap col-md-12">
-<!--                <div class="container">-->
-                    <div class="align-items-center " style="margin-top: -35px">
-                        <div class="row trip">
-                            <!-- Shop Sidebar Start -->
-                            <div class="col-md-2 shop-sidebar" style="margin-top: -8px">
-                                <!-- Price Start -->
-                                <div class="mb-4 pb-4 filter-by-price">
-                                    <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
-                                    <form action="">
-                                        <div class="d-flex align-items-center justify-content-between mb-3">
-                                            <input type="text" name="lowPrice" style="width: 90px" placeholder="Low Price">
-                                            <span class="mr-8 ml-8"> - </span>
-                                            <input type="text" name="highPrice" style="width: 90px" placeholder="High Price">
-                                            <button type="submit" style="border: 1px solid #0069d9;background-color: #0069d9;font-size: 17px;color: white" >
-                                                <i class="fa fa-search" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                        
-                                    </form>
-                                </div>
-                                <!-- Price End -->
-
-                                <!-- Time Start -->
-                                <div class="mb-4 pb-4 filter-by-time">
-                                    <h5 class="font-weight-semi-bold mb-4">Filter by time</h5>
-                                    <div class="d-flex align-items-center justify-content-between text-center" style="color: white">
-                                        <div class="phan-loai-theo-h">
-                                                <a style="" class="btn btn-primary mb-3"
-                                                   href="${pageContext.request.contextPath}/book?action=SortByTime&from=0&to=6&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">
-                                                    0:00-6:00<br>AM
-                                                </a>
-                                                <a style="" class="btn btn-primary" 
-                                                   href="${pageContext.request.contextPath}/book?action=SortByTime&from=6&to=12&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}"   >
-                                                    6:00-12:00<br>AM
-                                                </a>
-                                            </div>
-                                            <div class="phan-loai-theo-h">
-                                                <a style="" class="btn btn-primary mb-3"
-                                                   href="${pageContext.request.contextPath}/book?action=SortByTime&from=12&to=18&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">
-                                                    12:00-18:00<br>PM
-                                                </a>
-                                                <a style="" class="btn btn-primary"
-                                                   href="${pageContext.request.contextPath}/book?action=SortByTime&from=18&to=24&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">
-                                                    18:00-24:00<br>PM
-                                                </a>
-                                            </div>
-                                        </div>
-                                    
-                                    
-                                </div>
-                                <div class="mb-4 pb-4 filter-by-seat">
-                                    <h5 class="font-weight-semi-bold mb-4 text-center">Filter by Seat</h5>
-                                    <h4 id="filter-by-seat">Select<i class="fa fa-chevron-down" aria-hidden="true" style="margin-left: 170px"></i></h4>
-                                    <div class="chon-loai-xe" id="chon-loai-xe">
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Ford Transit&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Ford Transit</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Toyota Hiace&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Toyota Hiace</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Huyndai County&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Huyndai County</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Daewo Aero Class&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Daewo Aero Class</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Mercedes Supersport&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Mercedes Supersport</a>
-                                        <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Huyndai Universe&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Huyndai Universe 2010</a>
-                                    </div>    
-                                </div>
-                                <!-- Time end -->
-
-                            </div>
-                            <!-- Shop Sidebar End -->
-                            <!-- Shop Product Start -->
-                            <div class="col-md-6 shop-product" style="">
-                                <div class="row pb-3">
-                                    <div class="col-12 pb-1">
-                                        <div class="d-flex align-items-center justify-content-between mb-4">
-                                            <h4>Sort By:</h4>
-                                            <a href="${pageContext.request.contextPath}/book?action=Sort&sort=ascendingbyDate&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Ascending by Date</a>
-                                            <a href="${pageContext.request.contextPath}/book?action=Sort&sort=descendingbyDate&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Descending by Date</a>
-                                            <a href="${pageContext.request.contextPath}/book?action=Sort&sort=ascendingbyPrice&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}" >Ascending by Price</a>
-                                            <a href="${pageContext.request.contextPath}/book?action=Sort&sort=descendingbyPrice&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Descending by Price</a>
-                                        </div>
+            <section class="destinations-area section-gap col-md-12">
+                <!--                <div class="container">-->
+                <div class="align-items-center " style="margin-top: -35px">
+                    <div class="row trip">
+                        <!-- Shop Sidebar Start -->
+                        <div class="col-md-2 shop-sidebar" style="margin-top: -8px">
+                            <!-- Price Start -->
+                            <div class="mb-4 pb-4 filter-by-price">
+                                <h5 class="font-weight-semi-bold mb-4">Filter by price</h5>
+                                <form action="">
+                                    <div class="d-flex align-items-center justify-content-between mb-3">
+                                        <input type="text" name="lowPrice" style="width: 90px" placeholder="Low Price">
+                                        <span class="mr-8 ml-8"> - </span>
+                                        <input type="text" name="highPrice" style="width: 90px" placeholder="High Price">
+                                        <button type="submit" style="border: 1px solid #0069d9;background-color: #0069d9;font-size: 17px;color: white" >
+                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                        </button>
                                     </div>
+
+                                </form>
+                            </div>
+                            <!-- Price End -->
+
+                            <!-- Time Start -->
+                            <div class="mb-4 pb-4 filter-by-time">
+                                <h5 class="font-weight-semi-bold mb-4">Filter by time</h5>
+                                <div class="d-flex align-items-center justify-content-between text-center" style="color: white">
+                                    <div class="phan-loai-theo-h">
+                                        <a style="" class="btn btn-primary mb-3"
+                                           href="${pageContext.request.contextPath}/book?action=SortByTime&from=0&to=6&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">
+                                        0:00-6:00<br>AM
+                                    </a>
+                                    <a style="" class="btn btn-primary" 
+                                       href="${pageContext.request.contextPath}/book?action=SortByTime&from=6&to=12&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}"   >
+                                        6:00-12:00<br>AM
+                                    </a>
+                                </div>
+                                <div class="phan-loai-theo-h">
+                                    <a style="" class="btn btn-primary mb-3"
+                                       href="${pageContext.request.contextPath}/book?action=SortByTime&from=12&to=18&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">
+                                        12:00-18:00<br>PM
+                                    </a>
+                                    <a style="" class="btn btn-primary"
+                                       href="${pageContext.request.contextPath}/book?action=SortByTime&from=18&to=24&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">
+                                        18:00-24:00<br>PM
+                                    </a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="mb-4 pb-4 filter-by-seat">
+                            <h5 class="font-weight-semi-bold mb-4 text-center">Filter by Seat</h5>
+                            <h4 id="filter-by-seat">Select<i class="fa fa-chevron-down" aria-hidden="true" style="margin-left: 170px"></i></h4>
+                            <div class="chon-loai-xe" id="chon-loai-xe">
+                                <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Ford Transit&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Ford Transit</a>
+                                <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Toyota Hiace&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Toyota Hiace</a>
+                                <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Huyndai County&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Huyndai County</a>
+                                <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Daewo Aero Class&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Daewo Aero Class</a>
+                                <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Mercedes Supersport&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Mercedes Supersport</a>
+                                <a href="${pageContext.request.contextPath}/book?action=chooseCar&carName=Huyndai Universe&seat=16&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Huyndai Universe 2010</a>
+                            </div>    
+                        </div>
+                        <!-- Time end -->
+
+                    </div>
+                    <!-- Shop Sidebar End -->
+                    <!-- Shop Product Start -->
+                    <div class="col-md-6 shop-product" style="">
+                        <div class="row pb-3">
+                            <div class="col-12 pb-1">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h4>Sort By:</h4>
+                                    <a href="${pageContext.request.contextPath}/book?action=Sort&sort=ascendingbyDate&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Ascending by Date</a>
+                                    <a href="${pageContext.request.contextPath}/book?action=Sort&sort=descendingbyDate&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Descending by Date</a>
+                                    <a href="${pageContext.request.contextPath}/book?action=Sort&sort=ascendingbyPrice&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}" >Ascending by Price</a>
+                                    <a href="${pageContext.request.contextPath}/book?action=Sort&sort=descendingbyPrice&routeID=${requestScope.ROUTEID}&start=${requestScope.STARTDAY}">Descending by Price</a>
+                                </div>
+                            </div>
                             <c:if test="${LIST_ALL_TRIP_BY_LOCATION.size()>0}">
                                 <c:forEach items="${LIST_ALL_TRIP_BY_LOCATION}" var="trip">
 
@@ -293,7 +293,7 @@
                                     </div>
                                 </c:forEach>
                             </c:if>
-                                        
+
                             <c:if test="${LIST_ALL_TRIP_BY_LOCATION.size()<=0}">
                                 <div class="col-lg-12 col-md-6 col-sm-12">
                                     <div class="not-found">
@@ -302,35 +302,35 @@
                                     </div>
                                 </div>
                             </c:if>    
-                                <!--Phân trang-->
-                                <!-- <div class="col-12 pb-1">
-                                    <nav aria-label="Page navigation">
-                                        <ul class="pagination justify-content-center mb-3">
-                                            <li class="page-item disabled">
-                                                <a class="page-link" href="#" aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                            </li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#" aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div> -->
+                            <!--Phân trang-->
+                             <div class="col-12 pb-1">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center mb-3">
+                                        <li class="page-item disabled">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <%--<c:forEach items="${requestScope.totalPage}" begin="1" end="${requestScope.totalPage}" var="total">--%>
+                                            <!--<li class="page-item"><a class="page-link" href="#"></a></li>-->
+                                        <%--</c:forEach>--%>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div> 
 
-                            </div>
                         </div>
-                        <!-- Shop Product End -->
                     </div>
+                    <!-- Shop Product End -->
                 </div>
-<!--            </div>-->
+            </div>
+            <!--            </div>-->
         </section>
         <!-- End destinations Area -->
 
@@ -453,7 +453,7 @@
                             var flight_tab = document.querySelector("#flight-tab");
                             var hotel_tab = document.querySelector("#hotel-tab");
                             var holiday_tab = document.querySelector("#holiday-tab");
-                            
+
                             function AlwaysFlightClick() {
                                 flight_tab.click();
                             }
@@ -465,29 +465,29 @@
                             function nextInHotels() {
                                 holiday_tab.click();
                             }
-                            
-                            document.getElementById("filter-by-seat").addEventListener("mouseover",showList);
-                            var check=false;
-                            function showList(){
-                                if(check==false){
-                                    document.getElementById("chon-loai-xe").style.display="block";
-                                    document.getElementById("filter-by-seat").style.backgroundColor="#0083ff";
-                                    check=true;
-                                }else{
-                                    document.getElementById("chon-loai-xe").style.display="none";
-                                    document.getElementById("filter-by-seat").style.backgroundColor="white";
-                                    check=false; 
+
+                            document.getElementById("filter-by-seat").addEventListener("mouseover", showList);
+                            var check = false;
+                            function showList() {
+                                if (check == false) {
+                                    document.getElementById("chon-loai-xe").style.display = "block";
+                                    document.getElementById("filter-by-seat").style.backgroundColor = "#0083ff";
+                                    check = true;
+                                } else {
+                                    document.getElementById("chon-loai-xe").style.display = "none";
+                                    document.getElementById("filter-by-seat").style.backgroundColor = "white";
+                                    check = false;
                                 }
                             }
-                            
-                            document.getElementById("chon-loai-xe").addEventListener("mouseleave",showOff);
-                            function showOff(){
-                                document.getElementById("chon-loai-xe").style.display="none";
-                                document.getElementById("filter-by-seat").style.backgroundColor="white";
+
+                            document.getElementById("chon-loai-xe").addEventListener("mouseleave", showOff);
+                            function showOff() {
+                                document.getElementById("chon-loai-xe").style.display = "none";
+                                document.getElementById("filter-by-seat").style.backgroundColor = "white";
                             }
-                          
+
         </script>
-        
+
     </body>
 
 </html>

@@ -31,9 +31,9 @@ div.seatCharts-seat:focus {
 }
 */
 
-div.seatCharts-space {
-	background-color: white;
-}
+/*div.seatCharts-space {
+	background-color: transparent;
+}*/
 div.seatCharts-row {
 	height: 50px;
 }
