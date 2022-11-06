@@ -32,7 +32,7 @@
         <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
         <link href="${pageContext.request.contextPath}/admin/css/sb-admin-2.min.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery-seat-charts1.css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/client/css/stylechoosecar3.css">
     </head>
 

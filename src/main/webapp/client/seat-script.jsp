@@ -64,7 +64,7 @@
                             this.settings.id +
                             ": <b>" +
                             this.data().price +
-                            '</b> <a class="cancel-cart-item"></a></li>'
+                            ' VND </b> <a class="cancel-cart-item"></a></li>'
                             )
                             .attr("id", "cart-item-" + this.settings.id)
                             .data("seatId", this.settings.id)

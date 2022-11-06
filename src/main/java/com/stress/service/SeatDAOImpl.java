@@ -29,10 +29,11 @@ public class SeatDAOImpl implements SeatDAO{
         List<String> list = null;
         if(number==16) {
             String[] seatID = {
-                "A_4","A_5",
-                "B_1","B_2","B_4","B_5",
-                "C_1","C_2","C_4","C_5",
-                "D_1","D_2","D_3","D_4","D_5"
+                "B_1","B_2","B_4",
+                "C_1","C_2",
+                "D_1","D_2","D_4",
+                "E_1","E_2","E_4",
+                "F_1","F_2","F_3","F_4"
             };
             list = new ArrayList<>(Arrays.asList(seatID));
         }
