@@ -139,14 +139,18 @@ public class BookingController extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         try {
             int routeID = Integer.parseInt(request.getParameter("routeID"));
+            int page = Integer.parseInt(request.getParameter("page"));
+            
+            int totalPage = 0;
+            if(page%3==0) totalPage = page/3;
+            else totalPage = page/3+1;
+            
             String startDay = request.getParameter("start");
-            System.out.println(startDay);
             String[] a = startDay.split("/");
             String checkStartDate = a[2] + "-" + a[1] + "-" + a[0];
             SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
             Date dateInput = formater.parse(checkStartDate);
             String test = java.time.LocalDate.now().toString();
-            System.out.println("test:" + test);
             Date currentDate = formater.parse(test);
 
             List<Trip> listTrip = null;
@@ -156,9 +160,25 @@ public class BookingController extends HttpServlet {
             } else {
                 listTrip = tripDAO.getAllTripByRouteAndStartDay(routeID, startDay);
             }
+            List<Trip> listTripTmp = null;
+            if(page < 3){
+                
+            }
+            else{
+                int endPage = page * 3;
+                int startPage = endPage - 2;
+
+                listTripTmp = new ArrayList<>();
+
+                for(int i = startPage-1; i < endPage; i++){
+                    listTripTmp.add(listTrip.get(i));
+                }
+            }
             request.setAttribute("LIST_ALL_TRIP_BY_LOCATION", listTrip);
             request.setAttribute("ROUTEID", routeID);
             request.setAttribute("STARTDAY", startDay);
+            request.setAttribute("totalPage", totalPage);
+            
         } catch (Exception e) {
             System.out.println("Error at BookingController - showTrip" + e.toString());
         } finally {

@@ -109,7 +109,7 @@
                                                             class=" checkout-button-seat"
                                                             type="button">Checkout</button>
                                                     </div>
-                                                   
+                                                    <div id="legend"></div>
                                                 </div>
                                         </div>
                                 </div>

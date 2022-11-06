@@ -506,5 +506,5 @@ public class TripDAOImpl implements TripDAO {
             if(conn != null) conn.close();
         }
         return check;
-    }
+    }   
 }

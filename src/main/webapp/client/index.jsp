@@ -111,6 +111,7 @@
 
                                         <input type="submit" class="primary-btn text-uppercase col-md-2 float-right"
                                                style="height: 10vh; margin: -40px 0 0 15px; font-size: 20px" name="action" value="Search" id="findTrip"/>
+                                        <input type="hidden" name="page" value="1">
                                 </form>
                             </div>
                         </div>
