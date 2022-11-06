@@ -199,7 +199,7 @@ public class BookingController extends HttpServlet {
                     if (seat.getStatus() == 1) {
                         order.setStatus(2);
                         url = "home";
-                        request.setAttribute("ERROR", "The Seat is not available! Please Choose Another Seat!");
+                        request.setAttribute("FAIL", "The Seat is not available! Please Choose Another Seat!");
 
                     } else {
                         order.setStatus(1);
@@ -229,7 +229,7 @@ public class BookingController extends HttpServlet {
                     userDAO.updateUser(loginUser.getUserID(),
                             loginUser.getAccountBalance());
                     session.setAttribute("LOGIN_USER", loginUser);
-                    request.setAttribute("SUCCESS", "Check Out Success!");
+                    request.setAttribute("CHECK_OUT_SUCCESS", "Check Out Success!");
                     
                     order.setTotalPrice((float) price);
                     order.setPaymentMode("ABL");

@@ -147,7 +147,7 @@
                                                 <li>
                                                     <div class="col-md-12">
                                                         <div>
-                                                            <input type="text" class="select-list-group__search" placeholder="Coupon ID . . ." id="data1" autocomplete="off"
+                                                            <input type="text" class="select-list-group__search" placeholder="Enter coupon . . ." id="data1" autocomplete="off"
                                                                    style="font-size: 20px" name="routeName" required=""/> <i class="fa fa-check" id="oke" aria-hidden="true" style="color: #23b812;float: right;display: none"></i>
                                                            
                                                         </div>
@@ -183,13 +183,13 @@
                                                         type="submit" name="action" value="payingAccount" id="payingAccount">
                                                     AccountBalance
                                             </button><br>
-                                            <div style="margin-bottom: 20px">
+<!--                                            <div style="margin-bottom: 20px">
                                                 <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${sessionScope.PRICE + (sessionScope.PRICE * 0.1)}" style="width: 260px; background-color: #dc008a;
                                                color: white; padding: 12px; border-radius:10px;">
                                                     <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
                                                     Pay via MoMo
                                                 </a> 
-                                            </div>
+                                            </div>-->
                                             <div>
                                                 <a href="${pageContext.request.contextPath}/book?action=paypal&orderID=${sessionScope.ORDER.orderID}" >
                                                     <img style="width: 150px;border: 1px solid #a1aae3; border-radius: 10px"

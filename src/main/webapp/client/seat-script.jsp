@@ -120,10 +120,12 @@
     function generateSeatMap(totalSeat) {
         if (totalSeat === 16) {
             return [
-                "e__ee",
-                "ee_ee",
-                "ee_ee",
-                "eeeee"
+                "e___",
+                "ee_e",
+                "ee__",     
+                "ee_e",
+                "ee_e",
+                "eeee"
             ];
         }
         if (totalSeat === 29) {
