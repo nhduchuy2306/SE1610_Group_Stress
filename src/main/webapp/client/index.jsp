@@ -59,11 +59,16 @@
                 <div class="row fullscreen align-items-center justify-content-between">
                     <div class="col-lg-12 col-md-12 mt-60 pt-60">
 <!--                        <h6 class="text-white">Away from monotonous life</h6>-->
+                    <c:if test="${sessionScope.LOGIN_USER!=null}">
+                        <h1 class="text-white" style="font-size: 400%">Hello, ${sessionScope.LOGIN_USER.username}!</h1>
+                    </c:if>
+                    <c:if test="${sessionScope.LOGIN_USER==null}">
                         <h1 class="text-white" style="font-size: 500%">Magical Travel</h1>
                         <p class="text-white" style="font-size: 120%">
                             If you are looking at blank cassettes on the web, you may be very confused at the difference in
                             price. You may see some for as low as $.17 each.
                         </p>
+                    </c:if>                      
 <!--                        <a href="#" class="primary-btn text-uppercase">Get Started</a>-->
                     </div>
                     <div class="col-lg-12 col-md-12 banner-right" style="margin-top: -40px; height: 300px;">
