@@ -23,7 +23,7 @@ public class CouponDaoImpl implements CouponDAO {
         List<Coupon> list = new ArrayList<>();
         String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108);"
                 + "SELECT [CouponID],[Count],[Percent],[expiryDate],[expiryTime]FROM [ETransportationManagement].[dbo].[tblCoupon]"
-                + "WHERE expiryDate= ? AND expiryTime >= @timeFrom";
+                + "WHERE expiryDate= ? AND expiryTime >= @timeFrom AND [Count]>0";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -34,7 +34,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, day);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    list.add(new Coupon(rs.getInt("CouponID"),
+                    list.add(new Coupon(rs.getString("CouponID"),
                             rs.getInt("Percent"),
                             rs.getInt("Count"),
                             rs.getDate("expiryDate"),
@@ -63,7 +63,7 @@ public class CouponDaoImpl implements CouponDAO {
         List<Coupon> list = new ArrayList<>();
         String sql = "SELECT [CouponID],[Count],[Percent],[expiryDate],[expiryTime]"
                 + "FROM [ETransportationManagement].[dbo].[tblCoupon]"
-                + "WHERE expiryDate> ?";
+                + "WHERE expiryDate> ? AND [Count]>0 ";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -74,7 +74,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, day);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    list.add(new Coupon(rs.getInt("CouponID"),
+                    list.add(new Coupon(rs.getString("CouponID"),
                             rs.getInt("Percent"),
                             rs.getInt("Count"),
                             rs.getDate("expiryDate"),
@@ -114,8 +114,8 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setInt(2, coupon.getPercent());
                 ptm.setDate(3, coupon.getExpiryDate());
                 ptm.setTime(4, coupon.getExpiryTime());
-                ptm.setInt(5, coupon.getCouponID());
-                check = ptm.executeUpdate() > 0 ? true : false;
+                ptm.setString(5, coupon.getCouponID());
+                check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
             System.out.println("Error at deleteCoupon:" + e.toString());
@@ -131,19 +131,20 @@ public class CouponDaoImpl implements CouponDAO {
     }
 
     @Override
-    public boolean addCoupon(int count, int percent, String exDate, String exTime) throws SQLException {
+    public boolean addCoupon(String coupondID,int count, int percent, String exDate, String exTime) throws SQLException {
         boolean check = false;
-        String sql = "INSERT INTO tblCoupon ([Count],[Percent],expiryDate,expiryTime)VALUES (?,?,?,?)";
+        String sql = "INSERT INTO tblCoupon ([CouponID],[Count],[Percent],expiryDate,expiryTime)VALUES (?,?,?,?,?)";
         Connection conn = null;
         PreparedStatement ptm = null;
         try {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(sql);
-                ptm.setInt(1, count);
-                ptm.setInt(2, percent);
-                ptm.setString(3, exDate);
-                ptm.setString(4, exTime);
+                ptm.setString(1, coupondID);
+                ptm.setInt(2, count);
+                ptm.setInt(3, percent);
+                ptm.setString(4, exDate);
+                ptm.setString(5 , exTime);
                 check = ptm.executeUpdate() > 0;
             }
         } catch (Exception e) {
@@ -172,7 +173,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm = conn.prepareStatement(sql);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    coupon = new Coupon(rs.getInt("CouponID"),
+                    coupon = new Coupon(rs.getString("CouponID"),
                             rs.getInt("Percent"),
                             rs.getInt("Count"),
                             rs.getDate("expiryDate"),
@@ -201,17 +202,18 @@ public class CouponDaoImpl implements CouponDAO {
         try {
             CouponDaoImpl dao = new CouponDaoImpl();
 //            boolean check=dao.addCoupon(new Coupon(0, 20, 20, Date.valueOf("10/30/2022"), Time.valueOf(java.time.LocalDate.now().toString())));
-            System.out.println("Check: " + dao.getCouponUserNot("2022-11-01"));
+            //System.out.println("Check: " + dao.updateCoupon(new Coupon("tIcVgvg", 20, 40, Date.valueOf("2022-12-02"), Time.valueOf("01:27:00"))));
+            System.out.println("Check: " + dao.getCouponUserNot(java.time.LocalDate.now().toString()));
         } catch (Exception e) {
         }
     }
 
     @Override
-    public Coupon getCouponByPercent(int percent) throws SQLException {
+    public Coupon getCouponByPercentOrID(int percent,String couponID) throws SQLException {
         Coupon coupon = null;
         String sql = "SELECT [CouponID],[Count],[Percent],[expiryDate],[expiryTime]"
                 + "FROM [ETransportationManagement].[dbo].[tblCoupon] "
-                + "WHERE [Percent]=?";
+                + "WHERE [Percent]=? OR [CouponID]=?";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -220,9 +222,10 @@ public class CouponDaoImpl implements CouponDAO {
             if (conn != null) {
                 ptm = conn.prepareStatement(sql);
                 ptm.setInt(1, percent);
+                ptm.setString(2, couponID);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    coupon = new Coupon(rs.getInt("CouponID"),
+                    coupon = new Coupon(rs.getString("CouponID"),
                             rs.getInt("Percent"),
                             rs.getInt("Count"),
                             rs.getDate("expiryDate"),
@@ -286,7 +289,7 @@ public class CouponDaoImpl implements CouponDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(sql);
-                ptm.setInt(1, count - 1);
+                ptm.setInt(1, count);
                 ptm.setString(2, couponID);
                 check = ptm.executeUpdate() > 0 ? true : false;
             }
@@ -323,7 +326,7 @@ public class CouponDaoImpl implements CouponDAO {
                 rs = ptm.executeQuery();
                 System.out.println("Rs: " + rs);
                 if (rs.next()) {
-                    userCoupon = new UserCoupon(userDAO.getUserByID(userID), getCouponByID(Integer.parseInt(couponID)), rs.getInt("Status"));
+                    userCoupon = new UserCoupon(userDAO.getUserByID(userID), getCouponByID(couponID), rs.getInt("Status"));
                 }
             }
         } catch (Exception e) {
@@ -343,7 +346,7 @@ public class CouponDaoImpl implements CouponDAO {
     }
 
     @Override
-    public Coupon getCouponByID(int couponID) throws SQLException {
+    public Coupon getCouponByID(String couponID) throws SQLException {
         Coupon coupon = null;
         String sql = "SELECT [CouponID],[Count],[Percent],[expiryDate],[expiryTime]"
                 + "FROM [ETransportationManagement].[dbo].[tblCoupon] "
@@ -355,10 +358,10 @@ public class CouponDaoImpl implements CouponDAO {
             conn = DBConnection.getConnection();
             if (conn != null) {
                 ptm = conn.prepareStatement(sql);
-                ptm.setInt(1, couponID);
+                ptm.setString(1, couponID);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    coupon = new Coupon(rs.getInt("CouponID"),
+                    coupon = new Coupon(rs.getString("CouponID"),
                             rs.getInt("Percent"),
                             rs.getInt("Count"),
                             rs.getDate("expiryDate"),
@@ -417,7 +420,7 @@ public class CouponDaoImpl implements CouponDAO {
         String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108)\n"
                 + "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
                 + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]!=[tblUser_Coupon].[CouponID] \n"
-                + "WHERE C.[expiryDate] = ? AND C.[expiryTime] >= @timeFrom";
+                + "WHERE C.[expiryDate] = ? AND C.[expiryTime] >= @timeFrom AND C.[Count]>0 AND [tblUser_Coupon].[Status]=1 ";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -428,7 +431,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, day);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                    list.add(new Coupon(rs.getString("CouponIDs"),
                             rs.getInt("Percents"),
                             rs.getInt("Counts"),
                             rs.getDate("expiryDates"),
@@ -457,7 +460,7 @@ public class CouponDaoImpl implements CouponDAO {
         List<Coupon> list = new ArrayList<>();
         String sql = "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
                 + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]!=[tblUser_Coupon].[CouponID] \n"
-                + "WHERE C.[expiryDate] > ?";
+                + "WHERE C.[expiryDate] > ? AND C.[Count]>0 AND [tblUser_Coupon].[Status]=1 ";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -468,7 +471,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, day);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                    list.add(new Coupon(rs.getString("CouponIDs"),
                             rs.getInt("Percents"),
                             rs.getInt("Counts"),
                             rs.getDate("expiryDates"),
@@ -498,7 +501,7 @@ public class CouponDaoImpl implements CouponDAO {
         String sql = "DECLARE @timeFrom time(7) = convert(varchar(10), GETDATE(), 108)\n"
                 + "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
                 + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]=[tblUser_Coupon].[CouponID] \n"
-                + "WHERE C.[expiryDate] = ? AND C.[expiryTime] >= @timeFrom";
+                + "WHERE C.[expiryDate] = ? AND C.[expiryTime] >= @timeFrom AND [tblUser_Coupon].[Status]=1";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -509,7 +512,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, day);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                    list.add(new Coupon(rs.getString("CouponIDs"),
                             rs.getInt("Percents"),
                             rs.getInt("Counts"),
                             rs.getDate("expiryDates"),
@@ -538,7 +541,7 @@ public class CouponDaoImpl implements CouponDAO {
         List<Coupon> list = new ArrayList<>();
         String sql = "SELECT C.[CouponID] as CouponIDs , C.[Count] as Counts , C.[Percent] as Percents , C.[expiryDate] as expiryDates , C.[expiryTime] as  expiryTimes \n"
                 + "FROM [tblCoupon] as C INNER JOIN [tblUser_Coupon] ON C.[CouponID]=[tblUser_Coupon].[CouponID] \n"
-                + "WHERE C.[expiryDate] > ?";
+                + "WHERE C.[expiryDate] > ? AND [tblUser_Coupon].[Status]=1";
         Connection conn = null;
         PreparedStatement ptm = null;
         ResultSet rs = null;
@@ -549,7 +552,7 @@ public class CouponDaoImpl implements CouponDAO {
                 ptm.setString(1, day);
                 rs = ptm.executeQuery();
                 while (rs.next()) {
-                    list.add(new Coupon(rs.getInt("CouponIDs"),
+                    list.add(new Coupon(rs.getString("CouponIDs"),
                             rs.getInt("Percents"),
                             rs.getInt("Counts"),
                             rs.getDate("expiryDates"),

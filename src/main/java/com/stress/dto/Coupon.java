@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coupon {
-    private int couponID;
+    private String couponID;
     private int percent;
     private int count;
     private Date expiryDate;

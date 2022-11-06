@@ -11,13 +11,26 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
-    public static final boolean PENDING  = false;
-    public static final boolean COMPLETE  = true;
+    public static final int PENDING  = 0;
+    public static final int COMPLETE  = 1;
+    public static final int FAILED = 2;
+    public static final int RETURN_REQUEST = 3;
+    public static final int RETURN = 4;
     
     private String orderID;
     private Date createDate;
     private String paymentMode;
     private User user;
     private float totalPrice;
-    private boolean status;
+    private int status;
+    
+    public String getStringStatus() {
+        String sStatus = "";
+        if(this.status == 0) sStatus = "Pending";
+        else if(this.status == COMPLETE) sStatus = "Complete";
+        else if(this.status == FAILED) sStatus = "Failed";
+        else if(this.status == RETURN_REQUEST) sStatus = "Return_Request";
+        else if(this.status == RETURN) sStatus = "Returned";
+        return sStatus;
+    }
 }

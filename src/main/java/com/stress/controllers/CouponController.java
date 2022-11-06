@@ -9,10 +9,11 @@ import com.stress.dto.Coupon;
 import com.stress.dto.User;
 import com.stress.dto.UserCoupon;
 import com.stress.service.CouponDaoImpl;
+import com.stress.utils.ContentIdGenerator;
+import com.stress.utils.Email;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -100,7 +101,7 @@ public class CouponController extends HttpServlet {
 
     private void updateCoupon(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try {
-            int couponID=Integer.parseInt(request.getParameter("couponID"));
+            String couponID=request.getParameter("couponID");
             int percent=Integer.parseInt(request.getParameter("percent"));
             Date exDate=Date.valueOf(request.getParameter("exDate"));
             Time exTime=Time.valueOf(request.getParameter("exTime"));
@@ -122,15 +123,17 @@ public class CouponController extends HttpServlet {
             String exDate=request.getParameter("exDate");
             String exTime=request.getParameter("exTime");
             int count=Integer.parseInt(request.getParameter("count"));
-            Coupon check=couponDAO.getCouponByPercent(percent);
+            String couponID = ContentIdGenerator.getRandomWord(7);
+            Coupon check=couponDAO.getCouponByPercentOrID(percent,couponID);
             if (check == null) {
-                if (couponDAO.addCoupon(count, percent, exDate, exTime)) {
-                    check = couponDAO.getNewCoupon();
+                if (couponDAO.addCoupon(couponID,count, percent, exDate, exTime)) {
+                    
                     request.setAttribute("SUCCESS", "Adding Successfully!");
-                    request.setAttribute("COUPONID", check.getCouponID());
+                    request.setAttribute("COUPONID", couponID);
                     showCoupon(request, response);
                 }
             }else{
+                check = couponDAO.getNewCoupon();
                 request.setAttribute("COUPONID", check.getCouponID());
                 request.setAttribute("FAIL", "Coupon has already existed!");
                 showCoupon(request, response);
@@ -148,18 +151,32 @@ public class CouponController extends HttpServlet {
             User loginUser=(User)session.getAttribute("LOGIN_USER");
             int count=Integer.parseInt(request.getParameter("numOfCoupon"));
             UserCoupon userCoupon=couponDAO.getUserCoupon(loginUser.getUserID(), couponID);
-            System.out.println("UserCoupon: "+userCoupon);
+            Coupon coupon=couponDAO.getCouponByID(couponID);
             if (userCoupon == null) {
                 if (couponDAO.insertUserCoupon(loginUser.getUserID(), couponID)) {
-                    if (couponDAO.setNumOfCoupon(couponID, count)) {
-                        request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                    if (couponDAO.setNumOfCoupon(couponID, count-1)) {
+                        boolean sendCode = Email.sendEmail(loginUser.getEmail(),"" , "Your coupon code:"
+                        + couponID + "\n" + "Validate to: " + coupon.getExpiryDate()+" at"+coupon.getExpiryTime() + "\n\tDon't forget to use! For further information"
+                        + ", Please Contact: 079_809_1101\n\t\t\tGROUP STRESS", "Coupon for you");
+                        if(sendCode){
+                            request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                        }
                     } else {
                         request.setAttribute("FAIL", "The number of coupons is sold out!");
                     }
                 }
             }else if(userCoupon.getStatus()==0){
                 if(couponDAO.setStatusUserCoupon(loginUser.getUserID(), couponID, 1)){
-                    request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                    if (couponDAO.setNumOfCoupon(couponID, count-1)) {
+                        boolean sendCode = Email.sendEmail(loginUser.getEmail(),"" , "Your coupon code:"
+                        + couponID + "\n" + "Validate to: " + coupon.getExpiryDate()+" at "+coupon.getExpiryTime() + "\n\tDon't forget to use! For further information"
+                        + ", Please Contact: 079_809_1101\n\t\t\tGROUP STRESS", "Coupon for you");
+                        if(sendCode){
+                            request.setAttribute("CHECK_OUT_SUCCESS", "Coupon is ready!");
+                        }
+                    } else {
+                        request.setAttribute("FAIL", "The number of coupons is sold out!");
+                    }
                 }
             }              
             else{

@@ -32,6 +32,7 @@
         <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/jquery.seat-charts.css">
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/order2.css">
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/client/css/couponID.css">
 
     </head>
 
@@ -142,18 +143,28 @@
                                         </div>
                                         <div class="d-flex mt-3 ml-3 mb-4">
                                             <p class="text-muted mb-0">Using coupon </p>
-                                            <select name="coupons" id="selectCoupon" class="coupon" onchange="changeFunc();">
-                                                <option value="0" selected>Choose Coupon</option>
-                                                <c:forEach var="coupon" items="${sessionScope.LIST_COUPON_USER}">
-                                                    <option value="${coupon.percent}">${coupon.percent}%</option>
-                                                </c:forEach>
-                                                
-                                            </select>
+                                            <ul class="select-list-group" id="listone">
+                                                <li>
+                                                    <div class="col-md-12">
+                                                        <div>
+                                                            <input type="text" class="select-list-group__search" placeholder="Enter coupon . . ." id="data1" autocomplete="off"
+                                                                   style="font-size: 20px" name="routeName" required=""/> <i class="fa fa-check" id="oke" aria-hidden="true" style="color: #23b812;float: right;display: none"></i>
+                                                           
+                                                        </div>
+                                                        <ul class="select-list-group__list" data-toggle="false" style="margin-left: 0px">  
+                                                            <c:forEach var="coupon" items="${sessionScope.LIST_COUPON_USER}"> 
+                                                                <li value="${coupon.percent}" class="select-list-group__list-item" id="routeID" data-display="true" data-highlight="false">${coupon.couponID}</li>
+                                                            </c:forEach>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </div>
 
 
                                 </div>    
+
 
 
                                 <div class="d-flex align-items-center justify-content-between card-footer border-0 px-4 py-5">
@@ -167,26 +178,31 @@
                                          
                                         <input type="hidden" value="${sessionScope.LOGIN_USER.accountBalance}" id="accountBalance">
                                             <form action="${pageContext.request.contextPath}/book" method="POST">
-                                            <button style="width: 150px; margin-bottom: 10px; background-color: #007bff;
+                                            <button style="width: 150px; margin-bottom: 3px; background-color: #007bff;
                                                         color: white; padding: 12px; border-radius:10px;font-size: 14px;cursor: pointer;"
                                                         type="submit" name="action" value="payingAccount" id="payingAccount">
                                                     AccountBalance
                                             </button><br>
-                                            <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${sessionScope.PRICE + (sessionScope.PRICE * 0.1)}" style="width: 260px; margin-bottom: 10px; background-color: #dc008a;
+<!--                                            <div style="margin-bottom: 20px">
+                                                <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${sessionScope.PRICE + (sessionScope.PRICE * 0.1)}" style="width: 260px; background-color: #dc008a;
                                                color: white; padding: 12px; border-radius:10px;">
-                                                <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
-                                                Pay via MoMo
-                                            </a>
-                                            <a href="${pageContext.request.contextPath}/book?action=paypal&orderID=${sessionScope.ORDER.orderID}" style="width: 260px; margin-bottom: 10px; background-color: #0b6799;
-                                               color: white; padding: 12px; border-radius:10px;">
-                                                <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
-                                                Pay via Paypal 
-                                            </a>
+                                                    <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
+                                                    Pay via MoMo
+                                                </a> 
+                                            </div>-->
+                                            <div>
+                                                <a href="${pageContext.request.contextPath}/book?action=paypal&orderID=${sessionScope.ORDER.orderID}" >
+                                                    <img style="width: 150px;border: 1px solid #a1aae3; border-radius: 10px"
+                                                         src="${pageContext.request.contextPath}/client/img/paypal.png" alt="alt"/> 
+                                                </a>
+                                            </div>
+                                            
                                             <input type="hidden" value="${sessionScope.SEAT_LIST}" name="seatID">
                                             <input type="hidden" value="${sessionScope.TRIP.tripID}" name="tripID">
                                             <input type="hidden" value="${sessionScope.ORDER.orderID}" name="orderID">
                                             <input type="hidden" value="${sessionScope.QUANTITY}" name="quantity">
                                             <input type="hidden" value="${sessionScope.PRICE}" name="totalPrice" id="totalPrice">
+                                            <input type="hidden" name="couponID" value="" id="couponID">
                                         </form>
                                     </div>
                                     <input type="hidden" value="${sessionScope.PRICE}" id="default-totalPrice">
@@ -315,7 +331,7 @@
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/coupon2.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/coupon3.js"></script>
         <jsp:include page="/client/seat-script.jsp"></jsp:include>
         
         <script type="text/javascript">
