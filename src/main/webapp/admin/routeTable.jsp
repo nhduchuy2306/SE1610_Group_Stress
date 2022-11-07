@@ -313,8 +313,9 @@
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
-                                                                                
-                                                                                <input type="text" name="tripName" class="add-dob form-control" value="${r.routeName}" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
+
+                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" value="${r.routeName}" required>
+
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Date Time</label>
@@ -337,7 +338,7 @@
                                                                         </div>
                                                                         <div class="modal-footer">
                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            <input type="submit" name="action" value="add" class="btn btn-primary" id="createTrip">
+                                                                            <input type="submit" name="action" value="Add" class="btn btn-primary" id="createTrip">
                                                                         </div>
                                                                     </form>
                                                                 </div>
@@ -359,6 +360,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
+
                                 <h5 class="modal-title" id="exampleModalLabel">Assign For ${r.routeName}</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -389,7 +391,7 @@
                                             </c:if>
                                             <c:if test="${requestScope.LIST_ACTIVE_DRIVER!=null}">
                                                 <c:forEach var="ad" items="${requestScope.LIST_ACTIVE_DRIVER}">
-                                                    <option value="${ad.driverID}">${ad.driverName}</option>
+                                                    <option value="${ad.driverID}">${ad.driverName}_${ad.driverID}</option>
                                                 </c:forEach>
                                             </c:if>
                                         </select>
@@ -397,7 +399,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <input type="submit" name="action" value="add_continue" class="btn btn-primary" id="createTrip">
+                                    <input type="submit" name="action" value="Assign" class="btn btn-primary" id="createTrip">
                                 </div>
                             </form>
                         </div>
