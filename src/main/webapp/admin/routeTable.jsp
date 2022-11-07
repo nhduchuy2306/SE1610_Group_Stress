@@ -251,7 +251,7 @@
                                                                                     <label for="exampleInputEmail1">Status</label>
                                                                                     <select name="status" class="form-control">
                                                                                         <option value="1">ACTIVE</option>
-                                                                                        <option value="0"}>INACTIVE</option>
+                                                                                        <option value="0">INACTIVE</option>
 
 
                                                                                     </select>
@@ -297,6 +297,8 @@
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-${r.routeID}">
                                                             <i class="fa fa-check-circle"></i>
                                                         </button>
+                                                            <p id="" style="display: none"></p>
+                                                            <input type="hidden" value="${r.routeName}" id="defaultTripName">
                                                         <div class="modal fade" id="create-${r.routeID}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
@@ -307,19 +309,24 @@
                                                                         </button>
                                                                     </div>
                                                                         <!--createTripForm-->
-                                                                    <form action="route" method="post" id="">
+                                                                    <form action="route" method="post" id="createTripForm">
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
+<<<<<<< HEAD
                                                                                 <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" value="${r.routeName}" required>
+=======
+                                                                                
+                                                                                <input type="text" name="tripName" class="add-dob form-control" value="${r.routeName}" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
+>>>>>>> f3caba3b8191e9e8d3acbde5d317a21c17ae00fe
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Date Time</label>
-                                                                                <input type="date" name="startdate" class="add-dob form-control" id="exampleInputDate" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
+                                                                                <input type="date" name="startdate" class="add-dob form-control" onchange="myFunction()" id="exampleInputDate" aria-describedby="emailHelp" placeholder="Enter Start Date" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Time</label>
-                                                                                <input type="time" name="startTime" class="add-dob form-control"  placeholder="Enter Start Date" required>
+                                                                                <input type="time" name="startTime" class="add-dob form-control" id="timeStart" onchange="setNameTime()"  placeholder="Enter Start Date" required>
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Policy</label>
@@ -356,7 +363,11 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
+<<<<<<< HEAD
                                 <h5 class="modal-title" id="exampleModalLabel">Assign Driver For Trip ${requestScope.tripName}</h5>
+=======
+                                <h5 class="modal-title" id="exampleModalLabel">Assign For ${r.routeName}</h5>
+>>>>>>> f3caba3b8191e9e8d3acbde5d317a21c17ae00fe
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -486,6 +497,7 @@
         <!-- Page level custom scripts -->
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
         <script src="${pageContext.request.contextPath}/admin/js/validationTripForm.js"></script>
+        <script src="${pageContext.request.contextPath}/admin/js/validationDate2.js"></script>
         <script type="text/javascript">
             <c:if test="${requestScope.SUCCESS!=null}">
             $(document).ready(function () {
@@ -595,36 +607,28 @@
             </c:if>
 
         </script>
-        <script>
-            function changeData() {
-                var tmp = document.getElementById("data1").value;
-                document.getElementById("data1").value = document.getElementById("data2").value;
-                document.getElementById("data2").value = tmp;
-            }
-        </script>
-
-        <script>
-            const dayInput = document.getElementById('exampleInputDate');
+<!--        <script>
+            var form = document.getElementById('createTripForm');
+            const dayInput = form.querySelector('#exampleInputDate');
+            
 
             function myFunction() {
                 const currentDate = new Date();
                 let dayCheck = new Date(dayInput.value);
                 if (currentDate > dayCheck) {
-                    console.log(currentDate < dayCheck);
+                    console.log(currentDate > dayCheck);
                     document.getElementById('exampleInputDate').setCustomValidity('Day Start must higher than current day!');
                 } else {
                     document.getElementById('exampleInputDate').setCustomValidity('');
                 }
 
             }
-            var inputs = document.querySelectorAll('input:not([type="submit"])');
-
-
-            var submit = document.querySelector('input[type="submit"');
-            var form = document.getElementById('createTripForm');
+            
+            var submit = document.getElementById('createTrip');
+            
 
             submit.addEventListener('click', myFunction);
             form.addEventListener('submit', myFunction);
-        </script>
+        </script>-->
     </body> 
 </html>
