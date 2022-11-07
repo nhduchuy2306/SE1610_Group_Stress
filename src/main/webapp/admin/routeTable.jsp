@@ -313,12 +313,11 @@
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
-<<<<<<< HEAD
-                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" value="${r.routeName}" required>
-=======
                                                                                 
-                                                                                <input type="text" name="tripName" class="add-dob form-control" value="${r.routeName}" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" required>
->>>>>>> f3caba3b8191e9e8d3acbde5d317a21c17ae00fe
+
+
+                                                                                <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" value="${r.routeName}" required>
+
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Start Date Time</label>
@@ -363,11 +362,8 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-<<<<<<< HEAD
-                                <h5 class="modal-title" id="exampleModalLabel">Assign Driver For Trip ${requestScope.tripName}</h5>
-=======
+
                                 <h5 class="modal-title" id="exampleModalLabel">Assign For ${r.routeName}</h5>
->>>>>>> f3caba3b8191e9e8d3acbde5d317a21c17ae00fe
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
