@@ -52,7 +52,10 @@
                                             Add Trip 
                                         </button>
                                     </div>
-
+                                    <div>
+                                    <a href="${pageContext.request.contextPath}/admin/trip?action=report" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Feedback Report</a>
+                                    </div>
                                     <div class="add-modal modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
