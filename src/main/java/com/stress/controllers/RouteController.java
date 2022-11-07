@@ -95,10 +95,10 @@ public class RouteController extends HttpServlet {
                 case "recover":
                     recoverRoute(request, response);
                     break;
-                case "add":
+                case "Add":
                     addTrip(request, response);
                     break;
-                case "add_continue":
+                case "Assign":
                     addTripContinue(request, response);
                     break;
             }
