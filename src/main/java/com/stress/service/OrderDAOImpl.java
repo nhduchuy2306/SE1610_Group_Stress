@@ -130,7 +130,8 @@ public class OrderDAOImpl implements OrderDAO {
         PreparedStatement ptm = null;
         ResultSet rs = null;
         List<Order> list = new ArrayList<>();
-        String sql = "SELECT [OrderID], [createDate], [PaymentMode],[UserID],[TotalPrice],[Status] FROM tblOrders WHERE [UserID] = ?";
+        String sql = "SELECT [OrderID], [createDate], [PaymentMode],[UserID],[TotalPrice],[Status] FROM tblOrders WHERE [UserID] = ? AND [Status] != 0 "
+                + " ORDER BY [CreateDate] DESC";
         try {
             conn = DBConnection.getConnection();
             if(conn != null) {

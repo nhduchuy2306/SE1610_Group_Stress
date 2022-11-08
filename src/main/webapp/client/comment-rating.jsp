@@ -348,22 +348,22 @@
                                     </form>
                                 </c:if>
                                 <c:if test="${requestScope.FEEDBACK != null}"> 
-                                    <input type="radio" name="rating" value="5" id="rate-5-comment" <c:if test="${requestScope.FEEDBACK.rating == 5}">checked</c:if>>
-                                        <label for="rate-5-comment" class="fas fa-star"></label>
-                                        <input type="radio" name="rating" value="4" id="rate-4-comment" <c:if test="${requestScope.FEEDBACK.rating == 4}">checked</c:if>>
-                                        <label for="rate-4-comment" class="fas fa-star"></label>
-                                        <input type="radio" name="rating" value="3" id="rate-3-comment"<c:if test="${requestScope.FEEDBACK.rating == 3}">checked</c:if>>
-                                        <label for="rate-3-comment" class="fas fa-star"></label>
-                                        <input type="radio" name="rating" value="2" id="rate-2-comment" <c:if test="${requestScope.FEEDBACK.rating == 2}">checked</c:if>>
-                                        <label for="rate-2-comment" class="fas fa-star"></label>
-                                        <input type="radio" name="rating" value="1" id="rate-1-comment" <c:if test="${requestScope.FEEDBACK.rating == 1}">checked</c:if>>
-                                        <label for="rate-1-comment" class="fas fa-star"></label> >
+                                    <input type="radio" name="rating" value="5" id="rate-5-comment" <c:if test="${requestScope.FEEDBACK.rating == 5}">checked</c:if> >
+                                           <label for="rate-5-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="4" id="rate-4-comment" <c:if test="${requestScope.FEEDBACK.rating == 4}">checked</c:if> >
+                                               <label for="rate-4-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="3" id="rate-3-comment"<c:if test="${requestScope.FEEDBACK.rating == 3}">checked</c:if> > 
+                                               <label for="rate-3-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="2" id="rate-2-comment" <c:if test="${requestScope.FEEDBACK.rating == 2}">checked</c:if> > 
+                                               <label for="rate-2-comment" class="fas fa-star"></label>
+                                        <input type="radio" name="rating" value="1" id="rate-1-comment" <c:if test="${requestScope.FEEDBACK.rating == 1}">checked</c:if> >
+                                               <label for="rate-1-comment" class="fas fa-star"></label> 
 
-                                        <header>Comment</header>
+                                               <header style="color:white;">Comment: ${requestScope.FEEDBACK.comment}</header>
 
 
                                         <div class="textarea-comment">
-                                            <textarea name="comment" cols="30" placeholder="Describe your experience.." value="${requestScope.FEEDBACK.comment}"></textarea>
+                                            <p></p>
                                         </div>
                                 </c:if>
                             </div>
