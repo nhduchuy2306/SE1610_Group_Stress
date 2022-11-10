@@ -272,15 +272,15 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-            <section class="about-banner relative">
+            <section class="about-banner relative" style="height: 28vh">
                 <div class="overlay overlay-bg"></div>
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
-                        <div class="about-content col-lg-12">
+                        <div class="about-content col-lg-12" style="margin-top: -70px">
                             <h1 class="text-white">
                                 Profile
                             </h1>
-                            <p class="text-white link-nav"><a href="">Home </a> </p>
+<!--                            <p class="text-white link-nav"><a href="">Home </a> </p>-->
                         </div>
                     </div>
                 </div>
@@ -288,24 +288,24 @@
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-            <section class="bg-light mt-10">
+            <section class="bg-light mt-10"  style="margin-top: -70px">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12 mb-4 mb-sm-5">
+                        <div class="col-lg-12 mb-4 mb-sm-5" >
                             <div class="card card-style1 border-0">
                                 <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                                     <div class="row align-items-center">
                                         <div class="col-lg-6 mb-4 mb-lg-0">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                                            <img style="height: 30vh" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
                                         </div>
                                         <div class="col-lg-6 px-xl-10">
                                             <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
                                                 <h3 class="h2 text-white mb-0">${sessionScope.LOGIN_USER.username}</h3>
                                         </div>
                                         <ul class="list-unstyled mb-1-9">
-                                            <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> ${sessionScope.LOGIN_USER.email}</li>
-                                            <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Date Of Birth:</span> ${sessionScope.LOGIN_USER.dob}</li>
-                                            <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span>${sessionScope.LOGIN_USER.phoneNumber}</li>
+                                            <li class="mb-2 mb-xl-3 display-28" style="font-size: 22px"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> ${sessionScope.LOGIN_USER.email}</li>
+                                            <li class="mb-2 mb-xl-3 display-28" style="font-size: 22px"><span class="display-26 text-secondary me-2 font-weight-600">Date Of Birth:</span> ${sessionScope.LOGIN_USER.dob}</li>
+                                            <li class="display-28" style="font-size: 22px"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span>${sessionScope.LOGIN_USER.phoneNumber}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -315,7 +315,7 @@
                     <div class="col-lg-6 mb-4 mb-sm-5">
                         <div class="container-comment">
                             <div class="post-comment">
-                                <div class="text-comment">Thanks for rating us!</div>
+                                <div class="text-comment" style="color: #e09119">Thanks for rating us!</div>
 
                                 <!--<div class="edit-comment">EDIT</div>-->
                             </div>
@@ -359,7 +359,7 @@
                                         <input type="radio" name="rating" value="1" id="rate-1-comment" <c:if test="${requestScope.FEEDBACK.rating == 1}">checked</c:if> >
                                                <label for="rate-1-comment" class="fas fa-star"></label> 
 
-                                               <header style="color:white;">Comment: ${requestScope.FEEDBACK.comment}</header>
+                                               <header style="color:white;font-size: 24px;text-align: center">Comment:<br> ${requestScope.FEEDBACK.comment}</header>
 
 
                                         <div class="textarea-comment">
@@ -370,7 +370,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-4 mb-sm-5"> 
-                        <div> 
+                        <div class="font-weight-600" style="color: #606061;font-size: 20px"> 
                             <h1>Thank You for choosing us</h1>
                             <h3>Order ID: ${requestScope.TICKET.order.orderID}</h3>
                             <p>Trip: ${requestScope.TICKET.trip.tripName} | ${requestScope.TICKET.trip.route.routeName}</p>
