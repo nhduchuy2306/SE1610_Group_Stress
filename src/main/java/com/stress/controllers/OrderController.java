@@ -131,6 +131,7 @@ public class OrderController extends HttpServlet {
                 request.setAttribute("ERROR", "You are not booking any ticket in this order!");
                 showOrderView(request, response);
             }else if(fb != null) {
+                System.out.println(fb.getComment());
                 Ticket t = tList.get(0);
                 request.setAttribute("TICKET", t);
                 request.setAttribute("FEEDBACK", fb);

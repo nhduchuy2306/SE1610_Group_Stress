@@ -74,9 +74,10 @@ public class ExcelUtils {
         String excelFilePath = fileName;
 
         try ( Connection connection = DBConnection.getConnection()) {
-            String sql = "SELECT tr.TripID,tr.TripName, AVG(fb.Rating) AS [Average Rating]  FROM tblTrips tr INNER JOIN tblFeedbacks fb \n"
-                    + " ON tr.TripID = fb.TripID \n"
-                    + " GROUP BY tr.TripID, tr.TripName ";
+            String sql = "SELECT tr.TripID AS [TripID],tr.TripName AS [TripName], r.RouteName AS RouteName,tr.SeatRemain AS [SeatRemain], AVG(fb.Rating) AS [Rating]"
+                    + "  FROM tblTrips tr INNER JOIN tblFeedbacks fb \n"
+                    + " ON tr.TripID = fb.TripID INNER JOIN tblRoutes r ON tr.RouteID = r.RouteID \n"
+                    + " GROUP BY tr.TripID, tr.TripName, r.RouteName, tr.SeatRemain";
 
             Statement statement = connection.createStatement();
 

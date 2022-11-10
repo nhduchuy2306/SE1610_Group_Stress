@@ -178,18 +178,13 @@
                                          
                                         <input type="hidden" value="${sessionScope.LOGIN_USER.accountBalance}" id="accountBalance">
                                             <form action="${pageContext.request.contextPath}/book" method="POST">
+                                            <div>
                                             <button style="width: 150px; margin-bottom: 3px; background-color: #007bff;
                                                         color: white; padding: 12px; border-radius:10px;font-size: 14px;cursor: pointer;"
                                                         type="submit" name="action" value="payingAccount" id="payingAccount">
-                                                    AccountBalance
-                                            </button><br>
-<!--                                            <div style="margin-bottom: 20px">
-                                                <a href="${pageContext.request.contextPath}/MoMoRequest?action=payMoMo&amount=${sessionScope.PRICE + (sessionScope.PRICE * 0.1)}" style="width: 260px; background-color: #dc008a;
-                                               color: white; padding: 12px; border-radius:10px;">
-                                                    <img width="30px;" src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="alt"/> 
-                                                    Pay via MoMo
-                                                </a> 
-                                            </div>-->
+                                                    Account Balance
+                                            </button>
+                                            </div>
                                             <div>
                                                 <a href="${pageContext.request.contextPath}/book?action=paypal&orderID=${sessionScope.ORDER.orderID}" >
                                                     <img style="width: 150px;border: 1px solid #a1aae3; border-radius: 10px"

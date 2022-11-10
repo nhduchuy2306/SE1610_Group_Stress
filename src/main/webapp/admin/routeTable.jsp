@@ -313,6 +313,8 @@
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Trip Name</label>
+                                                                                
+
 
                                                                                 <input type="text" name="tripName" class="add-dob form-control" id="exampleInputTripName" aria-describedby="emailHelp" placeholder="Enter Trip Name" value="${r.routeName}" required>
 
