@@ -4,6 +4,7 @@ import com.stress.dao.FeedbackDAO;
 import com.stress.dao.OrderDAO;
 import com.stress.dao.SeatDAO;
 import com.stress.dao.TicketDAO;
+import com.stress.dto.DistanceAndTime;
 import com.stress.dto.Feedback;
 import com.stress.dto.Order;
 import com.stress.dto.Ticket;
@@ -15,10 +16,13 @@ import com.stress.service.SeatDAOImpl;
 import com.stress.service.TicketDAOImpl;
 import com.stress.service.TripDAOImpl;
 import com.stress.service.UserDAOImpl;
+import com.stress.utils.DistanceUtils;
 import com.stress.utils.Email;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -93,31 +97,45 @@ public class OrderController extends HttpServlet {
             System.out.println("Error at Post " + e.toString());
         }
     }
+
     private void sendFeedback(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String url = "./client/404.jsp";
         try {
             String orderID = request.getParameter("orderID");
             String tripID = request.getParameter("tripID");
             String comment = request.getParameter("comment");
-            
+
             Trip trip = new TripDAOImpl().getTripByID(tripID);
             Order order = new OrderDAOImpl().getOderByID(orderID);
             int rating = Integer.parseInt(request.getParameter("rating"));
             Feedback fb = new Feedback(0, rating, comment, order, trip);
-            
-            FeedbackDAO fbDAO = new FeedbackDAOImpl();
-            if(fbDAO.sendFeedback(fb)) 
-                request.setAttribute("SUCCESS", "Thank you for your feedback!");
-            else request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
-            
+            DistanceAndTime tripTime = new DistanceUtils().getDistanceAndTime(
+                    trip.getRoute().getStartLocation().getCity().getCityName(),
+                    trip.getRoute().getEndLocation().getCity().getCityName());
+
+            long realTimeGoing = (long) tripTime.getTime();
+            LocalTime StartTime = trip.getStartTime().toLocalTime();
+            LocalDateTime finishTrip = trip.getStartDateTime().toLocalDate().atTime(StartTime).plusHours(realTimeGoing);
+
+            if (finishTrip.isAfter(LocalDateTime.now())) {
+                request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
+            } else {
+                FeedbackDAO fbDAO = new FeedbackDAOImpl();
+                if (fbDAO.sendFeedback(fb)) {
+                    request.setAttribute("SUCCESS", "Thank you for your feedback!");
+                } else {
+                    request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
+                }
+            }
             showDetailView(request, response);
-            
+
         } catch (Exception e) {
             System.out.println("Error at Send Feedback " + e.toString());
-        } 
-        
+        }
+
     }
+
     private void showFeedBack(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String url = "./client/404.jsp";
@@ -130,15 +148,14 @@ public class OrderController extends HttpServlet {
             if (tList.size() <= 0) {
                 request.setAttribute("ERROR", "You are not booking any ticket in this order!");
                 showOrderView(request, response);
-            }else if(fb != null) {
+            } else if (fb != null) {
                 System.out.println(fb.getComment());
                 Ticket t = tList.get(0);
                 request.setAttribute("TICKET", t);
                 request.setAttribute("FEEDBACK", fb);
                 request.setAttribute("FB_ALREADY", "You have Feedback this Order Already!");
-                 url = "./client/comment-rating.jsp";
-            }
-            else {
+                url = "./client/comment-rating.jsp";
+            } else {
                 Ticket t = tList.get(0);
                 request.setAttribute("TICKET", t);
                 url = "./client/comment-rating.jsp";
@@ -199,8 +216,10 @@ public class OrderController extends HttpServlet {
             String orderID = request.getParameter("orderID");
             OrderDAO orderDAO = new OrderDAOImpl();
             Order od = orderDAO.getOderByID(orderID);
-            if (od != null && od.getStatus() != Order.FAILED && od.getStatus() != Order.PENDING ) {
-                if(od.getStatus() == Order.RETURN) request.setAttribute("ERROR", "Return it Already!");
+            if (od != null && od.getStatus() != Order.FAILED && od.getStatus() != Order.PENDING) {
+                if (od.getStatus() == Order.RETURN) {
+                    request.setAttribute("ERROR", "Return it Already!");
+                }
                 request.setAttribute("ORDER", od);
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN_USER", new UserDAOImpl().getUserByEmail("quangtmse161987@fpt.edu.vn"));
@@ -220,38 +239,36 @@ public class OrderController extends HttpServlet {
             throws ServletException, IOException {
         String url = "./client/404.jsp";
         try {
-            
-            
-            
+
             String orderID = request.getParameter("orderID");
             OrderDAO oDAO = new OrderDAOImpl();
             Order od = oDAO.getOderByID(orderID);
-            if(od.getStatus() == Order.FAILED && od.getStatus() == Order.PENDING) {
+            if (od.getStatus() == Order.FAILED && od.getStatus() == Order.PENDING) {
                 request.setAttribute("ERROR", "Cant not Return this Order! You haven't payed yet");
                 showDetailView(request, response);
-            }else if(od.getStatus() == Order.RETURN) {
+            } else if (od.getStatus() == Order.RETURN) {
                 request.setAttribute("ERROR", "Cant not Return this Order! You had returned it already!");
                 showDetailView(request, response);
-            }else {
-            
-            od.setStatus(Order.RETURN_REQUEST);
-            new OrderDAOImpl().updateOrder(od);
-            List<Ticket> ticketList = new TicketDAOImpl().getTicketByOrderID(orderID);
-            Date goingDate = ticketList.get(0).getSeat().getTrip().getStartDateTime();
-            if (Date.valueOf(LocalDate.now()).after(goingDate)) {
-                request.setAttribute("ERROR", "Cant not Return this Order! This Trip is already Going");
-                showDetailView(request, response);
             } else {
-                Email.sendEmail("carbookingstress@gmail.com", "", "A customer want to Return an Order\n" + "Please "
-                        + "click at the link below\n"
-                        + "http://localhost:8080/ETrans/order?action=Return&orderID=" + orderID, "Return Order Request");
-                request.setAttribute("RETURN_ORDER_SUCCESS", "An Email has send to Staff. You Request will be processed in a shortest Time");
-                showDetailView(request, response);
-            }
+
+                od.setStatus(Order.RETURN_REQUEST);
+                new OrderDAOImpl().updateOrder(od);
+                List<Ticket> ticketList = new TicketDAOImpl().getTicketByOrderID(orderID);
+                Date goingDate = ticketList.get(0).getSeat().getTrip().getStartDateTime();
+                if (Date.valueOf(LocalDate.now()).after(goingDate)) {
+                    request.setAttribute("ERROR", "Cant not Return this Order! This Trip is already Going");
+                    showDetailView(request, response);
+                } else {
+                    Email.sendEmail("carbookingstress@gmail.com", "", "A customer want to Return an Order\n" + "Please "
+                            + "click at the link below\n"
+                            + "http://localhost:8080/ETrans/order?action=Return&orderID=" + orderID, "Return Order Request");
+                    request.setAttribute("RETURN_ORDER_SUCCESS", "An Email has send to Staff. You Request will be processed in a shortest Time");
+                    showDetailView(request, response);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error at Return Ticket Controller " + e.toString());
-        } 
+        }
 
     }
 
@@ -291,8 +308,8 @@ public class OrderController extends HttpServlet {
         }
     }
 
-    private void pendingOrder(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException{
+    private void pendingOrder(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         try {
             request.getRequestDispatcher("/client/order.jsp").forward(request, response);
         } catch (Exception e) {
