@@ -323,7 +323,7 @@
                                 <c:if test="${requestScope.FB_ALREADY == null}"> 
                                     <form action="order" method="POST">
 
-                                        <input type="radio" name="rating" value="5" id="rate-5-comment">
+                                        <input type="radio"  name="rating" value="5" id="rate-5-comment">
                                         <label for="rate-5-comment" class="fas fa-star"></label>
                                         <input type="radio" name="rating" value="4" id="rate-4-comment">
                                         <label for="rate-4-comment" class="fas fa-star"></label>
@@ -331,7 +331,7 @@
                                         <label for="rate-3-comment" class="fas fa-star"></label>
                                         <input type="radio" name="rating" value="2" id="rate-2-comment">
                                         <label for="rate-2-comment" class="fas fa-star"></label>
-                                        <input type="radio" name="rating" value="1" id="rate-1-comment">
+                                        <input type="radio" checked="" name="rating" value="1" id="rate-1-comment">
                                         <label for="rate-1-comment" class="fas fa-star"></label>
 
                                         <header>Comment</header>
@@ -479,7 +479,33 @@
         </div>
     </footer>
     <!-- End footer Area -->
-
+    <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                    </div>
+                    <c:if test="${requestScope.RETURN_ORDER_SUCCESS != null}"> <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.RETURN_ORDER_SUCCESS}</h4> </c:if>
+                    <c:if test="${requestScope.SUCCESS != null}"> <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.SUCCESS}</h4> </c:if>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-exclamation" style="font-size:70px; color: red" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px; color:red">${requestScope.ERROR}</h4>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -500,7 +526,18 @@
     <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
-
+    <script>
+        <c:if test="${requestScope.SUCCESS!=null}">
+                            $(document).ready(function () {
+                                $('#showsuccess').modal('show')
+                            });
+        </c:if>
+        <c:if test="${requestScope.ERROR!=null}">
+                            $(document).ready(function () {
+                                $('#showerror').modal('show')
+                            });
+        </c:if>
+    </script>
 </body>
 
 </html>
