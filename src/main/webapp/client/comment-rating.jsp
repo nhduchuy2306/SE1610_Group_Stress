@@ -272,15 +272,15 @@
             <!--    END Login, Register, Forgot Password, Confirm email-->
 
             <!-- start banner Area -->
-            <section class="about-banner relative">
+            <section class="about-banner relative" style="height: 28vh">
                 <div class="overlay overlay-bg"></div>
                 <div class="container">
                     <div class="row d-flex align-items-center justify-content-center">
-                        <div class="about-content col-lg-12">
+                        <div class="about-content col-lg-12" style="margin-top: -70px">
                             <h1 class="text-white">
                                 Profile
                             </h1>
-                            <p class="text-white link-nav"><a href="">Home </a> </p>
+<!--                            <p class="text-white link-nav"><a href="">Home </a> </p>-->
                         </div>
                     </div>
                 </div>
@@ -288,24 +288,24 @@
             <!-- End banner Area -->
 
             <!-- Start destinations Area -->
-            <section class="bg-light mt-10">
+            <section class="bg-light mt-10"  style="margin-top: -70px">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-12 mb-4 mb-sm-5">
+                        <div class="col-lg-12 mb-4 mb-sm-5" >
                             <div class="card card-style1 border-0">
                                 <div class="card-body p-1-9 p-sm-2-3 p-md-6 p-lg-7">
                                     <div class="row align-items-center">
                                         <div class="col-lg-6 mb-4 mb-lg-0">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
+                                            <img style="height: 30vh" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="...">
                                         </div>
                                         <div class="col-lg-6 px-xl-10">
                                             <div class="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
                                                 <h3 class="h2 text-white mb-0">${sessionScope.LOGIN_USER.username}</h3>
                                         </div>
                                         <ul class="list-unstyled mb-1-9">
-                                            <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> ${sessionScope.LOGIN_USER.email}</li>
-                                            <li class="mb-2 mb-xl-3 display-28"><span class="display-26 text-secondary me-2 font-weight-600">Date Of Birth:</span> ${sessionScope.LOGIN_USER.dob}</li>
-                                            <li class="display-28"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span>${sessionScope.LOGIN_USER.phoneNumber}</li>
+                                            <li class="mb-2 mb-xl-3 display-28" style="font-size: 22px"><span class="display-26 text-secondary me-2 font-weight-600">Email:</span> ${sessionScope.LOGIN_USER.email}</li>
+                                            <li class="mb-2 mb-xl-3 display-28" style="font-size: 22px"><span class="display-26 text-secondary me-2 font-weight-600">Date Of Birth:</span> ${sessionScope.LOGIN_USER.dob}</li>
+                                            <li class="display-28" style="font-size: 22px"><span class="display-26 text-secondary me-2 font-weight-600">Phone:</span>${sessionScope.LOGIN_USER.phoneNumber}</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -315,7 +315,7 @@
                     <div class="col-lg-6 mb-4 mb-sm-5">
                         <div class="container-comment">
                             <div class="post-comment">
-                                <div class="text-comment">Thanks for rating us!</div>
+                                <div class="text-comment" style="color: #e09119">Thanks for rating us!</div>
 
                                 <!--<div class="edit-comment">EDIT</div>-->
                             </div>
@@ -323,7 +323,7 @@
                                 <c:if test="${requestScope.FB_ALREADY == null}"> 
                                     <form action="order" method="POST">
 
-                                        <input type="radio" name="rating" value="5" id="rate-5-comment">
+                                        <input type="radio"  name="rating" value="5" id="rate-5-comment">
                                         <label for="rate-5-comment" class="fas fa-star"></label>
                                         <input type="radio" name="rating" value="4" id="rate-4-comment">
                                         <label for="rate-4-comment" class="fas fa-star"></label>
@@ -331,7 +331,11 @@
                                         <label for="rate-3-comment" class="fas fa-star"></label>
                                         <input type="radio" name="rating" value="2" id="rate-2-comment">
                                         <label for="rate-2-comment" class="fas fa-star"></label>
+<<<<<<< HEAD
                                         <input type="radio" name="rating" value="1" id="rate-1-comment" checked="">
+=======
+                                        <input type="radio" checked="" name="rating" value="1" id="rate-1-comment">
+>>>>>>> 1ff43f8b23566c30c6163e95f4ae594ac753069d
                                         <label for="rate-1-comment" class="fas fa-star"></label>
 
                                         <header>Comment</header>
@@ -359,7 +363,7 @@
                                         <input type="radio" name="rating" value="1" id="rate-1-comment"  <c:if test="${requestScope.FEEDBACK.rating == 1}">checked</c:if> >
                                                <label for="rate-1-comment" class="fas fa-star"></label> 
 
-                                               <header style="color:white;">Comment: ${requestScope.FEEDBACK.comment}</header>
+                                               <header style="color:white;font-size: 24px;text-align: center">Comment:<br> ${requestScope.FEEDBACK.comment}</header>
 
 
                                         <div class="textarea-comment">
@@ -370,7 +374,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6 mb-4 mb-sm-5"> 
-                        <div> 
+                        <div class="font-weight-600" style="color: #606061;font-size: 20px"> 
                             <h1>Thank You for choosing us</h1>
                             <h3>Order ID: ${requestScope.TICKET.order.orderID}</h3>
                             <p>Trip: ${requestScope.TICKET.trip.tripName} | ${requestScope.TICKET.trip.route.routeName}</p>
@@ -479,7 +483,33 @@
         </div>
     </footer>
     <!-- End footer Area -->
-
+    <div class="modal fade" id="showsuccess" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
+                    </div>
+                    <c:if test="${requestScope.RETURN_ORDER_SUCCESS != null}"> <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.RETURN_ORDER_SUCCESS}</h4> </c:if>
+                    <c:if test="${requestScope.SUCCESS != null}"> <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.SUCCESS}</h4> </c:if>
+                        <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="showerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <i class="fa fa-exclamation" style="font-size:70px; color: red" aria-hidden="true"></i>
+                        </div>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px; color:red">${requestScope.ERROR}</h4>
+                    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
@@ -500,7 +530,18 @@
     <script src="${pageContext.request.contextPath}/admin/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="${pageContext.request.contextPath}/admin/vendor/datatables/dataTables.bootstrap4.min.js"></script>
     <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
-
+    <script>
+        <c:if test="${requestScope.SUCCESS!=null}">
+                            $(document).ready(function () {
+                                $('#showsuccess').modal('show')
+                            });
+        </c:if>
+        <c:if test="${requestScope.ERROR!=null}">
+                            $(document).ready(function () {
+                                $('#showerror').modal('show')
+                            });
+        </c:if>
+    </script>
 </body>
 
 </html>
