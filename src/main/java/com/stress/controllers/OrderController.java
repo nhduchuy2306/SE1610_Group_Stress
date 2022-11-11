@@ -128,7 +128,7 @@ public class OrderController extends HttpServlet {
                     request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
                 }
             }
-            showFeedBack(request, response);
+            showDetailView(request, response);
 
         } catch (Exception e) {
             System.out.println("Error at Send Feedback " + e.toString());
