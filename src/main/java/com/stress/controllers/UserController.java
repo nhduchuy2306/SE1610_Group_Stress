@@ -5,9 +5,16 @@
  */
 package com.stress.controllers;
 
+import com.stress.dao.RouteDAO;
 import com.stress.dao.UserDAO;
+import com.stress.dto.City;
+import com.stress.dto.Location;
 import com.stress.dto.Role;
+import com.stress.dto.Route;
 import com.stress.dto.User;
+import com.stress.service.CityDAOImpl;
+import com.stress.service.LocationDAOImpl;
+import com.stress.service.RouteDAOImpl;
 import com.stress.service.UserDAOImpl;
 import com.stress.utils.ContentIdGenerator;
 import com.stress.utils.Email;
@@ -204,7 +211,8 @@ public class UserController extends HttpServlet {
                         else if (loginUser.getRole().getRoleID().equals("1")) {
                             url = "/home";
                         } else {
-                            url = "./admin/index.jsp";
+//                            url = "./admin/index.jsp";
+                            viewRoute(request, response);
                         }
                     } else {
                         request.setAttribute("USERID", userID);
@@ -229,7 +237,29 @@ public class UserController extends HttpServlet {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
+    
+    private void viewRoute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            response.setContentType("text/html;charset=UTF-8");
+            request.setCharacterEncoding("utf-8");
+            String url = "./404.jsp";
+            try {
+                RouteDAO dao = new RouteDAOImpl();
+                List<Route> list = dao.getAllRoute();
+                List<Location> allLocation = new LocationDAOImpl().getAllLocation();
+                List<City> cityList = new CityDAOImpl().getAllCity();
 
+                request.setAttribute("ROUTE_LIST", list);
+                request.setAttribute("CITY_LIST", cityList);
+
+                request.setAttribute("LOCATION_LIST", allLocation);
+                url = "./admin/routeTable.jsp";
+
+            } catch (Exception e) {
+                log("Error at RouteController - viewRoute: " + e.toString());
+            } finally {
+                request.getRequestDispatcher(url).forward(request, response);
+            }
+        }
     private void deleteHistory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String url = "./admin/404.jsp";

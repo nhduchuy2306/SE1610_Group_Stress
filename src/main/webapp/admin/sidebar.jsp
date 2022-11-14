@@ -7,15 +7,15 @@
         </div>
         <div class="sidebar-brand-text mx-3">ETrans Staff </div>
     </a>
-    <!-- Divider -->
+<!--     Divider 
     <hr class="sidebar-divider my-0">
-    <!-- Nav Item - Dashboard -->
+     Nav Item - Dashboard 
     <li class="nav-item active">
         <a class="nav-link" href="index.jsp">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
-    <!-- Divider -->
+     Divider -->
     <hr class="sidebar-divider">
     <!-- Heading -->
     <div class="sidebar-heading">
