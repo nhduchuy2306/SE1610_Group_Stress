@@ -118,17 +118,17 @@ public class OrderController extends HttpServlet {
             LocalTime StartTime = trip.getStartTime().toLocalTime();
             LocalDateTime finishTrip = trip.getStartDateTime().toLocalDate().atTime(StartTime).plusHours(realTimeGoing);
 
-            if (finishTrip.isAfter(LocalDateTime.now())) {
-                request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
-            } else {
+            //if (finishTrip.isAfter(LocalDateTime.now())) {
+                //request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
+            //} else {
                 FeedbackDAO fbDAO = new FeedbackDAOImpl();
                 if (fbDAO.sendFeedback(fb)) {
                     request.setAttribute("SUCCESS", "Thank you for your feedback!");
                 } else {
                     request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
                 }
-            }
-            showDetailView(request, response);
+            //}
+            showFeedBack(request, response);
 
         } catch (Exception e) {
             System.out.println("Error at Send Feedback " + e.toString());
