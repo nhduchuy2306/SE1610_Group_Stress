@@ -196,15 +196,7 @@
                                                     <div class="chuyenxe-giathanh col-md-3" style="">
                                                         <div class="">
                                                             <h3 class="" style="color: #007bff;">
-                                                                <c:if test="${trip.vehicle.vehicleType.totalSeat==16}">
-                                                                    ${trip.vehicle.vehicleType.PRICE_16} VNĐ
-                                                                </c:if>
-                                                                <c:if test="${trip.vehicle.vehicleType.totalSeat==29}">
-                                                                    ${trip.vehicle.vehicleType.PRICE_29} VNĐ
-                                                                </c:if>
-                                                                <c:if test="${trip.vehicle.vehicleType.totalSeat==45}">
-                                                                    ${trip.vehicle.vehicleType.PRICE_45} VNĐ
-                                                                </c:if>
+                                                                150000 VNĐ
                                                             </h3>
                                                         </div>
                                                         <p class="font-weight-bold" style="color:black;">${trip.seatRemain} seat remain</p>
