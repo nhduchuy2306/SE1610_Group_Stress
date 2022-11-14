@@ -18,10 +18,10 @@ function matching(item) {
     if (item.innerHTML==search.value) {
         changeColor();
         copy_paste(item);
-         console.log(couponID.value); 
-         console.log(search.value); 
+        // console.log(couponID.value); 
+        // console.log(search.value); 
         changeFunc(item.value);
-         console.log(couponID.innerHTML);
+        // console.log(couponID.innerHTML);
         document.getElementById('oke').style.display='block';     
     } else {
     	couponID.value="";
@@ -59,7 +59,7 @@ function changeFunc(item) {
 	document.getElementById("totalPrice-span").innerHTML=resetTotal + 'VND' ;
 	
 	var totalPrice=document.getElementById("totalPrice");
-	if (accountBalance.value>resetTotal) {
+	if (parseFloat(accountBalance.value)>=parseFloat(resetTotal)) {
 		document.getElementById('payingAccount').style.display='block';
 		//console.log("totalPrice: "+totalPrice.value);
 	}else{
@@ -75,7 +75,7 @@ function changeDefault(){
 	// console.log("accountBalance:" + accountBalance.value);
 	// console.log("defaultTotalPrice:" + defaultTotalPrice.value);
 	// console.log("Compare:" + accountBalance.value>defaultTotalPrice.value);
-	if (accountBalance.value>defaultTotalPrice.value) {
+	if (parseFloat(accountBalance.value)>=parseFloat(defaultTotalPrice.value)) {
 		document.getElementById('payingAccount').style.display='block';
 	}else{
 		 document.getElementById('payingAccount').style.display='none';

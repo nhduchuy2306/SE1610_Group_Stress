@@ -326,14 +326,14 @@
         <script src="${pageContext.request.contextPath}/client/js/mail-script.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/main.js"></script>
         <script src="${pageContext.request.contextPath}/client/js/jquery.seat-charts.js"></script>
-        <script src="${pageContext.request.contextPath}/client/js/coupon3.js"></script>
+        <script src="${pageContext.request.contextPath}/client/js/coupon.js"></script>
         <jsp:include page="/client/seat-script.jsp"></jsp:include>
         
         <script type="text/javascript">
         var accountBalance=document.getElementById('accountBalance');
         var totalPrice=document.getElementById('totalPrice');
             $(window).load(function () {
-                    if(accountBalance.value>totalPrice.value){
+                    if(parseFloat(accountBalance.value)>= parseFloat(totalPrice.value)){
                         document.getElementById('payingAccount').style.display='block';
                     }else{
                         document.getElementById('payingAccount').style.display='none';
