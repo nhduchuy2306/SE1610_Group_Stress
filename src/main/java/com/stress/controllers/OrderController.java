@@ -120,8 +120,9 @@ public class OrderController extends HttpServlet {
             LocalTime StartTime = trip.getStartTime().toLocalTime();
             LocalDateTime finishTrip = trip.getStartDateTime().toLocalDate().atTime(StartTime).plusHours(realTimeGoing);
 
-//            if (finishTrip.isAfter(LocalDateTime.now())) {
-//                request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
+
+            //if (finishTrip.isAfter(LocalDateTime.now())) {
+                //request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
             //} else {
                 FeedbackDAO fbDAO = new FeedbackDAOImpl();
                 if (fbDAO.sendFeedback(fb)) {
