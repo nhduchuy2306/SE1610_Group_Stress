@@ -153,7 +153,7 @@
                                                     <td>${d.driverName}</td>
                                                     <td>${d.DOB}</td>
                                                     <td>${d.sex eq "true"? "MALE":"FEMALE"}</td>
-                                                    <td><img style="width: 150px; height: 200px;" src="${d.driverPicture}" alt="alt"/></td>
+                                                    <td><img style="width: 125px; height: 100px;" src="${d.driverPicture}" alt="alt"/></td>
                                                     <td>${d.phoneNumber}</td>
                                                     <td>
                                                         <c:choose>
@@ -216,7 +216,7 @@
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">Driver Picture</label>
-                                                                                    <input type="text" name="driverPic" class="form-control" value="${d.driverPicture.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Picture">
+                                                                                    <input  type="text" name="driverPic" class="form-control" value="${d.driverPicture.trim()}" id="exampleInputEmail1" placeholder="Enter Driver Picture">
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="exampleInputEmail1">Phone Number</label>

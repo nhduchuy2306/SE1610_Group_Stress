@@ -273,7 +273,7 @@ public class TripController extends HttpServlet {
                     vehicleDAO.updateVehicle(v);
                     driverDAO.updateDriver(d);
                     request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                    request.setAttribute("tripID", tripID);
+                    request.setAttribute("tripID", tripID.trim());
                     showTripTable(request, response);
                 } else {
                     request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");
