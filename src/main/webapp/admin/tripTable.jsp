@@ -47,11 +47,7 @@
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 d-flex justify-content-between align-items-center">
                                     <h2 class="m-0 font-weight-bold text-primary">TRIPS</h2>
-                                    <div>
-                                        <button type="button" class="ml-10 btn btn-primary float-right" data-toggle="modal" data-target="#add">
-                                            Add Trip 
-                                        </button>
-                                    </div>
+                                    
                                     <div>
                                     <a href="${pageContext.request.contextPath}/admin/trip?action=report" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Feedback Report</a>
@@ -160,6 +156,7 @@
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modify-${t.tripID.trim()}">
                                                             <i class="fa fa-pen"></i>
                                                         </button>
+                                                            
                                                         <div class="modal fade" id="modify-${t.tripID.trim()}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
@@ -263,7 +260,9 @@
                                                         </div>
                                                     </td>
                                                 </tr>
+                                            
                                             </c:forEach>
+                                           
                                         </tbody>
                                     </table>
                                 </div>
@@ -304,7 +303,7 @@
                         <div class="text-center">
                             <i class="fa fa-check-circle" style="font-size:70px; color: greenyellow" aria-hidden="true"></i>
                         </div>
-                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${requestScope.SUCCESS}</h4>
+                        <h4 class="text-center font-weight-bold" style="margin-top: 20px">${sessionScope.SUCCESS}</h4>
                         <button type="button" class="btn btn-secondary float-right" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -338,7 +337,7 @@
         <script src="${pageContext.request.contextPath}/admin/js/demo/datatables-demo.js"></script>
 
         <script type="text/javascript">
-            <c:if test="${requestScope.SUCCESS != null}">
+            <c:if test="${sessionScope.SUCCESS != null}">
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
                 var idField = parseInt($('input[type="search"]').val(), 10);
                 var id = parseFloat(data[1]) || 1; // use data for the age column
@@ -356,7 +355,9 @@
                 $('input[type="search"]').keyup(function () {
                     table.draw();
                 });
-                $('input[type="search"]').val('${tripID}').keyup();
+                $('input[type="search"]').val('${sessionScope.tripID}').keyup();
+                
+                
             });
             </c:if>
 

@@ -23,6 +23,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -118,17 +120,17 @@ public class OrderController extends HttpServlet {
             LocalTime StartTime = trip.getStartTime().toLocalTime();
             LocalDateTime finishTrip = trip.getStartDateTime().toLocalDate().atTime(StartTime).plusHours(realTimeGoing);
 
-            if (finishTrip.isAfter(LocalDateTime.now())) {
-                request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
-            } else {
+//            if (finishTrip.isAfter(LocalDateTime.now())) {
+//                request.setAttribute("ERROR", "Trip Has not finished yet! You Cant Feedback");
+            //} else {
                 FeedbackDAO fbDAO = new FeedbackDAOImpl();
                 if (fbDAO.sendFeedback(fb)) {
                     request.setAttribute("SUCCESS", "Thank you for your feedback!");
                 } else {
                     request.setAttribute("ERROR", "Something Wrong! Please Try Again!");
                 }
-            }
-            showDetailView(request, response);
+            //}
+            showFeedBack(request, response);
 
         } catch (Exception e) {
             System.out.println("Error at Send Feedback " + e.toString());
@@ -222,7 +224,7 @@ public class OrderController extends HttpServlet {
                 }
                 request.setAttribute("ORDER", od);
                 HttpSession session = request.getSession();
-                session.setAttribute("LOGIN_USER", new UserDAOImpl().getUserByEmail("quangtmse161987@fpt.edu.vn"));
+                session.setAttribute("LOGIN_USER", new UserDAOImpl().getUserByEmail("carbookingstress@gmail.com"));
                 url = "./admin/orderTable.jsp";
             } else {
                 url = "./client/404.jsp";

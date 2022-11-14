@@ -15,7 +15,16 @@ huynguyen123456@personal.example.com
 
 
 
-// Tài khoản mail doanh nghiệp
+// Tài khoản mail 
 
 carbookingstress@gmail.com
 Stress123456789
+
+//customer
+trangminhquang
+
+quangtrangmin
+
+Quang@123456789
+
+nguyenhuy1323614@gmail.com

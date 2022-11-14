@@ -34,7 +34,7 @@
             map: seatMap,
             seats: {
                 e: {
-                    price: 15000,
+                    price: 150000,
                     classes: "economy-class", //your custom CSS class
                     category: "Economy Class"
                 }

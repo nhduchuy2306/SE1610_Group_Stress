@@ -35,6 +35,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "RouteController", urlPatterns = {"/admin/route"})
 public class RouteController extends HttpServlet {
@@ -357,6 +358,7 @@ public class RouteController extends HttpServlet {
     private void addTripContinue(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+            HttpSession session=request.getSession();
             String tripID = CommonFunction.generateID("tblTrips", "Trip");
             String tripName = request.getParameter("tripName").trim();
             String startdate = request.getParameter("startdate");
@@ -386,8 +388,8 @@ public class RouteController extends HttpServlet {
                 if (checkAddSeat) {
                     vehicleDAO.updateVehicle(v);
                     driverDAO.updateDriver(d);
-                    request.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
-                    request.setAttribute("tripID", tripID);
+                    session.setAttribute("SUCCESS", "ADD TRIP SUCCESSFULLY");
+                    session.setAttribute("tripID", tripID);
                     response.sendRedirect("trip?action=show");
                 } else {
                     request.setAttribute("ADD_ERROR", "ADD TRIP ERROR");

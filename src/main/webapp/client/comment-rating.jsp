@@ -330,12 +330,8 @@
                                         <input type="radio" name="rating" value="3" id="rate-3-comment">
                                         <label for="rate-3-comment" class="fas fa-star"></label>
                                         <input type="radio" name="rating" value="2" id="rate-2-comment">
-                                        <label for="rate-2-comment" class="fas fa-star"></label>
-<<<<<<< HEAD
-                                        <input type="radio" name="rating" value="1" id="rate-1-comment" checked="">
-=======
-                                        <input type="radio" checked="" name="rating" value="1" id="rate-1-comment">
->>>>>>> 1ff43f8b23566c30c6163e95f4ae594ac753069d
+                                        <label for="rate-2-comment" class="fas fa-star"></label>                                        <input type="radio" name="rating" value="1" id="rate-1-comment" checked="">
+
                                         <label for="rate-1-comment" class="fas fa-star"></label>
 
                                         <header>Comment</header>
@@ -510,6 +506,9 @@
             </div>
         </div>
     </div>
+                    
+                    
+                    
     <script src="${pageContext.request.contextPath}/client/js/vendor/jquery-2.2.4.min.js"></script>
     <script src="${pageContext.request.contextPath}/client/js/popper.min.js"></script>
     <script src="${pageContext.request.contextPath}/client/js/vendor/bootstrap.min.js"></script>
